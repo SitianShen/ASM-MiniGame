@@ -2,8 +2,20 @@
 
 # define IDB_BACKG          100
 # define IDB_OBJ1           101
+# define IDB_OBJ2           102
+# define IDB_OBJ3           103
 # define IDB_ICON           200
+# define IDB_GAMESTART      301
+# define IDB_GAMEINTRO      302
+# define IDB_GAMESTARTC     303
+# define IDB_GAMEINTROC     304
 
-IDB_BACKG   BITMAP      "background.bmp"
-IDB_ICON    ICON        "icon.ico"
-IDB_OBJ1    BITMAP      "object1.bmp"
+IDB_BACKG       BITMAP      "background.bmp"
+IDB_ICON        ICON        "icon.ico"
+IDB_OBJ1        BITMAP      "object1.bmp"
+IDB_OBJ2        BITMAP      "object2.bmp"
+IDB_OBJ3        BITMAP      "object3.bmp"
+IDB_GAMESTART   BITMAP      "game_start.bmp"
+IDB_GAMEINTRO   BITMAP      "game_intro.bmp"
+IDB_GAMESTARTC  BITMAP      "game_start_chosen.bmp"
+IDB_GAMEINTROC  BITMAP      "game_intro_chosen.bmp"

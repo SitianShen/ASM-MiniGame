@@ -31,7 +31,6 @@ BASE ends
 Subject struct 
         base    BASE  <> 
 Subject ends
-
 MONEY_1                 equ 1000
 MONEY_2                 equ 1001
 PROP_ACC_SELF           equ 2000 ;给自己加速
@@ -118,6 +117,29 @@ debug_int       db      '%llu', 0ah, 0
 
 
 .code
+
+NextPos proc stdcall PtrtoBase :ptr byte, num :ptr dword, ptrlen :ptr dword
+
+
+
+
+NextPos endp
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ;1 create
 _create_ldf_need proc
         local @playerPic
