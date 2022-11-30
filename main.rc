@@ -1,0 +1,9 @@
+# include   <resource.h>
+
+# define IDB_BACKG          100
+# define IDB_OBJ1           101
+# define IDB_ICON           200
+
+IDB_BACKG   BITMAP      "background.bmp"
+IDB_ICON    ICON        "icon.ico"
+IDB_OBJ1    BITMAP      "object1.bmp"
