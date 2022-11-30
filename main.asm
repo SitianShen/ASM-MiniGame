@@ -24,8 +24,8 @@ BASE struct
         lengthx dd      ?
         lengthy dd      ?
         alive   dd      ?
-        DC      dd      ?  ;ÎïÌåÍ¼Æ¬¾ä±ú
-        rel_v   dd      ?  ;Ïà¶ÔÒÆ¶¯ËÙ¶È£¨±¶ÂÊ£©
+        DC      dd      ?  ;ï¿½ï¿½ï¿½ï¿½Í¼Æ¬ï¿½ï¿½ï¿½
+        rel_v   dd      ?  ;ï¿½ï¿½ï¿½ï¿½Æ¶ï¿½ï¿½Ù¶È£ï¿½ï¿½ï¿½ï¿½Ê£ï¿½
 BASE ends
 
 Subject struct 
@@ -34,28 +34,29 @@ Subject ends
 
 MONEY_1                 equ 1000
 MONEY_2                 equ 1001
-PROP_ACC_SELF           equ 2000 ;¸ø×Ô¼º¼ÓËÙ
-PROP_DEC_SELF           equ 2001 ;¸ø×Ô¼º¼õËÙ
-OBST_HARD               equ 3000 ;Ó²ÕÏ°­
-OBST_SOFT               equ 3001 ;ÈíÕÏ°­
+PROP_ACC_SELF           equ 2000 ;ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½ï¿½
+PROP_DEC_SELF           equ 2001 ;ï¿½ï¿½ï¿½Ô¼ï¿½ï¿½ï¿½ï¿½ï¿½
+OBST_HARD               equ 3000 ;Ó²ï¿½Ï°ï¿½
+OBST_SOFT               equ 3001 ;ï¿½ï¿½ï¿½Ï°ï¿½
 Targets struct
         base    BASE  <> 
         typeid  dd      ?
+        runwayid dd     ?
 Targets ends
 
 .data?
-player          Subject <>              ;ÈËÎï
-bullet          Subject <>              ;×Óµ¯
-targets         Targets  1000 dup(<>)   ;ÎïÌå
+player          Subject <>              ;ï¿½ï¿½ï¿½ï¿½
+bullet          Subject <>              ;ï¿½Óµï¿½
+targets         Targets  1000 dup(<>)   ;ï¿½ï¿½ï¿½ï¿½
 .const 
 MAX_TARGET_NUMBER dd 1000
 .data
-target_number   dd      0               ;ÎïÌåÊýÁ¿£¨targetsÊý×é³¤¶È£©
+target_number   dd      0               ;ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½targetsï¿½ï¿½ï¿½é³¤ï¿½È£ï¿½
 
 .data
-base_speed      dd      2 ;»ù×¼ËÙ¶È µ¥Î»ÎªÏñËØ
+base_speed      dd      2 ;ï¿½ï¿½×¼ï¿½Ù¶ï¿½ ï¿½ï¿½Î»Îªï¿½ï¿½ï¿½ï¿½
 
-;when you store something-> offset targets + (id%MAX_TARGET_NUMBER) Ñ­»·¶ÓÁÐ
+;when you store something-> offset targets + (id%MAX_TARGET_NUMBER) Ñ­ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 
 
 
@@ -89,13 +90,13 @@ hCursorMove     dd      ?
 hMenu           dd      ?
 hBmpBack        dd      ?
 hBmpClock       dd      ?
-; »º´æµÄÖÓÃæ±³¾°
+; ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½æ±³ï¿½ï¿½
 hDCBack         dd      ?
-; »º´æµÄÓÎÏ·»­Ãæ
+; ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï·ï¿½ï¿½ï¿½ï¿½
 hDCGame         dd      ?
-; ÓÎÏ·Ä¿±ê1
+; ï¿½ï¿½Ï·Ä¿ï¿½ï¿½1
 hDCObj1         dd      ?
-; »º´æµÄµþ¼ÓÉÏÖ¸ÕëµÄÖÓÃæ
+; ï¿½ï¿½ï¿½ï¿½Äµï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 hDCClock        dd      ?
 
 dwNowBack       dd      ?
@@ -103,14 +104,14 @@ dwNowObj1       dd      ?
 dwNowCircle     dd      ?
 
 .const
-szClassName     db      'ASMÐ¡ÓÎÏ·', 0
+szClassName     db      'ASMÐ¡ï¿½ï¿½Ï·', 0
 _dwPara180      dw      180
 dwRadius        dw      100/2
-szMenuBack1     db      'Ê¹ÓÃ±³¾°1(&A)', 0
-szMenuBack2     db      'Ê¹ÓÃ±³¾°2(&B)', 0
-szMenuCircle1   db      'Ê¹ÓÃ±ß¿ò1(&C)', 0
-szMenuCircle2   db      'Ê¹ÓÃ±ß¿ò2(&D)', 0
-szMenuExit      db      'ÍË³ö(&X)', 0
+szMenuBack1     db      'Ê¹ï¿½Ã±ï¿½ï¿½ï¿½1(&A)', 0
+szMenuBack2     db      'Ê¹ï¿½Ã±ï¿½ï¿½ï¿½2(&B)', 0
+szMenuCircle1   db      'Ê¹ï¿½Ã±ß¿ï¿½1(&C)', 0
+szMenuCircle2   db      'Ê¹ï¿½Ã±ß¿ï¿½2(&D)', 0
+szMenuExit      db      'ï¿½Ë³ï¿½(&X)', 0
 debug_int       db      '%llu', 0ah, 0
 ; ########################################################## try code
 
@@ -128,22 +129,22 @@ _create_ldf_need proc
         invoke  LoadBitmap, hInstance, dwPlayerPic
         mov     @playerPic, eax
         invoke SelectObject, player.base.DC, @playerPic 
-;2.1 maintain player, Óöµ½²Ù×÷Ê±µ÷ÓÃ
+;2.1 maintain player, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½
 _move_object_player proc
 _move_object_player endp
 
-;2.2 maintain bullet Ã¿Ò»Ö¡µ÷ÓÃ
+;2.2 maintain bullet Ã¿Ò»Ö¡ï¿½ï¿½ï¿½ï¿½
 _move_object_bullet proc
 _move_object_bullet endp
 
-;2.3 maintain all object  Ã¿Ò»Ö¡µ÷ÓÃ
+;2.3 maintain all object  Ã¿Ò»Ö¡ï¿½ï¿½ï¿½ï¿½
 _move_object_obj proc
 _move_object_obj endp
 
-;3 check collision Ã¿Ò»Ö¡µ÷ÓÃ
+;3 check collision Ã¿Ò»Ö¡ï¿½ï¿½ï¿½ï¿½
 _check_collision proc
-;Á½Á½Ã¶¾ÙËùÓÐÎïÌå£¬ÁîÄÇÐ©Ó¦¸ÃÏûÊ§µÄÏûÊ§£º
-;Í¬Ê±Î¬»¤targetsÊý×éµÄÊýÁ¿target_number
+;ï¿½ï¿½ï¿½ï¿½Ã¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½å£¬ï¿½ï¿½ï¿½ï¿½Ð©Ó¦ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½ï¿½ï¿½Ê§ï¿½ï¿½
+;Í¬Ê±Î¬ï¿½ï¿½targetsï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½target_number
 _check_collision endp
 
 
@@ -244,8 +245,8 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                 sub     eax, @stPs.rcPaint.left
                 mov     ecx, @stPs.rcPaint.bottom
                 sub     ecx, @stPs.rcPaint.top
-                ; ¸´ÖÆ»º´æµÄÖÓÃæÍ¼Æ¬µ½ÏÔÊ¾DC
-                ; Èô1Ãë¶à´ÎÊÕµ½WM_PAINT²»±ØÖØ¸´¼ÆËã
+                ; ï¿½ï¿½ï¿½Æ»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¼Æ¬ï¿½ï¿½ï¿½ï¿½Ê¾DC
+                ; ï¿½ï¿½1ï¿½ï¿½ï¿½ï¿½ï¿½Õµï¿½WM_PAINTï¿½ï¿½ï¿½ï¿½ï¿½Ø¸ï¿½ï¿½ï¿½ï¿½ï¿½
                 invoke  BitBlt, @hDC, @stPs.rcPaint.left, @stPs.rcPaint.top, eax, ecx, hDCGame, @stPs.rcPaint.left, @stPs.rcPaint.top, SRCCOPY
                 invoke  EndPaint, hWnd, addr @stPs
         .elseif eax == WM_CREATE
@@ -276,18 +277,18 @@ _WinMain        proc
                 local   @stWndClass: WNDCLASSEX
                 local   @stMsg: MSG
 
-        ; Ä£¿é¾ä±ú
+        ; Ä£ï¿½ï¿½ï¿½ï¿½
         invoke  GetModuleHandle, NULL
         mov     hInstance, eax
 
-        ; ½á¹¹ÌåÇåÁã
+        ; ï¿½á¹¹ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         ; invoke  LoadCursor, hInstance, IDC_MOVE
         ; mov     hCursorMove, eax
         ; invoke  LoadCursor, hInstance, IDC_MAIN
         ; mov     hCursorMain, eax
         invoke  RtlZeroMemory, addr @stWndClass, sizeof @stWndClass
                 ; invoke  LoadIcon, hInstance, IDB_ICON
-                ; mov     @stWndClass.hIcon, eax ; ÉèÖÃÐ¡Í¼±ê
+                ; mov     @stWndClass.hIcon, eax ; ï¿½ï¿½ï¿½ï¿½Ð¡Í¼ï¿½ï¿½
                 ; mov     @stWndClass.hIconSm, eax
         invoke  LoadCursor, 0, IDC_ARROW
         mov     @stWndClass.hCursor, eax
@@ -295,12 +296,12 @@ _WinMain        proc
         mov     @stWndClass.hInstance, eax
         mov     @stWndClass.cbSize, sizeof WNDCLASSEX
         mov     @stWndClass.style, CS_HREDRAW or CS_VREDRAW
-        ; ×¢²á´°¿ÚÀàÊ±Ö¸¶¨¶ÔÓ¦µÄ´°¿Ú¹ý³Ì
+        ; ×¢ï¿½á´°ï¿½ï¿½ï¿½ï¿½Ê±Ö¸ï¿½ï¿½ï¿½ï¿½Ó¦ï¿½Ä´ï¿½ï¿½Ú¹ï¿½ï¿½ï¿½
         mov     @stWndClass.lpfnWndProc, offset _ProcWinMain
         mov     @stWndClass.hbrBackground, COLOR_WINDOW + 1
         mov     @stWndClass.lpszClassName, offset szClassName
-        ; ×¢²á´°¿ÚÀà
-        ; ×¢ÒâÍ¬Ò»´°¿ÚÀàµÄ´°¿Ú¶¼¾ßÓÐÏàÍ¬µÄ´°¿Ú¹ý³Ì,½¨Á¢´°¿Ú
+        ; ×¢ï¿½á´°ï¿½ï¿½ï¿½ï¿½
+        ; ×¢ï¿½ï¿½Í¬Ò»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä´ï¿½ï¿½Ú¶ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í¬ï¿½Ä´ï¿½ï¿½Ú¹ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         invoke  RegisterClassEx, addr @stWndClass
         invoke  CreateWindowEx, NULL, \
                 offset szClassName, offset szClassName, \
