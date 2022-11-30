@@ -24,8 +24,8 @@ BASE struct
         lengthx dd      ?
         lengthy dd      ?
         alive   dd      ?
-        DC      dd      ?  ;����ͼƬ���
-        rel_v   dd      ?  ;����ƶ��ٶȣ����ʣ�
+        DC      dd      ?  ;物体图片句柄
+        rel_v   dd      ?  ;相对移动速度（倍率）
 BASE ends
 
 Subject struct 
@@ -34,10 +34,10 @@ Subject ends
 
 MONEY_1                 equ 1000
 MONEY_2                 equ 1001
-PROP_ACC_SELF           equ 2000 ;���Լ�����
-PROP_DEC_SELF           equ 2001 ;���Լ�����
-OBST_HARD               equ 3000 ;Ӳ�ϰ�
-OBST_SOFT               equ 3001 ;���ϰ�
+PROP_ACC_SELF           equ 2000 ;给自己加速
+PROP_DEC_SELF           equ 2001 ;给自己减速
+OBST_HARD               equ 3000 ;硬障碍
+OBST_SOFT               equ 3001 ;软障碍
 Targets struct
         base    BASE  <> 
         typeid  dd      ?
@@ -45,18 +45,18 @@ Targets struct
 Targets ends
 
 .data?
-player          Subject <>              ;����
-bullet          Subject <>              ;�ӵ�
-targets         Targets  1000 dup(<>)   ;����
+player          Subject <>              ;人物
+bullet          Subject <>              ;子弹
+targets         Targets  1000 dup(<>)   ;物体
 .const 
 MAX_TARGET_NUMBER dd 1000
 .data
-target_number   dd      0               ;����������targets���鳤�ȣ�
+target_number   dd      0               ;物体数量（targets数组长度）
 
 .data
-base_speed      dd      2 ;��׼�ٶ� ��λΪ����
+base_speed      dd      2 ;基准速度 单位为像素
 
-;when you store something-> offset targets + (id%MAX_TARGET_NUMBER) ѭ������
+;when you store something-> offset targets + (id%MAX_TARGET_NUMBER) 循环队列
 
 
 
@@ -90,13 +90,13 @@ hCursorMove     dd      ?
 hMenu           dd      ?
 hBmpBack        dd      ?
 hBmpClock       dd      ?
-; ��������汳��
+; 缓存的钟面背景
 hDCBack         dd      ?
-; �������Ϸ����
+; 缓存的游戏画面
 hDCGame         dd      ?
-; ��ϷĿ��1
+; 游戏目标1
 hDCObj1         dd      ?
-; ����ĵ�����ָ�������
+; 缓存的叠加上指针的钟面
 hDCClock        dd      ?
 
 dwNowBack       dd      ?
@@ -104,14 +104,14 @@ dwNowObj1       dd      ?
 dwNowCircle     dd      ?
 
 .const
-szClassName     db      'ASMС��Ϸ', 0
+szClassName     db      'ASM小游戏', 0
 _dwPara180      dw      180
 dwRadius        dw      100/2
-szMenuBack1     db      'ʹ�ñ���1(&A)', 0
-szMenuBack2     db      'ʹ�ñ���2(&B)', 0
-szMenuCircle1   db      'ʹ�ñ߿�1(&C)', 0
-szMenuCircle2   db      'ʹ�ñ߿�2(&D)', 0
-szMenuExit      db      '�˳�(&X)', 0
+szMenuBack1     db      '使用背景1(&A)', 0
+szMenuBack2     db      '使用背景2(&B)', 0
+szMenuCircle1   db      '使用边框1(&C)', 0
+szMenuCircle2   db      '使用边框2(&D)', 0
+szMenuExit      db      '退出(&X)', 0
 debug_int       db      '%llu', 0ah, 0
 ; ########################################################## try code
 
@@ -129,22 +129,22 @@ _create_ldf_need proc
         invoke  LoadBitmap, hInstance, dwPlayerPic
         mov     @playerPic, eax
         invoke SelectObject, player.base.DC, @playerPic 
-;2.1 maintain player, ��������ʱ����
+;2.1 maintain player, 遇到操作时调用
 _move_object_player proc
 _move_object_player endp
 
-;2.2 maintain bullet ÿһ֡����
+;2.2 maintain bullet 每一帧调用
 _move_object_bullet proc
 _move_object_bullet endp
 
-;2.3 maintain all object  ÿһ֡����
+;2.3 maintain all object  每一帧调用
 _move_object_obj proc
 _move_object_obj endp
 
-;3 check collision ÿһ֡����
+;3 check collision 每一帧调用
 _check_collision proc
-;����ö���������壬����ЩӦ����ʧ����ʧ��
-;ͬʱά��targets���������target_number
+;两两枚举所有物体，令那些应该消失的消失：
+;同时维护targets数组的数量target_number
 _check_collision endp
 
 
@@ -240,13 +240,13 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
 
         .if eax == WM_PAINT
                 invoke  BeginPaint, hWnd, addr @stPs
-                mov     @hDC, eaxelse
+                mov     @hDC, eax
                 mov     eax, @stPs.rcPaint.right
                 sub     eax, @stPs.rcPaint.left
                 mov     ecx, @stPs.rcPaint.bottom
                 sub     ecx, @stPs.rcPaint.top
-                ; ���ƻ��������ͼƬ����ʾDC
-                ; ��1�����յ�WM_PAINT�����ظ�����
+                ; 复制缓存的钟面图片到显示DC
+                ; 若1秒多次收到WM_PAINT不必重复计算
                 invoke  BitBlt, @hDC, @stPs.rcPaint.left, @stPs.rcPaint.top, eax, ecx, hDCGame, @stPs.rcPaint.left, @stPs.rcPaint.top, SRCCOPY
                 invoke  EndPaint, hWnd, addr @stPs
         .elseif eax == WM_CREATE
@@ -277,18 +277,18 @@ _WinMain        proc
                 local   @stWndClass: WNDCLASSEX
                 local   @stMsg: MSG
 
-        ; ģ����
+        ; 模块句柄
         invoke  GetModuleHandle, NULL
         mov     hInstance, eax
 
-        ; �ṹ������
+        ; 结构体清零
         ; invoke  LoadCursor, hInstance, IDC_MOVE
         ; mov     hCursorMove, eax
         ; invoke  LoadCursor, hInstance, IDC_MAIN
         ; mov     hCursorMain, eax
         invoke  RtlZeroMemory, addr @stWndClass, sizeof @stWndClass
                 ; invoke  LoadIcon, hInstance, IDB_ICON
-                ; mov     @stWndClass.hIcon, eax ; ����Сͼ��
+                ; mov     @stWndClass.hIcon, eax ; 设置小图标
                 ; mov     @stWndClass.hIconSm, eax
         invoke  LoadCursor, 0, IDC_ARROW
         mov     @stWndClass.hCursor, eax
@@ -296,12 +296,12 @@ _WinMain        proc
         mov     @stWndClass.hInstance, eax
         mov     @stWndClass.cbSize, sizeof WNDCLASSEX
         mov     @stWndClass.style, CS_HREDRAW or CS_VREDRAW
-        ; ע�ᴰ����ʱָ����Ӧ�Ĵ��ڹ���
+        ; 注册窗口类时指定对应的窗口过程
         mov     @stWndClass.lpfnWndProc, offset _ProcWinMain
         mov     @stWndClass.hbrBackground, COLOR_WINDOW + 1
         mov     @stWndClass.lpszClassName, offset szClassName
-        ; ע�ᴰ����
-        ; ע��ͬһ������Ĵ��ڶ�������ͬ�Ĵ��ڹ���,��������
+        ; 注册窗口类
+        ; 注意同一窗口类的窗口都具有相同的窗口过程
         invoke  RegisterClassEx, addr @stWndClass
         invoke  CreateWindowEx, NULL, \
                 offset szClassName, offset szClassName, \
