@@ -167,6 +167,8 @@ _collision_test endp
 _two_two_enum proc 
         
 
+        mov eax, target_number
+
 _two_two_enum endp
 
 
