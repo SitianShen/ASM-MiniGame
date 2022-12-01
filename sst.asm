@@ -160,7 +160,7 @@ szInt db "%d", 0ah, 0
 .code
 ;小车的初始化
 _Init_car proc uses ebx
-    mov ebx, 1
+    mov ebx, 2
     mov player.course_id, ebx
     mov player.base.alive, ebx
     xor ebx, ebx
