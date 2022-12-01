@@ -17,38 +17,52 @@ include msvcrt.inc
 scanf proto c:dword,:vararg
 printf proto c:dword,:vararg
 
+;=====================================================
+;sst functions
+_Init_car proc;С����ʼ��
+_Jump_maintain proc;ÿһ֡����һ��
+_Action_left proc;
+_Action_right proc;
+_Action_jump proc;
+
+
+
+;=====================================================
+
 BASE struct
         posx    dd      ?
         posy    dd      ?
         lengthx dd      ?
         lengthy dd      ?
         alive   dd      ?
-        DC      dd      ?  ;����ͼƬ���
-        rel_v   dd      ?  ;����ƶ��ٶȣ����ʣ�
+        DC      dd      ?  ;?????????
+        rel_v   dd      ?  ;???????????????
 BASE ends
 
 Subject struct 
         base    BASE  <> 
+        course_id       dd      ? ;0,1,2
+        score           dd      ?
 Subject ends
 
 MONEY_1                 equ 1000
 MONEY_2                 equ 1001
-PROP_ACC_SELF           equ 2000 ;���Լ�����
-PROP_DEC_SELF           equ 2001 ;���Լ�����
-OBST_HARD               equ 3000 ;Ӳ�ϰ�
-OBST_SOFT               equ 3001 ;���ϰ�
+PROP_ACC_SELF           equ 2000 ;?????????
+PROP_DEC_SELF           equ 2001 ;?????????
+OBST_HARD               equ 3000 ;????
+OBST_SOFT               equ 3001 ;?????
 Targets struct
         base    BASE  <> 
         typeid  dd      ?
 Targets ends
 
 .data?
-player          Subject <>              ;����
-bullet          Subject <>              ;�ӵ�
-env_objecet_1   BASE    <>              ;������������ 1
-env_objecet_2   BASE    <>              ;������������ 2
-env_objecet_3   BASE    <>              ;������������ 3
-targets         Targets  1000 dup(<>)   ;����
+player          Subject <>              ;????
+bullet          Subject <>              ;???
+env_objecet_1   BASE    <>              ;???????????? 1
+env_objecet_2   BASE    <>              ;???????????? 2
+env_objecet_3   BASE    <>              ;???????????? 3
+targets         Targets  1000 dup(<>)   ;????
 
 ;zzl own
 game_start              BASE <>
@@ -64,15 +78,26 @@ in_begining             equ 0
 in_game                 equ 1
 cur_interface           dd  0
 
+;sst
+carx0                   equ     150;�������ִ���
+carx1                   equ     300
+carx2                   equ     450
+cary                    equ     500
+cary_jump               equ     450
+
+.data
+flag_jump               dd      0
+time_jump               dd      5
+
 .const 
 MAX_TARGET_NUMBER dd 1000
 .data
-target_number   dd      0               ;����������targets���鳤�ȣ�
+target_number   dd      0               ;??????????targets???�A???
 
 .data
-base_speed      dd      2 ;��׼�ٶ� ��λΪ����
+base_speed      dd      2 ;?????? ??��?????
 
-;when you store something-> offset targets + (id%MAX_TARGET_NUMBER) ѭ������
+;when you store something-> offset targets + (id%MAX_TARGET_NUMBER) ???????
 
 
 
@@ -117,13 +142,13 @@ hWinMain        dd      ?
 ; hMenu           dd      ?
 ; hBmpBack        dd      ?
 ; hBmpClock       dd      ?
-; ��������汳��
+; ????????�M??
 hDCBack         dd      ?
-; �������Ϸ����
+; ????????????
 hDCGame         dd      ?
-; ��ϷĿ��1
+; ??????1
 hDCObj1         dd      ?
-; ����ĵ�����ָ�������
+; ??????????????????
 ; hDCClock        dd      ?
 
 dwNowBack       dd      ?
@@ -134,11 +159,11 @@ dwNowBack       dd      ?
 szClassName     db      'run away from covid-19', 0
 ; _dwPara180      dw      180
 ; dwRadius        dw      100/2
-; szMenuBack1     db      'ʹ�ñ���1(&A)', 0
-; szMenuBack2     db      'ʹ�ñ���2(&B)', 0
-; szMenuCircle1   db      'ʹ�ñ߿�1(&C)', 0
-; szMenuCircle2   db      'ʹ�ñ߿�2(&D)', 0
-; szMenuExit      db      '�˳�(&X)', 0
+; szMenuBack1     db      '??????1(&A)', 0
+; szMenuBack2     db      '??????2(&B)', 0
+; szMenuCircle1   db      '?????1(&C)', 0
+; szMenuCircle2   db      '?????2(&D)', 0
+; szMenuExit      db      '???(&X)', 0
 debug_int       db      '%d', 0ah, 0
 ; ########################################################## try code
 
@@ -156,22 +181,22 @@ debug_int       db      '%d', 0ah, 0
 ;         invoke  LoadBitmap, hInstance, dwPlayerPic
 ;         mov     @playerPic, eax
 ;         invoke SelectObject, player.base.DC, @playerPic 
-; ;2.1 maintain player, ��������ʱ����
+; ;2.1 maintain player, ?????????????
 ; _move_object_player proc
 ; _move_object_player endp
 
-; ;2.2 maintain bullet ÿһ֡����
+; ;2.2 maintain bullet ???????
 ; _move_object_bullet proc
 ; _move_object_bullet endp
 
-; ;2.3 maintain all object  ÿһ֡����
+; ;2.3 maintain all object  ???????
 ; _move_object_obj proc
 ; _move_object_obj endp
 
-; ;3 check collision ÿһ֡����
+; ;3 check collision ???????
 ; _check_collision proc
-; ;����ö���������壬����ЩӦ����ʧ����ʧ��
-; ;ͬʱά��targets���������target_number
+; ;??????????????��????��?????????????
+; ;?????targets?????????target_number
 ; _check_collision endp
 
 
@@ -222,7 +247,7 @@ _createAll proc
         invoke  SelectObject, hDCBack, @hBmpBack
         ; invoke  DeleteObject, @brush
         invoke  DeleteObject, @hBmpBack
-;��������ͼ��
+;???????????
         invoke  CreateCompatibleDC, @hDC
         mov     env_objecet_1.DC, eax
         invoke  CreateCompatibleDC, @hDC
@@ -241,7 +266,7 @@ _createAll proc
         invoke  DeleteObject, @hBmpObj1
         invoke  DeleteObject, @hBmpObj2
         invoke  DeleteObject, @hBmpObj3
-;��ʼ����
+;???????
         invoke  CreateCompatibleDC, @hDC
         mov     game_start.DC, eax
         invoke  CreateCompatibleDC, @hDC
@@ -400,8 +425,8 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                 sub     eax, @stPs.rcPaint.left
                 mov     ecx, @stPs.rcPaint.bottom
                 sub     ecx, @stPs.rcPaint.top
-                ; ���ƻ��������ͼƬ����ʾDC
-                ; ��1�����յ�WM_PAINT�����ظ�����
+                ; ???????????????????DC
+                ; ??1???????WM_PAINT???????????
                 invoke  BitBlt, @hDC, @stPs.rcPaint.left, @stPs.rcPaint.top, eax, ecx, hDCGame, @stPs.rcPaint.left, @stPs.rcPaint.top, SRCCOPY
                 invoke  EndPaint, hWnd, addr @stPs
         .elseif eax == WM_CREATE
@@ -443,18 +468,18 @@ _WinMain        proc
                 local   @stWndClass: WNDCLASSEX
                 local   @stMsg: MSG
 
-        ; ģ����
+        ; ?????
         invoke  GetModuleHandle, NULL
         mov     hInstance, eax
 
-        ; �ṹ������
+        ; ????????
         ; invoke  LoadCursor, hInstance, IDC_MOVE
         ; mov     hCursorMove, eax
         ; invoke  LoadCursor, hInstance, IDC_MAIN
         ; mov     hCursorMain, eax
         invoke  RtlZeroMemory, addr @stWndClass, sizeof @stWndClass
         invoke  LoadIcon, hInstance, IDB_ICON
-        mov     @stWndClass.hIcon, eax ; ����Сͼ��
+        mov     @stWndClass.hIcon, eax ; ????��???
         mov     @stWndClass.hIconSm, eax
         invoke  LoadCursor, 0, IDC_ARROW
         mov     @stWndClass.hCursor, eax
@@ -462,12 +487,12 @@ _WinMain        proc
         mov     @stWndClass.hInstance, eax
         mov     @stWndClass.cbSize, sizeof WNDCLASSEX
         mov     @stWndClass.style, CS_HREDRAW or CS_VREDRAW
-        ; ע�ᴰ����ʱָ����Ӧ�Ĵ��ڹ���
+        ; ??????????????????????
         mov     @stWndClass.lpfnWndProc, offset _ProcWinMain
         mov     @stWndClass.hbrBackground, COLOR_WINDOW + 1
         mov     @stWndClass.lpszClassName, offset szClassName
-        ; ע�ᴰ����
-        ; ע��ͬһ������Ĵ��ڶ�������ͬ�Ĵ��ڹ���
+        ; ???????
+        ; ???????????????????????????????
         invoke  RegisterClassEx, addr @stWndClass
         invoke  CreateWindowEx, NULL, \
                 offset szClassName, offset szClassName, \
