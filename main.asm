@@ -28,7 +28,7 @@ _Action_jump proto;
 _sst_test proto
 
 ; ldf funcions
-_check_collision proto :dword,:dword
+_check_collision proto :ptr BASE,:ptr BASE
 _collision_test proto
 
 ; lja funcions
@@ -520,6 +520,7 @@ _WinMain        proc
 _WinMain        endp
 
 start:
-        call    _WinMain
-        invoke  ExitProcess, NULL
-        end     start
+        ; call    _WinMain
+        ; invoke  ExitProcess, NULL
+        ret
+end     start

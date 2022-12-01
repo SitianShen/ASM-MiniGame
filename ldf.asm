@@ -169,7 +169,7 @@ debug_int       db      '%d', 0ah, 0
 ;同时维护targets数组的数量target_number
 ;返回值为1代表碰撞
 ;返回值为0代表没有碰撞 
-_check_collision proc uses ebx, @objectOne:BASE, @objectTwo:BASE
+_check_collision proc uses ebx, @objectOne:ptr BASE, @objectTwo:ptr BASE
         local @objectOnePosX, @objectOnePosY
         local @objectOneLengthX, @objectOneLengthY
         
@@ -183,8 +183,14 @@ _check_collision proc uses ebx, @objectOne:BASE, @objectTwo:BASE
         
         local @criticalX, @criticalY
 
-        mov eax, @objectOne.course_id
-        .if @objectTwo.course_id != eax
+        mov esi, @objectOne
+        assume esi: ptr BASE
+        mov eax, [esi].course_id
+        
+        mov esi, @objectTwo
+        assume esi: ptr BASE
+
+        .if [esi].course_id != eax
                 mov eax, 0
                 ; invoke printf, offset szInt, @objectOne.course_id
                 ; invoke printf, offset szInt, @objectTwo.course_id
@@ -192,29 +198,29 @@ _check_collision proc uses ebx, @objectOne:BASE, @objectTwo:BASE
         .endif
 
         ;objectOne
-        mov eax, @objectOne.posx
+        mov eax, [esi].posx
         mov @objectOnePosX, eax
 
-        mov eax, @objectOne.posy
+        mov eax, [esi].posy
         mov @objectOnePosY, eax
         
-        mov eax, @objectOne.lengthx
+        mov eax, [esi].lengthx
         mov @objectOneLengthX, eax
 
-        mov eax, @objectOne.lengthy
+        mov eax, [esi].lengthy
         mov @objectOneLengthY, eax
 
         ;objectTwo
-        mov eax, @objectTwo.posx
+        mov eax, [esi].posx
         mov @objectTwoPosX, eax
 
-        mov eax, @objectTwo.posy
+        mov eax, [esi].posy
         mov @objectTwoPosY, eax
         
-        mov eax, @objectTwo.lengthx
+        mov eax, [esi].lengthx
         mov @objectTwoLengthX, eax
 
-        mov eax, @objectTwo.lengthy
+        mov eax, [esi].lengthy
         mov @objectTwoLengthY, eax
 
         ;获取objectOne.中心X坐标
@@ -313,11 +319,11 @@ _collision_test proc
         ret
 _collision_test endp
 
-start:
-        ; call    _WinMain
-        ; invoke  ExitProcess, NULL
+; start:
+;         ; call    _WinMain
+;         ; invoke  ExitProcess, NULL
         
-        invoke _collision_test
-        ret
-end     start
-; end
+;         invoke _collision_test
+;         ret
+; end     start
+end
