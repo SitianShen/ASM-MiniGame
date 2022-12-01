@@ -174,4 +174,5 @@ szClassName     db      'run away from covid-19', 0
 ; szMenuCircle2   db      '?????2(&D)', 0
 ; szMenuExit      db      '???(&X)', 0
 debug_int       db      '%d', 0ah, 0
+szInt       db      '%d', 0ah, 0
 ; ########################################################## try code
