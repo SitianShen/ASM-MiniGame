@@ -222,18 +222,26 @@ _two_two_enum endp
 _two_two_enum_test proc
         mov target_number, 2
 
-        mov eax, MONEY_1
-        mov targets[0].typeid, eax
+        mov esi, offset targets[0]
+        assume esi :ptr Targets
 
-        mov eax, MONEY_2
-        mov targets[1].typeid, eax
+        mov eax, MONEY_1
+        mov [esi].typeid, eax
+
         ; invoke _two_two_enum
         ; .if targets[0].typeid == MONEY_1
         ;         invoke printf, offset szInt, targets[0].typeid
         ; .endif
         
-        invoke printf, offset debug_int, targets[0].typeid
-        invoke printf, offset debug_int, targets[1].typeid
+        invoke printf, offset debug_int, [esi].typeid
+
+        mov esi, offset targets[sizeofTargets]
+        assume esi :ptr Targets
+
+        mov eax, MONEY_2
+        mov [esi].typeid, eax
+
+        invoke printf, offset debug_int, [esi].typeid
         ret
 _two_two_enum_test endp
 

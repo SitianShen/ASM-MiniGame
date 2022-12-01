@@ -131,7 +131,7 @@ object1H_begin  equ     57
 object1W_begin  equ     86
 object1H_end    equ     57*3
 object1W_end    equ     86*3
-
+sizeofTargets   equ     sizeof Targets
 .data
 
 
