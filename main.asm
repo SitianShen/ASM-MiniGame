@@ -31,6 +31,9 @@ _sst_test proto
 _check_collision proto
 _collision_test proto
 
+; lja funcions
+NextPos proto :ptr BASE         ;每个道具移动
+ChangeAllPos proto      ;遍历所有道具，使之移动
 ;=====================================================
 
 BASE struct
