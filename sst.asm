@@ -26,11 +26,11 @@ BASE struct
         alive   dd      ?
         DC      dd      ?  ;?????????
         rel_v   dd      ?  ;???????????????
+        course_id       dd      ? ;0,1,2
 BASE ends
 
 Subject struct 
         base    BASE  <> 
-        course_id       dd      ? ;0,1,2
         score           dd      ?
 Subject ends
 
@@ -68,23 +68,28 @@ in_game                 equ 1
 cur_interface           dd  0
 
 ;sst
-carx0                   equ     150;坐标数字待定
+carx0                   equ     200;?????????
 carx1                   equ     300
-carx2                   equ     450
+carx2                   equ     400
 cary                    equ     500
 cary_jump               equ     450
 
 .data
 flag_jump               dd      0
-time_jump               dd      5
+flag_movleft            dd      0
+flag_movright           dd      0
+stdtime_jump            dd      100
+time_jump               dd      100
+stdtime_mov             dd      100
+time_mov                dd      100
 
 .const 
 MAX_TARGET_NUMBER dd 1000
 .data
-target_number   dd      0               ;??????????targets???鳤???
+target_number   dd      0               ;??????????targets????????
 
 .data
-base_speed      dd      2 ;?????? ??λ?????
+base_speed      dd      2 ;?????? ????????
 
 ;when you store something-> offset targets + (id%MAX_TARGET_NUMBER) ???????
 
@@ -131,7 +136,7 @@ hWinMain        dd      ?
 ; hMenu           dd      ?
 ; hBmpBack        dd      ?
 ; hBmpClock       dd      ?
-; ????????汳??
+; ????????????
 hDCBack         dd      ?
 ; ????????????
 hDCGame         dd      ?
@@ -158,10 +163,10 @@ szInt db "%d", 0ah, 0
 ; ########################################################## try code
 
 .code
-;小车的初始化
+;?????????
 _Init_car proc uses ebx
     mov ebx, 2
-    mov player.course_id, ebx
+    mov player.base.course_id, ebx
     mov player.base.alive, ebx
     xor ebx, ebx
     mov player.base.rel_v, ebx
@@ -171,66 +176,99 @@ _Init_car proc uses ebx
     mov ebx, cary
     mov player.base.posy, ebx
     ret
-;句柄初始化成什么？
+;??????????????
 _Init_car endp
 
-;每一帧刷新都要调用一次_Jump_maintain
-_Jump_maintain proc uses ebx
+;?????????????????Jump_maintain
+_Move_process proc uses ebx
         mov eax, flag_jump
         .if (eax == 1)
-                .if (time_jump == 0)
-                        mov ebx, 5
+                .if (time_jump == 0);时间到了，落地
+                        mov ebx, stdtime_jump
                         mov time_jump, ebx
-                        xor ebx, ebx
+                        mov ebx, 0
                         mov flag_jump, ebx
 
                         mov eax, cary
-                        mov player.base.posy, eax
+                        mov player.base.posy, eax;回到原地
                         ret
+                .endif
+                .if(player.base.posy>cary_jump);高度没到继续跳起
+                        mov eax, player.base.posy
+                        dec eax
+                        mov player.base.posy, eax
                 .endif
                 mov ebx, time_jump
                 dec ebx
-                mov time_jump, ebx
+                mov time_jump, ebx ;时间没到不回原地
+        .endif
+
+        mov eax, flag_movleft
+        .if (eax == 1)
+                .if (time_mov == 0)
+                        mov ebx, stdtime_mov
+                        mov time_mov, ebx
+                        mov ebx, 0
+                        mov flag_movleft, ebx
+                        ret
+                .endif
+                ;没移到足够时间（位置，此处设置移动时间和距离匹配）
+                mov ebx, player.base.posx
+                dec ebx
+                mov player.base.posx, ebx
+
+                mov ebx, time_mov
+                dec ebx
+                mov time_mov, ebx
+        .endif
+
+        mov eax, flag_movright
+        .if (eax == 1)
+                .if (time_mov == 0)
+                        mov ebx, stdtime_mov
+                        mov time_mov, ebx
+                        mov ebx, 0
+                        mov flag_movright, ebx
+                        ret
+                .endif
+                ;没移到足够时间（位置，此处设置移动时间和距离匹配）
+                mov ebx, player.base.posx
+                inc ebx
+                mov player.base.posx, ebx
+
+                mov ebx, time_mov
+                dec ebx
+                mov time_mov, ebx
         .endif
         ret
-_Jump_maintain endp
+_Move_process endp
 
-;左移
+;???
 _Action_left proc uses ebx
-        mov     ebx, player.course_id
+        mov     ebx, player.base.course_id
         .if (ebx == 1)
                 ret
-        .elseif (ebx==2)
-                mov eax, carx0
-                mov player.base.posx, eax
-        .else
-                mov eax, carx1
-                mov player.base.posx, eax
         .endif
+        mov     ebx, 1
+        mov     flag_movleft, ebx
         ret
 _Action_left endp
 
-;右移
+;???
 _Action_right proc uses ebx
-        mov     ebx, player.course_id
+        mov     ebx, player.base.course_id
         .if (ebx == 3)
                ret
-        .elseif (ebx==2)
-               mov eax, carx2
-               mov player.base.posx, eax
-        .else
-               mov eax, carx1
-               mov player.base.posx, eax
         .endif
+        mov     ebx, 1
+        mov     flag_movright, ebx
         ret
 _Action_right endp
 
-;跳跃
+;???
 _Action_jump proc uses ebx
         mov     ebx, 1
         mov     flag_jump, ebx
-        mov     eax, cary_jump
-        mov     player.base.posy, eax
         ret
 _Action_jump endp
 
@@ -243,9 +281,9 @@ _sst_test proc
         invoke printf, offset szInt, player.base.posx
         invoke printf, offset szInt, player.base.posy
 
-        mov esi, 10
+        mov esi, 150
         .while( esi > 0)
-                invoke _Jump_maintain
+                invoke _Move_process
                 invoke printf, offset szInt, player.base.posx
                 invoke printf, offset szInt, player.base.posy
                 dec esi
@@ -255,15 +293,31 @@ _sst_test proc
         invoke printf, offset szInt, player.base.posx
         invoke printf, offset szInt, player.base.posy
 
+        mov esi, 150
+        .while( esi > 0)
+                invoke _Move_process
+                invoke printf, offset szInt, player.base.posx
+                invoke printf, offset szInt, player.base.posy
+                dec esi
+        .endw   
+
         invoke _Action_right
         invoke printf, offset szInt, player.base.posx
         invoke printf, offset szInt, player.base.posy
+
+        mov esi, 150
+        .while( esi > 0)
+                invoke _Move_process
+                invoke printf, offset szInt, player.base.posx
+                invoke printf, offset szInt, player.base.posy
+                dec esi 
+        .endw
         ret
 _sst_test endp
 
 ;test
 ; start:
-;         invoke  _sst_test
-;         ret
+        ;  invoke  _sst_test
+        ;  ret
 ; end start
 end

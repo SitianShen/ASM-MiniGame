@@ -20,8 +20,8 @@ printf proto c:dword,:vararg
 
 ;=====================================================
 ; sst functions
-_Init_car proto;小锟斤拷锟斤拷始锟斤拷
-_Jump_maintain proto;每一帧锟斤拷锟斤拷一锟斤拷
+_Init_car proto;小车初始化
+_Move_process proto;每帧更新都要调用，实现连续性移动或跳起
 _Action_left proto;
 _Action_right proto;
 _Action_jump proto;
@@ -32,8 +32,8 @@ _check_collision proto :ptr BASE,:ptr BASE
 _collision_test proto
 
 ; lja funcions
-NextPos proto :ptr BASE         ;每锟斤拷锟斤拷锟斤拷锟狡讹拷
-ChangeAllPos proto      ;锟斤拷锟斤拷锟斤拷锟叫碉拷锟竭ｏ拷使之锟狡讹拷
+NextPos proto :ptr BASE         ;每个道具移动
+ChangeAllPos proto      ;遍历所有道具，使之移动
 ;=====================================================
 
 BASE struct
@@ -487,7 +487,7 @@ _WinMain        proc
         ; mov     hCursorMain, eax
         invoke  RtlZeroMemory, addr @stWndClass, sizeof @stWndClass
         invoke  LoadIcon, hInstance, IDB_ICON
-        mov     @stWndClass.hIcon, eax ; ????锟斤拷???
+        mov     @stWndClass.hIcon, eax ; ?????????????
         mov     @stWndClass.hIconSm, eax
         invoke  LoadCursor, 0, IDC_ARROW
         mov     @stWndClass.hCursor, eax
