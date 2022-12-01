@@ -32,8 +32,8 @@ _check_collision proto :ptr BASE,:ptr BASE
 _collision_test proto
 
 ; lja funcions
-NextPos proto :ptr BASE         ;Ã¿¸öµÀ¾ßÒÆ¶¯
-ChangeAllPos proto      ;±éÀúËùÓÐµÀ¾ß£¬Ê¹Ö®ÒÆ¶¯
+NextPos proto :ptr BASE         ;Ã¿ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ¶ï¿½
+ChangeAllPos proto      ;ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ðµï¿½ï¿½ß£ï¿½Ê¹Ö®ï¿½Æ¶ï¿½
 ;=====================================================
 
 BASE struct
@@ -520,7 +520,7 @@ _WinMain        proc
 _WinMain        endp
 
 start:
-        ; call    _WinMain
-        ; invoke  ExitProcess, NULL
+        call    _WinMain
+        invoke  ExitProcess, NULL
         ret
 end     start

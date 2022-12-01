@@ -31,7 +31,6 @@ BASE ends
 
 Subject struct 
         base    BASE  <> 
-        
         score           dd      ?
 Subject ends
 
@@ -41,6 +40,7 @@ PROP_ACC_SELF           equ 2000 ;?????????
 PROP_DEC_SELF           equ 2001 ;?????????
 OBST_HARD               equ 3000 ;????
 OBST_SOFT               equ 3001 ;?????
+
 Targets struct
         base    BASE  <> 
         typeid  dd      ?
@@ -292,6 +292,8 @@ _check_collision proc uses ebx, @objectOne:ptr BASE, @objectTwo:ptr BASE
         mov eax, 0
         ret
 _check_collision endp
+
+
         
 _collision_test proc
         local @objectOne:BASE, @objectTwo:BASE
@@ -318,6 +320,17 @@ _collision_test proc
         invoke printf, offset debug_int, eax
         ret
 _collision_test endp
+
+
+_two_two_enum proc 
+
+
+_two_two_enum endp
+
+_two_two_enum_test proc
+        
+
+_two_two_enum_test endp
 
 ; start:
 ;         ; call    _WinMain

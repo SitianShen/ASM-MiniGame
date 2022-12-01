@@ -1,12 +1,12 @@
 EXE = main.exe 
-OBJS = main.obj 
+OBJS = main.obj ldf.obj sst.obj lja.obj
 RES = main.res 
 
 LINK_FLAGS = /subsystem:windows
 ML_FLAGS = /c /coff
 
 $(EXE):$(OBJS) $(RES)
-				Link $(LINK_FLAGS) $(OBJS) $(RES)
+		Link $(LINK_FLAGS) $(OBJS) $(RES)
 
 .asm.obj:
 		ml $(ML_FLAGS) $<
