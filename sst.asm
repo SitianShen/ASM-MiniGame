@@ -163,7 +163,7 @@ _sst_test endp
 
 ;test
 ; start:
-;          invoke  _sst_test
-;          ret
+        ;  invoke  _sst_test
+        ;  ret
 ; end start
 end

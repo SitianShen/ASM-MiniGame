@@ -3,12 +3,12 @@
 option casemap: none
 
 include global.inc
-
+        
 .code
 ;1 create
 ; _create_ldf_need proc
-;         local @playerPic
-
+;         local @playerPic  
+  
 ;         invoke  GetDC, hWinMain
 ;         mov     @hDC, eax
 ;         invoke  CreateCompatibleDC, @hDC
