@@ -3,12 +3,12 @@
 option casemap: none
 
 include global.inc
-
+        
 .code
 ;1 create
 ; _create_ldf_need proc
-;         local @playerPic
-
+;         local @playerPic  
+  
 ;         invoke  GetDC, hWinMain
 ;         mov     @hDC, eax
 ;         invoke  CreateCompatibleDC, @hDC
@@ -164,7 +164,7 @@ _move_object proc hWnd
 
                 invoke	GetCursorPos,addr @mouse
                 invoke  GetWindowRect, hWnd, addr @window
-                invoke printf, offset debug_int, @mouse.x
+                ; invoke printf, offset debug_int, @mouse.x
                 mov eax, @window.left
                 mov ebx, @window.top
                 ; sub @mouse.x, windows
@@ -190,7 +190,7 @@ _move_object proc hWnd
                                 mov choose_which_char, choose_intro
                         .endif
                 .endif
-                invoke printf, offset debug_int, choose_which_char
+                ; invoke printf, offset debug_int, choose_which_char
 
                 mov eax, choose_which_char
                 .if eax == choose_start
@@ -346,9 +346,9 @@ _WinMain        proc
 _WinMain        endp
 
 start:
-        ; call    _WinMain
-        ; invoke  ExitProcess, NULL
-        invoke _collision_test
+        call    _WinMain
+        invoke  ExitProcess, NULL
+        ; invoke _collision_test
         ; invoke _sst_test
         ret
 end     start

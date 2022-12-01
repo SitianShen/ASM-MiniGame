@@ -18,10 +18,12 @@ clean:
 	del *.obj
 	del *.res
 
+# 生成ldf.exe
 ldf:
 	ml $(ML_FLAGS) ldf.asm
 	link $(LINK_FLAGS) ldf.obj
 
+# 生成lja.exe
 lja:
 	ml $(ML_FLAGS) lja.asm
 	link $(LINK_FLAGS) lja.obj
