@@ -19,14 +19,16 @@ printf proto c:dword,:vararg
 
 ;=====================================================
 ; sst functions
-_Init_car proto;Ð¡³µ³õÊ¼»¯
-_Jump_maintain proto;Ã¿Ò»Ö¡µ÷ÓÃÒ»´Î
+_Init_car proto;Ð¡ï¿½ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½
+_Jump_maintain proto;Ã¿Ò»Ö¡ï¿½ï¿½ï¿½ï¿½Ò»ï¿½ï¿½
 _Action_left proto;
 _Action_right proto;
 _Action_jump proto;
+_sst_test proto
 
 ; ldf funcions
-
+_check_collision proto
+_collision_test proto
 
 ;=====================================================
 
@@ -38,11 +40,12 @@ BASE struct
         alive   dd      ?
         DC      dd      ?  ;?????????
         rel_v   dd      ?  ;???????????????
+        course_id       dd      ? ;0,1,2
 BASE ends
 
 Subject struct 
         base    BASE  <> 
-        course_id       dd      ? ;0,1,2
+        
         score           dd      ?
 Subject ends
 
@@ -80,7 +83,7 @@ in_game                 equ 1
 cur_interface           dd  0
 
 ;sst
-carx0                   equ     150;×ø±êÊý×Ö´ý¶¨
+carx0                   equ     150;ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö´ï¿½ï¿½ï¿½
 carx1                   equ     300
 carx2                   equ     450
 cary                    equ     500
@@ -93,10 +96,10 @@ time_jump               dd      5
 .const 
 MAX_TARGET_NUMBER dd 1000
 .data
-target_number   dd      0               ;??????????targets???øA???
+target_number   dd      0               ;??????????targets???ï¿½A???
 
 .data
-base_speed      dd      2 ;?????? ??¦Ë?????
+base_speed      dd      2 ;?????? ??ï¿½ï¿½?????
 
 ;when you store something-> offset targets + (id%MAX_TARGET_NUMBER) ???????
 
@@ -143,7 +146,7 @@ hWinMain        dd      ?
 ; hMenu           dd      ?
 ; hBmpBack        dd      ?
 ; hBmpClock       dd      ?
-; ????????›M??
+; ????????ï¿½M??
 hDCBack         dd      ?
 ; ????????????
 hDCGame         dd      ?
@@ -196,7 +199,7 @@ debug_int       db      '%d', 0ah, 0
 
 ; ;3 check collision ???????
 ; _check_collision proc
-; ;??????????????ÈÉ????§»?????????????
+; ;??????????????ï¿½ï¿½????ï¿½ï¿½?????????????
 ; ;?????targets?????????target_number
 ; _check_collision endp
 
@@ -480,7 +483,7 @@ _WinMain        proc
         ; mov     hCursorMain, eax
         invoke  RtlZeroMemory, addr @stWndClass, sizeof @stWndClass
         invoke  LoadIcon, hInstance, IDB_ICON
-        mov     @stWndClass.hIcon, eax ; ????§³???
+        mov     @stWndClass.hIcon, eax ; ????ï¿½ï¿½???
         mov     @stWndClass.hIconSm, eax
         invoke  LoadCursor, 0, IDC_ARROW
         mov     @stWndClass.hCursor, eax
