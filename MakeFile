@@ -16,4 +16,4 @@ $(EXE):$(OBJS) $(RES)
 
 clean:
 	del *.obj
-	del *.res 
+	del *.res
