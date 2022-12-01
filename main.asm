@@ -20,7 +20,7 @@ printf proto c:dword,:vararg
 
 ;=====================================================
 ; sst functions
-_Init_car proto;С����ʼ��
+_Init_car proto;小车初始化
 _Move_process proto;每帧更新都要调用，实现连续性移动或跳起
 _Action_left proto;
 _Action_right proto;
@@ -32,8 +32,8 @@ _check_collision proto :ptr BASE,:ptr BASE
 _collision_test proto
 
 ; lja funcions
-NextPos proto :ptr BASE         ;ÿ�������ƶ�
-ChangeAllPos proto      ;�������е��ߣ�ʹ֮�ƶ�
+NextPos proto :ptr BASE         ;每个道具移动
+ChangeAllPos proto      ;遍历所有道具，使之移动
 ;=====================================================
 
 BASE struct
@@ -87,7 +87,7 @@ in_game                 equ 1
 cur_interface           dd  0
 
 ;sst
-carx0                   equ     150;�������ִ���
+carx0                   equ     150;锟斤拷锟斤拷锟斤拷锟街达拷锟斤拷
 carx1                   equ     300
 carx2                   equ     450
 cary                    equ     500
@@ -100,10 +100,10 @@ time_jump               dd      5
 .const 
 MAX_TARGET_NUMBER dd 1000
 .data
-target_number   dd      0               ;??????????targets???�A???
+target_number   dd      0               ;??????????targets???锟紸???
 
 .data
-base_speed      dd      2 ;?????? ??��?????
+base_speed      dd      2 ;?????? ??锟斤拷?????
 
 ;when you store something-> offset targets + (id%MAX_TARGET_NUMBER) ???????
 
@@ -150,7 +150,7 @@ hWinMain        dd      ?
 ; hMenu           dd      ?
 ; hBmpBack        dd      ?
 ; hBmpClock       dd      ?
-; ????????�M??
+; ????????锟組??
 hDCBack         dd      ?
 ; ????????????
 hDCGame         dd      ?
@@ -203,7 +203,7 @@ debug_int       db      '%d', 0ah, 0
 
 ; ;3 check collision ???????
 ; _check_collision proc
-; ;??????????????��????��?????????????
+; ;??????????????锟斤拷????锟斤拷?????????????
 ; ;?????targets?????????target_number
 ; _check_collision endp
 
@@ -487,7 +487,7 @@ _WinMain        proc
         ; mov     hCursorMain, eax
         invoke  RtlZeroMemory, addr @stWndClass, sizeof @stWndClass
         invoke  LoadIcon, hInstance, IDB_ICON
-        mov     @stWndClass.hIcon, eax ; ????��???
+        mov     @stWndClass.hIcon, eax ; ????锟斤拷???
         mov     @stWndClass.hIconSm, eax
         invoke  LoadCursor, 0, IDC_ARROW
         mov     @stWndClass.hCursor, eax
