@@ -17,7 +17,7 @@ include msvcrt.inc
 scanf proto c:dword,:vararg
 printf proto c:dword,:vararg
 
-=====================================================
+;=====================================================
 ;sst functions
 _Init_car proc;小车初始化
 _Jump_maintain proc;每一帧调用一次
@@ -25,7 +25,7 @@ _Action_left proc;
 _Action_right proc;
 _Action_jump proc;
 
-=====================================================
+;=====================================================
 
 BASE struct
         posx    dd      ?
