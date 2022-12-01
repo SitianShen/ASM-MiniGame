@@ -23,11 +23,11 @@ _Action_right proto;
 _Action_jump proto;
 _sst_test proto
 
-; ldf funcions
+; ldf functions
 _check_collision proto :ptr BASE,:ptr BASE
 _collision_test proto
 
-; lja funcions
+; lja functions
 NextPos proto :ptr BASE         ;每个道具移动
 ChangeAllPos proto      ;遍历所有道具，使之移动
 ;=====================================================
