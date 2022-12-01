@@ -24,7 +24,7 @@ _Init_car endp
 _Move_process proc uses ebx
         mov eax, flag_jump
         .if (eax == 1)
-                .if (time_jump == 0);时间到了，落地
+                .if (time_jump == 0);下降完毕，落地
                         mov ebx, stdtime_jump
                         mov time_jump, ebx
                         mov ebx, 0
@@ -34,9 +34,14 @@ _Move_process proc uses ebx
                         mov player.base.posy, eax;回到原地
                         ret
                 .endif
-                .if(player.base.posy>cary_jump);高度没到继续跳起
+                .if(time_jump >= 100);高度没到继续跳起
                         mov eax, player.base.posy
                         dec eax
+                        mov player.base.posy, eax
+                .endif
+                .if(time_jump < 100);高度到了，开始降落
+                        mov eax, player.base.posy
+                        inc eax
                         mov player.base.posy, eax
                 .endif
                 mov ebx, time_jump
@@ -122,7 +127,7 @@ _sst_test proc
         invoke printf, offset szInt, player.base.posx
         invoke printf, offset szInt, player.base.posy
 
-        mov esi, 150
+        mov esi, 250
         .while( esi > 0)
                 invoke _Move_process
                 invoke printf, offset szInt, player.base.posx
@@ -130,35 +135,35 @@ _sst_test proc
                 dec esi
         .endw
 
-        invoke _Action_left
-        invoke printf, offset szInt, player.base.posx
-        invoke printf, offset szInt, player.base.posy
+        ; invoke _Action_left
+        ; invoke printf, offset szInt, player.base.posx
+        ; invoke printf, offset szInt, player.base.posy
 
-        mov esi, 150
-        .while( esi > 0)
-                invoke _Move_process
-                invoke printf, offset szInt, player.base.posx
-                invoke printf, offset szInt, player.base.posy
-                dec esi
-        .endw   
+        ; mov esi, 150
+        ; .while( esi > 0)
+                ; invoke _Move_process
+                ; invoke printf, offset szInt, player.base.posx
+                ; invoke printf, offset szInt, player.base.posy
+                ; dec esi
+        ; .endw   
 
-        invoke _Action_right
-        invoke printf, offset szInt, player.base.posx
-        invoke printf, offset szInt, player.base.posy
+        ; invoke _Action_right
+        ; invoke printf, offset szInt, player.base.posx
+        ; invoke printf, offset szInt, player.base.posy
 
-        mov esi, 150
-        .while( esi > 0)
-                invoke _Move_process
-                invoke printf, offset szInt, player.base.posx
-                invoke printf, offset szInt, player.base.posy
-                dec esi 
-        .endw
+        ; mov esi, 150
+        ; .while( esi > 0)
+                ; invoke _Move_process
+                ; invoke printf, offset szInt, player.base.posx
+                ; invoke printf, offset szInt, player.base.posy
+                ; dec esi 
+        ; .endw
         ret
 _sst_test endp
 
 ;test
-; start:
-        ;  invoke  _sst_test
-        ;  ret
-; end start
-end
+start:
+         invoke  _sst_test
+         ret
+end start
+;end
