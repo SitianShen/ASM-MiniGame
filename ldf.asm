@@ -165,8 +165,6 @@ _collision_test endp
 
 
 _two_two_enum proc 
-        
-
         mov eax, target_number
 
 _two_two_enum endp
@@ -177,11 +175,11 @@ _two_two_enum_test proc
 
 _two_two_enum_test endp
 
-; start:
-;         ; call    _WinMain
-;         ; invoke  ExitProcess, NULL
+start:
+        ; call    _WinMain
+        ; invoke  ExitProcess, NULL
         
-;         invoke _collision_test
-;         ret
-; end     start
-end
+        invoke _collision_test
+        ret
+end     start
+; end

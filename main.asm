@@ -34,7 +34,6 @@ include global.inc
 ; ;?????targets?????????target_number
 ; _check_collision endp
 
-
 _set_char_pos proc
         mov game_start.posx, 70
         mov game_start.posy, 50
