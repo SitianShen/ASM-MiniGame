@@ -12,6 +12,7 @@ includelib      user32.lib
 includelib      kernel32.lib
 includelib      Msimg32.lib
 
+
 includelib msvcrt.lib
 include msvcrt.inc
 scanf proto c:dword,:vararg
