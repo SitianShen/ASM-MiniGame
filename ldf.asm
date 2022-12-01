@@ -164,22 +164,81 @@ _collision_test proc
 _collision_test endp
 
 
-_two_two_enum proc 
-        mov eax, target_number
+_two_two_enum proc
+        ;一些和target有关的局部变量
+        local @new_target_number
+        local @new_targets[1000]:Targets
+        local @target_number_index
 
+        mov eax, target_number
+        mov @target_number_index, eax
+        dec @target_number_index
+
+        .while
+                .break .if target_number == 0
+
+                mov eax, @target_number_index
+                mov esi, target_number[eax]
+                assume esi :ptr Targets
+
+                invoke printf, offset szInt, [esi].typeid
+                
+                .if [esi].typeid == MONEY_1
+
+                .endif
+
+                .if [esi].typeid == MONEY_2
+
+                .endif
+
+                .if [esi].typeid == PROP_ACC_SELF
+
+                .endif
+
+                .if [esi].typeid == PROP_DEC_SELF
+
+                .endif
+
+                .if [esi].typeid == OBST_HARD
+                        
+                .endif
+
+                .if [esi].typeid == OBST_SOFT
+
+                .endif
+                
+                .break .if @target_number_index == 0
+                dec @target_number_index
+        .endw
+
+
+        mov eax, @new_target_number
+        mov target_number, eax
+
+        ret
 _two_two_enum endp
 
 
 _two_two_enum_test proc
-        
+        mov target_number, 2
 
+        mov targets[0].typeid, MONEY_1
+
+        ; invoke _two_two_enum
+        ; .if targets[0].typeid == MONEY_1
+        ;         invoke printf, offset szInt, targets[0].typeid
+        ; .endif
+        
+        invoke printf, offset szInt, targets[0].typeid
+        ret
 _two_two_enum_test endp
 
-start:
-        ; call    _WinMain
-        ; invoke  ExitProcess, NULL
+; start:
+;         ; call    _WinMain
+;         ; invoke  ExitProcess, NULL
         
-        invoke _collision_test
-        ret
-end     start
-; end
+;         ; invoke _collision_test
+;         invoke _two_two_enum_test
+;         ret
+; end     start
+end

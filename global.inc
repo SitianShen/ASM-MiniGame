@@ -87,7 +87,6 @@ carx0                   equ     200;?????????
 carx1                   equ     300
 carx2                   equ     400
 cary                    equ     500
-cary_jump               equ     450
 
 .data
 flag_jump               dd      0
@@ -95,8 +94,8 @@ flag_movleft            dd      0
 flag_movright           dd      0
 stdtime_jump            dd      100
 time_jump               dd      100
-stdtime_mov             dd      100
-time_mov                dd      100
+stdtime_mov             dd      50
+time_mov                dd      50
 
 .const 
 MAX_TARGET_NUMBER dd 1000
@@ -132,7 +131,7 @@ object1H_begin  equ     57
 object1W_begin  equ     86
 object1H_end    equ     57*3
 object1W_end    equ     86*3
-
+sizeofTargets   equ     sizeof Targets
 .data
 
 
