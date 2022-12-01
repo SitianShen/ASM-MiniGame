@@ -19,12 +19,13 @@ printf proto c:dword,:vararg
 
 ;=====================================================
 ;sst functions
-_Init_car proc;小车初始化
-_Jump_maintain proc;每一帧调用一次
-_Action_left proc;
-_Action_right proc;
-_Action_jump proc;
+; _Init_car proc;小车初始化
+; _Jump_maintain proc;每一帧调用一次
+; _Action_left proc;
+; _Action_right proc;
+; _Action_jump proc;
 
+;ldf funcions
 
 
 ;=====================================================

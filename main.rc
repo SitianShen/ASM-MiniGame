@@ -10,12 +10,12 @@
 # define IDB_GAMESTARTC     303
 # define IDB_GAMEINTROC     304
 
-IDB_BACKG       BITMAP      "background.bmp"
-IDB_ICON        ICON        "icon.ico"
-IDB_OBJ1        BITMAP      "object1.bmp"
-IDB_OBJ2        BITMAP      "object2.bmp"
-IDB_OBJ3        BITMAP      "object3.bmp"
-IDB_GAMESTART   BITMAP      "game_start.bmp"
-IDB_GAMEINTRO   BITMAP      "game_intro.bmp"
-IDB_GAMESTARTC  BITMAP      "game_start_chosen.bmp"
-IDB_GAMEINTROC  BITMAP      "game_intro_chosen.bmp"
+IDB_BACKG       BITMAP      "resource/background.bmp"
+IDB_ICON        ICON        "resource/icon.ico"
+IDB_OBJ1        BITMAP      "resource/object1.bmp"
+IDB_OBJ2        BITMAP      "resource/object2.bmp"
+IDB_OBJ3        BITMAP      "resource/object3.bmp"
+IDB_GAMESTART   BITMAP      "resource/game_start.bmp"
+IDB_GAMEINTRO   BITMAP      "resource/game_intro.bmp"
+IDB_GAMESTARTC  BITMAP      "resource/game_start_chosen.bmp"
+IDB_GAMEINTROC  BITMAP      "resource/game_intro_chosen.bmp"
