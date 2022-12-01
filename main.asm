@@ -17,38 +17,50 @@ include msvcrt.inc
 scanf proto c:dword,:vararg
 printf proto c:dword,:vararg
 
+=====================================================
+;sst functions
+_Init_car proc;å°è½¦åˆå§‹åŒ–
+_Jump_maintain proc;æ¯ä¸€å¸§è°ƒç”¨ä¸€æ¬¡
+_Action_left proc;
+_Action_right proc;
+_Action_jump proc;
+
+=====================================================
+
 BASE struct
         posx    dd      ?
         posy    dd      ?
         lengthx dd      ?
         lengthy dd      ?
         alive   dd      ?
-        DC      dd      ?  ;ÎïÌåÍ¼Æ¬¾ä±ú
-        rel_v   dd      ?  ;Ïà¶ÔÒÆ¶¯ËÙ¶È£¨±¶ÂÊ£©
+        DC      dd      ?  ;ç‰©ä½“å›¾ç‰‡å¥æŸ„
+        rel_v   dd      ?  ;ç›¸å¯¹ç§»åŠ¨é€Ÿåº¦ï¼ˆå€ç‡ï¼‰
 BASE ends
 
 Subject struct 
         base    BASE  <> 
+        course_id       dd      ? ;0,1,2
+        score           dd      ?
 Subject ends
 
 MONEY_1                 equ 1000
 MONEY_2                 equ 1001
-PROP_ACC_SELF           equ 2000 ;¸ø×Ô¼º¼ÓËÙ
-PROP_DEC_SELF           equ 2001 ;¸ø×Ô¼º¼õËÙ
-OBST_HARD               equ 3000 ;Ó²ÕÏ°­
-OBST_SOFT               equ 3001 ;ÈíÕÏ°­
+PROP_ACC_SELF           equ 2000 ;ç»™è‡ªå·±åŠ é€Ÿ
+PROP_DEC_SELF           equ 2001 ;ç»™è‡ªå·±å‡é€Ÿ
+OBST_HARD               equ 3000 ;ç¡¬éšœç¢
+OBST_SOFT               equ 3001 ;è½¯éšœç¢
 Targets struct
         base    BASE  <> 
         typeid  dd      ?
 Targets ends
 
 .data?
-player          Subject <>              ;ÈËÎï
-bullet          Subject <>              ;×Óµ¯
-env_objecet_1   BASE    <>              ;Èı¸ö»·¾³ÎïÌå 1
-env_objecet_2   BASE    <>              ;Èı¸ö»·¾³ÎïÌå 2
-env_objecet_3   BASE    <>              ;Èı¸ö»·¾³ÎïÌå 3
-targets         Targets  1000 dup(<>)   ;ÎïÌå
+player          Subject <>              ;äººç‰©
+bullet          Subject <>              ;å­å¼¹
+env_objecet_1   BASE    <>              ;ä¸‰ä¸ªç¯å¢ƒç‰©ä½“ 1
+env_objecet_2   BASE    <>              ;ä¸‰ä¸ªç¯å¢ƒç‰©ä½“ 2
+env_objecet_3   BASE    <>              ;ä¸‰ä¸ªç¯å¢ƒç‰©ä½“ 3
+targets         Targets  1000 dup(<>)   ;ç‰©ä½“
 
 ;zzl own
 game_start              BASE <>
@@ -64,15 +76,26 @@ in_begining             equ 0
 in_game                 equ 1
 cur_interface           dd  0
 
+;sst
+carx0                   equ     150;åæ ‡æ•°å­—å¾…å®š
+carx1                   equ     300
+carx2                   equ     450
+cary                    equ     500
+cary_jump               equ     450
+
+.data
+flag_jump               dd      0
+time_jump               dd      5
+
 .const 
 MAX_TARGET_NUMBER dd 1000
 .data
-target_number   dd      0               ;ÎïÌåÊıÁ¿£¨targetsÊı×é³¤¶È£©
+target_number   dd      0               ;ç‰©ä½“æ•°é‡ï¼ˆtargetsæ•°ç»„é•¿åº¦ï¼‰
 
 .data
-base_speed      dd      2 ;»ù×¼ËÙ¶È µ¥Î»ÎªÏñËØ
+base_speed      dd      2 ;åŸºå‡†é€Ÿåº¦ å•ä½ä¸ºåƒç´ 
 
-;when you store something-> offset targets + (id%MAX_TARGET_NUMBER) Ñ­»·¶ÓÁĞ
+;when you store something-> offset targets + (id%MAX_TARGET_NUMBER) å¾ªç¯é˜Ÿåˆ—
 
 
 
@@ -116,13 +139,13 @@ hWinMain        dd      ?
 ; hMenu           dd      ?
 ; hBmpBack        dd      ?
 ; hBmpClock       dd      ?
-; »º´æµÄÖÓÃæ±³¾°
+; ç¼“å­˜çš„é’Ÿé¢èƒŒæ™¯
 hDCBack         dd      ?
-; »º´æµÄÓÎÏ·»­Ãæ
+; ç¼“å­˜çš„æ¸¸æˆç”»é¢
 hDCGame         dd      ?
-; ÓÎÏ·Ä¿±ê1
+; æ¸¸æˆç›®æ ‡1
 hDCObj1         dd      ?
-; »º´æµÄµş¼ÓÉÏÖ¸ÕëµÄÖÓÃæ
+; ç¼“å­˜çš„å åŠ ä¸ŠæŒ‡é’ˆçš„é’Ÿé¢
 ; hDCClock        dd      ?
 
 dwNowBack       dd      ?
@@ -133,11 +156,11 @@ dwNowBack       dd      ?
 szClassName     db      'run away from covid-19', 0
 ; _dwPara180      dw      180
 ; dwRadius        dw      100/2
-; szMenuBack1     db      'Ê¹ÓÃ±³¾°1(&A)', 0
-; szMenuBack2     db      'Ê¹ÓÃ±³¾°2(&B)', 0
-; szMenuCircle1   db      'Ê¹ÓÃ±ß¿ò1(&C)', 0
-; szMenuCircle2   db      'Ê¹ÓÃ±ß¿ò2(&D)', 0
-; szMenuExit      db      'ÍË³ö(&X)', 0
+; szMenuBack1     db      'ä½¿ç”¨èƒŒæ™¯1(&A)', 0
+; szMenuBack2     db      'ä½¿ç”¨èƒŒæ™¯2(&B)', 0
+; szMenuCircle1   db      'ä½¿ç”¨è¾¹æ¡†1(&C)', 0
+; szMenuCircle2   db      'ä½¿ç”¨è¾¹æ¡†2(&D)', 0
+; szMenuExit      db      'é€€å‡º(&X)', 0
 debug_int       db      '%d', 0ah, 0
 ; ########################################################## try code
 
@@ -155,22 +178,22 @@ debug_int       db      '%d', 0ah, 0
 ;         invoke  LoadBitmap, hInstance, dwPlayerPic
 ;         mov     @playerPic, eax
 ;         invoke SelectObject, player.base.DC, @playerPic 
-; ;2.1 maintain player, Óöµ½²Ù×÷Ê±µ÷ÓÃ
+; ;2.1 maintain player, é‡åˆ°æ“ä½œæ—¶è°ƒç”¨
 ; _move_object_player proc
 ; _move_object_player endp
 
-; ;2.2 maintain bullet Ã¿Ò»Ö¡µ÷ÓÃ
+; ;2.2 maintain bullet æ¯ä¸€å¸§è°ƒç”¨
 ; _move_object_bullet proc
 ; _move_object_bullet endp
 
-; ;2.3 maintain all object  Ã¿Ò»Ö¡µ÷ÓÃ
+; ;2.3 maintain all object  æ¯ä¸€å¸§è°ƒç”¨
 ; _move_object_obj proc
 ; _move_object_obj endp
 
-; ;3 check collision Ã¿Ò»Ö¡µ÷ÓÃ
+; ;3 check collision æ¯ä¸€å¸§è°ƒç”¨
 ; _check_collision proc
-; ;Á½Á½Ã¶¾ÙËùÓĞÎïÌå£¬ÁîÄÇĞ©Ó¦¸ÃÏûÊ§µÄÏûÊ§£º
-; ;Í¬Ê±Î¬»¤targetsÊı×éµÄÊıÁ¿target_number
+; ;ä¸¤ä¸¤æšä¸¾æ‰€æœ‰ç‰©ä½“ï¼Œä»¤é‚£äº›åº”è¯¥æ¶ˆå¤±çš„æ¶ˆå¤±ï¼š
+; ;åŒæ—¶ç»´æŠ¤targetsæ•°ç»„çš„æ•°é‡target_number
 ; _check_collision endp
 
 
@@ -221,7 +244,7 @@ _createAll proc
         invoke  SelectObject, hDCBack, @hBmpBack
         ; invoke  DeleteObject, @brush
         invoke  DeleteObject, @hBmpBack
-;Èı¸ö»·¾³Í¼Ïñ
+;ä¸‰ä¸ªç¯å¢ƒå›¾åƒ
         invoke  CreateCompatibleDC, @hDC
         mov     env_objecet_1.DC, eax
         invoke  CreateCompatibleDC, @hDC
@@ -240,7 +263,7 @@ _createAll proc
         invoke  DeleteObject, @hBmpObj1
         invoke  DeleteObject, @hBmpObj2
         invoke  DeleteObject, @hBmpObj3
-;¿ªÊ¼ÎÄ×Ö
+;å¼€å§‹æ–‡å­—
         invoke  CreateCompatibleDC, @hDC
         mov     game_start.DC, eax
         invoke  CreateCompatibleDC, @hDC
@@ -399,8 +422,8 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                 sub     eax, @stPs.rcPaint.left
                 mov     ecx, @stPs.rcPaint.bottom
                 sub     ecx, @stPs.rcPaint.top
-                ; ¸´ÖÆ»º´æµÄÖÓÃæÍ¼Æ¬µ½ÏÔÊ¾DC
-                ; Èô1Ãë¶à´ÎÊÕµ½WM_PAINT²»±ØÖØ¸´¼ÆËã
+                ; å¤åˆ¶ç¼“å­˜çš„é’Ÿé¢å›¾ç‰‡åˆ°æ˜¾ç¤ºDC
+                ; è‹¥1ç§’å¤šæ¬¡æ”¶åˆ°WM_PAINTä¸å¿…é‡å¤è®¡ç®—
                 invoke  BitBlt, @hDC, @stPs.rcPaint.left, @stPs.rcPaint.top, eax, ecx, hDCGame, @stPs.rcPaint.left, @stPs.rcPaint.top, SRCCOPY
                 invoke  EndPaint, hWnd, addr @stPs
         .elseif eax == WM_CREATE
@@ -442,18 +465,18 @@ _WinMain        proc
                 local   @stWndClass: WNDCLASSEX
                 local   @stMsg: MSG
 
-        ; Ä£¿é¾ä±ú
+        ; æ¨¡å—å¥æŸ„
         invoke  GetModuleHandle, NULL
         mov     hInstance, eax
 
-        ; ½á¹¹ÌåÇåÁã
+        ; ç»“æ„ä½“æ¸…é›¶
         ; invoke  LoadCursor, hInstance, IDC_MOVE
         ; mov     hCursorMove, eax
         ; invoke  LoadCursor, hInstance, IDC_MAIN
         ; mov     hCursorMain, eax
         invoke  RtlZeroMemory, addr @stWndClass, sizeof @stWndClass
         invoke  LoadIcon, hInstance, IDB_ICON
-        mov     @stWndClass.hIcon, eax ; ÉèÖÃĞ¡Í¼±ê
+        mov     @stWndClass.hIcon, eax ; è®¾ç½®å°å›¾æ ‡
         mov     @stWndClass.hIconSm, eax
         invoke  LoadCursor, 0, IDC_ARROW
         mov     @stWndClass.hCursor, eax
@@ -461,12 +484,12 @@ _WinMain        proc
         mov     @stWndClass.hInstance, eax
         mov     @stWndClass.cbSize, sizeof WNDCLASSEX
         mov     @stWndClass.style, CS_HREDRAW or CS_VREDRAW
-        ; ×¢²á´°¿ÚÀàÊ±Ö¸¶¨¶ÔÓ¦µÄ´°¿Ú¹ı³Ì
+        ; æ³¨å†Œçª—å£ç±»æ—¶æŒ‡å®šå¯¹åº”çš„çª—å£è¿‡ç¨‹
         mov     @stWndClass.lpfnWndProc, offset _ProcWinMain
         mov     @stWndClass.hbrBackground, COLOR_WINDOW + 1
         mov     @stWndClass.lpszClassName, offset szClassName
-        ; ×¢²á´°¿ÚÀà
-        ; ×¢ÒâÍ¬Ò»´°¿ÚÀàµÄ´°¿Ú¶¼¾ßÓĞÏàÍ¬µÄ´°¿Ú¹ı³Ì
+        ; æ³¨å†Œçª—å£ç±»
+        ; æ³¨æ„åŒä¸€çª—å£ç±»çš„çª—å£éƒ½å…·æœ‰ç›¸åŒçš„çª—å£è¿‡ç¨‹
         invoke  RegisterClassEx, addr @stWndClass
         invoke  CreateWindowEx, NULL, \
                 offset szClassName, offset szClassName, \
