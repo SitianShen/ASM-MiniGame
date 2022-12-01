@@ -233,12 +233,12 @@ _two_two_enum_test proc
         ret
 _two_two_enum_test endp
 
-; start:
-;         ; call    _WinMain
-;         ; invoke  ExitProcess, NULL
+start:
+        ; call    _WinMain
+        ; invoke  ExitProcess, NULL
         
-;         ; invoke _collision_test
-;         invoke _two_two_enum_test
-;         ret
-; end     start
-end
+        ; invoke _collision_test
+        invoke _two_two_enum_test
+        ret
+end     start
+; end
