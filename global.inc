@@ -104,11 +104,9 @@ MAX_TARGET_NUMBER dd 1000
 target_number   dd      0               ;??????????targets???锟紸???
 
 .data
-base_speed      dd      2 ;?????? ??锟斤拷?????
+speed      dd      4 ;?????? ??锟斤拷?????
 
 ;when you store something-> offset targets + (id%MAX_TARGET_NUMBER) ???????
-
-
 
 
 ; ########################################################## try code
@@ -141,6 +139,7 @@ object1W_end    equ     86*3
 object1H         dd     57
 object1W         dd     86
 object_move_v    dd     2
+POSCNT          dd      0; NEXTPOS的计数器
 
 
 .data?
@@ -175,4 +174,5 @@ szClassName     db      'run away from covid-19', 0
 ; szMenuExit      db      '???(&X)', 0
 debug_int       db      '%d', 0ah, 0
 szInt       db      '%d', 0ah, 0
+
 ; ########################################################## try code
