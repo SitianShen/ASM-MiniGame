@@ -28,7 +28,7 @@ _Action_jump proto;
 _sst_test proto
 
 ; ldf funcions
-_check_collision proto
+_check_collision proto :dword,:dword
 _collision_test proto
 
 ;=====================================================

@@ -18,16 +18,6 @@ scanf proto c:dword,:vararg
 printf proto c:dword,:vararg
 
 
-; ======================================
-; 声明函数
-;ldf ldf ldf ldf
-
-;sst sst sst sst
-
-
-;lja
-
-; ======================================
 BASE struct
         posx    dd      ?
         posy    dd      ?
@@ -318,16 +308,16 @@ _collision_test proc
         mov @objectTwo.rel_v, 1
         mov @objectTwo.course_id, 0
 
-        invoke _check_collision, @objectOne, @objectTwo
+        invoke _check_collision,addr @objectOne, addr @objectTwo
         invoke printf, offset debug_int, eax
         ret
 _collision_test endp
 
-; start:
-;         ; call    _WinMain
-;         ; invoke  ExitProcess, NULL
+start:
+        ; call    _WinMain
+        ; invoke  ExitProcess, NULL
         
-;         invoke _collision_test
-;         ret
-; end     start
-end
+        invoke _collision_test
+        ret
+end     start
+; end
