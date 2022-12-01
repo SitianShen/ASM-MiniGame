@@ -27,7 +27,7 @@ NextPos proc stdcall ptrBase :ptr BASE
                 mov eax, speed
                 add [esi].posy, eax
                 mov edx, 0
-                mov ebx, 4
+                mov ebx, 2
                 div ebx
                 sub [esi].posx, eax
 
@@ -35,7 +35,7 @@ NextPos proc stdcall ptrBase :ptr BASE
                 mov eax, speed
                 add [esi].posy, eax
                 mov edx, 0
-                mov ebx, 4
+                mov ebx, 2
                 div ebx
                 add [esi].posx, eax
         
@@ -43,7 +43,7 @@ NextPos proc stdcall ptrBase :ptr BASE
                 mov eax, speed
                 add [esi].posy, eax
                 mov edx, 0
-                mov ebx, 2
+                mov ebx, 1
                 div ebx
                 sub [esi].posx, eax
 
@@ -51,7 +51,7 @@ NextPos proc stdcall ptrBase :ptr BASE
                 mov eax, speed
                 add [esi].posy, eax
                 mov edx, 0
-                mov ebx, 2
+                mov ebx, 1
                 div ebx
                 add [esi].posx, eax
 
@@ -63,7 +63,7 @@ NextPos proc stdcall ptrBase :ptr BASE
                 mov eax, speed
                 sub [esi].posy, eax
                 mov edx, 0
-                mov ebx, 4
+                mov ebx, 2
                 div ebx
                 add [esi].posx, eax
 
@@ -71,7 +71,7 @@ NextPos proc stdcall ptrBase :ptr BASE
                 mov eax, speed
                 sub [esi].posy, eax
                 mov edx, 0
-                mov ebx, 4
+                mov ebx, 2
                 div ebx
                 sub [esi].posx, eax
 
