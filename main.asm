@@ -21,7 +21,7 @@ printf proto c:dword,:vararg
 ;=====================================================
 ; sst functions
 _Init_car proto;С����ʼ��
-_Jump_maintain proto;ÿһ֡����һ��
+_Move_process proto;每帧更新都要调用，实现连续性移动或跳起
 _Action_left proto;
 _Action_right proto;
 _Action_jump proto;
