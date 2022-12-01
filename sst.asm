@@ -34,12 +34,12 @@ _Move_process proc uses ebx
                         mov player.base.posy, eax;回到原地
                         ret
                 .endif
-                .if(time_jump >= 100);高度没到继续跳起
+                .if(time_jump >= 50);高度没到继续跳起
                         mov eax, player.base.posy
                         dec eax
                         mov player.base.posy, eax
                 .endif
-                .if(time_jump < 100);高度到了，开始降落
+                .if(time_jump < 50);高度到了，开始降落
                         mov eax, player.base.posy
                         inc eax
                         mov player.base.posy, eax

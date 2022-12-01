@@ -92,10 +92,10 @@ cary                    equ     500
 flag_jump               dd      0
 flag_movleft            dd      0
 flag_movright           dd      0
-stdtime_jump            dd      200
-time_jump               dd      200
-stdtime_mov             dd      100
-time_mov                dd      100
+stdtime_jump            dd      100
+time_jump               dd      100
+stdtime_mov             dd      50
+time_mov                dd      50
 
 .const 
 MAX_TARGET_NUMBER dd 1000
