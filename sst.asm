@@ -160,7 +160,7 @@ szInt db "%d", 0ah, 0
 .code
 ;小车的初始化
 _Init_car proc uses ebx
-    mov ebx, 1
+    mov ebx, 2
     mov player.course_id, ebx
     mov player.base.alive, ebx
     xor ebx, ebx
@@ -198,9 +198,9 @@ _Jump_maintain endp
 ;左移
 _Action_left proc uses ebx
         mov     ebx, player.course_id
-        .if (ebx == 0)
+        .if (ebx == 1)
                 ret
-        .elseif (ebx==1)
+        .elseif (ebx==2)
                 mov eax, carx0
                 mov player.base.posx, eax
         .else
@@ -213,9 +213,9 @@ _Action_left endp
 ;右移
 _Action_right proc uses ebx
         mov     ebx, player.course_id
-        .if (ebx == 2)
+        .if (ebx == 3)
                ret
-        .elseif (ebx==1)
+        .elseif (ebx==2)
                mov eax, carx2
                mov player.base.posx, eax
         .else
