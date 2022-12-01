@@ -1,0 +1,19 @@
+EXE = main.exe 
+OBJS = main.obj 
+RES = main.res 
+
+LINK_FLAGS = /subsystem:windows
+ML_FLAGS = /c /coff
+
+$(EXE):$(OBJS) $(RES)
+				Link $(LINK_FLAGS) $(OBJS) $(RES)
+
+.asm.obj:
+		ml $(ML_FLAGS) $<
+
+.rc.res:
+		rc $<
+
+clean:
+	del *.obj
+	del *.res 

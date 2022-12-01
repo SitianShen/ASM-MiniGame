@@ -18,14 +18,14 @@ scanf proto c:dword,:vararg
 printf proto c:dword,:vararg
 
 ;=====================================================
-;sst functions
-; _Init_car proc;小车初始化
-; _Jump_maintain proc;每一帧调用一次
-; _Action_left proc;
-; _Action_right proc;
-; _Action_jump proc;
+; sst functions
+_Init_car proto;小车初始化
+_Jump_maintain proto;每一帧调用一次
+_Action_left proto;
+_Action_right proto;
+_Action_jump proto;
 
-;ldf funcions
+; ldf funcions
 
 
 ;=====================================================
