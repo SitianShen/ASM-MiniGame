@@ -82,16 +82,21 @@ in_begining             equ 0
 in_game                 equ 1
 cur_interface           dd  0
 
-;sst
-carx0                   equ     150;锟斤拷锟斤拷锟斤拷锟街达拷锟斤拷
+;sst own
+carx0                   equ     200;?????????
 carx1                   equ     300
-carx2                   equ     450
+carx2                   equ     400
 cary                    equ     500
 cary_jump               equ     450
 
 .data
 flag_jump               dd      0
-time_jump               dd      5
+flag_movleft            dd      0
+flag_movright           dd      0
+stdtime_jump            dd      100
+time_jump               dd      100
+stdtime_mov             dd      100
+time_mov                dd      100
 
 .const 
 MAX_TARGET_NUMBER dd 1000
