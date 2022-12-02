@@ -4,7 +4,7 @@ option casemap: none
 
 include global.inc
 .code
-
+;speed = 4 —— 正常， 8 —— 快速， 12 —— 超快速
 NextPos proc stdcall ptrBase :ptr BASE
         ; local cur_speed :dword
         ; mov bx, speed
@@ -27,51 +27,51 @@ NextPos proc stdcall ptrBase :ptr BASE
                 mov eax, speed
                 add [esi].posy, eax
                 mov edx, 0
-                mov ebx, 4
+                mov ebx, 2
                 div ebx
                 sub [esi].posx, eax
 
-        .elseif cx == 3 ;最右边跑道
+        .elseif ecx == 3 ;最右边跑道
                 mov eax, speed
                 add [esi].posy, eax
                 mov edx, 0
-                mov ebx, 4
+                mov ebx, 2
                 div ebx
                 add [esi].posx, eax
         
-        .elseif cx == 0 ;左侧风景
+        .elseif ecx == 0 ;左侧风景
                 mov eax, speed
                 add [esi].posy, eax
                 mov edx, 0
-                mov ebx, 2
+                mov ebx, 1
                 div ebx
                 sub [esi].posx, eax
 
-        .elseif cx == 4 ;右侧风景
+        .elseif ecx == 4 ;右侧风景
                 mov eax, speed
                 add [esi].posy, eax
+                mov edx, 0
+                mov ebx, 1
+                div ebx
+                add [esi].posx, eax
+
+        .elseif ecx == 6 ;中间跑道的子弹
+                mov eax, speed
+                sub [esi].posy, eax
+
+        .elseif ecx == 5 ;左边跑道的子弹
+                mov eax, speed
+                sub [esi].posy, eax
                 mov edx, 0
                 mov ebx, 2
                 div ebx
                 add [esi].posx, eax
 
-        .elseif cx == 6 ;中间跑道的子弹
-                mov eax, speed
-                sub [esi].posy, eax
-
-        .elseif cx == 5 ;左边跑道的子弹
+        .elseif ecx == 7 ;右边跑道的子弹
                 mov eax, speed
                 sub [esi].posy, eax
                 mov edx, 0
-                mov ebx, 4
-                div ebx
-                add [esi].posx, eax
-
-        .elseif cx == 7 ;右边跑道的子弹
-                mov eax, speed
-                sub [esi].posy, eax
-                mov edx, 0
-                mov ebx, 4
+                mov ebx, 2
                 div ebx
                 sub [esi].posx, eax
 
@@ -79,12 +79,17 @@ NextPos proc stdcall ptrBase :ptr BASE
         mov eax, POSCNT
 
         .if eax & 0001h
-                .if cx != 5 && cx != 6 && cx != 7
-                        inc [esi].lengthx
-                        inc [esi].lengthy
+                mov eax, speed
+                mov edx, 0
+                mov ebx, 4
+                div ebx
+                .if ecx != 5 && ecx != 6 && ecx != 7
+                        add [esi].lengthx, eax
+                        add [esi].lengthy, eax
+
                 .else 
-                        dec [esi].lengthx
-                        dec [esi].lengthy
+                        sub [esi].lengthx, eax
+                        sub [esi].lengthy, eax
                 .endif
         .endif
         assume  esi: nothing

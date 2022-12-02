@@ -89,6 +89,7 @@ _Move_process proc uses ebx
         ret
 _Move_process endp
 
+
 ;???
 _Action_left proc uses ebx
         mov     ebx, player.base.course_id
