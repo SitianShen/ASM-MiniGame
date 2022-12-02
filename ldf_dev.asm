@@ -170,19 +170,21 @@ _two_two_enum proc
         local @new_targets[1000]:Targets
         local @target_number_index
 
-        mov eax, target_number
-        mov @target_number_index, eax
-        dec @target_number_index
-
+        invoke printf, offset debug_int, 1
+        
+        mov @target_number_index, 0
         .while
-                .break .if target_number == 0
-
                 mov eax, @target_number_index
-                mov esi, target_number[eax]
+                .break .if target_number == eax
+
+                mov ebx, sizeofTargets
+                mul ebx
+
+                invoke printf, offset debug_int, eax
+
+                lea esi, target_number[eax]
                 assume esi :ptr Targets
 
-                invoke printf, offset szInt, [esi].typeid
-                
                 .if [esi].typeid == MONEY_1
 
                 .endif
@@ -207,41 +209,91 @@ _two_two_enum proc
 
                 .endif
                 
-                .break .if @target_number_index == 0
-                dec @target_number_index
+                inc @target_number_index
         .endw
 
 
-        mov eax, @new_target_number
-        mov target_number, eax
+        ; mov eax, @new_target_number
+        ; mov target_number, eax
 
         ret
 _two_two_enum endp
 
 
 _two_two_enum_test proc
+        ;给bullte赋值
+        lea esi, bullet
+        assume esi :ptr Subject
+
+        mov [esi].base.posx, 1
+        mov [esi].base.posy, 1
+        mov [esi].base.lengthx, 1
+        mov [esi].base.lengthy, 1
+        mov [esi].base.alive, 1
+        mov [esi].base.DC, 1
+        mov [esi].base.rel_v, 1
+        mov [esi].base.course_id, 1
+        mov [esi].score, 1
+
+
+        ; invoke printf, offset debug_int, [esi].base.posx
+        ;给player赋值
+        lea esi, player
+        assume esi :ptr Subject
+
+        mov [esi].base.posx, 1
+        mov [esi].base.posy, 1
+        mov [esi].base.lengthx, 1
+        mov [esi].base.lengthy, 1
+        mov [esi].base.alive, 1
+        mov [esi].base.DC, 1
+        mov [esi].base.rel_v, 1
+        mov [esi].base.course_id, 1
+        mov [esi].score, 1
+
         mov target_number, 2
 
-        mov esi, offset targets[0]
+        ;第零个targets
+        lea esi, targets[0]
         assume esi :ptr Targets
 
-        mov eax, MONEY_1
-        mov [esi].typeid, eax
+        mov [esi].base.posx, 1
+        mov [esi].base.posy, 1
+        mov [esi].base.lengthx, 1
+        mov [esi].base.lengthy, 1
+        mov [esi].base.alive, 1
+        mov [esi].base.DC, 1
+        mov [esi].base.rel_v, 1
+        mov [esi].base.course_id, 1
+        mov [esi].typeid, MONEY_1
 
         ; invoke _two_two_enum
         ; .if targets[0].typeid == MONEY_1
         ;         invoke printf, offset szInt, targets[0].typeid
         ; .endif
         
-        invoke printf, offset debug_int, [esi].typeid
+        ; invoke printf, offset debug_int, [esi].base.posx
+        ; invoke printf, offset debug_int, [esi].typeid
 
-        mov esi, offset targets[sizeofTargets]
+        ;第一个targets
+        lea esi, targets[sizeofTargets]
         assume esi :ptr Targets
 
-        mov eax, MONEY_2
-        mov [esi].typeid, eax
+        mov [esi].base.posx, 1
+        mov [esi].base.posy, 1
+        mov [esi].base.lengthx, 1
+        mov [esi].base.lengthy, 1
+        mov [esi].base.alive, 1
+        mov [esi].base.DC, 1
+        mov [esi].base.rel_v, 1
+        mov [esi].base.course_id, 1
+        mov [esi].typeid, MONEY_2
 
-        invoke printf, offset debug_int, [esi].typeid
+        ; invoke printf, offset debug_int, [esi].typeid
+        ; invoke printf, offset debug_int, [esi].base.posx
+        
+        invoke _two_two_enum
+
         ret
 _two_two_enum_test endp
 

@@ -16,7 +16,6 @@ $(EXE):$(OBJS) $(RES)
 
 clean:
 	del *.obj
-	del *.res
 
 # 生成ldf.exe
 ldf:
