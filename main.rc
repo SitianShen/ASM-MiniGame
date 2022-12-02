@@ -1,5 +1,9 @@
 # include   <resource.h>
 
+# define IDB_BACKG_END      96
+# define IDB_BACKG_PLAY     97
+# define IDB_BACKG_INTRO    98
+# define IDB_BACKG_BEGINING 99
 # define IDB_BACKG          100
 # define IDB_OBJ1           101
 # define IDB_OBJ2           102
@@ -9,13 +13,33 @@
 # define IDB_GAMEINTRO      302
 # define IDB_GAMESTARTC     303
 # define IDB_GAMEINTROC     304
+# define IDB_BUTTON_BACK_1  305
+# define IDB_BUTTON_BACK_2  306
+# define IDB_BUTTON_EXIT_1  307
+# define IDB_BUTTON_EXIT_2  308
+# define IDB_BUTTON_PLAY_1  309
+# define IDB_BUTTON_PLAY_2  310
+# define IDB_BUTTON_START_1  311
+# define IDB_BUTTON_START_2  312
 
-IDB_BACKG       BITMAP      "resource/background.bmp"
-IDB_ICON        ICON        "resource/icon.ico"
-IDB_OBJ1        BITMAP      "resource/object1.bmp"
-IDB_OBJ2        BITMAP      "resource/object2.bmp"
-IDB_OBJ3        BITMAP      "resource/object3.bmp"
-IDB_GAMESTART   BITMAP      "resource/game_start.bmp"
-IDB_GAMEINTRO   BITMAP      "resource/game_intro.bmp"
-IDB_GAMESTARTC  BITMAP      "resource/game_start_chosen.bmp"
-IDB_GAMEINTROC  BITMAP      "resource/game_intro_chosen.bmp"
+IDB_BACKG           BITMAP      "resource/background.bmp"
+IDB_BACKG_BEGINING  BITMAP      "resource/background_begining.bmp"
+IDB_BACKG_INTRO     BITMAP      "resource/background_intro.bmp"
+IDB_BACKG_PLAY      BITMAP      "resource/background_play.bmp"
+IDB_BACKG_END       BITMAP      "resource/background_end.bmp"
+IDB_ICON            ICON        "resource/icon.ico"
+IDB_OBJ1            BITMAP      "resource/object1.bmp"
+IDB_OBJ2            BITMAP      "resource/object2.bmp"
+IDB_OBJ3            BITMAP      "resource/object3.bmp"
+IDB_GAMESTART       BITMAP      "resource/game_start.bmp"
+IDB_GAMEINTRO       BITMAP      "resource/game_intro.bmp"
+IDB_GAMESTARTC      BITMAP      "resource/game_start_chosen.bmp"
+IDB_GAMEINTROC      BITMAP      "resource/game_intro_chosen.bmp"
+IDB_BUTTON_BACK_1   BITMAP      "resource/button_back_1.bmp"
+IDB_BUTTON_BACK_2   BITMAP      "resource/button_back_2.bmp"
+IDB_BUTTON_EXIT_1   BITMAP      "resource/button_exit_1.bmp"
+IDB_BUTTON_EXIT_2   BITMAP      "resource/button_exit_2.bmp"
+IDB_BUTTON_PLAY_1   BITMAP      "resource/button_play_1.bmp"
+IDB_BUTTON_PLAY_2   BITMAP      "resource/button_play_2.bmp"
+IDB_BUTTON_START_1   BITMAP      "resource/button_start_1.bmp"
+IDB_BUTTON_START_2   BITMAP      "resource/button_start_2.bmp"

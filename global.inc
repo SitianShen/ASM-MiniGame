@@ -71,6 +71,21 @@ Targets struct
         typeid  dd      ?
 Targets ends
 
+Button struct 
+        base     BASE <>
+        DC       dd      ?  
+        DC_      dd      ? ;chosen
+        is_click dd      ?
+Button ends
+
+BackGround struct
+        DC_b    dd      ?
+        DC_p    dd      ?
+        DC_i    dd      ?
+        DC_e    dd      ?
+BackGround ends
+        
+
 .data?
 player          Subject <>              ;????
 bullet          Subject <>              ;???
@@ -80,17 +95,21 @@ env_objecet_3   BASE    <>              ;???????????? 3
 targets         Targets  1000 dup(<>)   ;????
 
 ;zzl own
-game_start              BASE <>
-game_intro              BASE <>
-game_start_chosen       BASE <>
-game_intro_chosen       BASE <>
+button_play       Button <>
+button_start      Button <>
+button_back       Button <>
+button_exit       Button <>
+backGround        BackGround <>
+
 .data
-choose_start            equ 1 
-choose_intro            equ 2 
-choose_which_char            dd  0
+choose_start equ 0
+choose_intro equ 1
+choose_which_char dd 0
 
 in_begining             equ 0
 in_game                 equ 1
+in_intro                equ 2
+in_over                 equ 3
 cur_interface           dd  0
 
 ;sst own
@@ -121,6 +140,10 @@ speed      dd      4 ;?????? ??锟斤拷?????
 
 ; ########################################################## try code
 ID_TIMER        equ     1
+IDB_BACKG_BEGINING       equ     99
+IDB_BACKG_INTRO          equ     98
+IDB_BACKG_PLAY           equ     97
+IDB_BACKG_END            equ     96
 IDB_BACKG       equ     100
 IDB_OBJ1        equ     101
 IDB_OBJ2        equ     102
@@ -131,17 +154,31 @@ IDB_GAMEINTRO   equ     302
 IDB_GAMESTARTC  equ     303
 IDB_GAMEINTROC  equ     304
 
+IDB_BUTTON_BACK_1  equ 305
+IDB_BUTTON_BACK_2  equ 306
+button_back_LX     equ 320
+button_back_LY     equ 140
 
-gameH           equ     548
-gameW           equ     650
+IDB_BUTTON_EXIT_1  equ 307
+IDB_BUTTON_EXIT_2  equ 308
+button_exit_LX     equ 200
+button_exit_LY     equ 84
+
+IDB_BUTTON_PLAY_1  equ 309
+IDB_BUTTON_PLAY_2  equ 310
+button_play_LX     equ 200
+button_play_LY     equ 85
+
+IDB_BUTTON_START_1 equ 311
+IDB_BUTTON_START_2 equ 312
+button_start_LX     equ 265
+button_start_LY     equ 83
+
+
+gameH           equ     600
+gameW           equ     600
 charH           equ     400
 charW           equ     400
-object1H_init   equ     400
-object1W_init   equ     600
-object1H_begin  equ     57
-object1W_begin  equ     86
-object1H_end    equ     57*3
-object1W_end    equ     86*3
 sizeofTargets   equ     sizeof Targets
 .data
 
