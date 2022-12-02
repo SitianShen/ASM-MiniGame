@@ -15,6 +15,7 @@ $(EXE):$(OBJS) $(RES)
 		rc $<
 
 clean:
+	del *.res
 	del *.obj
 
 # 生成ldf.exe
@@ -27,18 +28,22 @@ lja:
 	ml $(ML_FLAGS) lja.asm
 	link $(LINK_FLAGS) lja.obj
 
+# 生成sst.exe
 sst:
 	ml $(ML_FLAGS) sst.asm
 	link $(LINK_FLAGS) sst.obj
 
+# 生成ldf_dev.exe
 ldf_dev:
 	ml $(ML_FLAGS) ldf_dev.asm
 	link $(LINK_FLAGS) ldf_dev.obj
 
+# 生成lja_dev.exe
 lja_dev:
 	ml $(ML_FLAGS) lja_dev.asm
 	link $(LINK_FLAGS) lja_dev.obj
 
+# 生成sst_dev.exe
 sst_dev:
 	ml $(ML_FLAGS) sst_dev.asm
 	link $(LINK_FLAGS) sst_dev.obj

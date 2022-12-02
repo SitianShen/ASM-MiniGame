@@ -174,13 +174,14 @@ _two_two_enum proc
         
         mov @target_number_index, 0
         .while
+                invoke printf, offset debug_int, eax
                 mov eax, @target_number_index
                 .break .if target_number == eax
 
                 mov ebx, sizeofTargets
                 mul ebx
 
-                invoke printf, offset debug_int, eax
+                
 
                 lea esi, target_number[eax]
                 assume esi :ptr Targets
