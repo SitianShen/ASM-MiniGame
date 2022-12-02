@@ -19,7 +19,7 @@ debug_str byte "%s", 0
 _check_collision proc uses ebx, @objectOne:ptr BASE, @objectTwo:ptr BASE
         local @objectOnePosX, @objectOnePosY
         local @objectOneLengthX, @objectOneLengthY
-        
+
         local @objectTwoPosX, @objectTwoPosY
         local @objectTwoLengthX, @objectTwoLengthY
 
@@ -27,13 +27,13 @@ _check_collision proc uses ebx, @objectOne:ptr BASE, @objectTwo:ptr BASE
         local @objectOneCenterY, @objectTwoCenterX
 
         local @distanceX, @distanceY
-        
+
         local @criticalX, @criticalY
 
         mov esi, @objectOne
         assume esi: ptr BASE
         mov eax, [esi].course_id
-        
+
         mov esi, @objectTwo
         assume esi: ptr BASE
 
@@ -100,7 +100,7 @@ _check_collision proc uses ebx, @objectOne:ptr BASE, @objectTwo:ptr BASE
                 mov ebx, @objectTwoCenterX
                 sub ebx, eax
                 mov @distanceX, ebx
-        .elseif
+        .else
                 sub eax, @objectTwoCenterX
                 mov @distanceX, eax
         .endif
@@ -111,7 +111,7 @@ _check_collision proc uses ebx, @objectOne:ptr BASE, @objectTwo:ptr BASE
                 mov ebx, @objectTwoCenterY
                 sub ebx, eax
                 mov @distanceY, ebx
-        .elseif
+        .else
                 sub eax, @objectTwoCenterY
                 mov @distanceY, eax
         .endif
