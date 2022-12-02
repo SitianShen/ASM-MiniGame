@@ -4,6 +4,11 @@ option casemap: none
 
 include global.inc
 
+.const
+szCollision byte "collision check", 0ah, 0
+szCollisionEnd byte "collision end", 0ah, 0
+debug_str byte "%s", 0
+
 .code
 
 ;3 check collision 每一帧调用
@@ -163,73 +168,397 @@ _collision_test proc
         ret
 _collision_test endp
 
+_collision_Player_with_MONEY_1 proc moneyOne:ptr Targets
+        ;得到MONEY_1结构体
+        mov esi, moneyOne
+        assume esi:ptr Targets
 
-_two_two_enum proc
+        ; invoke printf, offset debug_int, [esi].typeid
+
+        ;金币消失
+        mov [esi].base.alive, 0
+        
+        ;TODO 得分增加
+
+        ret
+_collision_Player_with_MONEY_1 endp
+
+
+_collision_Player_with_MONEY_2 proc moneyTwo:ptr Targets
+        ;得到MONEY_2结构体
+        mov esi, moneyTwo
+        assume esi :ptr Targets
+
+        ; invoke printf, offset debug_int, [esi].typeid
+
+        ;MONEY_2消失
+        mov [esi].base.alive, 0
+        
+        ;TODO 得分增加
+        lea esi, player
+
+
+        ret
+_collision_Player_with_MONEY_2 endp
+
+
+_collision_Player_with_ACC proc ACC_target:ptr Targets
+        ;得到ACC结构体
+        mov esi, ACC_target
+        assume esi:ptr Targets
+
+        ; invoke printf, offset debug_int, [esi].typeid
+
+        ;ACC消失
+        mov [esi].base.alive, 0
+
+        ;TODO 加速
+
+        ret
+_collision_Player_with_ACC endp
+
+
+_collision_Player_with_DEC proc DEC_target:ptr Targets
+        ;得到DEC结构体
+        mov esi, DEC_target
+        assume esi:ptr Targets
+        
+        ; invoke printf, offset debug_int, [esi].typeid
+
+        ;DEC消失
+        mov [esi].base.alive, 0
+
+        ;TODO 减速
+
+        ret
+_collision_Player_with_DEC endp 
+
+
+_collision_Player_with_HARD proc HARD_target:ptr Targets 
+        ;得到HARD结构体
+        mov esi, HARD_target
+        assume esi:ptr Targets
+
+        ; invoke printf, offset debug_int, [esi].typeid
+
+        ;HARD消失
+        mov [esi].base.alive, 0
+
+        ;TODO 游戏结束
+
+        ret
+_collision_Player_with_HARD endp
+
+
+_collision_Player_with_SOFT proc SOFT_target:ptr Targets
+        ;得到SOFT结构体
+        mov esi, SOFT_target
+        assume esi:ptr Targets
+
+        ; invoke printf, offset debug_int, [esi].typeid
+
+        ;SOFT消失
+        mov [esi].base.alive, 0
+
+        ;TODO 扣分
+        ret
+_collision_Player_with_SOFT endp
+
+
+_collision_bullet_with_HARD proc HARD_target:ptr Targets
+        ;得到HARD结构体
+        mov esi, HARD_target
+        assume esi:ptr Targets
+
+        ; invoke printf, offset debug_int, [esi].typeid
+
+        ;HARD消失
+        mov [esi].base.alive, 0
+        
+        ;得到bullet结构体
+        lea esi, bullet
+        assume esi:ptr Targets
+
+        ;bullet消失
+        mov [esi].base.alive, 0
+
+        ret
+_collision_bullet_with_HARD endp
+
+
+_two_two_enum proc uses ebx
+
+        ; ============== declare ==============
         ;一些和target有关的局部变量
         local @new_target_number
-        local @new_targets[1000]:Targets
+
+        local @new_target_number_index
+        local @newTargetByteOffset
+        ; local @new_targets[1000]:Targets ;这个RE了？？？，如果程序卡顿了，大概率RE了
         local @target_number_index
+        local @targetByteOffset
 
-        mov eax, target_number
-        mov @target_number_index, eax
-        dec @target_number_index
+        ; 碰撞逻辑
+        local @collisionFlag
 
-        .while
-                .break .if target_number == 0
+        invoke printf, offset debug_str, offset szCollision
+        ; ============== init ==============
+        ; Old
+        mov @targetByteOffset, 0
+        mov @target_number_index, 0
 
+        ; New
+        mov @new_target_number, 0
+        mov @new_target_number_index, 0
+        mov @newTargetByteOffset, 0
+
+        .while TRUE
+                ; 循环次数判定
                 mov eax, @target_number_index
-                mov esi, target_number[eax]
-                assume esi :ptr Targets
+                .break .if target_number == eax
 
-                invoke printf, offset szInt, [esi].typeid
+                ; invoke printf, offset debug_int, eax
+                ; invoke printf, offset debug_int, @targetByteOffset
                 
+                ; 得到结构体
+                mov eax, @targetByteOffset
+                lea esi, targets[eax]
+                assume esi:ptr Targets
+
+                ; invoke printf, offset debug_int, [esi].typeid
+                
+                ; 判断逻辑
                 .if [esi].typeid == MONEY_1
+                        invoke _check_collision, addr player.base, addr [esi].base 
+                        mov @collisionFlag, eax
 
-                .endif
+                        ; invoke printf, offset debug_int, [esi].typeid
+                        ; invoke printf, offset debug_int, @collisionFlag
 
-                .if [esi].typeid == MONEY_2
+                        .if @collisionFlag == 1
+                                invoke _collision_Player_with_MONEY_1, esi
+                        .endif
 
-                .endif
+                .elseif [esi].typeid == MONEY_2
+                        invoke _check_collision, addr player.base, addr [esi].base
+                        mov @collisionFlag, eax
 
-                .if [esi].typeid == PROP_ACC_SELF
+                        ; invoke printf, offset debug_int, [esi].typeid
+                        ; invoke printf, offset debug_int, @collisionFlag
 
-                .endif
+                        .if @collisionFlag == 1
+                                invoke _collision_Player_with_MONEY_2, esi
+                        .endif
 
-                .if [esi].typeid == PROP_DEC_SELF
+                .elseif [esi].typeid == PROP_ACC_SELF
+                        invoke _check_collision, addr player.base, addr [esi].base
+                        mov @collisionFlag, eax
 
-                .endif
-
-                .if [esi].typeid == OBST_HARD
+                        ; invoke printf, offset debug_int, [esi].typeid
+                        ; invoke printf, offset debug_int, @collisionFlag
                         
+                        .if @collisionFlag == 1
+                                invoke _collision_Player_with_ACC, esi
+                        .endif
+
+                .elseif [esi].typeid == PROP_DEC_SELF
+                        invoke _check_collision, addr player.base, addr [esi].base
+                        mov @collisionFlag, eax
+
+                        ; invoke printf, offset debug_int, [esi].typeid
+                        ; invoke printf, offset debug_int, @collisionFlag
+
+
+                        .if @collisionFlag == 1
+                                invoke _collision_Player_with_DEC, esi
+                        .endif
+                        
+                .elseif [esi].typeid == OBST_HARD
+                        invoke _check_collision, addr bullet.base, addr [esi].base
+                        mov @collisionFlag, eax
+
+                        ; invoke printf, offset debug_int, [esi].typeid
+                        ; invoke printf, offset debug_int, @collisionFlag
+
+                        .if @collisionFlag == 1
+                                invoke _collision_bullet_with_HARD, esi
+                        .else
+                                invoke _check_collision, addr player.base, addr [esi].base
+                                mov @collisionFlag, eax
+                                .if @collisionFlag == 1
+                                        invoke _collision_bullet_with_HARD, esi
+                                .endif
+                        .endif
+
+                .elseif [esi].typeid == OBST_SOFT
+                        invoke _check_collision, addr player.base, addr [esi].base
+                        mov @collisionFlag, eax
+
+                        ; invoke printf, offset debug_int, [esi].typeid
+                        ; invoke printf, offset debug_int, @collisionFlag
+
+                        .if @collisionFlag == 1
+                                invoke _collision_Player_with_SOFT, esi
+                        .endif
                 .endif
 
-                .if [esi].typeid == OBST_SOFT
+                ;获取要附带的结构体地址
+                mov eax, @targetByteOffset
+                lea esi, targets[eax]
+                assume esi:ptr Targets
 
+                ; invoke printf, offset debug_int, [esi].base.alive
+                
+                ;覆盖targets
+                .if [esi].base.alive == 1
+                        invoke printf, offset debug_int, [esi].typeid
+                        mov eax, @new_target_number_index
+                        .if eax != @target_number_index
+                                
+                                ;获取要覆盖的结构体地址
+                                mov eax, @newTargetByteOffset
+                                lea ebx, targets[eax]
+                                assume ebx :ptr Targets
+
+                                ;覆盖
+                                mov eax, [esi].base.posx
+                                mov [ebx].base.posx, eax
+
+                                mov eax, [esi].base.posy
+                                mov [ebx].base.posy, eax
+                                
+                                mov eax, [esi].base.lengthx
+                                mov [ebx].base.lengthx, eax
+
+                                mov eax, [esi].base.lengthy
+                                mov [ebx].base.lengthy, eax
+
+                                mov eax, [esi].base.alive
+                                mov [ebx].base.alive, eax
+
+                                mov eax, [esi].base.DC
+                                mov [ebx].base.DC, eax
+
+                                mov eax, [esi].base.rel_v
+                                mov [ebx].base.rel_v, eax
+
+                                mov eax, [esi].base.course_id
+                                mov [ebx].base.course_id, eax
+
+                                mov eax, [esi].typeid
+                                mov [ebx].typeid, eax
+                        .endif
+                        
+                        ;递增offset
+                        mov eax, sizeofTargets
+                        add eax, @newTargetByteOffset
+                        mov @newTargetByteOffset, eax
+
+                        ;递增number和index
+                        inc @new_target_number
+                        inc @new_target_number_index
                 .endif
                 
-                .break .if @target_number_index == 0
-                dec @target_number_index
+                
+                
+                ;递增offset
+                mov eax, sizeofTargets
+                add eax, @targetByteOffset
+                mov @targetByteOffset, eax
+
+                ;递增index
+                inc @target_number_index
         .endw
 
-
+        
+        ;修改target_number
         mov eax, @new_target_number
+        ; inc eax
         mov target_number, eax
 
+        ; invoke printf, offset debug_int, @new_target_number
+        invoke printf, offset debug_str, offset szCollisionEnd
         ret
 _two_two_enum endp
 
 
 _two_two_enum_test proc
-        mov target_number, 2
+        ;给bullet赋值
+        lea esi, bullet
+        assume esi :ptr Subject
 
-        mov targets[0].typeid, MONEY_1
+        mov [esi].base.posx, 1
+        mov [esi].base.posy, 1
+        mov [esi].base.lengthx, 1
+        mov [esi].base.lengthy, 1
+        mov [esi].base.alive, 1
+        mov [esi].base.DC, 1
+        mov [esi].base.rel_v, 1
+        mov [esi].base.course_id, 1
+        mov [esi].score, 1
+
+
+        ; invoke printf, offset debug_int, [esi].base.posx
+        ;给player赋值
+        lea esi, player
+        assume esi :ptr Subject
+
+        mov [esi].base.posx, 1
+        mov [esi].base.posy, 1
+        mov [esi].base.lengthx, 1
+        mov [esi].base.lengthy, 1
+        mov [esi].base.alive, 1
+        mov [esi].base.DC, 1
+        mov [esi].base.rel_v, 1
+        mov [esi].base.course_id, 1
+        mov [esi].score, 1
+
+        ;第零个targets
+        lea esi, targets[0]
+        assume esi :ptr Targets
+
+        mov [esi].base.posx, 1
+        mov [esi].base.posy, 1
+        mov [esi].base.lengthx, 1
+        mov [esi].base.lengthy, 1
+        mov [esi].base.alive, 1
+        mov [esi].base.DC, 1
+        mov [esi].base.rel_v, 1
+        mov [esi].base.course_id, 0
+        mov [esi].typeid, MONEY_1
 
         ; invoke _two_two_enum
-        ; .if targets[0].typeid == MONEY_1
+        ; .if [esi].typeid == MONEY_1
         ;         invoke printf, offset szInt, targets[0].typeid
         ; .endif
         
-        invoke printf, offset szInt, targets[0].typeid
+        ; invoke printf, offset debug_int, [esi].base.posx
+        ; invoke printf, offset debug_int, [esi].typeid
+
+        ; 第一个targets
+        lea esi, targets[sizeofTargets]
+        assume esi :ptr Targets
+
+        mov [esi].base.posx, 1
+        mov [esi].base.posy, 1
+        mov [esi].base.lengthx, 3
+        mov [esi].base.lengthy, 4
+        mov [esi].base.alive, 1
+        mov [esi].base.DC, 1
+        mov [esi].base.rel_v, 1
+        mov [esi].base.course_id, 0
+        mov [esi].typeid, MONEY_2
+
+        mov target_number, 2
+
+        ; invoke printf, offset debug_int, target_number
+        ; invoke printf, offset debug_int, [esi].typeid
+        ; invoke printf, offset debug_int, [esi].base.posx
+        ; invoke printf, offset debug_int, sizeofTargets
+        invoke _two_two_enum
+
+        ; invoke printf, offset debug_int, target_number
+
         ret
 _two_two_enum_test endp
 

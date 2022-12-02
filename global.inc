@@ -27,6 +27,17 @@ _sst_test proto
 _check_collision proto :ptr BASE,:ptr BASE
 _collision_test proto
 
+_collision_Player_with_MONEY_1 proto :ptr Targets
+_collision_Player_with_MONEY_2 proto :ptr Targets
+_collision_Player_with_ACC proto :ptr Targets
+_collision_Player_with_DEC proto :ptr Targets
+_collision_Player_with_HARD proto :ptr Targets
+_collision_Player_with_SOFT proto :ptr Targets
+_collision_bullet_with_HARD proto :ptr Targets
+_two_two_enum proto
+_two_two_enum_test proto
+
+
 ; lja functions
 NextPos proto :ptr BASE         ;每个道具移动
 ChangeAllPos proto      ;遍历所有道具，使之移动
