@@ -597,12 +597,17 @@ _targets_bullet_out_of_bound proc
         mov ebx, target_number
         xor eax, eax
         .while eax < ebx
+                push eax
+                mov edx, 0
+                mov ebx, sizeofTargets
+                mul ebx
                 .if targets[eax].base.alive == 1
                         .if targets[eax].base.posx <= 10 || targets[eax].base.posx >= gameW-10 \
                         || targets[eax].base.posy <= 10 || targets[eax].base.posy <= gameH-10
                                 mov targets[eax].base.alive, 0
                         .endif
                 .endif
+                pop eax
                 inc eax
         .endw
 

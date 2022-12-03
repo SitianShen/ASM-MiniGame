@@ -45,15 +45,15 @@ _Move_process proc uses ebx
                         ret
                 .endif
 
-                .if(time_jump >= 50);高度没到继续跳起
+                .if(time_jump >= 25);高度没到继续跳起
                         mov eax, player.base.posy
-                        dec eax
+                        sub eax, 2
                         mov player.base.posy, eax
                 .endif
 
-                .if(time_jump < 50);高度到了，开始降落
+                .if(time_jump < 25);高度到了，开始降落
                         mov eax, player.base.posy
-                        inc eax
+                        add eax, 2
                         mov player.base.posy, eax
                 .endif
 
@@ -75,7 +75,7 @@ _Move_process proc uses ebx
                 .endif
                 ;没移到足够时间（位置，此处设置移动时间和距离匹配）
                 mov ebx, player.base.posx
-                dec ebx
+                sub ebx, 5
                 mov player.base.posx, ebx
 
                 mov ebx, time_mov
@@ -89,13 +89,12 @@ _Move_process proc uses ebx
                         mov ebx, stdtime_mov
                         mov time_mov, ebx
                         
-                        mov ebx, 0
-                        mov flag_movright, ebx
+                        mov flag_movright, 0
                         ret
                 .endif
                 ;没移到足够时间（位置，此处设置移动时间和距离匹配）
                 mov ebx, player.base.posx
-                inc ebx
+                add ebx, 5
                 mov player.base.posx, ebx
 
                 mov ebx, time_mov
@@ -112,8 +111,10 @@ _Action_left proc uses ebx
         .if (ebx == 1)
                 ret
         .endif
-        mov     ebx, 1
-        mov     flag_movleft, ebx
+        dec     ebx
+        mov     player.base.course_id, ebx
+
+        mov     flag_movleft, 1
         ret
 _Action_left endp
 
@@ -123,8 +124,10 @@ _Action_right proc uses ebx
         .if (ebx == 3)
                ret
         .endif
-        mov     ebx, 1
-        mov     flag_movright, ebx
+        inc     ebx
+        mov     player.base.course_id, ebx
+
+        mov     flag_movright, 1
         ret
 _Action_right endp
 
@@ -134,49 +137,6 @@ _Action_jump proc uses ebx
         mov     flag_jump, ebx
         ret
 _Action_jump endp
-
-_sst_test proc
-        invoke _Init_car
-        invoke printf, offset szInt, player.base.posx
-        invoke printf, offset szInt, player.base.posy
-
-        invoke _Action_jump
-        invoke printf, offset szInt, player.base.posx
-        invoke printf, offset szInt, player.base.posy
-
-        mov esi, 250
-        .while( esi > 0)
-                invoke _Move_process
-                invoke printf, offset szInt, player.base.posx
-                invoke printf, offset szInt, player.base.posy
-                dec esi
-        .endw
-
-        ; invoke _Action_left
-        ; invoke printf, offset szInt, player.base.posx
-        ; invoke printf, offset szInt, player.base.posy
-
-        ; mov esi, 150
-        ; .while( esi > 0)
-                ; invoke _Move_process
-                ; invoke printf, offset szInt, player.base.posx
-                ; invoke printf, offset szInt, player.base.posy
-                ; dec esi
-        ; .endw   
-
-        ; invoke _Action_right
-        ; invoke printf, offset szInt, player.base.posx
-        ; invoke printf, offset szInt, player.base.posy
-
-        ; mov esi, 150
-        ; .while( esi > 0)
-                ; invoke _Move_process
-                ; invoke printf, offset szInt, player.base.posx
-                ; invoke printf, offset szInt, player.base.posy
-                ; dec esi 
-        ; .endw
-        ret
-_sst_test endp
 
 ;test
 ; start:
@@ -192,9 +152,19 @@ _initAll proc
 _initAll endp
 
 _random_object proc
-        local @id, @new_DC, @new_course
+        local @id, @new_DC, @new_course, @offs
+        
+        mov esi, offset targets
+        assume esi: ptr Targets
+        mov ecx, target_number
+        .while ecx != 0 
+                dec ecx
+                add esi, sizeofTargets
+        .endw
+        mov @offs, esi
 
         invoke rand
+        mov @id, eax
         and eax, 7
 
         .if eax == 0
@@ -215,8 +185,23 @@ _random_object proc
                 mov ebx, object_DC.coin
         .endif
         mov @new_DC, ebx
-        ; invoke printf, offset debug_int, ebx
-        
+
+        mov eax, @id
+        .if eax <= 2 
+                and eax, 4
+                mov @new_course, eax
+        .else
+                invoke rand
+                add eax, 3
+                .while eax == 0
+                        invoke rand
+                        add eax, 3
+                .endw
+                add eax, 4
+                mov @new_course, eax
+        .endif
+
+
         ret
 _random_object endp
 
