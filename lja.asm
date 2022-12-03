@@ -101,8 +101,20 @@ ChangeAllPos proc stdcall       ;遍历所有道具改变位置
         xor eax, eax
         .while eax < target_number
                 lea esi, targets[eax]
-                invoke NextPos, esi
+                assume  esi: ptr BASE
+                .if [esi].alive == 1
+                        invoke NextPos, esi
+                .endif
+                assume  esi: nothing
+                inc eax
         .endw
+        ; 移动子弹
+        lea esi, bullet.base
+        assume  esi: ptr BASE
+        .if [esi].alive == 1
+                invoke NextPos, esi
+        .endif
+        assume  esi: nothing
 ret
 ChangeAllPos endp
 
