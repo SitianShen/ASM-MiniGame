@@ -2,6 +2,8 @@
 
 # define IDB_BACKG_END      96
 # define IDB_BACKG_PLAY     97
+# define IDB_BACKG_PLAYU    90
+# define IDB_BACKG_PLAYD    91
 # define IDB_BACKG_INTRO    98
 # define IDB_BACKG_BEGINING 99
 # define IDB_BACKG          100
@@ -28,12 +30,15 @@
 # define IDB_PROP_DEC        317
 # define IDB_PROP_BULLETL    318
 # define IDB_PROP_BULLETM    319
-# define DB_PROP_BULLETR     320
+# define IDB_PROP_BULLETR    320
+# define IDB_PLAYER          400
 
 IDB_BACKG           BITMAP      "resource/background.bmp"
 IDB_BACKG_BEGINING  BITMAP      "resource/background_begining.bmp"
 IDB_BACKG_INTRO     BITMAP      "resource/background_intro.bmp"
 IDB_BACKG_PLAY      BITMAP      "resource/background_play.bmp"
+IDB_BACKG_PLAYD     BITMAP      "resource/background_play_down.bmp"
+IDB_BACKG_PLAYU     BITMAP      "resource/background_play_up.bmp"
 IDB_BACKG_END       BITMAP      "resource/background_end.bmp"
 IDB_ICON            ICON        "resource/icon.ico"
 
@@ -63,4 +68,6 @@ IDB_PROP_DEC        BITMAP       "resource/prop_dec.bmp"
 IDB_PROP_BULLETL    BITMAP       "resource/prop_bulletL.bmp"
 IDB_PROP_BULLETM    BITMAP       "resource/prop_bulletM.bmp"
 IDB_PROP_BULLETR    BITMAP       "resource/prop_bulletR.bmp"
+
+IDB_PLAYER          BITMAP       "resource/player.bmp"
 
