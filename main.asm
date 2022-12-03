@@ -192,9 +192,19 @@ _initAll proc
 _initAll endp
 
 _random_object proc
-        local @id, @new_DC, @new_course
+        local @id, @new_DC, @new_course, @offs
+        
+        mov esi, offset targets
+        assume esi: ptr Targets
+        mov ecx, target_number
+        .while ecx != 0 
+                dec ecx
+                add esi, sizeofTargets
+        .endw
+        mov @offs, esi
 
         invoke rand
+        mov @id, eax
         and eax, 7
 
         .if eax == 0
@@ -215,8 +225,23 @@ _random_object proc
                 mov ebx, object_DC.coin
         .endif
         mov @new_DC, ebx
-        ; invoke printf, offset debug_int, ebx
-        
+
+        mov eax, @id
+        .if eax <= 2 
+                and eax, 4
+                mov @new_course, eax
+        .else
+                invoke rand
+                add eax, 3
+                .while eax == 0
+                        invoke rand
+                        add eax, 3
+                .endw
+                add eax, 4
+                mov @new_course, eax
+        .endif
+
+
         ret
 _random_object endp
 
