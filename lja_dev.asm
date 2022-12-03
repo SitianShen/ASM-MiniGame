@@ -100,12 +100,17 @@ _change_all_position proc stdcall       ;遍历所有道具改变位置
         mov ebx, target_number
         xor eax, eax
         .while eax < ebx
+                push eax
+                mov edx, 0
+                mov ebx, sizeofTargets
+                mul ebx
                 lea esi, targets[eax].base
                 assume  esi: ptr BASE
                 .if [esi].alive == 1
                         invoke _next_position, esi
                 .endif
                 assume  esi: nothing
+                pop eax
                 inc eax
         .endw
         ; 移动子弹
