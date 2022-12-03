@@ -33,15 +33,15 @@ carLX                   equ     100
 carLY                   equ     100
 
 ;obj init size
-obj_init_lx                   equ 50
-obj_init_ly                   equ 50
+obj_init_lx                   equ 36
+obj_init_ly                   equ 36
 ;obj init pos  
-remote_y                equ 180
-remote_x0               equ 80+50
-remote_x5               equ 120+50
-remote_x6               equ 160+50
-remote_x7               equ 200+50
-remote_x4               equ 240+50
+remote_y                equ 190
+remote_x0               equ 80+50+30+30+30
+remote_x5               equ 120+50+30+30+30
+remote_x6               equ 160+50+30+40
+remote_x7               equ 200+50+50
+remote_x4               equ 240+50+50
 
 
 
