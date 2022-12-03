@@ -5,34 +5,246 @@ option casemap: none
 include global.inc
         
 .code
-;1 create
-; _create_ldf_need proc
-;         local @playerPic  
-  
-;         invoke  GetDC, hWinMain
-;         mov     @hDC, eax
-;         invoke  CreateCompatibleDC, @hDC
-;         mov     player.base.DC, eax
-;         invoke  LoadBitmap, hInstance, dwPlayerPic
-;         mov     @playerPic, eax
-;         invoke SelectObject, player.base.DC, @playerPic 
-; ;2.1 maintain player, ?????????????
-; _move_object_player proc
-; _move_object_player endp
+;sst part #################################################################
+_Init_car proc uses ebx
 
-; ;2.2 maintain bullet ???????
-; _move_object_bullet proc
-; _move_object_bullet endp
+    mov ebx, 2
+    mov player.base.course_id, ebx
+    mov player.base.alive, 1
 
-; ;2.3 maintain all object  ???????
-; _move_object_obj proc
-; _move_object_obj endp
+    xor ebx, ebx
+    mov player.base.rel_v, ebx
+    mov player.score, ebx
 
-; ;3 check collision ???????
-; _check_collision proc
-; ;???????????????????????????????????
-; ;?????targets?????????target_number
-; _check_collision endp
+    mov eax, carx1
+    mov player.base.posx, eax
+
+    mov ebx, cary
+    mov player.base.posy, ebx
+
+    mov player.base.lengthx, carLX
+    mov player.base.lengthy, carLY
+
+    ret
+;??????????????
+_Init_car endp
+
+;?????????????????
+_Move_process proc uses ebx
+        mov eax, flag_jump
+        .if (eax == 1)
+                .if (time_jump == 0);下降完毕，落地
+                        mov ebx, stdtime_jump
+                        mov time_jump, ebx
+
+                        mov ebx, 0
+                        mov flag_jump, ebx
+
+                        mov eax, cary
+                        mov player.base.posy, eax;回到原地
+                        ret
+                .endif
+
+                .if(time_jump >= 50);高度没到继续跳起
+                        mov eax, player.base.posy
+                        dec eax
+                        mov player.base.posy, eax
+                .endif
+
+                .if(time_jump < 50);高度到了，开始降落
+                        mov eax, player.base.posy
+                        inc eax
+                        mov player.base.posy, eax
+                .endif
+
+                mov ebx, time_jump
+                dec ebx
+                mov time_jump, ebx ;时间没到不回原地
+        .endif
+
+        mov eax, flag_movleft
+        .if (eax == 1)
+                .if (time_mov == 0)
+                        mov ebx, stdtime_mov
+                        mov time_mov, ebx
+
+                        mov ebx, 0
+                        mov flag_movleft, ebx
+
+                        ret
+                .endif
+                ;没移到足够时间（位置，此处设置移动时间和距离匹配）
+                mov ebx, player.base.posx
+                dec ebx
+                mov player.base.posx, ebx
+
+                mov ebx, time_mov
+                dec ebx
+                mov time_mov, ebx
+        .endif
+
+        mov eax, flag_movright
+        .if (eax == 1)
+                .if (time_mov == 0)
+                        mov ebx, stdtime_mov
+                        mov time_mov, ebx
+                        
+                        mov ebx, 0
+                        mov flag_movright, ebx
+                        ret
+                .endif
+                ;没移到足够时间（位置，此处设置移动时间和距离匹配）
+                mov ebx, player.base.posx
+                inc ebx
+                mov player.base.posx, ebx
+
+                mov ebx, time_mov
+                dec ebx
+                mov time_mov, ebx
+        .endif
+        ret
+_Move_process endp
+
+
+;???
+_Action_left proc uses ebx
+        mov     ebx, player.base.course_id
+        .if (ebx == 1)
+                ret
+        .endif
+        mov     ebx, 1
+        mov     flag_movleft, ebx
+        ret
+_Action_left endp
+
+;???
+_Action_right proc uses ebx
+        mov     ebx, player.base.course_id
+        .if (ebx == 3)
+               ret
+        .endif
+        mov     ebx, 1
+        mov     flag_movright, ebx
+        ret
+_Action_right endp
+
+;???
+_Action_jump proc uses ebx
+        mov     ebx, 1
+        mov     flag_jump, ebx
+        ret
+_Action_jump endp
+
+_sst_test proc
+        invoke _Init_car
+        invoke printf, offset szInt, player.base.posx
+        invoke printf, offset szInt, player.base.posy
+
+        invoke _Action_jump
+        invoke printf, offset szInt, player.base.posx
+        invoke printf, offset szInt, player.base.posy
+
+        mov esi, 250
+        .while( esi > 0)
+                invoke _Move_process
+                invoke printf, offset szInt, player.base.posx
+                invoke printf, offset szInt, player.base.posy
+                dec esi
+        .endw
+
+        ; invoke _Action_left
+        ; invoke printf, offset szInt, player.base.posx
+        ; invoke printf, offset szInt, player.base.posy
+
+        ; mov esi, 150
+        ; .while( esi > 0)
+                ; invoke _Move_process
+                ; invoke printf, offset szInt, player.base.posx
+                ; invoke printf, offset szInt, player.base.posy
+                ; dec esi
+        ; .endw   
+
+        ; invoke _Action_right
+        ; invoke printf, offset szInt, player.base.posx
+        ; invoke printf, offset szInt, player.base.posy
+
+        ; mov esi, 150
+        ; .while( esi > 0)
+                ; invoke _Move_process
+                ; invoke printf, offset szInt, player.base.posx
+                ; invoke printf, offset szInt, player.base.posy
+                ; dec esi 
+        ; .endw
+        ret
+_sst_test endp
+
+;test
+; start:
+        ;  invoke  _sst_test
+        ;  ret
+; end start
+
+;zzl part #################################################################
+_initAll proc
+        invoke _Init_car
+        mov target_number, 0
+        ret
+_initAll endp
+
+_random_object proc
+        local @id, @new_DC, @new_course, @offs
+        
+        mov esi, offset targets
+        assume esi: ptr Targets
+        mov ecx, target_number
+        .while ecx != 0 
+                dec ecx
+                add esi, sizeofTargets
+        .endw
+        mov @offs, esi
+
+        invoke rand
+        mov @id, eax
+        and eax, 7
+
+        .if eax == 0
+                mov ebx, object_DC.env1
+        .elseif eax == 1
+                mov ebx, object_DC.env2
+        .elseif eax == 2
+                mov ebx, object_DC.env3
+        .elseif eax == 3
+                mov ebx, object_DC.sobs
+        .elseif eax == 4
+                mov ebx, object_DC.hobs
+        .elseif eax == 5
+                mov ebx, object_DC.accp
+        .elseif eax == 6
+                mov ebx, object_DC.decp
+        .elseif eax == 7
+                mov ebx, object_DC.coin
+        .endif
+        mov @new_DC, ebx
+
+        mov eax, @id
+        .if eax <= 2 
+                and eax, 4
+                mov @new_course, eax
+        .else
+                invoke rand
+                add eax, 3
+                .while eax == 0
+                        invoke rand
+                        add eax, 3
+                .endw
+                add eax, 4
+                mov @new_course, eax
+        .endif
+
+
+        ret
+_random_object endp
+
 
 _set_char_pos proc
         mov button_play.base.posx, 70
@@ -49,6 +261,11 @@ _set_char_pos proc
         mov button_back.base.posy, 180
         mov button_back.base.lengthx, button_back_LX/2
         mov button_back.base.lengthy, button_back_LY/2
+
+        mov button_exit.base.posx, 70
+        mov button_exit.base.posy, 180
+        mov button_exit.base.lengthx, button_exit_LX/2
+        mov button_exit.base.lengthy, button_exit_LY/2
         ret
 _set_char_pos endp
 
@@ -113,13 +330,18 @@ _createAll proc
 ;backgrounds
         invoke  _load_common_pic, addr backGround.DC_b, IDB_BACKG_BEGINING
         invoke  _load_common_pic, addr backGround.DC_i, IDB_BACKG_INTRO
-        invoke  _load_common_pic, addr backGround.DC_p, IDB_BACKG_PLAY
+        invoke  _load_common_pic, addr backGround.DC_pu, IDB_BACKG_PLAYU
+        invoke  _load_common_pic, addr backGround.DC_pd, IDB_BACKG_PLAYD
         invoke  _load_common_pic, addr backGround.DC_e, IDB_BACKG_END
 ;�������� env obj
-        invoke  _load_common_pic, addr env_objecet_1.DC, IDB_OBJ1
-        invoke  _load_common_pic, addr env_objecet_2.DC, IDB_OBJ2
-        invoke  _load_common_pic, addr env_objecet_2.DC, IDB_OBJ3
-
+        invoke  _load_common_pic, addr object_DC.env1, IDB_OBJ1
+        invoke  _load_common_pic, addr object_DC.env2, IDB_OBJ2
+        invoke  _load_common_pic, addr object_DC.env3, IDB_OBJ3
+        invoke  _load_common_pic, addr object_DC.sobs, IDB_PROP_ABSTSOFT
+        invoke  _load_common_pic, addr object_DC.hobs, IDB_PROP_ABSTHARD
+        invoke  _load_common_pic, addr object_DC.accp, IDB_PROP_ACC
+        invoke  _load_common_pic, addr object_DC.decp, IDB_PROP_DEC
+        invoke  _load_common_pic, addr object_DC.coin, IDB_PROP_MONEY
 ;��ʼ�����ؼ� button
         invoke _load_button, addr button_play,  IDB_BUTTON_PLAY_1,  IDB_BUTTON_PLAY_2
         invoke _load_button, addr button_start, IDB_BUTTON_START_1, IDB_BUTTON_START_2
@@ -127,9 +349,12 @@ _createAll proc
         invoke _load_button, addr button_back,  IDB_BUTTON_BACK_1,  IDB_BUTTON_BACK_2
 
         invoke _set_char_pos
+;set car
+        invoke  _load_common_pic, addr player.base.DC, IDB_PLAYER
+        invoke  _Init_car
 
+;set prop
 
-;
         invoke  ReleaseDC, hWinMain, @hDC
         ret 
 _createAll endp
@@ -186,19 +411,24 @@ _move_object proc hWnd
         local @mouse:POINT
         local @window:RECT
 
-
-
         mov eax, cur_interface
         .if eax == in_begining 
                 invoke  TransparentBlt, hDCGame, 0, 0, gameH, gameW, backGround.DC_b, 0, 0, 1000, 1000, SRCCOPY
-                invoke _draw_button, addr button_play, hWnd, button_play_LX, button_play_LY
-                invoke _draw_button, addr button_start, hWnd, button_start_LX, button_start_LY
+                invoke  _draw_button, addr button_play, hWnd, button_play_LX, button_play_LY
+                invoke  _draw_button, addr button_start, hWnd, button_start_LX, button_start_LY
         .elseif eax == in_game
-                invoke  TransparentBlt, hDCGame, 0, 0, gameH, gameW, backGround.DC_p, 0, 0, 1000, 1000, SRCCOPY
+                invoke _Move_process
+
+                invoke  TransparentBlt, hDCGame, 0, 0, gameH, gameW, backGround.DC_pd, 0, 0, 1000, 1000, SRCCOPY
+
+                invoke  TransparentBlt, hDCGame, player.base.posx, player.base.posy, player.base.lengthx, player.base.lengthy, player.base.DC, 0, 0, PLAYER_LX, PLAYER_LY, 16777215
+
+
+                invoke  TransparentBlt, hDCGame, 0, 0, gameH, gameW, backGround.DC_pu, 0, 0, 1000, 1000, 16777215
         
         .elseif eax == in_intro
                 invoke  TransparentBlt, hDCGame, 0, 0, gameH, gameW, backGround.DC_i, 0, 0, 1000, 1000, SRCCOPY
-                invoke _draw_button, addr button_back, hWnd, button_back_LX, button_back_LY
+                invoke  _draw_button, addr button_back, hWnd, button_back_LX, button_back_LY
         .elseif eax == in_over
                 invoke  TransparentBlt, hDCGame, 0, 0, gameH, gameW, backGround.DC_e, 0, 0, 1000, 1000, SRCCOPY
 
@@ -244,7 +474,9 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                 mov     eax, hWnd
                 mov     hWinMain, eax
                 invoke  _createAll
+                invoke  _initAll
                 invoke  SetTimer, hWinMain, ID_TIMER, 15, NULL
+
 
         .elseif eax == WM_TIMER
                 mov     eax, wParam
@@ -269,6 +501,17 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                                 mov cur_interface, in_begining
                         .endif
                 .endif
+
+        .elseif eax == WM_KEYDOWN
+                mov eax, wParam
+                .if eax == 87 
+                        invoke _Action_jump
+                .elseif eax == 65
+                        invoke _Action_left
+                .elseif eax == 68
+                        invoke _Action_right
+                .endif
+
 
 
         .elseif eax == WM_CLOSE
@@ -329,6 +572,9 @@ _WinMain        proc
 _WinMain        endp
 
 start:
+        invoke time, 0
+        invoke srand, eax
+        invoke rand
         call    _WinMain
         invoke  ExitProcess, NULL
         ; invoke _collision_test

@@ -9,7 +9,7 @@ _Init_car proc uses ebx
 
     mov ebx, 2
     mov player.base.course_id, ebx
-    mov player.base.alive, ebx
+    mov player.base.alive, 1
 
     xor ebx, ebx
     mov player.base.rel_v, ebx
@@ -21,6 +21,8 @@ _Init_car proc uses ebx
     mov ebx, cary
     mov player.base.posy, ebx
 
+    mov player.base.lengthx, carLX
+    mov player.base.lengthy, carLY
     ret
 ;??????????????
 _Init_car endp
