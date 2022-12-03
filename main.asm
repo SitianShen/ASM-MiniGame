@@ -207,13 +207,13 @@ _random_object endp
 
 
 _set_char_pos proc
-        mov button_play.base.posx, 70
-        mov button_play.base.posy, 50
+        mov button_play.base.posx, 200
+        mov button_play.base.posy, 235
         mov button_play.base.lengthx, button_play_LX
         mov button_play.base.lengthy, button_play_LY
 
-        mov button_start.base.posx, 70
-        mov button_start.base.posy, 180
+        mov button_start.base.posx, 170
+        mov button_start.base.posy, 340
         mov button_start.base.lengthx, button_start_LX
         mov button_start.base.lengthy, button_start_LY
 
