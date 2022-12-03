@@ -4,6 +4,37 @@ option casemap: none
 
 include global.inc
 
+; extrn player:Subject         
+; extrn bullet:Subject             
+; extrn targets
+
+; ;zzl own
+; extrn button_play:Button      
+; extrn button_start:Button      
+; extrn button_back:Button      
+; extrn button_exit:Button       
+; extrn backGround:BackGround       
+; extrn object_DC:Object_DC        
+
+; extrn hInstance:dd       
+; extrn hWinMain:dd      
+; extrn hDCBack:dd         
+; extrn hDCGame:dd         
+; extrn hDCObj1:dd        
+; extrn dwNowBack:dd     
+
+; extrn flag_jump:dd               
+; extrn flag_movleft:dd          
+; extrn flag_movright:dd           
+; extrn stdtime_jump:dd            
+; extrn time_jump:dd              
+; extrn stdtime_mov:dd             
+; extrn time_mov:dd             
+; extrn cur_interface:dd     
+
+; extrn target_number:dd       
+; extrn speed:dd     
+
 .const
 szCollision byte "collision check", 0ah, 0
 szCollisionEnd byte "collision end", 0ah, 0
