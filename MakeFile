@@ -36,7 +36,7 @@ clean:
 # 	link $(LINK_FLAGS) sst.obj
 # 	del *.obj
 ASM_DEV = main_dev.asm ldf_dev.asm
-OBJS_DEV = main_dev.obj ldf_dev.obj
+OBJS_DEV = main_dev.obj ldf_dev.obj main_dev.obj
 
 main_dev:
 	rc main.rc
