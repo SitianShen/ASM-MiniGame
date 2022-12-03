@@ -5,7 +5,7 @@ option casemap: none
 include global.inc
 .code
 ;speed = 4 —— 正常， 8 —— 快速， 12 —— 超快速
-NextPos proc stdcall ptrBase :ptr BASE
+_next_position proc stdcall ptrBase :ptr BASE
         ; local cur_speed :dword
         ; mov bx, speed
         ; xor ax, ax
@@ -94,16 +94,16 @@ NextPos proc stdcall ptrBase :ptr BASE
         .endif
         assume  esi: nothing
 ret
-NextPos endp 
+_next_position endp 
 
-ChangeAllPos proc stdcall       ;遍历所有道具改变位置
+_change_all_position proc stdcall       ;遍历所有道具改变位置
         mov ebx, target_number
         xor eax, eax
         .while eax < ebx
                 lea esi, targets[eax].base
                 assume  esi: ptr BASE
                 .if [esi].alive == 1
-                        invoke NextPos, esi
+                        invoke _next_position, esi
                 .endif
                 assume  esi: nothing
                 inc eax
@@ -112,10 +112,10 @@ ChangeAllPos proc stdcall       ;遍历所有道具改变位置
         lea esi, bullet.base
         assume  esi: ptr BASE
         .if [esi].alive == 1
-                invoke NextPos, esi
+                invoke _next_position, esi
         .endif
         assume  esi: nothing
 ret
-ChangeAllPos endp
+_change_all_position endp
 
 end
