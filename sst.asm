@@ -5,6 +5,7 @@ option casemap: none
 include global.inc
 
 .code
+
 _Init_car proc uses ebx
 
     mov ebx, 2
@@ -23,6 +24,7 @@ _Init_car proc uses ebx
 
     mov player.base.lengthx, carLX
     mov player.base.lengthy, carLY
+
     ret
 ;??????????????
 _Init_car endp
@@ -43,15 +45,15 @@ _Move_process proc uses ebx
                         ret
                 .endif
 
-                .if(time_jump >= 50);高度没到继续跳起
+                .if(time_jump >= 25);高度没到继续跳起
                         mov eax, player.base.posy
-                        dec eax
+                        sub eax, 2
                         mov player.base.posy, eax
                 .endif
 
-                .if(time_jump < 50);高度到了，开始降落
+                .if(time_jump < 25);高度到了，开始降落
                         mov eax, player.base.posy
-                        inc eax
+                        add eax, 2
                         mov player.base.posy, eax
                 .endif
 
@@ -71,9 +73,9 @@ _Move_process proc uses ebx
 
                         ret
                 .endif
-                ;没移到足够时间（位置，此处设置移动时间和距离匹配）
+                ;没移到足够时间（位置，此处设置移动时间和距离匹
                 mov ebx, player.base.posx
-                dec ebx
+                sub ebx, 5
                 mov player.base.posx, ebx
 
                 mov ebx, time_mov
@@ -87,13 +89,12 @@ _Move_process proc uses ebx
                         mov ebx, stdtime_mov
                         mov time_mov, ebx
                         
-                        mov ebx, 0
-                        mov flag_movright, ebx
+                        mov flag_movright, 0
                         ret
                 .endif
-                ;没移到足够时间（位置，此处设置移动时间和距离匹配）
+                ;没移到足够时间（位置，此处设置移动时间和距离匹
                 mov ebx, player.base.posx
-                inc ebx
+                add ebx, 5
                 mov player.base.posx, ebx
 
                 mov ebx, time_mov
@@ -110,8 +111,10 @@ _Action_left proc uses ebx
         .if (ebx == 1)
                 ret
         .endif
-        mov     ebx, 1
-        mov     flag_movleft, ebx
+        dec     ebx
+        mov     player.base.course_id, ebx
+
+        mov     flag_movleft, 1
         ret
 _Action_left endp
 
@@ -121,8 +124,10 @@ _Action_right proc uses ebx
         .if (ebx == 3)
                ret
         .endif
-        mov     ebx, 1
-        mov     flag_movright, ebx
+        inc     ebx
+        mov     player.base.course_id, ebx
+
+        mov     flag_movright, 1
         ret
 _Action_right endp
 
