@@ -63,12 +63,6 @@ Subject struct
         score           dd      ?
 Subject ends
 
-MONEY_1                 equ 1000
-MONEY_2                 equ 1001
-PROP_ACC_SELF           equ 2000 ;?????????
-PROP_DEC_SELF           equ 2001 ;?????????
-OBST_HARD               equ 3000 ;????
-OBST_SOFT               equ 3001 ;?????
 Targets struct
         base    BASE  <> 
         typeid  dd      ?
@@ -121,6 +115,13 @@ object_DC         Object_DC <>
 choose_start equ 0
 choose_intro equ 1
 choose_which_char dd 0
+
+MONEY_1                 equ 1000
+MONEY_2                 equ 1001
+PROP_ACC_SELF           equ 2000 ;?????????
+PROP_DEC_SELF           equ 2001 ;?????????
+OBST_HARD               equ 3000 ;????
+OBST_SOFT               equ 3001 ;?????
 
 in_begining             equ 0
 in_game                 equ 1
