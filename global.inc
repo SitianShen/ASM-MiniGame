@@ -23,6 +23,7 @@ _Action_right proto;
 _Action_jump proto;
 _sst_test proto
 
+
 ; ldf functions
 _check_collision proto :ptr BASE,:ptr BASE
 _collision_test proto
