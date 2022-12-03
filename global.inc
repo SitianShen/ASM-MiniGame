@@ -23,6 +23,7 @@ _Action_right proto;
 _Action_jump proto;
 _sst_test proto
 
+
 ; ldf functions
 _check_collision proto :ptr BASE,:ptr BASE
 _collision_test proto
@@ -36,11 +37,10 @@ _collision_Player_with_SOFT proto :ptr Targets
 _collision_bullet_with_HARD proto :ptr Targets
 _two_two_enum proto
 _two_two_enum_test proto
-
-
+_targets_bullet_out_of_bound proto
 ; lja functions
-NextPos proto :ptr BASE         ;每个道具移动
-ChangeAllPos proto      ;遍历所有道具，使之移动
+_next_position proto :ptr BASE         ;每个道具移动
+_change_all_position proto      ;遍历所有道具，使之移动
 ;=====================================================
 
 BASE struct
