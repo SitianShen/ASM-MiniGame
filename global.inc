@@ -174,6 +174,18 @@ IDB_BUTTON_START_2 equ 312
 button_start_LX     equ 265
 button_start_LY     equ 83
 
+PROP_LX equ 500
+PROP_LY equ 500
+IDB_PROP_MONEY      equ 313
+IDB_PROP_ABSTSOFT   equ 314
+IDB_PROP_ABSTHARD   equ 315
+IDB_PROP_ACC        equ 316
+IDB_PROP_DEC        equ 317
+IDB_PROP_BULLETL    equ 318
+IDB_PROP_BULLETM    equ 319
+IDB_PROP_BULLETR     equ 320
+
+
 
 gameH           equ     600
 gameW           equ     600
