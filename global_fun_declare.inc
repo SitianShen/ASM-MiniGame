@@ -1,5 +1,4 @@
 ;========================= c c c c ============================
-
 scanf proto c:dword,:vararg
 printf proto c:dword,:vararg
 srand proto c:dword,:vararg
@@ -7,13 +6,14 @@ time proto c:dword,:vararg
 rand proto c
 
 
+
 ;========================= sst sst sst sst ============================
 ; sst functions
 _Init_car proto;小车初始化
 _Move_process proto;每帧更新都要调用，实现连续性移动或跳起
-_Action_left proto;
-_Action_right proto;
-_Action_jump proto;
+_Action_left proto
+_Action_right proto
+_Action_jump proto
 _sst_test proto
 
 

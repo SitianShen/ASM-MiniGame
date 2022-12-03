@@ -2,38 +2,41 @@
 .model flat, stdcall
 option casemap: none
 
-include global.inc
+include global_dev.inc
 
-; extrn player:Subject         
-; extrn bullet:Subject             
-; extrn targets
+extrn player:Subject         
+extrn bullet:Subject             
+extrn targets:dword
 
-; ;zzl own
-; extrn button_play:Button      
-; extrn button_start:Button      
-; extrn button_back:Button      
-; extrn button_exit:Button       
-; extrn backGround:BackGround       
-; extrn object_DC:Object_DC        
+;zzl own
+extrn button_play:Button      
+extrn button_start:Button      
+extrn button_back:Button      
+extrn button_exit:Button       
+extrn backGround:BackGround       
+extrn object_DC:Object_DC        
 
-; extrn hInstance:dd       
-; extrn hWinMain:dd      
-; extrn hDCBack:dd         
-; extrn hDCGame:dd         
-; extrn hDCObj1:dd        
-; extrn dwNowBack:dd     
+extrn hInstance:dword       
+extrn hWinMain:dword      
+extrn hDCBack:dword         
+extrn hDCGame:dword         
+extrn hDCObj1:dword        
+extrn dwNowBack:dword     
 
-; extrn flag_jump:dd               
-; extrn flag_movleft:dd          
-; extrn flag_movright:dd           
-; extrn stdtime_jump:dd            
-; extrn time_jump:dd              
-; extrn stdtime_mov:dd             
-; extrn time_mov:dd             
-; extrn cur_interface:dd     
+extrn flag_jump:dword               
+extrn flag_movleft:dword          
+extrn flag_movright:dword           
+extrn stdtime_jump:dword            
+extrn time_jump:dword              
+extrn stdtime_mov:dword             
+extrn time_mov:dword             
+extrn cur_interface:dword     
 
-; extrn target_number:dd       
-; extrn speed:dd     
+extrn target_number:dword       
+extrn speed:dword  
+
+; include global.inc
+   
 
 .const
 szCollision byte "collision check", 0ah, 0
@@ -592,44 +595,13 @@ _two_two_enum_test proc
         ret
 _two_two_enum_test endp
 
-_targets_bullet_out_of_bound proc
-        ; 判断道具越界
-        mov ebx, target_number
-        xor eax, eax
-        .while eax < ebx
-                push eax
-                mov edx, 0
-                mov ebx, sizeofTargets
-                mul ebx
-                .if targets[eax].base.alive == 1
-                        .if targets[eax].base.posx <= 10 || targets[eax].base.posx >= gameW-10 \
-                        || targets[eax].base.posy <= 10 || targets[eax].base.posy <= gameH-10
-                                mov targets[eax].base.alive, 0
-                        .endif
-                .endif
-                pop eax
-                inc eax
-        .endw
 
-        ; 判断子弹越界
-        .if bullet.base.alive == 1
-                .if bullet.base.posx <= 10 || bullet.base.posx >= gameW-10 \
-                || bullet.base.posy <= 10 || bullet.base.posy <= gameH-10
-                        mov bullet.base.alive, 0
-                .endif
-        .endif
-ret
-_targets_bullet_out_of_bound endp
-
-
-
-
-start:
-        ; call    _WinMain
-        ; invoke  ExitProcess, NULL
+; start:
+;         ; call    _WinMain
+;         ; invoke  ExitProcess, NULL
         
-        ; invoke _collision_test
-        invoke _two_two_enum_test
-        ret
-end     start
-; end
+;         ; invoke _collision_test
+;         invoke _two_two_enum_test
+;         ret
+; end     start
+end

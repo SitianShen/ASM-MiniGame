@@ -6,4 +6,7 @@ set lib=%Masm32Dir%\lib;%lib%
 set path=%Masm32Dir%\Bin;%Masm32Dir%;%PATH%
 
 nmake clean
-nmake ldf_dev
+@REM nmake ldf_dev
+nmake main_dev
+@REM nmake
+

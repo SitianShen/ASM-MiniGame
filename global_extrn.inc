@@ -1,6 +1,6 @@
 extrn player:Subject         
 extrn bullet:Subject             
-extrn targets
+extrn targets:dword
 
 ;zzl own
 extrn button_play:Button      
@@ -10,21 +10,21 @@ extrn button_exit:Button
 extrn backGround:BackGround       
 extrn object_DC:Object_DC        
 
-extrn hInstance       
-extrn hWinMain      
-extrn hDCBack         
-extrn hDCGame         
-extrn hDCObj1        
-extrn dwNowBack      
+extrn hInstance:dword       
+extrn hWinMain:dword      
+extrn hDCBack:dword         
+extrn hDCGame:dword         
+extrn hDCObj1:dword        
+extrn dwNowBack:dword     
 
-extrn flag_jump               
-extrn flag_movleft            
-extrn flag_movright           
-extrn stdtime_jump            
-extrn time_jump              
-extrn stdtime_mov             
-extrn time_mov             
-extrn cur_interface     
+extrn flag_jump:dword               
+extrn flag_movleft:dword          
+extrn flag_movright:dword           
+extrn stdtime_jump:dword            
+extrn time_jump:dword              
+extrn stdtime_mov:dword             
+extrn time_mov:dword             
+extrn cur_interface:dword     
 
-extrn target_number       
-extrn speed     
+extrn target_number:dword       
+extrn speed:dword  
