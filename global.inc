@@ -13,6 +13,9 @@ includelib msvcrt.lib
 include msvcrt.inc
 scanf proto c:dword,:vararg
 printf proto c:dword,:vararg
+srand proto c:dword,:vararg
+time proto c:dword,:vararg
+rand proto c
 
 ;=====================================================
 ; sst functions
@@ -85,14 +88,25 @@ BackGround struct
         DC_i    dd      ?
         DC_e    dd      ?
 BackGround ends
+
+Object_DC struct
+        env1    dd      ?
+        env2    dd      ?
+        env3    dd      ?
+        sobs    dd      ?
+        hobs    dd      ?
+        accp    dd      ?
+        decp    dd      ?
+        coin    dd      ?
+Object_DC ends
         
 
 .data?
 player          Subject <>              ;????
 bullet          Subject <>              ;???
-env_objecet_1   BASE    <>              ;???????????? 1
-env_objecet_2   BASE    <>              ;???????????? 2
-env_objecet_3   BASE    <>              ;???????????? 3
+; env_objecet_1   BASE    <>              ;???????????? 1
+; env_objecet_2   BASE    <>              ;???????????? 2
+; env_objecet_3   BASE    <>              ;???????????? 3
 targets         Targets  1000 dup(<>)   ;????
 
 ;zzl own
@@ -101,6 +115,7 @@ button_start      Button <>
 button_back       Button <>
 button_exit       Button <>
 backGround        BackGround <>
+object_DC         Object_DC <>
 
 .data
 choose_start equ 0
