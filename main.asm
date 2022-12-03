@@ -76,7 +76,7 @@ _load_button proc button, p1, p2
         ret
 _load_button endp
 
-_load_background proc DC, p1
+_load_common_pic proc DC, p1
         local   @hDC, @pic
 
         invoke  GetDC, hWinMain
@@ -93,7 +93,7 @@ _load_background proc DC, p1
         invoke  SelectObject, [esi], @pic
         invoke  DeleteObject,  @pic
         ret
-_load_background endp
+_load_common_pic endp
 
 _createAll proc 
         local   @hDC, @hDCCircle, @hDCMask
@@ -110,37 +110,24 @@ _createAll proc
         mov     @hBmpBack, eax
         invoke  SelectObject, hDCGame, @hBmpBack ; set draw area to DC
         invoke  DeleteObject, @hBmpBack
+;backgrounds
+        invoke  _load_common_pic, addr backGround.DC_b, IDB_BACKG_BEGINING
+        invoke  _load_common_pic, addr backGround.DC_i, IDB_BACKG_INTRO
+        invoke  _load_common_pic, addr backGround.DC_p, IDB_BACKG_PLAY
+        invoke  _load_common_pic, addr backGround.DC_e, IDB_BACKG_END
+;ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ env obj
+        invoke  _load_common_pic, addr env_objecet_1.DC, IDB_OBJ1
+        invoke  _load_common_pic, addr env_objecet_2.DC, IDB_OBJ2
+        invoke  _load_common_pic, addr env_objecet_2.DC, IDB_OBJ3
 
-        invoke  _load_background, addr backGround.DC_b, IDB_BACKG_BEGINING
-        invoke  _load_background, addr backGround.DC_i, IDB_BACKG_INTRO
-        invoke  _load_background, addr backGround.DC_p, IDB_BACKG_PLAY
-        invoke  _load_background, addr backGround.DC_e, IDB_BACKG_END
-;»·¾³ÎïÌå
-        invoke  CreateCompatibleDC, @hDC
-        mov     env_objecet_1.DC, eax
-        invoke  CreateCompatibleDC, @hDC
-        mov     env_objecet_2.DC, eax
-        invoke  CreateCompatibleDC, @hDC
-        mov     env_objecet_3.DC, eax
-        invoke  LoadBitmap, hInstance, IDB_OBJ1
-        mov     @hBmpObj1, eax ;load obj
-        invoke  LoadBitmap, hInstance, IDB_OBJ2
-        mov     @hBmpObj2, eax ;load obj
-        invoke  LoadBitmap, hInstance, IDB_OBJ3
-        mov     @hBmpObj3, eax ;load obj
-        invoke  SelectObject, env_objecet_1.DC, @hBmpObj1
-        invoke  SelectObject, env_objecet_2.DC, @hBmpObj2
-        invoke  SelectObject, env_objecet_3.DC, @hBmpObj3
-        invoke  DeleteObject, @hBmpObj1
-        invoke  DeleteObject, @hBmpObj2
-        invoke  DeleteObject, @hBmpObj3
-;¿ªÊ¼½áÊø¿Ø¼þ
+;ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½Ø¼ï¿½ button
         invoke _load_button, addr button_play,  IDB_BUTTON_PLAY_1,  IDB_BUTTON_PLAY_2
         invoke _load_button, addr button_start, IDB_BUTTON_START_1, IDB_BUTTON_START_2
         invoke _load_button, addr button_exit,  IDB_BUTTON_EXIT_1,  IDB_BUTTON_EXIT_2
         invoke _load_button, addr button_back,  IDB_BUTTON_BACK_1,  IDB_BUTTON_BACK_2
 
         invoke _set_char_pos
+
 
 ;
         invoke  ReleaseDC, hWinMain, @hDC
