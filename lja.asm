@@ -102,6 +102,7 @@ ChangeAllPos proc stdcall       ;遍历所有道具改变位置
         .while eax < target_number
                 lea esi, targets[eax]
                 invoke NextPos, esi
+                inc eax
         .endw
 ret
 ChangeAllPos endp
