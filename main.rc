@@ -1,5 +1,9 @@
 # include   <resource.h>
 
+# define IDB_BACKG_END      96
+# define IDB_BACKG_PLAY     97
+# define IDB_BACKG_INTRO    98
+# define IDB_BACKG_BEGINING 99
 # define IDB_BACKG          100
 # define IDB_OBJ1           101
 # define IDB_OBJ2           102
@@ -9,13 +13,54 @@
 # define IDB_GAMEINTRO      302
 # define IDB_GAMESTARTC     303
 # define IDB_GAMEINTROC     304
+# define IDB_BUTTON_BACK_1  305
+# define IDB_BUTTON_BACK_2  306
+# define IDB_BUTTON_EXIT_1  307
+# define IDB_BUTTON_EXIT_2  308
+# define IDB_BUTTON_PLAY_1  309
+# define IDB_BUTTON_PLAY_2  310
+# define IDB_BUTTON_START_1  311
+# define IDB_BUTTON_START_2  312
+# define IDB_PROP_MONEY      313
+# define IDB_PROP_ABSTSOFT   314
+# define IDB_PROP_ABSTHARD   315
+# define IDB_PROP_ACC        316
+# define IDB_PROP_DEC        317
+# define IDB_PROP_BULLETL    318
+# define IDB_PROP_BULLETM    319
+# define DB_PROP_BULLETR     320
 
-IDB_BACKG       BITMAP      "resource/background.bmp"
-IDB_ICON        ICON        "resource/icon.ico"
-IDB_OBJ1        BITMAP      "resource/object1.bmp"
-IDB_OBJ2        BITMAP      "resource/object2.bmp"
-IDB_OBJ3        BITMAP      "resource/object3.bmp"
-IDB_GAMESTART   BITMAP      "resource/game_start.bmp"
-IDB_GAMEINTRO   BITMAP      "resource/game_intro.bmp"
-IDB_GAMESTARTC  BITMAP      "resource/game_start_chosen.bmp"
-IDB_GAMEINTROC  BITMAP      "resource/game_intro_chosen.bmp"
+IDB_BACKG           BITMAP      "resource/background.bmp"
+IDB_BACKG_BEGINING  BITMAP      "resource/background_begining.bmp"
+IDB_BACKG_INTRO     BITMAP      "resource/background_intro.bmp"
+IDB_BACKG_PLAY      BITMAP      "resource/background_play.bmp"
+IDB_BACKG_END       BITMAP      "resource/background_end.bmp"
+IDB_ICON            ICON        "resource/icon.ico"
+
+IDB_OBJ1            BITMAP      "resource/object1.bmp"
+IDB_OBJ2            BITMAP      "resource/object2.bmp"
+IDB_OBJ3            BITMAP      "resource/object3.bmp"
+
+IDB_GAMESTART       BITMAP      "resource/game_start.bmp"
+IDB_GAMEINTRO       BITMAP      "resource/game_intro.bmp"
+IDB_GAMESTARTC      BITMAP      "resource/game_start_chosen.bmp"
+IDB_GAMEINTROC      BITMAP      "resource/game_intro_chosen.bmp"
+
+IDB_BUTTON_BACK_1   BITMAP      "resource/button_back_1.bmp"
+IDB_BUTTON_BACK_2   BITMAP      "resource/button_back_2.bmp"
+IDB_BUTTON_EXIT_1   BITMAP      "resource/button_exit_1.bmp"
+IDB_BUTTON_EXIT_2   BITMAP      "resource/button_exit_2.bmp"
+IDB_BUTTON_PLAY_1   BITMAP      "resource/button_play_1.bmp"
+IDB_BUTTON_PLAY_2   BITMAP      "resource/button_play_2.bmp"
+IDB_BUTTON_START_1  BITMAP      "resource/button_start_1.bmp"
+IDB_BUTTON_START_2  BITMAP      "resource/button_start_2.bmp"
+
+IDB_PROP_MONEY      BITMAP       "resource/prop_money.bmp"
+IDB_PROP_ABSTSOFT   BITMAP       "resource/prop_obstsoft.bmp"
+IDB_PROP_ABSTHARD   BITMAP       "resource/prop_obsthard.bmp"
+IDB_PROP_ACC        BITMAP       "resource/prop_acc.bmp"
+IDB_PROP_DEC        BITMAP       "resource/prop_dec.bmp"
+IDB_PROP_BULLETL    BITMAP       "resource/prop_bulletL.bmp"
+IDB_PROP_BULLETM    BITMAP       "resource/prop_bulletM.bmp"
+IDB_PROP_BULLETR    BITMAP       "resource/prop_bulletR.bmp"
+

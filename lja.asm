@@ -5,7 +5,7 @@ option casemap: none
 include global.inc
 .code
 ;speed = 4 —— 正常， 8 —— 快速， 12 —— 超快速
-NextPos proc stdcall ptrBase :ptr BASE
+_next_position proc stdcall ptrBase :ptr BASE
         ; local cur_speed :dword
         ; mov bx, speed
         ; xor ax, ax
@@ -27,7 +27,7 @@ NextPos proc stdcall ptrBase :ptr BASE
                 mov eax, speed
                 add [esi].posy, eax
                 mov edx, 0
-                mov ebx, 2
+                mov ebx, 1
                 div ebx
                 sub [esi].posx, eax
 
@@ -35,7 +35,7 @@ NextPos proc stdcall ptrBase :ptr BASE
                 mov eax, speed
                 add [esi].posy, eax
                 mov edx, 0
-                mov ebx, 2
+                mov ebx, 1
                 div ebx
                 add [esi].posx, eax
         
@@ -43,16 +43,16 @@ NextPos proc stdcall ptrBase :ptr BASE
                 mov eax, speed
                 add [esi].posy, eax
                 mov edx, 0
-                mov ebx, 1
-                div ebx
+                mov ebx, 2
+                mul ebx
                 sub [esi].posx, eax
 
         .elseif ecx == 4 ;右侧风景
                 mov eax, speed
                 add [esi].posy, eax
                 mov edx, 0
-                mov ebx, 1
-                div ebx
+                mov ebx, 2
+                mul ebx
                 add [esi].posx, eax
 
         .elseif ecx == 6 ;中间跑道的子弹
@@ -63,7 +63,7 @@ NextPos proc stdcall ptrBase :ptr BASE
                 mov eax, speed
                 sub [esi].posy, eax
                 mov edx, 0
-                mov ebx, 2
+                mov ebx, 1
                 div ebx
                 add [esi].posx, eax
 
@@ -71,7 +71,7 @@ NextPos proc stdcall ptrBase :ptr BASE
                 mov eax, speed
                 sub [esi].posy, eax
                 mov edx, 0
-                mov ebx, 2
+                mov ebx, 1
                 div ebx
                 sub [esi].posx, eax
 
@@ -94,16 +94,28 @@ NextPos proc stdcall ptrBase :ptr BASE
         .endif
         assume  esi: nothing
 ret
-NextPos endp 
+_next_position endp 
 
-ChangeAllPos proc stdcall       ;遍历所有道具改变位置
+_change_all_position proc stdcall       ;遍历所有道具改变位置
         mov ebx, target_number
         xor eax, eax
-        .while eax < target_number
-                lea esi, targets[eax]
-                invoke NextPos, esi
+        .while eax < ebx
+                lea esi, targets[eax].base
+                assume  esi: ptr BASE
+                .if [esi].alive == 1
+                        invoke _next_position, esi
+                .endif
+                assume  esi: nothing
+                inc eax
         .endw
+        ; 移动子弹
+        lea esi, bullet.base
+        assume  esi: ptr BASE
+        .if [esi].alive == 1
+                invoke _next_position, esi
+        .endif
+        assume  esi: nothing
 ret
-ChangeAllPos endp
+_change_all_position endp
 
 end

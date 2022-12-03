@@ -30,104 +30,104 @@ include global.inc
 
 ; ;3 check collision ???????
 ; _check_collision proc
-; ;??????????????��????��?????????????
+; ;???????????????????????????????????
 ; ;?????targets?????????target_number
 ; _check_collision endp
 
 _set_char_pos proc
-        mov game_start.posx, 70
-        mov game_start.posy, 50
-        mov game_start.lengthx, charH
-        mov game_start.lengthy, charW
-        mov game_start_chosen.posx, 70
-        mov game_start_chosen.posy, 50
-        mov game_start_chosen.lengthx, charH
-        mov game_start_chosen.lengthy, charW
+        mov button_play.base.posx, 70
+        mov button_play.base.posy, 50
+        mov button_play.base.lengthx, button_play_LX
+        mov button_play.base.lengthy, button_play_LY
 
-        mov game_intro.posx, 70
-        mov game_intro.posy, 180
-        mov game_intro.lengthx, charH
-        mov game_intro.lengthy, charW
-        mov game_intro_chosen.posx, 70
-        mov game_intro_chosen.posy, 180
-        mov game_intro_chosen.lengthx, charH
-        mov game_intro_chosen.lengthy, charW
+        mov button_start.base.posx, 70
+        mov button_start.base.posy, 180
+        mov button_start.base.lengthx, button_start_LX
+        mov button_start.base.lengthy, button_start_LY
 
+        mov button_back.base.posx, 70
+        mov button_back.base.posy, 180
+        mov button_back.base.lengthx, button_back_LX/2
+        mov button_back.base.lengthy, button_back_LY/2
         ret
 _set_char_pos endp
+
+_load_button proc button, p1, p2
+        local @hDC, @pic
+        invoke  GetDC, hWinMain
+        mov     @hDC, eax
+
+        mov ebx, button
+        assume ebx :ptr Button
+        invoke  CreateCompatibleDC, @hDC
+        mov     [ebx].DC, eax
+        invoke  CreateCompatibleDC, @hDC
+        mov     [ebx].DC_, eax
+
+        invoke  LoadBitmap, hInstance, p1
+        mov @pic, eax
+        invoke SelectObject, [ebx].DC, @pic
+        invoke DeleteObject, @pic
+        
+        invoke  LoadBitmap, hInstance, p2
+        mov @pic, eax
+        invoke SelectObject, [ebx].DC_, @pic
+        invoke DeleteObject, @pic
+        ret
+_load_button endp
+
+_load_common_pic proc DC, p1
+        local   @hDC, @pic
+
+        invoke  GetDC, hWinMain
+        mov     @hDC, eax
+        
+        mov esi, DC
+        assume esi :ptr dword
+        invoke  CreateCompatibleDC, @hDC
+        mov     [esi], eax
+
+        invoke  LoadBitmap, hInstance, p1
+        mov     @pic, eax ;load back
+        
+        invoke  SelectObject, [esi], @pic
+        invoke  DeleteObject,  @pic
+        ret
+_load_common_pic endp
+
 _createAll proc 
         local   @hDC, @hDCCircle, @hDCMask
         local   @hBmpBack, @hBmpObj1, @hBmpObj2, @hBmpObj3
         local   @hBmpGS, @hBmpGI
         local   @brush
 
-        mov     dwNowBack, IDB_BACKG
         invoke  GetDC, hWinMain
         mov     @hDC, eax
-
-        invoke  CreateCompatibleDC, @hDC
-        mov     hDCBack, eax
 
         invoke  CreateCompatibleDC, @hDC
         mov     hDCGame, eax
         invoke  CreateCompatibleBitmap, @hDC, gameH, gameW
         mov     @hBmpBack, eax
         invoke  SelectObject, hDCGame, @hBmpBack ; set draw area to DC
-
-
-        invoke  LoadBitmap, hInstance, dwNowBack
-        mov     @hBmpBack, eax ;load back
-
-        invoke  SelectObject, hDCBack, @hBmpBack
-        ; invoke  DeleteObject, @brush
         invoke  DeleteObject, @hBmpBack
-;???????????
-        invoke  CreateCompatibleDC, @hDC
-        mov     env_objecet_1.DC, eax
-        invoke  CreateCompatibleDC, @hDC
-        mov     env_objecet_2.DC, eax
-        invoke  CreateCompatibleDC, @hDC
-        mov     env_objecet_3.DC, eax
-        invoke  LoadBitmap, hInstance, IDB_OBJ1
-        mov     @hBmpObj1, eax ;load obj
-        invoke  LoadBitmap, hInstance, IDB_OBJ2
-        mov     @hBmpObj2, eax ;load obj
-        invoke  LoadBitmap, hInstance, IDB_OBJ3
-        mov     @hBmpObj3, eax ;load obj
-        invoke  SelectObject, env_objecet_1.DC, @hBmpObj1
-        invoke  SelectObject, env_objecet_2.DC, @hBmpObj2
-        invoke  SelectObject, env_objecet_3.DC, @hBmpObj3
-        invoke  DeleteObject, @hBmpObj1
-        invoke  DeleteObject, @hBmpObj2
-        invoke  DeleteObject, @hBmpObj3
-;???????
-        invoke  CreateCompatibleDC, @hDC
-        mov     game_start.DC, eax
-        invoke  CreateCompatibleDC, @hDC
-        mov     game_intro.DC, eax
-        invoke  LoadBitmap, hInstance, IDB_GAMESTART
-        mov     @hBmpGS, eax ;load obj
-        invoke  LoadBitmap, hInstance, IDB_GAMEINTRO
-        mov     @hBmpGI, eax ;load obj
-        invoke  SelectObject, game_start.DC, @hBmpGS
-        invoke  SelectObject, game_intro.DC, @hBmpGI
-        invoke  DeleteObject, @hBmpGS
-        invoke  DeleteObject, @hBmpGI
+;backgrounds
+        invoke  _load_common_pic, addr backGround.DC_b, IDB_BACKG_BEGINING
+        invoke  _load_common_pic, addr backGround.DC_i, IDB_BACKG_INTRO
+        invoke  _load_common_pic, addr backGround.DC_p, IDB_BACKG_PLAY
+        invoke  _load_common_pic, addr backGround.DC_e, IDB_BACKG_END
+;�������� env obj
+        invoke  _load_common_pic, addr env_objecet_1.DC, IDB_OBJ1
+        invoke  _load_common_pic, addr env_objecet_2.DC, IDB_OBJ2
+        invoke  _load_common_pic, addr env_objecet_2.DC, IDB_OBJ3
 
-        invoke  CreateCompatibleDC, @hDC
-        mov     game_start_chosen.DC, eax
-        invoke  CreateCompatibleDC, @hDC
-        mov     game_intro_chosen.DC, eax
-        invoke  LoadBitmap, hInstance, IDB_GAMESTARTC
-        mov     @hBmpGS, eax ;load obj
-        invoke  LoadBitmap, hInstance, IDB_GAMEINTROC
-        mov     @hBmpGI, eax ;load obj
-        invoke  SelectObject, game_start_chosen.DC, @hBmpGS
-        invoke  SelectObject, game_intro_chosen.DC, @hBmpGI
-        invoke  DeleteObject, @hBmpGS
-        invoke  DeleteObject, @hBmpGI
+;��ʼ�����ؼ� button
+        invoke _load_button, addr button_play,  IDB_BUTTON_PLAY_1,  IDB_BUTTON_PLAY_2
+        invoke _load_button, addr button_start, IDB_BUTTON_START_1, IDB_BUTTON_START_2
+        invoke _load_button, addr button_exit,  IDB_BUTTON_EXIT_1,  IDB_BUTTON_EXIT_2
+        invoke _load_button, addr button_back,  IDB_BUTTON_BACK_1,  IDB_BUTTON_BACK_2
 
         invoke _set_char_pos
+
 
 ;
         invoke  ReleaseDC, hWinMain, @hDC
@@ -151,80 +151,57 @@ _Quit           proc
         ret
 _Quit           endp
 
+_draw_button proc button, hWnd, LX, LY
+        local @mouse:POINT
+        local @window:RECT
+        local @chooseDC
+
+        invoke	GetCursorPos,addr @mouse
+        invoke  ScreenToClient, hWnd, addr @mouse
+
+        mov esi, button
+        assume esi :ptr Button
+        
+        mov eax, [esi].base.posx
+        mov ebx, [esi].base.posy
+
+        mov edx, [esi].DC
+        mov [esi].is_click, 0
+        .if (eax <= @mouse.x) && (ebx <= @mouse.y)
+                add eax, [esi].base.lengthx
+                add ebx, [esi].base.lengthy
+                .if (eax >= @mouse.x) && (ebx >= @mouse.y)
+                        mov edx, [esi].DC_
+                        mov [esi].is_click, 1
+                .endif
+        .endif
+        invoke  TransparentBlt, 
+                hDCGame, 
+                [esi].base.posx, [esi].base.posy, [esi].base.lengthx, [esi].base.lengthy, 
+                edx, 0, 0, LX, LY, 16777215      
+        ret
+_draw_button endp
+
 _move_object proc hWnd
         local @mouse:POINT
         local @window:RECT
 
 
 
-        invoke  BitBlt, hDCGame, 0, 0, gameH, gameW, hDCBack, 0, 0, SRCCOPY
         mov eax, cur_interface
         .if eax == in_begining 
-                mov choose_which_char, 0
+                invoke  TransparentBlt, hDCGame, 0, 0, gameH, gameW, backGround.DC_b, 0, 0, 1000, 1000, SRCCOPY
+                invoke _draw_button, addr button_play, hWnd, button_play_LX, button_play_LY
+                invoke _draw_button, addr button_start, hWnd, button_start_LX, button_start_LY
+        .elseif eax == in_game
+                invoke  TransparentBlt, hDCGame, 0, 0, gameH, gameW, backGround.DC_p, 0, 0, 1000, 1000, SRCCOPY
+        
+        .elseif eax == in_intro
+                invoke  TransparentBlt, hDCGame, 0, 0, gameH, gameW, backGround.DC_i, 0, 0, 1000, 1000, SRCCOPY
+                invoke _draw_button, addr button_back, hWnd, button_back_LX, button_back_LY
+        .elseif eax == in_over
+                invoke  TransparentBlt, hDCGame, 0, 0, gameH, gameW, backGround.DC_e, 0, 0, 1000, 1000, SRCCOPY
 
-                invoke	GetCursorPos,addr @mouse
-                invoke  GetWindowRect, hWnd, addr @window
-                ; invoke printf, offset debug_int, @mouse.x
-                mov eax, @window.left
-                mov ebx, @window.top
-                ; sub @mouse.x, windows
-                add eax, game_start.posx
-                ; invoke printf, offset debug_int, eax
-                add ebx, game_start.posy
-                .if (eax <= @mouse.x) && (ebx <= @mouse.y)
-                        add eax, game_start.lengthx
-                        add ebx, game_start.lengthy
-                        .if (eax >= @mouse.x) && (ebx >= @mouse.y)
-                                mov choose_which_char, choose_start
-                        .endif
-                .endif
-
-                mov eax, @window.left
-                mov ebx, @window.top
-                add eax, game_intro.posx
-                add ebx, game_intro.posy
-                .if (eax <= @mouse.x) && (ebx <= @mouse.y)
-                        add eax, game_intro.lengthx
-                        add ebx, game_intro.lengthy
-                        .if (eax >= @mouse.x) && (ebx >= @mouse.y)
-                                mov choose_which_char, choose_intro
-                        .endif
-                .endif
-                ; invoke printf, offset debug_int, choose_which_char
-
-                mov eax, choose_which_char
-                .if eax == choose_start
-                        invoke  TransparentBlt, 
-                                hDCGame, 
-                                game_start_chosen.posx, game_start_chosen.posy, charH, charW, 
-                                game_start_chosen.DC, 
-                                0, 0, game_start_chosen.lengthx, game_start_chosen.lengthy, 
-                                16777215               
-                .else
-                        invoke  TransparentBlt, 
-                                hDCGame, 
-                                game_start.posx, game_start.posy, charH, charW, 
-                                game_start.DC, 
-                                0, 0, game_start.lengthx, game_start.lengthy, 
-                                16777215  
-                .endif
-
-                mov eax, choose_which_char
-                .if eax == choose_intro
-                        invoke  TransparentBlt, 
-                                hDCGame, 
-                                game_intro_chosen.posx, game_intro_chosen.posy, charH, charW, 
-                                game_intro_chosen.DC, 
-                                0, 0, game_intro_chosen.lengthx, game_intro_chosen.lengthy, 
-                                16777215     
-                .else
-                        invoke  TransparentBlt, 
-                                hDCGame, 
-                                game_intro.posx, game_intro.posy, charH, charW, 
-                                game_intro.DC, 
-                                0, 0, game_intro.lengthx, game_intro.lengthy, 
-                                16777215  
-                .endif
         .endif
 ;         mov eax, object1H
 ;         mov ebx, object1W
@@ -267,7 +244,7 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                 mov     eax, hWnd
                 mov     hWinMain, eax
                 invoke  _createAll
-                invoke  SetTimer, hWinMain, ID_TIMER, 55, NULL
+                invoke  SetTimer, hWinMain, ID_TIMER, 15, NULL
 
         .elseif eax == WM_TIMER
                 mov     eax, wParam
@@ -279,14 +256,20 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
         .elseif eax == WM_LBUTTONUP
                 mov eax, cur_interface
                 .if eax == in_begining 
-                        mov eax, choose_which_char
-                        .if eax == choose_start
+                        mov eax, 1
+                        .if eax == button_play.is_click
                                 mov cur_interface, in_game
                         .endif
-                        .if eax == choose_intro
-                                
+                        .if eax == button_start.is_click
+                                mov cur_interface, in_intro
+                        .endif
+                .elseif eax == in_intro
+                        mov eax, 1
+                        .if eax == button_back.is_click
+                                mov cur_interface, in_begining
                         .endif
                 .endif
+
 
         .elseif eax == WM_CLOSE
                 invoke  _Quit
@@ -331,7 +314,7 @@ _WinMain        proc
         invoke  CreateWindowEx, NULL, \
                 offset szClassName, offset szClassName, \
                 WS_OVERLAPPEDWINDOW, \
-                10, 10, gameH, gameW, \
+                0, 0, gameH+13, gameW+33, \
                 NULL, NULL, hInstance, NULL
         mov     hWinMain, eax
         invoke  ShowWindow, hWinMain, SW_SHOWNORMAL
