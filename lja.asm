@@ -97,27 +97,27 @@ ret
 _next_position endp 
 
 _change_all_position proc stdcall       ;遍历所有道具改变位置
-        mov ebx, target_number
+        mov ecx, target_number
         xor eax, eax
-        .while eax < ebx
+        .while eax < ecx
                 push eax
                 mov edx, 0
                 mov ebx, sizeofTargets
                 mul ebx
-                lea esi, targets[eax].base
-                assume  esi: ptr BASE
-                .if [esi].alive == 1
-                        invoke _next_position, esi
+                lea esi, targets[eax]
+                assume esi :ptr Targets
+                .if [esi].base.alive == 1
+                        invoke _next_position, addr [esi].base
                 .endif
                 assume  esi: nothing
                 pop eax
                 inc eax
         .endw
         ; 移动子弹
-        lea esi, bullet.base
-        assume  esi: ptr BASE
-        .if [esi].alive == 1
-                invoke _next_position, esi
+        lea esi, bullet
+        assume esi :ptr Targets
+        .if [esi].base.alive == 1
+                invoke _next_position, addr [esi].base
         .endif
         assume  esi: nothing
 ret

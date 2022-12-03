@@ -536,7 +536,7 @@ start:
         invoke srand, eax
         invoke rand
         call    _WinMain
-        invoke  ExitProcess, NULL
+        invoke  ExitProcess, NULL      
         ; invoke _collision_test
         ; invoke _sst_test
         ret

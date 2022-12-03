@@ -564,19 +564,22 @@ _two_two_enum_test endp
 
 _targets_bullet_out_of_bound proc
         ; 判断道具越界
-        mov ebx, target_number
+        mov ecx, target_number
         xor eax, eax
-        .while eax < ebx
+        .while eax < ecx
                 push eax
                 mov edx, 0
                 mov ebx, sizeofTargets
                 mul ebx
-                .if targets[eax].base.alive == 1
-                        .if targets[eax].base.posx <= 10 || targets[eax].base.posx >= gameW-10 \
-                        || targets[eax].base.posy <= 10 || targets[eax].base.posy <= gameH-10
-                                mov targets[eax].base.alive, 0
+                lea esi, targets[eax]
+                assume esi :ptr Targets
+                .if [esi].base.alive == 1
+                        .if [esi].base.posx <= 10 || [esi].base.posx >= gameW-10 \
+                        || [esi].base.posy <= 10 || [esi].base.posy <= gameH-10
+                                mov [esi].base.alive, 0
                         .endif
                 .endif
+                assume esi: nothing
                 pop eax
                 inc eax
         .endw
