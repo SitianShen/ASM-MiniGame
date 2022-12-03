@@ -145,6 +145,67 @@ _Action_jump endp
 ; end start
 
 ;zzl part #################################################################
+_initAll proc
+        invoke _Init_car
+        mov target_number, 0
+        ret
+_initAll endp
+
+_random_object proc
+        local @id, @new_DC, @new_course, @offs
+        
+        mov esi, offset targets
+        assume esi: ptr Targets
+        mov ecx, target_number
+        .while ecx != 0 
+                dec ecx
+                add esi, sizeofTargets
+        .endw
+        mov @offs, esi
+
+        invoke rand
+        mov @id, eax
+        and eax, 7
+
+        .if eax == 0
+                mov ebx, object_DC.env1
+        .elseif eax == 1
+                mov ebx, object_DC.env2
+        .elseif eax == 2
+                mov ebx, object_DC.env3
+        .elseif eax == 3
+                mov ebx, object_DC.sobs
+        .elseif eax == 4
+                mov ebx, object_DC.hobs
+        .elseif eax == 5
+                mov ebx, object_DC.accp
+        .elseif eax == 6
+                mov ebx, object_DC.decp
+        .elseif eax == 7
+                mov ebx, object_DC.coin
+        .endif
+        mov @new_DC, ebx
+
+        mov eax, @id
+        .if eax <= 2 
+                and eax, 4
+                mov @new_course, eax
+        .else
+                invoke rand
+                add eax, 3
+                .while eax == 0
+                        invoke rand
+                        add eax, 3
+                .endw
+                add eax, 4
+                mov @new_course, eax
+        .endif
+
+
+        ret
+_random_object endp
+
+
 _set_char_pos proc
         mov button_play.base.posx, 70
         mov button_play.base.posy, 50
@@ -160,6 +221,11 @@ _set_char_pos proc
         mov button_back.base.posy, 180
         mov button_back.base.lengthx, button_back_LX/2
         mov button_back.base.lengthy, button_back_LY/2
+
+        mov button_exit.base.posx, 70
+        mov button_exit.base.posy, 180
+        mov button_exit.base.lengthx, button_exit_LX/2
+        mov button_exit.base.lengthy, button_exit_LY/2
         ret
 _set_char_pos endp
 
@@ -228,10 +294,14 @@ _createAll proc
         invoke  _load_common_pic, addr backGround.DC_pd, IDB_BACKG_PLAYD
         invoke  _load_common_pic, addr backGround.DC_e, IDB_BACKG_END
 ;�������� env obj
-        invoke  _load_common_pic, addr env_objecet_1.DC, IDB_OBJ1
-        invoke  _load_common_pic, addr env_objecet_2.DC, IDB_OBJ2
-        invoke  _load_common_pic, addr env_objecet_2.DC, IDB_OBJ3
-
+        invoke  _load_common_pic, addr object_DC.env1, IDB_OBJ1
+        invoke  _load_common_pic, addr object_DC.env2, IDB_OBJ2
+        invoke  _load_common_pic, addr object_DC.env3, IDB_OBJ3
+        invoke  _load_common_pic, addr object_DC.sobs, IDB_PROP_ABSTSOFT
+        invoke  _load_common_pic, addr object_DC.hobs, IDB_PROP_ABSTHARD
+        invoke  _load_common_pic, addr object_DC.accp, IDB_PROP_ACC
+        invoke  _load_common_pic, addr object_DC.decp, IDB_PROP_DEC
+        invoke  _load_common_pic, addr object_DC.coin, IDB_PROP_MONEY
 ;��ʼ�����ؼ� button
         invoke _load_button, addr button_play,  IDB_BUTTON_PLAY_1,  IDB_BUTTON_PLAY_2
         invoke _load_button, addr button_start, IDB_BUTTON_START_1, IDB_BUTTON_START_2
@@ -243,7 +313,8 @@ _createAll proc
         invoke  _load_common_pic, addr player.base.DC, IDB_PLAYER
         invoke  _Init_car
 
-;
+;set prop
+
         invoke  ReleaseDC, hWinMain, @hDC
         ret 
 _createAll endp
@@ -363,7 +434,9 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                 mov     eax, hWnd
                 mov     hWinMain, eax
                 invoke  _createAll
+                invoke  _initAll
                 invoke  SetTimer, hWinMain, ID_TIMER, 15, NULL
+
 
         .elseif eax == WM_TIMER
                 mov     eax, wParam
@@ -459,6 +532,9 @@ _WinMain        proc
 _WinMain        endp
 
 start:
+        invoke time, 0
+        invoke srand, eax
+        invoke rand
         call    _WinMain
         invoke  ExitProcess, NULL
         ; invoke _collision_test

@@ -13,6 +13,9 @@ includelib msvcrt.lib
 include msvcrt.inc
 scanf proto c:dword,:vararg
 printf proto c:dword,:vararg
+srand proto c:dword,:vararg
+time proto c:dword,:vararg
+rand proto c
 
 ;=====================================================
 ; sst functions
@@ -60,12 +63,6 @@ Subject struct
         score           dd      ?
 Subject ends
 
-MONEY_1                 equ 1000
-MONEY_2                 equ 1001
-PROP_ACC_SELF           equ 2000 ;?????????
-PROP_DEC_SELF           equ 2001 ;?????????
-OBST_HARD               equ 3000 ;????
-OBST_SOFT               equ 3001 ;?????
 Targets struct
         base    BASE  <> 
         typeid  dd      ?
@@ -85,14 +82,25 @@ BackGround struct
         DC_i    dd      ?
         DC_e    dd      ?
 BackGround ends
+
+Object_DC struct
+        env1    dd      ?
+        env2    dd      ?
+        env3    dd      ?
+        sobs    dd      ?
+        hobs    dd      ?
+        accp    dd      ?
+        decp    dd      ?
+        coin    dd      ?
+Object_DC ends
         
 
 .data?
 player          Subject <>              ;????
 bullet          Subject <>              ;???
-env_objecet_1   BASE    <>              ;???????????? 1
-env_objecet_2   BASE    <>              ;???????????? 2
-env_objecet_3   BASE    <>              ;???????????? 3
+; env_objecet_1   BASE    <>              ;???????????? 1
+; env_objecet_2   BASE    <>              ;???????????? 2
+; env_objecet_3   BASE    <>              ;???????????? 3
 targets         Targets  1000 dup(<>)   ;????
 
 ;zzl own
@@ -101,11 +109,19 @@ button_start      Button <>
 button_back       Button <>
 button_exit       Button <>
 backGround        BackGround <>
+object_DC         Object_DC <>
 
 .data
 choose_start equ 0
 choose_intro equ 1
 choose_which_char dd 0
+
+MONEY_1                 equ 1000
+MONEY_2                 equ 1001
+PROP_ACC_SELF           equ 2000 ;?????????
+PROP_DEC_SELF           equ 2001 ;?????????
+OBST_HARD               equ 3000 ;????
+OBST_SOFT               equ 3001 ;?????
 
 in_begining             equ 0
 in_game                 equ 1
