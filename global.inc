@@ -80,7 +80,8 @@ Button ends
 
 BackGround struct
         DC_b    dd      ?
-        DC_p    dd      ?
+        DC_pu   dd     ?
+        DC_pd   dd     ?
         DC_i    dd      ?
         DC_e    dd      ?
 BackGround ends
@@ -113,10 +114,12 @@ in_over                 equ 3
 cur_interface           dd  0
 
 ;sst own
-carx0                   equ     200;?????????
-carx1                   equ     300
+carx0                   equ     100;?????????
+carx1                   equ     250
 carx2                   equ     400
-cary                    equ     500
+cary                    equ     380
+carLX                   equ     100
+carLY                   equ     100
 
 .data
 flag_jump               dd      0
@@ -124,7 +127,7 @@ flag_movleft            dd      0
 flag_movright           dd      0
 stdtime_jump            dd      100
 time_jump               dd      100
-stdtime_mov             dd      50
+stdtime_mov             dd      150
 time_mov                dd      50
 
 .const 
@@ -143,6 +146,8 @@ ID_TIMER        equ     1
 IDB_BACKG_BEGINING       equ     99
 IDB_BACKG_INTRO          equ     98
 IDB_BACKG_PLAY           equ     97
+IDB_BACKG_PLAYU          equ     90
+IDB_BACKG_PLAYD          equ     91
 IDB_BACKG_END            equ     96
 IDB_BACKG       equ     100
 IDB_OBJ1        equ     101
@@ -183,7 +188,11 @@ IDB_PROP_ACC        equ 316
 IDB_PROP_DEC        equ 317
 IDB_PROP_BULLETL    equ 318
 IDB_PROP_BULLETM    equ 319
-IDB_PROP_BULLETR     equ 320
+IDB_PROP_BULLETR    equ 320
+
+IDB_PLAYER          equ 400 
+PLAYER_LX equ 500
+PLAYER_LY equ 500         
 
 
 

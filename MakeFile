@@ -1,5 +1,5 @@
 EXE = main.exe 
-OBJS = main.obj ldf.obj sst.obj lja.obj
+OBJS = main.obj ldf.obj lja.obj
 RES = main.res 
 
 LINK_FLAGS = /subsystem:console
