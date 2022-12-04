@@ -29,6 +29,7 @@ dwNowBack       dd      ?
 
 ;========================  data data data data ==========================
 
+
 .data
 flag_jump               dd      0
 flag_movleft            dd      0
@@ -40,11 +41,11 @@ time_mov                dd      30
 cur_interface           dd  0
 
 target_number   dd      0         
-speed      dd      4
+speed      dd      2
 
 object1H         dd     57
 object1W         dd     86
-object_move_v    dd     2
+object_move_v    dd     1
 POSCNT          dd      0; NEXTPOS的计数器
 
 

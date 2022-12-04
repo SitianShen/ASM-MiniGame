@@ -4,7 +4,7 @@ option casemap: none
 
 include global.inc
 .code
-;speed = 4 —— 正常， 8 —— 快速， 12 —— 超快速
+;speed = 2 —— 正常， 4 —— 快速， 8 —— 超快速
 _next_position proc stdcall ptrBase :ptr BASE
         ; local cur_speed :dword
         ; mov bx, speed
@@ -14,7 +14,11 @@ _next_position proc stdcall ptrBase :ptr BASE
         ; xor bx, bx
         ; mov bl, cl
         ; mul bl
-        inc POSCNT
+
+        ; local randnum :dword
+        ; invoke rand
+        ; mov randnum, eax
+
         mov esi, ptrBase
         assume  esi: ptr BASE
 
@@ -26,33 +30,64 @@ _next_position proc stdcall ptrBase :ptr BASE
         .elseif ecx == 1 ;最左边跑道
                 mov eax, speed
                 add [esi].posy, eax
-                mov edx, 0
-                mov ebx, 1
-                div ebx
+                mov ecx, POSCNT
+                add ecx, 5
+                .if ecx <= 1
+                        mov edx, 0
+                        mov ebx, 2
+                        div ebx
+                .else 
+                        mov edx, 0
+                        mov ebx, 1
+                        div ebx
+                .endif
                 sub [esi].posx, eax
 
         .elseif ecx == 3 ;最右边跑道
                 mov eax, speed
                 add [esi].posy, eax
-                mov edx, 0
-                mov ebx, 1
-                div ebx
+                mov ecx, POSCNT
+                .if ecx & 3
+                        mov edx, 0
+                        mov ebx, 2
+                        div ebx
+                .else 
+                        mov edx, 0
+                        mov ebx, 1
+                        div ebx
+                .endif
                 add [esi].posx, eax
         
         .elseif ecx == 0 ;左侧风景
                 mov eax, speed
                 add [esi].posy, eax
-                mov edx, 0
-                mov ebx, 2
-                mul ebx
+                mov ecx, POSCNT
+                and ecx, 10
+                .if ecx < 2
+                        mov edx, 0
+                        mov ebx, 2
+                        mul ebx
+                .else 
+                        mov edx, 0
+                        mov ebx, 1
+                        mul ebx
+                .endif
                 sub [esi].posx, eax
 
         .elseif ecx == 4 ;右侧风景
                 mov eax, speed
                 add [esi].posy, eax
-                mov edx, 0
-                mov ebx, 2
-                mul ebx
+                mov ecx, POSCNT
+                and ecx, 10
+                .if ecx == 0 
+                        mov edx, 0
+                        mov ebx, 2
+                        mul ebx
+                .else 
+                        mov edx, 0
+                        mov ebx, 1
+                        mul ebx
+                .endif
                 add [esi].posx, eax
 
         .elseif ecx == 6 ;中间跑道的子弹
@@ -77,11 +112,12 @@ _next_position proc stdcall ptrBase :ptr BASE
 
         .endif
         mov eax, POSCNT
-
-        .if eax & 0001h
+        ; 增大体积
+        and eax, 10
+        .if eax == 0
                 mov eax, speed
                 mov edx, 0
-                mov ebx, 4
+                mov ebx, 2
                 div ebx
                 .if ecx != 5 && ecx != 6 && ecx != 7
                         add [esi].lengthx, eax
@@ -97,30 +133,67 @@ ret
 _next_position endp 
 
 _change_all_position proc stdcall       ;遍历所有道具改变位置
-        mov ebx, target_number
+        inc POSCNT
+        invoke rand
+        and eax, 8
+        .if eax == 0 
+                mov ecx, target_number
+                xor eax, eax
+                .while eax < ecx
+                        push eax
+                        mov edx, 0
+                        mov ebx, sizeofTargets
+                        mul ebx
+                        lea esi, targets[eax]
+                        assume esi :ptr Targets
+                        .if [esi].base.alive == 1
+                                invoke _next_position, addr [esi].base
+                        .endif
+                        assume  esi: nothing
+                        pop eax
+                        inc eax
+                .endw
+                ; 移动子弹
+                lea esi, bullet
+                assume esi :ptr Targets
+                .if [esi].base.alive == 1
+                        invoke _next_position, addr [esi].base
+                .endif
+                assume  esi: nothing
+        .endif
+ret
+_change_all_position endp
+_targets_bullet_out_of_bound proc
+        ; 判断道具越界
+        mov ecx, target_number
         xor eax, eax
-        .while eax < ebx
+        .while eax < ecx
                 push eax
                 mov edx, 0
                 mov ebx, sizeofTargets
                 mul ebx
-                lea esi, targets[eax].base
-                assume  esi: ptr BASE
-                .if [esi].alive == 1
-                        invoke _next_position, esi
+                lea esi, targets[eax]
+                assume esi :ptr Targets
+                .if [esi].base.alive == 1
+                        ; invoke printf, debug_int, [esi].base.posy
+                        .if [esi].base.posx <= 10 || [esi].base.posx >= gameW-100 \
+                        || [esi].base.posy <= 10 || [esi].base.posy >= gameH-200
+                                mov [esi].base.alive, 0
+                        .endif
                 .endif
-                assume  esi: nothing
+                assume esi: nothing
                 pop eax
                 inc eax
         .endw
-        ; 移动子弹
-        lea esi, bullet.base
-        assume  esi: ptr BASE
-        .if [esi].alive == 1
-                invoke _next_position, esi
+
+        ; 判断子弹越界
+        .if bullet.base.alive == 1
+                .if bullet.base.posx <= 380 || bullet.base.posx >= gameW-100 \
+                || bullet.base.posy <= 380 || bullet.base.posy >= gameW-200
+                        mov bullet.base.alive, 0
+                .endif
         .endif
-        assume  esi: nothing
 ret
-_change_all_position endp
+_targets_bullet_out_of_bound endp
 
 end
