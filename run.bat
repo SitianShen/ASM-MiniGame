@@ -7,6 +7,6 @@ set path=%Masm32Dir%\Bin;%Masm32Dir%;%PATH%
 
 nmake clean
 @REM nmake ldf_dev
-@REM nmake main_dev
-nmake
+nmake main_dev
+@REM nmake
 
