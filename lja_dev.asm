@@ -69,8 +69,8 @@ _next_position proc stdcall ptrBase :ptr BASE
                 mov eax, speed
                 add [esi].posy, eax
                 mov ecx, POSCNT
-                add ecx, 5
-                .if ecx <= 1
+                and ecx, 1
+                .if ecx 
                         mov edx, 0
                         mov ebx, 2
                         div ebx
