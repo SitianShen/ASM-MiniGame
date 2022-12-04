@@ -1,20 +1,27 @@
 EXE = main.exe 
+ASM = main.asm release/zzl.asm release/ldf.asm release/lja.asm release/sst.asm data.asm
+# ASM = main.asm zzl.asm ldf.asm lja.asm sst.asm data.asm
 OBJS = main.obj zzl.obj ldf.obj lja.obj sst.obj data.obj
 RES = main.res 
 
 LINK_FLAGS = /subsystem:console
 ML_FLAGS = /c /coff
 
-$(EXE):$(OBJS) $(RES)
-		del *.exe
-		Link $(LINK_FLAGS) $(OBJS) $(RES)
-		nmake clean
+main:
+	del *.exe
+	rc main.rc
+	ml $(ML_FLAGS) $(ASM)
+	Link $(LINK_FLAGS) $(OBJS) $(RES)
+	nmake clean
 
-.asm.obj:
-		ml $(ML_FLAGS) $<
+# $(EXE):$(OBJS) $(RES) $(ASM)
+		
 
-.rc.res:
-		rc $<
+# .asm.obj:
+# 		ml $(ML_FLAGS) $<
+
+# .rc.res:
+# 		rc $<
 
 clean:
 	del *.res
@@ -35,15 +42,15 @@ clean:
 zzl_dev:
 	del *.exe
 	rc main.rc
-	ml $(ML_FLAGS) zzl_dev.asm data.asm 
-	link $(LINK_FLAGS) zzl_dev.obj data.obj main.res
+	ml $(ML_FLAGS) dev/zzl_dev.asm data.asm 
+	link $(LINK_FLAGS) dev/zzl_dev.obj data.obj main.res
 	nmake clean
 
 # 生成ldf_dev.exe
 ldf_dev:
 	del *.exe
 	rc main.rc
-	ml $(ML_FLAGS) ldf_dev.asm data.asm
+	ml $(ML_FLAGS) dev/ldf_dev.asm data.asm
 	link $(LINK_FLAGS) ldf_dev.obj data.obj main.res
 	nmake clean
 
@@ -51,14 +58,14 @@ ldf_dev:
 lja_dev:
 	del *.exe
 	rc main.rc
-	ml $(ML_FLAGS) lja_dev.asm data.asm
-	link $(LINK_FLAGS) lja_dev.obj data.obj main.res
+	ml $(ML_FLAGS) dev/lja_dev.asm data.asm
+	link $(LINK_FLAGS) dev/lja_dev.obj data.obj main.res
 	nmake clean
 
 # 生成sst_dev.exe
 sst_dev:
 	del *.exe
 	rc main.rc
-	ml $(ML_FLAGS) sst_dev.asm data.asm
-	link $(LINK_FLAGS) sst_dev.obj data.obj main.res
+	ml $(ML_FLAGS) dev/sst_dev.asm data.asm
+	link $(LINK_FLAGS) dev/sst_dev.obj data.obj main.res
 	nmake clean
