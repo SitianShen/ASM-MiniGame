@@ -133,8 +133,8 @@ sizeofTargets   equ     sizeof Targets
 
 
 ;ldf lja own
-slow_level      equ     2
-normal_level    equ     4
-fast_level      equ     8
+slow_level      equ     3
+normal_level    equ     2
+fast_level      equ     1
 speed_item_time      equ     100 ;加速/减速道具的持续时间
 
