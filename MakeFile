@@ -6,7 +6,9 @@ LINK_FLAGS = /subsystem:console
 ML_FLAGS = /c /coff
 
 $(EXE):$(OBJS) $(RES)
+		del *.exe
 		Link $(LINK_FLAGS) $(OBJS) $(RES)
+		del *.obj
 
 .asm.obj:
 		ml $(ML_FLAGS) $<
@@ -23,6 +25,7 @@ ASM_DEV = main_dev.asm ldf_dev.asm lja_dev.asm sst_dev.asm data.asm
 OBJS_DEV = main_dev.obj ldf_dev.obj lja_dev.obj sst_dev.obj data.obj
 
 main_dev:
+	del *.exe
 	rc main.rc
 	ml $(ML_FLAGS) $(ASM_DEV)
 	Link $(LINK_FLAGS) $(OBJS_DEV) $(RES)
@@ -30,18 +33,21 @@ main_dev:
 
 # 生成ldf_dev.exe
 ldf_dev:
+	del *.exe
 	ml $(ML_FLAGS) ldf_dev.asm data.asm
 	link $(LINK_FLAGS) ldf_dev.obj data.obj
 	del *.obj
 
 # 生成lja_dev.exe
 lja_dev:
+	del *.exe
 	ml $(ML_FLAGS) lja_dev.asm data.asm
 	link $(LINK_FLAGS) lja_dev.obj data.obj
 	del *.obj
 
 # 生成sst_dev.exe
 sst_dev:
+	del *.exe
 	ml $(ML_FLAGS) sst_dev.asm data.asm
 	link $(LINK_FLAGS) sst_dev.obj data.obj
 	del *.obj
