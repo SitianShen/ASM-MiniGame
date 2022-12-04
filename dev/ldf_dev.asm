@@ -407,6 +407,7 @@ _two_two_enum proc uses ebx
 
                         .if @collisionFlag == 1
                                 invoke _collision_Player_with_MONEY_1, esi
+                                
                         .endif
                 .elseif [esi].typeid == MONEY_2
                         ; invoke printf, offset debug_int, [esi].typeid
@@ -657,13 +658,51 @@ _two_two_enum_test proc
         ret
 _two_two_enum_test endp
 
+_collision_Player_with_MONEY_1_SOUND proc
 
-; start:
-;         ; call    _WinMain
-;         ; invoke  ExitProcess, NULL
+        ret
+_collision_Player_with_MONEY_1_SOUND endp
+
+
+_collision_Player_with_MONEY_2_SOUND proc
+
+        ret
+_collision_Player_with_MONEY_2_SOUND endp
+
+
+_collision_Player_with_ACC_SOUND proc
+
+        ret
+_collision_Player_with_ACC_SOUND endp
+
+
+_collision_Player_with_DEC_SOUND proc
+
+        ret
+_collision_Player_with_DEC_SOUND endp
+
+
+_collision_Player_with_SOFT_SOUND proc
+
+        ret
+_collision_Player_with_SOFT_SOUND endp
+
+_collision_bullet_with_SOFT_SOUND proc 
+
+        ret
+_collision_bullet_with_SOFT_SOUND endp
+
+_collision_SOUND_test proc
+
+        ret
+_collision_SOUND_test endp
+
+start:
+        ; call    _WinMain
+        ; invoke  ExitProcess, NULL
         
-;         ; invoke _collision_test
-;         invoke _two_two_enum_test
-;         ret
-; end     start
-end
+        ; invoke _collision_test
+        invoke _collision_SOUND_test
+        ret
+end     start
+; end
