@@ -5,7 +5,18 @@ srand proto c:dword,:vararg
 time proto c:dword,:vararg
 rand proto c
 
-
+;========================= zzl zzl zzl zzl ============================
+; zzl functions
+_initAll proto
+_random_object_gene proto
+_set_char_pos proto
+_load_button proto :ptr Button, :dword, :dword
+_load_common_pic proto :dword, :dword
+_createAll proto
+_deleteAll proto
+_Quit proto
+_draw_button proto :ptr Button, :dword, :dword, :dword
+_move_object proto :dword
 
 ;========================= sst sst sst sst ============================
 ; sst functions

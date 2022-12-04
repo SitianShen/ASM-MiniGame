@@ -1,5 +1,5 @@
 EXE = main.exe 
-OBJS = main.obj ldf.obj lja.obj sst.obj data.obj
+OBJS = main.obj zzl.obj ldf.obj lja.obj sst.obj data.obj
 RES = main.res 
 
 LINK_FLAGS = /subsystem:console
@@ -21,14 +21,21 @@ clean:
 	del *.obj
 
 
-ASM_DEV = main_dev.asm ldf_dev.asm lja_dev.asm sst_dev.asm data.asm
-OBJS_DEV = main_dev.obj ldf_dev.obj lja_dev.obj sst_dev.obj data.obj
+# ASM_DEV = main_dev.asm zzl_dev.asm ldf_dev.asm lja_dev.asm sst_dev.asm data.asm
+# OBJS_DEV = main_dev.obj zzl_dev.obj ldf_dev.obj lja_dev.obj sst_dev.obj data.obj
 
-main_dev:
+# main_dev:
+# 	del *.exe
+# 	rc main.rc
+# 	ml $(ML_FLAGS) $(ASM_DEV)
+# 	Link $(LINK_FLAGS) $(OBJS_DEV) $(RES)
+# 	nmake clean
+
+# 生成zzl_dev.exe
+zzl_dev:
 	del *.exe
-	rc main.rc
-	ml $(ML_FLAGS) $(ASM_DEV)
-	Link $(LINK_FLAGS) $(OBJS_DEV) $(RES)
+	ml $(ML_FLAGS) zzl_dev.asm data.asm
+	link $(LINK_FLAGS) zzl_dev.obj data.obj
 	nmake clean
 
 # 生成ldf_dev.exe

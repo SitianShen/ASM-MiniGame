@@ -40,9 +40,6 @@ extrn object1W:dword
 extrn object_move_v:dword   
 extrn POSCNT:dword          ; NEXTPOS的计数器
 
-; include global.inc
-   
-
 .const
 szCollision byte "collision check", 0ah, 0
 szCollisionEnd byte "collision end", 0ah, 0
