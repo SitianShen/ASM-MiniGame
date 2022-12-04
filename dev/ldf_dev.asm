@@ -239,6 +239,11 @@ _collision_Player_with_ACC proc ACC_target:ptr Targets
         mov [esi].base.alive, 0
 
         ;TODO 加速
+        .if speed == slow_level
+                mov speed, normal_level
+        .elseif speed == normal_level
+                mov speed, fast_level
+        .endif
 
         ret
 _collision_Player_with_ACC endp
@@ -255,7 +260,11 @@ _collision_Player_with_DEC proc DEC_target:ptr Targets
         mov [esi].base.alive, 0
 
         ;TODO 减速
-        
+        .if speed == normal_level
+                mov speed, slow_level
+        .elseif speed == fast_level
+                mov speed, normal_level
+        .endif
 
         ret
 _collision_Player_with_DEC endp 
