@@ -244,6 +244,11 @@ _collision_Player_with_ACC proc ACC_target:ptr Targets
         .elseif speed == normal_level
                 mov speed, fast_level
         .endif
+        
+        ;更新道具时间
+        ;加速时间拉满，减速时间归0
+        mov speed_acc_time, speed_item_time
+        mov speed_dec_time, 0
 
         ret
 _collision_Player_with_ACC endp
@@ -265,6 +270,11 @@ _collision_Player_with_DEC proc DEC_target:ptr Targets
         .elseif speed == fast_level
                 mov speed, normal_level
         .endif
+
+        ;更新道具时间
+        ;减速时间拉满，加速时间归0
+        mov speed_dec_time, speed_item_time
+        mov speed_acc_time, 0
 
         ret
 _collision_Player_with_DEC endp 
