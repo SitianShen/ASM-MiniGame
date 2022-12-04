@@ -69,8 +69,8 @@ _next_position proc stdcall ptrBase :ptr BASE
                 mov eax, speed
                 add [esi].posy, eax
                 mov ecx, POSCNT
-                add ecx, 5
-                .if ecx <= 1
+                and ecx, 1
+                .if ecx 
                         mov edx, 0
                         mov ebx, 2
                         div ebx
@@ -135,17 +135,33 @@ _next_position proc stdcall ptrBase :ptr BASE
         .elseif ecx == 5 ;左边跑道的子弹
                 mov eax, speed
                 sub [esi].posy, eax
-                mov edx, 0
-                mov ebx, 1
-                div ebx
+                mov ecx, POSCNT
+                and ecx, 1
+                .if ecx 
+                        mov edx, 0
+                        mov ebx, 2
+                        div ebx
+                .else 
+                        mov edx, 0
+                        mov ebx, 1
+                        div ebx
+                .endif
                 add [esi].posx, eax
 
         .elseif ecx == 7 ;右边跑道的子弹
                 mov eax, speed
                 sub [esi].posy, eax
-                mov edx, 0
-                mov ebx, 1
-                div ebx
+                mov ecx, POSCNT
+                and ecx, 1
+                .if ecx 
+                        mov edx, 0
+                        mov ebx, 2
+                        div ebx
+                .else 
+                        mov edx, 0
+                        mov ebx, 1
+                        div ebx
+                .endif
                 sub [esi].posx, eax
 
         .endif
@@ -173,6 +189,10 @@ _next_position endp
 
 _change_all_position proc stdcall       ;遍历所有道具改变位置
         inc POSCNT
+        mov eax, POSCNT
+        .if eax > 1024
+                mov POSCNT, 0
+        .endif
         invoke rand
         and eax, 8
         .if eax == 0 
