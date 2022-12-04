@@ -14,16 +14,19 @@ _next_position proc stdcall ptrBase :ptr BASE
         ; xor bx, bx
         ; mov bl, cl
         ; mul bl
+        ; mov eax, 3
+        ; invoke printf, offset debug_int, eax
         inc POSCNT
         mov esi, ptrBase
         assume  esi: ptr BASE
-
         mov ecx, [esi].course_id
+        ; .if eax & 10 == 0
         .if ecx == 2 ;正中间跑道
                 mov eax, speed
                 add [esi].posy, eax
 
         .elseif ecx == 1 ;最左边跑道
+
                 mov eax, speed
                 add [esi].posy, eax
                 mov edx, 0
@@ -76,6 +79,7 @@ _next_position proc stdcall ptrBase :ptr BASE
                 sub [esi].posx, eax
 
         .endif
+        ; .endif
         mov eax, POSCNT
 
         .if eax & 0001h
