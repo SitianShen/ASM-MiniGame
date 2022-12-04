@@ -264,6 +264,10 @@ _move_object proc hWnd
         local @mouse:POINT
         local @window:RECT
 
+        .if player.base.alive == 0 && cur_interface == in_game
+                mov cur_interface, in_over
+        .endif
+
         mov eax, cur_interface
         .if eax == in_begining 
                 invoke  TransparentBlt, hDCGame, 0, 0, gameH, gameW, backGround.DC_b, 0, 0, 1000, 1000, SRCCOPY
@@ -327,6 +331,7 @@ _move_object proc hWnd
 ;                                 env_objecet_3.DC, 0,  0,  object1H_init, object1W_init, 16777215
         ret
 _move_object endp
+
 
 
 ; start:

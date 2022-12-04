@@ -7,7 +7,6 @@ include global_extrn.inc
         
 .code
 
-
 _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                 local   @stPs: PAINTSTRUCT
                 local   @hDC
