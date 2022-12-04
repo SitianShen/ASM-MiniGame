@@ -275,6 +275,6 @@ ret
 _targets_bullet_out_of_bound endp
 
 start:
-        
+        ret
 end start
 end
