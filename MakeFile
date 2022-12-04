@@ -43,7 +43,7 @@ zzl_dev:
 	del *.exe
 	rc main.rc
 	ml $(ML_FLAGS) dev/zzl_dev.asm data.asm 
-	link $(LINK_FLAGS) dev/zzl_dev.obj data.obj main.res
+	link $(LINK_FLAGS) zzl_dev.obj data.obj main.res
 	nmake clean
 # zzl_dev.exe
 
@@ -61,7 +61,7 @@ lja_dev:
 	del *.exe
 	rc main.rc
 	ml $(ML_FLAGS) dev/lja_dev.asm data.asm
-	link $(LINK_FLAGS) dev/lja_dev.obj data.obj main.res
+	link $(LINK_FLAGS) lja_dev.obj data.obj main.res
 	nmake clean
 # lja_dev.exe
 
@@ -70,6 +70,6 @@ sst_dev:
 	del *.exe
 	rc main.rc
 	ml $(ML_FLAGS) dev/sst_dev.asm data.asm
-	link $(LINK_FLAGS) dev/sst_dev.obj data.obj main.res
+	link $(LINK_FLAGS) sst_dev.obj data.obj main.res
 	nmake clean
 # sst_dev.exe
