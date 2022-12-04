@@ -239,6 +239,11 @@ _collision_Player_with_ACC proc ACC_target:ptr Targets
         mov [esi].base.alive, 0
 
         ;TODO 加速
+        .if speed == slow_level
+                mov speed, normal_level
+        .elseif speed == normal_level
+                mov speed, fast_level
+        .endif
 
         ret
 _collision_Player_with_ACC endp
@@ -255,7 +260,11 @@ _collision_Player_with_DEC proc DEC_target:ptr Targets
         mov [esi].base.alive, 0
 
         ;TODO 减速
-        
+        .if speed == normal_level
+                mov speed, slow_level
+        .elseif speed == fast_level
+                mov speed, normal_level
+        .endif
 
         ret
 _collision_Player_with_DEC endp 
@@ -386,7 +395,6 @@ _two_two_enum proc uses ebx
                         .if @collisionFlag == 1
                                 invoke _collision_Player_with_MONEY_1, esi
                         .endif
-
                 .elseif [esi].typeid == MONEY_2
                         ; invoke printf, offset debug_int, [esi].typeid
                         invoke _check_collision, addr player.base, addr [esi].base

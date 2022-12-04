@@ -36,8 +36,8 @@ flag_movleft            dd      0
 flag_movright           dd      0
 stdtime_jump            dd      50
 time_jump               dd      50
-stdtime_mov             dd      15
-time_mov                dd      15
+stdtime_mov             dd      10
+time_mov                dd      10
 cur_interface           dd  0
 
 target_number   dd      0         

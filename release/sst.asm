@@ -76,7 +76,7 @@ _Move_process proc uses ebx
                 .endif
                 ;没移到足够时间（位置，此处设置移动时间和距离匹
                 mov ebx, player.base.posx
-                sub ebx, 10
+                sub ebx, 15
                 mov player.base.posx, ebx
 
                 mov ebx, time_mov
@@ -95,7 +95,7 @@ _Move_process proc uses ebx
                 .endif
                 ;没移到足够时间（位置，此处设置移动时间和距离匹
                 mov ebx, player.base.posx
-                add ebx, 10
+                add ebx, 15
                 mov player.base.posx, ebx
 
                 mov ebx, time_mov
