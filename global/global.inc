@@ -42,6 +42,8 @@ cur_interface           dd  0
 
 target_number   dd      0         
 speed      dd      2
+speed_acc_time dd 0
+speed_dec_time dd 0
 
 object1H         dd     57
 object1W         dd     86
