@@ -6,7 +6,8 @@ include global_dev.inc
 
 player          Subject <>             
 bullet          Subject <>              
-targets         Targets  1000 dup(<>)  
+targets         Targets  1000 dup(<>) 
+digitals_DC     dd 10 dup(?) 
 
 ;zzl own
 button_play       Button <>

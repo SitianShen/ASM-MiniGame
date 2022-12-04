@@ -9,6 +9,7 @@ public button_back
 public button_exit       
 public backGround       
 public object_DC        
+public digitals_DC
 
 public hInstance       
 public hWinMain      

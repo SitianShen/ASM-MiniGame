@@ -193,6 +193,7 @@ _createAll proc
         invoke  _load_common_pic, addr backGround.DC_pd, IDB_BACKG_PLAYD
         invoke  _load_common_pic, addr backGround.DC_e, IDB_BACKG_END
 ;�������� env obj
+;set prop
         invoke  _load_common_pic, addr object_DC.env1, IDB_OBJ1
         invoke  _load_common_pic, addr object_DC.env2, IDB_OBJ2
         invoke  _load_common_pic, addr object_DC.env3, IDB_OBJ3
@@ -211,9 +212,23 @@ _createAll proc
 ;set car
         invoke  _load_common_pic, addr player.base.DC, IDB_PLAYER
         invoke  _Init_car
+;load digital
+        lea esi, offset digitals_DC
+        assume esi:ptr dword
+        mov ecx, 0
+        .while ecx < 10
+                push esi
+                push ecx
 
-;set prop
+                mov eax, IDB_DIG0
+                add eax, ecx
+                invoke _load_common_pic, esi, eax
 
+                pop ecx
+                pop esi
+                add esi, 4
+                add ecx, 1
+        .endw
         invoke  ReleaseDC, hWinMain, @hDC
         ret 
 _createAll endp
@@ -266,6 +281,46 @@ _draw_button proc button:ptr Button, hWnd, LX, LY
         ret
 _draw_button endp
 
+_show_score proc
+        local @digit
+
+        mov ecx, scoreBoard_lst_X
+        mov edx, scoreBoard_lst_Y
+        
+        mov eax, player.score
+        .while eax > 0
+                push ecx
+                push edx
+
+                xor edx, edx
+                mov ecx, 10
+                div ecx
+                mov @digit, edx
+
+                pop edx
+                pop ecx
+                push ecx
+                push edx
+                push eax
+
+                mov esi, @digit
+                invoke  TransparentBlt, 
+                        hDCGame, ecx, edx, scoreBoard_dig_LX, scoreBoard_dig_LY, 
+                        [digitals_DC+4*esi], 0, 0, DIG_LX, DIG_LY, 16777215
+
+                pop eax
+                pop edx
+                pop ecx
+
+                sub ecx, scoreBoard_each_LX
+                sub edx, scoreBoard_each_LY
+        .endw
+                
+
+                
+        ret
+_show_score endp
+
 _move_object proc hWnd
         local @mouse:POINT
         local @window:RECT
@@ -309,6 +364,7 @@ _move_object proc hWnd
 ;draw car
                 invoke  TransparentBlt, hDCGame, player.base.posx, player.base.posy, player.base.lengthx, player.base.lengthy, player.base.DC, 0, 0, PLAYER_LX, PLAYER_LY, 16777215
 
+                invoke _show_score
                 invoke  TransparentBlt, hDCGame, 0, 0, gameH, gameW, backGround.DC_pu, 0, 0, 1000, 1000, 16777215
         
         .elseif eax == in_intro
