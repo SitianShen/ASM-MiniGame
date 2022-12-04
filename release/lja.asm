@@ -152,7 +152,7 @@ _next_position proc stdcall ptrBase :ptr BASE
         ; .endif
         invoke rand
         ; 增大体积
-        and eax, 8
+        and eax, 2
         .if eax == 0
                 mov eax, speed
                 mov edx, 0
