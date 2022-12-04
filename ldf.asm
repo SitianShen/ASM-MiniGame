@@ -2,7 +2,46 @@
 .model flat, stdcall
 option casemap: none
 
-include global.inc
+include global_dev.inc
+
+extrn player:Subject         
+extrn bullet:Subject             
+extrn targets:dword ;不知道会不会有bug，本地调试很正常
+
+;zzl own
+extrn button_play:Button      
+extrn button_start:Button      
+extrn button_back:Button      
+extrn button_exit:Button       
+extrn backGround:BackGround       
+extrn object_DC:Object_DC        
+
+extrn hInstance:dword       
+extrn hWinMain:dword      
+extrn hDCBack:dword         
+extrn hDCGame:dword         
+extrn hDCObj1:dword        
+extrn dwNowBack:dword     
+
+extrn flag_jump:dword               
+extrn flag_movleft:dword          
+extrn flag_movright:dword           
+extrn stdtime_jump:dword            
+extrn time_jump:dword              
+extrn stdtime_mov:dword             
+extrn time_mov:dword             
+extrn cur_interface:dword     
+
+extrn target_number:dword       
+extrn speed:dword
+
+extrn object1H:dword   
+extrn object1W:dword      
+extrn object_move_v:dword   
+extrn POSCNT:dword          ; NEXTPOS的计数器
+
+; include global.inc
+   
 
 .const
 szCollision byte "collision check", 0ah, 0
@@ -19,7 +58,7 @@ debug_str byte "%s", 0
 _check_collision proc uses ebx, @objectOne:ptr BASE, @objectTwo:ptr BASE
         local @objectOnePosX, @objectOnePosY
         local @objectOneLengthX, @objectOneLengthY
-        
+
         local @objectTwoPosX, @objectTwoPosY
         local @objectTwoLengthX, @objectTwoLengthY
 
@@ -27,13 +66,13 @@ _check_collision proc uses ebx, @objectOne:ptr BASE, @objectTwo:ptr BASE
         local @objectOneCenterY, @objectTwoCenterX
 
         local @distanceX, @distanceY
-        
+
         local @criticalX, @criticalY
 
         mov esi, @objectOne
         assume esi: ptr BASE
         mov eax, [esi].course_id
-        
+
         mov esi, @objectTwo
         assume esi: ptr BASE
 
@@ -100,7 +139,7 @@ _check_collision proc uses ebx, @objectOne:ptr BASE, @objectTwo:ptr BASE
                 mov ebx, @objectTwoCenterX
                 sub ebx, eax
                 mov @distanceX, ebx
-        .elseif
+        .else
                 sub eax, @objectTwoCenterX
                 mov @distanceX, eax
         .endif
@@ -111,7 +150,7 @@ _check_collision proc uses ebx, @objectOne:ptr BASE, @objectTwo:ptr BASE
                 mov ebx, @objectTwoCenterY
                 sub ebx, eax
                 mov @distanceY, ebx
-        .elseif
+        .else
                 sub eax, @objectTwoCenterY
                 mov @distanceY, eax
         .endif
@@ -470,7 +509,6 @@ _two_two_enum proc uses ebx
                 inc @target_number_index
         .endw
 
-        
         ;修改target_number
         mov eax, @new_target_number
         ; inc eax
@@ -561,7 +599,6 @@ _two_two_enum_test proc
 
         ret
 _two_two_enum_test endp
-
 
 
 ; start:
