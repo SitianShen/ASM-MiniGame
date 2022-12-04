@@ -16,6 +16,7 @@ PROP_ACC_SELF           equ 2000
 PROP_DEC_SELF           equ 2001 
 OBST_HARD               equ 3000 
 OBST_SOFT               equ 3001
+OBJ_ENV                 equ 4000
 
 in_begining             equ 0
 in_game                 equ 1
@@ -31,8 +32,21 @@ cary                    equ     380
 carLX                   equ     100
 carLY                   equ     100
 
+;obj init size
+obj_init_lx                   equ 36
+obj_init_ly                   equ 36
+;obj init pos  
+remote_y                equ 190
+remote_x0               equ 80+50+30+30+30
+remote_x5               equ 120+50+30+30+30
+remote_x6               equ 160+50+30+40
+remote_x7               equ 200+50+50
+remote_x4               equ 240+50+50
+
+
 
 ID_TIMER        equ     1
+ID_TIMER_gene   equ     2
 IDB_BACKG_BEGINING       equ     99
 IDB_BACKG_INTRO          equ     98
 IDB_BACKG_PLAY           equ     97

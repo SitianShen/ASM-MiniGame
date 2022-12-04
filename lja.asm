@@ -97,30 +97,61 @@ ret
 _next_position endp 
 
 _change_all_position proc stdcall       ;遍历所有道具改变位置
-        mov ebx, target_number
+        mov ecx, target_number
         xor eax, eax
-        .while eax < ebx
+        .while eax < ecx
                 push eax
                 mov edx, 0
                 mov ebx, sizeofTargets
                 mul ebx
-                lea esi, targets[eax].base
-                assume  esi: ptr BASE
-                .if [esi].alive == 1
-                        invoke _next_position, esi
+                lea esi, targets[eax]
+                assume esi :ptr Targets
+                .if [esi].base.alive == 1
+                        invoke _next_position, addr [esi].base
                 .endif
                 assume  esi: nothing
                 pop eax
                 inc eax
         .endw
         ; 移动子弹
-        lea esi, bullet.base
-        assume  esi: ptr BASE
-        .if [esi].alive == 1
-                invoke _next_position, esi
+        lea esi, bullet
+        assume esi :ptr Targets
+        .if [esi].base.alive == 1
+                invoke _next_position, addr [esi].base
         .endif
         assume  esi: nothing
 ret
 _change_all_position endp
+_targets_bullet_out_of_bound proc
+        ; 判断道具越界
+        mov ecx, target_number
+        xor eax, eax
+        .while eax < ecx
+                push eax
+                mov edx, 0
+                mov ebx, sizeofTargets
+                mul ebx
+                lea esi, targets[eax]
+                assume esi :ptr Targets
+                .if [esi].base.alive == 1
+                        .if [esi].base.posx <= 10 || [esi].base.posx >= gameW-10 \
+                        || [esi].base.posy <= 10 || [esi].base.posy >= gameH-10
+                                mov [esi].base.alive, 0
+                        .endif
+                .endif
+                assume esi: nothing
+                pop eax
+                inc eax
+        .endw
+
+        ; 判断子弹越界
+        .if bullet.base.alive == 1
+                .if bullet.base.posx <= 10 || bullet.base.posx >= gameW-10 \
+                || bullet.base.posy <= 10 || bullet.base.posy >= gameH-10
+                        mov bullet.base.alive, 0
+                .endif
+        .endif
+ret
+_targets_bullet_out_of_bound endp
 
 end

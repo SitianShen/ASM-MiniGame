@@ -6,6 +6,7 @@ include global.inc
         
 .code
 ;sst part #################################################################
+
 _Init_car proc uses ebx
 
     mov ebx, 2
@@ -73,7 +74,7 @@ _Move_process proc uses ebx
 
                         ret
                 .endif
-                ;没移到足够时间（位置，此处设置移动时间和距离匹配）
+                ;没移到足够时间（位置，此处设置移动时间和距离匹
                 mov ebx, player.base.posx
                 sub ebx, 5
                 mov player.base.posx, ebx
@@ -92,7 +93,7 @@ _Move_process proc uses ebx
                         mov flag_movright, 0
                         ret
                 .endif
-                ;没移到足够时间（位置，此处设置移动时间和距离匹配）
+                ;没移到足够时间（位置，此处设置移动时间和距离匹
                 mov ebx, player.base.posx
                 add ebx, 5
                 mov player.base.posx, ebx
@@ -138,11 +139,199 @@ _Action_jump proc uses ebx
         ret
 _Action_jump endp
 
-;test
-; start:
-        ;  invoke  _sst_test
-        ;  ret
-; end start
+_sst_test proc
+        invoke _Init_car
+        invoke printf, offset szInt, player.base.posx
+        invoke printf, offset szInt, player.base.posy
+
+        invoke _Action_jump
+        invoke printf, offset szInt, player.base.posx
+        invoke printf, offset szInt, player.base.posy
+
+        mov esi, 250
+        .while( esi > 0)
+                invoke _Move_process
+                invoke printf, offset szInt, player.base.posx
+                invoke printf, offset szInt, player.base.posy
+                dec esi
+        .endw
+
+        ; invoke _Action_left
+        ; invoke printf, offset szInt, player.base.posx
+        ; invoke printf, offset szInt, player.base.posy
+
+        ; mov esi, 150
+        ; .while( esi > 0)
+                ; invoke _Move_process
+                ; invoke printf, offset szInt, player.base.posx
+                ; invoke printf, offset szInt, player.base.posy
+                ; dec esi
+        ; .endw   
+
+        ; invoke _Action_right
+        ; invoke printf, offset szInt, player.base.posx
+        ; invoke printf, offset szInt, player.base.posy
+
+        ; mov esi, 150
+        ; .while( esi > 0)
+                ; invoke _Move_process
+                ; invoke printf, offset szInt, player.base.posx
+                ; invoke printf, offset szInt, player.base.posy
+                ; dec esi 
+        ; .endw
+        ret
+_sst_test endp
+
+;lja part ##############################
+
+_next_position proc stdcall ptrBase :ptr BASE
+        ; local cur_speed :dword
+        ; mov bx, speed
+        ; xor ax, ax
+        ; mov al, bl
+        ; mov cx, base_speed
+        ; xor bx, bx
+        ; mov bl, cl
+        ; mul bl
+        inc POSCNT
+        mov esi, ptrBase
+        assume  esi: ptr BASE
+
+        mov ecx, [esi].course_id
+        .if ecx == 2 ;正中间跑道
+                mov eax, speed
+                add [esi].posy, eax
+
+        .elseif ecx == 1 ;最左边跑道
+                mov eax, speed
+                add [esi].posy, eax
+                mov edx, 0
+                mov ebx, 1
+                div ebx
+                sub [esi].posx, eax
+
+        .elseif ecx == 3 ;最右边跑道
+                mov eax, speed
+                add [esi].posy, eax
+                mov edx, 0
+                mov ebx, 1
+                div ebx
+                add [esi].posx, eax
+        
+        .elseif ecx == 0 ;左侧风景
+                mov eax, speed
+                add [esi].posy, eax
+                mov edx, 0
+                mov ebx, 2
+                mul ebx
+                sub [esi].posx, eax
+
+        .elseif ecx == 4 ;右侧风景
+                mov eax, speed
+                add [esi].posy, eax
+                mov edx, 0
+                mov ebx, 2
+                mul ebx
+                add [esi].posx, eax
+
+        .elseif ecx == 6 ;中间跑道的子弹
+                mov eax, speed
+                sub [esi].posy, eax
+
+        .elseif ecx == 5 ;左边跑道的子弹
+                mov eax, speed
+                sub [esi].posy, eax
+                mov edx, 0
+                mov ebx, 1
+                div ebx
+                add [esi].posx, eax
+
+        .elseif ecx == 7 ;右边跑道的子弹
+                mov eax, speed
+                sub [esi].posy, eax
+                mov edx, 0
+                mov ebx, 1
+                div ebx
+                sub [esi].posx, eax
+
+        .endif
+        mov eax, POSCNT
+
+        .if eax & 0001h
+                mov eax, speed
+                mov edx, 0
+                mov ebx, 4
+                div ebx
+                .if ecx != 5 && ecx != 6 && ecx != 7
+                        add [esi].lengthx, eax
+                        add [esi].lengthy, eax
+
+                .else 
+                        sub [esi].lengthx, eax
+                        sub [esi].lengthy, eax
+                .endif
+        .endif
+        assume  esi: nothing
+ret
+_next_position endp 
+
+_change_all_position proc stdcall       ;遍历所有道具改变位置
+        mov ecx, target_number
+        xor eax, eax
+        .while eax < ecx
+                push eax
+                mov edx, 0
+                mov ebx, sizeofTargets
+                mul ebx
+                lea esi, targets[eax]
+                assume esi :ptr Targets
+                .if [esi].base.alive == 1
+                        invoke _next_position, addr [esi].base
+                .endif
+                assume  esi: nothing
+                pop eax
+                inc eax
+        .endw
+        ; 移动子弹
+        lea esi, bullet
+        assume esi :ptr Targets
+        .if [esi].base.alive == 1
+                invoke _next_position, addr [esi].base
+        .endif
+        assume  esi: nothing
+ret
+_change_all_position endp
+_targets_bullet_out_of_bound proc
+        ; 判断道具越界
+        mov ecx, target_number
+        xor eax, eax
+        .while eax < ecx
+                push eax
+                mov edx, 0
+                mov ebx, sizeofTargets
+                mul ebx
+                lea esi, targets[eax]
+                assume esi :ptr Targets
+                .if [esi].base.alive == 1
+                        .if [esi].base.posx <= 10 || [esi].base.posx >= gameW-10 \
+                        || [esi].base.posy <= 10 || [esi].base.posy >= gameH-10
+                                mov [esi].base.alive, 0
+                        .endif
+                .endif
+                assume esi: nothing
+                pop eax
+                inc eax
+        .endw
+
+        ; 判断子弹越界
+        .if bullet.base.alive == 1
+                .if bullet.base.posx <= 10 || bullet.base.posx >= gameW-10 \
+                || bullet.base.posy <= 10 || bullet.base.posy >= gameH-10
+                        mov bullet.base.alive, 0
+                .endif
+        .endif
+ret
+_targets_bullet_out_of_bound endp
 
 ;zzl part #################################################################
 _initAll proc
@@ -151,11 +340,9 @@ _initAll proc
         ret
 _initAll endp
 
-_random_object proc
-        local @id, @new_DC, @new_course, @offs
-        
+_random_object_gene proc
+        local @id, @offs
         mov esi, offset targets
-        assume esi: ptr Targets
         mov ecx, target_number
         .while ecx != 0 
                 dec ecx
@@ -167,43 +354,75 @@ _random_object proc
         mov @id, eax
         and eax, 7
 
+        mov esi, @offs
+        assume esi: ptr Targets
         .if eax == 0
                 mov ebx, object_DC.env1
+                mov [esi].typeid, OBJ_ENV
         .elseif eax == 1
                 mov ebx, object_DC.env2
+                mov [esi].typeid, OBJ_ENV
         .elseif eax == 2
                 mov ebx, object_DC.env3
+                mov [esi].typeid, OBJ_ENV
         .elseif eax == 3
                 mov ebx, object_DC.sobs
+                mov [esi].typeid, OBST_SOFT
         .elseif eax == 4
                 mov ebx, object_DC.hobs
+                mov [esi].typeid, OBST_HARD
         .elseif eax == 5
                 mov ebx, object_DC.accp
+                mov [esi].typeid, PROP_ACC_SELF
         .elseif eax == 6
                 mov ebx, object_DC.decp
+                mov [esi].typeid, PROP_DEC_SELF
         .elseif eax == 7
                 mov ebx, object_DC.coin
+                mov [esi].typeid, MONEY_1
         .endif
-        mov @new_DC, ebx
+        mov [esi].base.DC, ebx
 
         mov eax, @id
+        and eax, 7
         .if eax <= 2 
+                invoke rand
                 and eax, 4
-                mov @new_course, eax
         .else
                 invoke rand
-                add eax, 3
+                and eax, 3
                 .while eax == 0
                         invoke rand
-                        add eax, 3
+                        and eax, 3
                 .endw
-                add eax, 4
-                mov @new_course, eax
+        .endif
+        mov esi, @offs
+        assume esi: ptr Targets
+        mov [esi].base.course_id, eax
+
+        mov [esi].base.alive, 1
+        mov [esi].base.lengthx, obj_init_lx
+        mov [esi].base.lengthy, obj_init_ly
+        mov eax, [esi].base.course_id
+        mov [esi].base.posy, remote_y
+        .if eax == 0
+                mov [esi].base.posx, remote_x0
+        .elseif eax == 1
+                mov [esi].base.posx, remote_x5
+        .elseif eax == 2
+                mov [esi].base.posx, remote_x6
+        .elseif eax == 3
+                mov [esi].base.posx, remote_x7
+        .elseif eax == 4
+                mov [esi].base.posx, remote_x4
         .endif
 
+        mov eax, target_number
+        inc eax
+        mov target_number, eax
 
         ret
-_random_object endp
+_random_object_gene endp
 
 
 _set_char_pos proc
@@ -381,8 +600,30 @@ _move_object proc hWnd
 
                 invoke  TransparentBlt, hDCGame, 0, 0, gameH, gameW, backGround.DC_pd, 0, 0, 1000, 1000, SRCCOPY
 
+;draw obj
+                mov ecx, target_number
+                xor eax, eax
+                .while eax < ecx
+                        push eax
+                        mov edx, 0
+                        mov ebx, sizeofTargets
+                        mul ebx
+                        lea esi, targets[eax]
+                        assume esi :ptr Targets
+                        .if [esi].base.alive == 1
+                                push ecx
+                                invoke  TransparentBlt, 
+                                        hDCGame, 
+                                        [esi].base.posx, [esi].base.posy, 
+                                        [esi].base.lengthx, [esi].base.lengthy, 
+                                        [esi].base.DC, 0, 0, PROP_LX, PROP_LY, 16777215
+                                pop ecx
+                        .endif
+                        pop eax
+                        inc eax
+                .endw
+;draw car
                 invoke  TransparentBlt, hDCGame, player.base.posx, player.base.posy, player.base.lengthx, player.base.lengthy, player.base.DC, 0, 0, PLAYER_LX, PLAYER_LY, 16777215
-
 
                 invoke  TransparentBlt, hDCGame, 0, 0, gameH, gameW, backGround.DC_pu, 0, 0, 1000, 1000, 16777215
         
@@ -436,14 +677,22 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                 invoke  _createAll
                 invoke  _initAll
                 invoke  SetTimer, hWinMain, ID_TIMER, 15, NULL
+                invoke  SetTimer, hWinMain, ID_TIMER_gene, 1200, NULL
 
 
         .elseif eax == WM_TIMER
                 mov     eax, wParam
-                ; .if     eax == ID_TIMER1
-                invoke  _move_object, hWnd
-                ; .elseif eax == ID_TIMER2
-                invoke  InvalidateRect, hWnd, NULL, FALSE
+                .if     eax == ID_TIMER
+                        invoke  _move_object, hWnd
+                        invoke _change_all_position
+                        invoke _targets_bullet_out_of_bound
+                        invoke  InvalidateRect, hWnd, NULL, FALSE
+                .elseif eax == ID_TIMER_gene
+                        mov eax, cur_interface
+                        .if eax == in_game
+                                invoke  _random_object_gene
+                        .endif
+                .endif
 
         .elseif eax == WM_LBUTTONUP
                 mov eax, cur_interface
@@ -536,7 +785,7 @@ start:
         invoke srand, eax
         invoke rand
         call    _WinMain
-        invoke  ExitProcess, NULL
+        invoke  ExitProcess, NULL      
         ; invoke _collision_test
         ; invoke _sst_test
         ret
