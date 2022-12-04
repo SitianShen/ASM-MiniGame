@@ -121,8 +121,8 @@ _set_char_pos proc
         mov button_back.base.lengthx, button_back_LX/2
         mov button_back.base.lengthy, button_back_LY/2
 
-        mov button_exit.base.posx, 70
-        mov button_exit.base.posy, 180
+        mov button_exit.base.posx, 80
+        mov button_exit.base.posy, 260
         mov button_exit.base.lengthx, button_exit_LX/2
         mov button_exit.base.lengthy, button_exit_LY/2
         ret
@@ -316,6 +316,7 @@ _move_object proc hWnd
                 invoke  _draw_button, addr button_back, hWnd, button_back_LX, button_back_LY
         .elseif eax == in_over
                 invoke  TransparentBlt, hDCGame, 0, 0, gameH, gameW, backGround.DC_e, 0, 0, 1000, 1000, SRCCOPY
+                invoke  _draw_button, addr button_exit, hWnd, button_exit_LX, button_exit_LY
 
         .endif
 ;         mov eax, object1H

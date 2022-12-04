@@ -64,6 +64,11 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                         .if eax == button_back.is_click
                                 mov cur_interface, in_begining
                         .endif
+                .elseif eax == in_over
+                        mov eax, 1
+                        .if eax == button_exit.is_click
+                                invoke _Quit
+                        .endif
                 .endif
 
         .elseif eax == WM_KEYDOWN
