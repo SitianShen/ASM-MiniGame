@@ -373,9 +373,13 @@ _two_two_enum proc uses ebx
                 
                 ; 判断逻辑
                 .if [esi].typeid == MONEY_1
-                        invoke _check_collision, addr player.base, addr [esi].base 
-                        mov @collisionFlag, eax
-
+                        .if flag_jump == 1
+                                mov @collisionFlag, 0
+                        .else
+                                invoke _check_collision, addr player.base, addr [esi].base 
+                                mov @collisionFlag, eax
+                        .endif
+                        
                         ; invoke printf, offset debug_int, [esi].typeid
                         ; invoke printf, offset debug_int, @collisionFlag
 
@@ -384,7 +388,7 @@ _two_two_enum proc uses ebx
                         .endif
 
                 .elseif [esi].typeid == MONEY_2
-                        invoke printf, offset debug_int, [esi].typeid
+                        ; invoke printf, offset debug_int, [esi].typeid
                         invoke _check_collision, addr player.base, addr [esi].base
                         mov @collisionFlag, eax
 
@@ -396,8 +400,12 @@ _two_two_enum proc uses ebx
                         .endif
 
                 .elseif [esi].typeid == PROP_ACC_SELF
-                        invoke _check_collision, addr player.base, addr [esi].base
-                        mov @collisionFlag, eax
+                        .if flag_jump == 1
+                                mov @collisionFlag, 0
+                        .else
+                                invoke _check_collision, addr player.base, addr [esi].base
+                                mov @collisionFlag, eax
+                        .endif
 
                         ; invoke printf, offset debug_int, [esi].typeid
                         ; invoke printf, offset debug_int, @collisionFlag
@@ -407,8 +415,15 @@ _two_two_enum proc uses ebx
                         .endif
 
                 .elseif [esi].typeid == PROP_DEC_SELF
-                        invoke _check_collision, addr player.base, addr [esi].base
-                        mov @collisionFlag, eax
+
+                        .if flag_jump == 1
+                                mov @collisionFlag, 0
+                        .else
+                                invoke _check_collision, addr player.base, addr [esi].base
+                                mov @collisionFlag, eax
+                        .endif
+
+                        
 
                         ; invoke printf, offset debug_int, [esi].typeid
                         ; invoke printf, offset debug_int, @collisionFlag
@@ -420,8 +435,12 @@ _two_two_enum proc uses ebx
                         
                 .elseif [esi].typeid == OBST_HARD
 
-                        invoke _check_collision, addr player.base, addr [esi].base
-                        mov @collisionFlag, eax
+                        .if flag_jump == 1
+                                mov @collisionFlag, 0
+                        .else
+                                invoke _check_collision, addr player.base, addr [esi].base
+                                mov @collisionFlag, eax
+                        .endif
 
                         ; invoke printf, offset debug_int, [esi].typeid
                         ; invoke printf, offset debug_int, @collisionFlag
@@ -430,6 +449,7 @@ _two_two_enum proc uses ebx
                                 invoke _collision_Player_with_HARD, esi
                         .endif
                 .elseif [esi].typeid == OBST_SOFT
+
                         mov @collisionFlag, 0
 
                         .if bullet.base.alive == 1
@@ -443,8 +463,13 @@ _two_two_enum proc uses ebx
                         .if @collisionFlag == 1
                                 invoke _collision_bullet_with_SOFT, esi
                         .else
-                                invoke _check_collision, addr player.base, addr [esi].base
-                                mov @collisionFlag, eax
+                                .if flag_jump == 1 
+                                        mov @collisionFlag, 0
+                                .else
+                                        invoke _check_collision, addr player.base, addr [esi].base
+                                        mov @collisionFlag, eax    
+                                .endif
+                                
                                 .if @collisionFlag == 1
                                         invoke _collision_Player_with_SOFT, esi
                                 .endif
