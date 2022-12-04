@@ -24,6 +24,9 @@ _next_position proc stdcall ptrBase :ptr BASE
         mov esi, ptrBase
         assume  esi: ptr BASE
         mov ecx, [esi].course_id
+        .if [esi].posy > 300
+                mov base_speed, 4
+        .endif
         ; .if eax & 10 == 0
         .if ecx == 2 ;正中间跑道
                 invoke rand
@@ -168,6 +171,7 @@ _next_position proc stdcall ptrBase :ptr BASE
                 .endif
         .endif
         assume  esi: nothing
+        mov base_speed, 2
 ret
 _next_position endp 
 
