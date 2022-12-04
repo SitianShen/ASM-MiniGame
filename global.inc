@@ -33,10 +33,10 @@ dwNowBack       dd      ?
 flag_jump               dd      0
 flag_movleft            dd      0
 flag_movright           dd      0
-stdtime_jump            dd      100
-time_jump               dd      100
-stdtime_mov             dd      150
-time_mov                dd      50
+stdtime_jump            dd      50
+time_jump               dd      50
+stdtime_mov             dd      30
+time_mov                dd      30
 cur_interface           dd  0
 
 target_number   dd      0         
