@@ -29,25 +29,25 @@ main_dev:
 	rc main.rc
 	ml $(ML_FLAGS) $(ASM_DEV)
 	Link $(LINK_FLAGS) $(OBJS_DEV) $(RES)
-	del *.obj
+	nmake clean
 
 # 生成ldf_dev.exe
 ldf_dev:
 	del *.exe
 	ml $(ML_FLAGS) ldf_dev.asm data.asm
 	link $(LINK_FLAGS) ldf_dev.obj data.obj
-	del *.obj
+	nmake clean
 
 # 生成lja_dev.exe
 lja_dev:
 	del *.exe
 	ml $(ML_FLAGS) lja_dev.asm data.asm
 	link $(LINK_FLAGS) lja_dev.obj data.obj
-	del *.obj
+	nmake clean
 
 # 生成sst_dev.exe
 sst_dev:
 	del *.exe
 	ml $(ML_FLAGS) sst_dev.asm data.asm
 	link $(LINK_FLAGS) sst_dev.obj data.obj
-	del *.obj
+	nmake clean

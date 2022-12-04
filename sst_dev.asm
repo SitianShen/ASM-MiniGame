@@ -218,8 +218,8 @@ _sst_test proc
 _sst_test endp
 
 ;test
-; start:
-        ;  invoke  _sst_test
-        ;  ret
-; end start
-end
+start:
+         invoke  _sst_test
+         ret
+end start
+; end
