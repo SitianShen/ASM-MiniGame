@@ -20,9 +20,9 @@ OBST_SOFT               equ 3001
 OBJ_ENV                 equ 4000
 
 ;collision and score
-MONEY_1_SCORE           equ 100
-MONEY_2_SCORE           equ 300
-OBST_SOFT_SCORE         equ -50
+MONEY_1_SCORE           equ 2
+MONEY_2_SCORE           equ 3
+OBST_SOFT_SCORE         equ -1
 
 
 in_begining             equ 0
@@ -104,6 +104,20 @@ IDB_PROP_BULLETR    equ 320
 IDB_PLAYER          equ 400 
 PLAYER_LX equ 500
 PLAYER_LY equ 500         
+
+IDB_DIG0 equ 1000
+IDB_DIG1 equ 1001
+IDB_DIG2 equ 1002
+IDB_DIG3 equ 1003
+IDB_DIG4 equ 1004
+IDB_DIG5 equ 1005
+IDB_DIG6 equ 1006
+IDB_DIG7 equ 1007
+IDB_DIG8 equ 1008
+IDB_DIG9 equ 1009
+DIG_LX equ 500
+DIG_LY equ 500   
+
 
 gameH           equ     600
 gameW           equ     600

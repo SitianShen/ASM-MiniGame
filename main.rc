@@ -33,6 +33,17 @@
 # define IDB_PROP_BULLETR    320
 # define IDB_PLAYER          400
 
+# define IDB_DIG0            1000
+# define IDB_DIG1            1001
+# define IDB_DIG2            1002
+# define IDB_DIG3            1003
+# define IDB_DIG4            1004
+# define IDB_DIG5            1005
+# define IDB_DIG6            1006
+# define IDB_DIG7            1007
+# define IDB_DIG8            1008
+# define IDB_DIG9            1009
+
 IDB_BACKG           BITMAP      "resource/background.bmp"
 IDB_BACKG_BEGINING  BITMAP      "resource/background_begining.bmp"
 IDB_BACKG_INTRO     BITMAP      "resource/background_intro.bmp"
@@ -71,3 +82,14 @@ IDB_PROP_BULLETR    BITMAP       "resource/prop_bulletR.bmp"
 
 IDB_PLAYER          BITMAP       "resource/player.bmp"
 
+
+IDB_DIG0    BITMAP  "resource/dig0.bmp"
+IDB_DIG1    BITMAP  "resource/dig1.bmp"
+IDB_DIG2    BITMAP  "resource/dig2.bmp"
+IDB_DIG3    BITMAP  "resource/dig3.bmp"
+IDB_DIG4    BITMAP  "resource/dig4.bmp"
+IDB_DIG5    BITMAP  "resource/dig5.bmp"
+IDB_DIG6    BITMAP  "resource/dig6.bmp"
+IDB_DIG7    BITMAP  "resource/dig7.bmp"
+IDB_DIG8    BITMAP  "resource/dig8.bmp"
+IDB_DIG9    BITMAP  "resource/dig9.bmp"
