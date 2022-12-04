@@ -220,7 +220,7 @@ _targets_bullet_out_of_bound proc
                 .if [esi].base.alive == 1
                         ; invoke printf, debug_int, [esi].base.posy
                         .if [esi].base.posx <= 10 || [esi].base.posx >= gameW-100 \
-                        || [esi].base.posy <= 10 || [esi].base.posy >= gameH-200
+                        || [esi].base.posy <= 10 || [esi].base.posy >= gameH-130
                                 mov [esi].base.alive, 0
                         .endif
                 .endif
@@ -232,7 +232,7 @@ _targets_bullet_out_of_bound proc
         ; 判断子弹越界
         .if bullet.base.alive == 1
                 .if bullet.base.posx <= 380 || bullet.base.posx >= gameW-100 \
-                || bullet.base.posy <= 380 || bullet.base.posy >= gameW-200
+                || bullet.base.posy <= 380 || bullet.base.posy >= gameW-130
                         mov bullet.base.alive, 0
                 .endif
         .endif
