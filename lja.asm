@@ -52,25 +52,34 @@ _next_position proc stdcall ptrBase :ptr BASE
         ; mov bl, cl
         ; mul bl
 
-        ; local randnum :dword
+        ; local @randnum :dword
         ; invoke rand
-        ; mov randnum, eax
+        ; mov @randnum, eax
 
         mov esi, ptrBase
         assume  esi: ptr BASE
         mov ecx, [esi].course_id
         ; .if eax & 10 == 0
         .if ecx == 2 ;正中间跑道
+                invoke rand
+                mov ecx, eax
                 mov eax, speed
                 add [esi].posy, eax
+                and ecx, 100
+                .if ecx == 0
+                        mov edx, 0
+                        mov ebx, 2
+                        div ebx
+                        sub [esi].posx, eax
+                .endif
 
         .elseif ecx == 1 ;最左边跑道
 
                 mov eax, speed
                 add [esi].posy, eax
                 mov ecx, POSCNT
-                and ecx, 1
-                .if ecx 
+                and ecx, 3
+                .if ecx == 0
                         mov edx, 0
                         mov ebx, 2
                         div ebx
@@ -101,7 +110,7 @@ _next_position proc stdcall ptrBase :ptr BASE
                 add [esi].posy, eax
                 mov ecx, POSCNT
                 and ecx, 10
-                .if ecx < 2
+                .if ecx < 5
                         mov edx, 0
                         mov ebx, 2
                         mul ebx
