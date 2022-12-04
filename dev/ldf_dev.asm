@@ -386,7 +386,6 @@ _two_two_enum proc uses ebx
                         .if @collisionFlag == 1
                                 invoke _collision_Player_with_MONEY_1, esi
                         .endif
-
                 .elseif [esi].typeid == MONEY_2
                         ; invoke printf, offset debug_int, [esi].typeid
                         invoke _check_collision, addr player.base, addr [esi].base
