@@ -110,7 +110,7 @@ _next_position proc stdcall ptrBase :ptr BASE
                 add [esi].posy, eax
                 mov ecx, POSCNT
                 and ecx, 10
-                .if ecx < 5
+                .if ecx < 6
                         mov edx, 0
                         mov ebx, 2
                         mul ebx
@@ -138,8 +138,18 @@ _next_position proc stdcall ptrBase :ptr BASE
                 add [esi].posx, eax
 
         .elseif ecx == 6 ;中间跑道的子弹
+
+                invoke rand
+                mov ecx, eax
                 mov eax, speed
                 sub [esi].posy, eax
+                and ecx, 100
+                .if ecx == 0
+                        mov edx, 0
+                        mov ebx, 2
+                        div ebx
+                        add [esi].posx, eax
+                .endif
 
         .elseif ecx == 5 ;左边跑道的子弹
                 mov eax, speed
