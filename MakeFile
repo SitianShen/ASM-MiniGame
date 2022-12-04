@@ -8,7 +8,7 @@ ML_FLAGS = /c /coff
 $(EXE):$(OBJS) $(RES)
 		del *.exe
 		Link $(LINK_FLAGS) $(OBJS) $(RES)
-		del *.obj
+		nmake clean
 
 .asm.obj:
 		ml $(ML_FLAGS) $<
