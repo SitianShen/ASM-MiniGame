@@ -369,7 +369,7 @@ start:
         ; invoke  ExitProcess, NULL
         
         ; invoke _collision_test
-        invoke _two_two_enum_test
+        ; invoke _two_two_enum_test
         ret
 end     start
 ; end

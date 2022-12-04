@@ -40,9 +40,6 @@ extrn object1W:dword
 extrn object_move_v:dword   
 extrn POSCNT:dword          ; NEXTPOS的计数器
 
-; include global.inc
-   
-
 .const
 szCollision byte "collision check", 0ah, 0
 szCollisionEnd byte "collision end", 0ah, 0
@@ -70,11 +67,11 @@ _check_collision proc uses ebx, @objectOne:ptr BASE, @objectTwo:ptr BASE
         local @criticalX, @criticalY
 
         mov esi, @objectOne
-        assume esi: ptr BASE
+        assume esi:ptr BASE
         mov eax, [esi].course_id
 
         mov esi, @objectTwo
-        assume esi: ptr BASE
+        assume esi:ptr BASE
 
         .if [esi].course_id != eax
                 mov eax, 0
@@ -218,7 +215,12 @@ _collision_Player_with_MONEY_1 proc moneyOne:ptr Targets
         mov [esi].base.alive, 0
         
         ;TODO 得分增加
+        lea esi, player
+        assume esi:ptr Subject
 
+        add [esi].score, MONEY_1_SCORE
+        invoke printf, offset debug_int, [esi].score
+        
         ret
 _collision_Player_with_MONEY_1 endp
 
@@ -235,7 +237,10 @@ _collision_Player_with_MONEY_2 proc moneyTwo:ptr Targets
         
         ;TODO 得分增加
         lea esi, player
-
+        assume esi:ptr Subject
+        
+        add [esi].score, MONEY_2_SCORE
+        invoke printf, offset debug_int, [esi].score
 
         ret
 _collision_Player_with_MONEY_2 endp
@@ -268,6 +273,7 @@ _collision_Player_with_DEC proc DEC_target:ptr Targets
         mov [esi].base.alive, 0
 
         ;TODO 减速
+        
 
         ret
 _collision_Player_with_DEC endp 
@@ -300,6 +306,12 @@ _collision_Player_with_SOFT proc SOFT_target:ptr Targets
         mov [esi].base.alive, 0
 
         ;TODO 扣分
+        lea esi, player
+        assume esi:ptr Subject
+
+        add [esi].score, OBST_SOFT_SCORE
+        invoke printf, offset debug_int, [esi].score
+
         ret
 _collision_Player_with_SOFT endp
 
@@ -340,7 +352,7 @@ _two_two_enum proc uses ebx
         ; 碰撞逻辑
         local @collisionFlag
 
-        invoke printf, offset debug_str, offset szCollision
+        ; invoke printf, offset debug_str, offset szCollision
         ; ============== init ==============
         ; Old
         mov @targetByteOffset, 0
@@ -450,7 +462,7 @@ _two_two_enum proc uses ebx
                 
                 ;覆盖targets
                 .if [esi].base.alive == 1
-                        invoke printf, offset debug_int, [esi].typeid
+                        ; invoke printf, offset debug_int, [esi].typeid
                         mov eax, @new_target_number_index
                         .if eax != @target_number_index
                                 
@@ -515,7 +527,7 @@ _two_two_enum proc uses ebx
         mov target_number, eax
 
         ; invoke printf, offset debug_int, @new_target_number
-        invoke printf, offset debug_str, offset szCollisionEnd
+        ; invoke printf, offset debug_str, offset szCollisionEnd
         ret
 _two_two_enum endp
 

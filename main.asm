@@ -71,6 +71,7 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                         invoke  _move_object, hWnd
                         invoke _change_all_position
                         invoke _targets_bullet_out_of_bound
+                        invoke _two_two_enum
                         invoke  InvalidateRect, hWnd, NULL, FALSE
                 .elseif eax == ID_TIMER_gene
                         mov eax, cur_interface
