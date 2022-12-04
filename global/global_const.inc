@@ -10,6 +10,7 @@ choose_start equ 0
 choose_intro equ 1
 choose_which_char dd 0
 
+;Game Items
 MONEY_1                 equ 1000
 MONEY_2                 equ 1001
 PROP_ACC_SELF           equ 2000 
@@ -17,6 +18,12 @@ PROP_DEC_SELF           equ 2001
 OBST_HARD               equ 3000 
 OBST_SOFT               equ 3001
 OBJ_ENV                 equ 4000
+
+;collision and score
+MONEY_1_SCORE           equ 100
+MONEY_2_SCORE           equ 300
+OBST_SOFT_SCORE         equ -500
+
 
 in_begining             equ 0
 in_game                 equ 1
@@ -103,3 +110,5 @@ gameW           equ     600
 charH           equ     400
 charW           equ     400
 sizeofTargets   equ     sizeof Targets
+
+
