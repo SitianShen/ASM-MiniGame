@@ -1,6 +1,6 @@
 extrn player:Subject         
 extrn bullet:Subject             
-extrn targets:dword
+extrn targets:dword ;不知道会不会有bug，本地调试很正常
 
 ;zzl own
 extrn button_play:Button      
@@ -27,4 +27,9 @@ extrn time_mov:dword
 extrn cur_interface:dword     
 
 extrn target_number:dword       
-extrn speed:dword  
+extrn speed:dword
+
+extrn object1H:dword   
+extrn object1W:dword      
+extrn object_move_v:dword   
+extrn POSCNT:dword          ; NEXTPOS的计数器

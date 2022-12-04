@@ -2,147 +2,40 @@
 .model flat, stdcall
 option casemap: none
 
-include global.inc
+include global_dev.inc
+
+extrn player:Subject         
+extrn bullet:Subject             
+extrn targets:dword ;不知道会不会有bug，本地调试很正常
+
+;zzl own
+extrn button_play:Button      
+extrn button_start:Button      
+extrn button_back:Button      
+extrn button_exit:Button       
+extrn backGround:BackGround       
+extrn object_DC:Object_DC        
+
+extrn hInstance:dword       
+extrn hWinMain:dword      
+extrn hDCBack:dword         
+extrn hDCGame:dword         
+extrn hDCObj1:dword        
+extrn dwNowBack:dword     
+
+extrn flag_jump:dword               
+extrn flag_movleft:dword          
+extrn flag_movright:dword           
+extrn stdtime_jump:dword            
+extrn time_jump:dword              
+extrn stdtime_mov:dword             
+extrn time_mov:dword             
+extrn cur_interface:dword     
+
+extrn target_number:dword       
+extrn speed:dword
         
 .code
-;sst part #################################################################
-_Init_car proc uses ebx
-
-    mov ebx, 2
-    mov player.base.course_id, ebx
-    mov player.base.alive, 1
-
-    xor ebx, ebx
-    mov player.base.rel_v, ebx
-    mov player.score, ebx
-
-    mov eax, carx1
-    mov player.base.posx, eax
-
-    mov ebx, cary
-    mov player.base.posy, ebx
-
-    mov player.base.lengthx, carLX
-    mov player.base.lengthy, carLY
-
-    ret
-;??????????????
-_Init_car endp
-
-;?????????????????
-_Move_process proc uses ebx
-        mov eax, flag_jump
-        .if (eax == 1)
-                .if (time_jump == 0);下降完毕，落地
-                        mov ebx, stdtime_jump
-                        mov time_jump, ebx
-
-                        mov ebx, 0
-                        mov flag_jump, ebx
-
-                        mov eax, cary
-                        mov player.base.posy, eax;回到原地
-                        ret
-                .endif
-
-                .if(time_jump >= 25);高度没到继续跳起
-                        mov eax, player.base.posy
-                        sub eax, 2
-                        mov player.base.posy, eax
-                .endif
-
-                .if(time_jump < 25);高度到了，开始降落
-                        mov eax, player.base.posy
-                        add eax, 2
-                        mov player.base.posy, eax
-                .endif
-
-                mov ebx, time_jump
-                dec ebx
-                mov time_jump, ebx ;时间没到不回原地
-        .endif
-
-        mov eax, flag_movleft
-        .if (eax == 1)
-                .if (time_mov == 0)
-                        mov ebx, stdtime_mov
-                        mov time_mov, ebx
-
-                        mov ebx, 0
-                        mov flag_movleft, ebx
-
-                        ret
-                .endif
-                ;没移到足够时间（位置，此处设置移动时间和距离匹配）
-                mov ebx, player.base.posx
-                sub ebx, 5
-                mov player.base.posx, ebx
-
-                mov ebx, time_mov
-                dec ebx
-                mov time_mov, ebx
-        .endif
-
-        mov eax, flag_movright
-        .if (eax == 1)
-                .if (time_mov == 0)
-                        mov ebx, stdtime_mov
-                        mov time_mov, ebx
-                        
-                        mov flag_movright, 0
-                        ret
-                .endif
-                ;没移到足够时间（位置，此处设置移动时间和距离匹配）
-                mov ebx, player.base.posx
-                add ebx, 5
-                mov player.base.posx, ebx
-
-                mov ebx, time_mov
-                dec ebx
-                mov time_mov, ebx
-        .endif
-        ret
-_Move_process endp
-
-
-;???
-_Action_left proc uses ebx
-        mov     ebx, player.base.course_id
-        .if (ebx == 1)
-                ret
-        .endif
-        dec     ebx
-        mov     player.base.course_id, ebx
-
-        mov     flag_movleft, 1
-        ret
-_Action_left endp
-
-;???
-_Action_right proc uses ebx
-        mov     ebx, player.base.course_id
-        .if (ebx == 3)
-               ret
-        .endif
-        inc     ebx
-        mov     player.base.course_id, ebx
-
-        mov     flag_movright, 1
-        ret
-_Action_right endp
-
-;???
-_Action_jump proc uses ebx
-        mov     ebx, 1
-        mov     flag_jump, ebx
-        ret
-_Action_jump endp
-
-;test
-; start:
-        ;  invoke  _sst_test
-        ;  ret
-; end start
 
 ;zzl part #################################################################
 _initAll proc
@@ -151,11 +44,9 @@ _initAll proc
         ret
 _initAll endp
 
-_random_object proc
-        local @id, @new_DC, @new_course, @offs
-        
+_random_object_gene proc
+        local @id, @offs
         mov esi, offset targets
-        assume esi: ptr Targets
         mov ecx, target_number
         .while ecx != 0 
                 dec ecx
@@ -167,53 +58,85 @@ _random_object proc
         mov @id, eax
         and eax, 7
 
+        mov esi, @offs
+        assume esi: ptr Targets
         .if eax == 0
                 mov ebx, object_DC.env1
+                mov [esi].typeid, OBJ_ENV
         .elseif eax == 1
                 mov ebx, object_DC.env2
+                mov [esi].typeid, OBJ_ENV
         .elseif eax == 2
                 mov ebx, object_DC.env3
+                mov [esi].typeid, OBJ_ENV
         .elseif eax == 3
                 mov ebx, object_DC.sobs
+                mov [esi].typeid, OBST_SOFT
         .elseif eax == 4
                 mov ebx, object_DC.hobs
+                mov [esi].typeid, OBST_HARD
         .elseif eax == 5
                 mov ebx, object_DC.accp
+                mov [esi].typeid, PROP_ACC_SELF
         .elseif eax == 6
                 mov ebx, object_DC.decp
+                mov [esi].typeid, PROP_DEC_SELF
         .elseif eax == 7
                 mov ebx, object_DC.coin
+                mov [esi].typeid, MONEY_1
         .endif
-        mov @new_DC, ebx
+        mov [esi].base.DC, ebx
 
         mov eax, @id
+        and eax, 7
         .if eax <= 2 
+                invoke rand
                 and eax, 4
-                mov @new_course, eax
         .else
                 invoke rand
-                add eax, 3
+                and eax, 3
                 .while eax == 0
                         invoke rand
-                        add eax, 3
+                        and eax, 3
                 .endw
-                add eax, 4
-                mov @new_course, eax
+        .endif
+        mov esi, @offs
+        assume esi: ptr Targets
+        mov [esi].base.course_id, eax
+
+        mov [esi].base.alive, 1
+        mov [esi].base.lengthx, obj_init_lx
+        mov [esi].base.lengthy, obj_init_ly
+        mov eax, [esi].base.course_id
+        mov [esi].base.posy, remote_y
+        .if eax == 0
+                mov [esi].base.posx, remote_x0
+        .elseif eax == 1
+                mov [esi].base.posx, remote_x5
+        .elseif eax == 2
+                mov [esi].base.posx, remote_x6
+        .elseif eax == 3
+                mov [esi].base.posx, remote_x7
+        .elseif eax == 4
+                mov [esi].base.posx, remote_x4
         .endif
 
+        mov eax, target_number
+        inc eax
+        mov target_number, eax
 
         ret
-_random_object endp
+_random_object_gene endp
 
 
 _set_char_pos proc
-        mov button_play.base.posx, 70
-        mov button_play.base.posy, 50
+        mov button_play.base.posx, 200
+        mov button_play.base.posy, 235
         mov button_play.base.lengthx, button_play_LX
         mov button_play.base.lengthy, button_play_LY
 
-        mov button_start.base.posx, 70
-        mov button_start.base.posy, 180
+        mov button_start.base.posx, 170
+        mov button_start.base.posy, 340
         mov button_start.base.lengthx, button_start_LX
         mov button_start.base.lengthy, button_start_LY
 
@@ -381,8 +304,30 @@ _move_object proc hWnd
 
                 invoke  TransparentBlt, hDCGame, 0, 0, gameH, gameW, backGround.DC_pd, 0, 0, 1000, 1000, SRCCOPY
 
+;draw obj
+                mov ecx, target_number
+                xor eax, eax
+                .while eax < ecx
+                        push eax
+                        mov edx, 0
+                        mov ebx, sizeofTargets
+                        mul ebx
+                        lea esi, targets[eax]
+                        assume esi :ptr Targets
+                        .if [esi].base.alive == 1
+                                push ecx
+                                invoke  TransparentBlt, 
+                                        hDCGame, 
+                                        [esi].base.posx, [esi].base.posy, 
+                                        [esi].base.lengthx, [esi].base.lengthy, 
+                                        [esi].base.DC, 0, 0, PROP_LX, PROP_LY, 16777215
+                                pop ecx
+                        .endif
+                        pop eax
+                        inc eax
+                .endw
+;draw car
                 invoke  TransparentBlt, hDCGame, player.base.posx, player.base.posy, player.base.lengthx, player.base.lengthy, player.base.DC, 0, 0, PLAYER_LX, PLAYER_LY, 16777215
-
 
                 invoke  TransparentBlt, hDCGame, 0, 0, gameH, gameW, backGround.DC_pu, 0, 0, 1000, 1000, 16777215
         
@@ -436,14 +381,22 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                 invoke  _createAll
                 invoke  _initAll
                 invoke  SetTimer, hWinMain, ID_TIMER, 15, NULL
+                invoke  SetTimer, hWinMain, ID_TIMER_gene, 1200, NULL
 
 
         .elseif eax == WM_TIMER
                 mov     eax, wParam
-                ; .if     eax == ID_TIMER1
-                invoke  _move_object, hWnd
-                ; .elseif eax == ID_TIMER2
-                invoke  InvalidateRect, hWnd, NULL, FALSE
+                .if     eax == ID_TIMER
+                        invoke  _move_object, hWnd
+                        invoke _change_all_position
+                        invoke _targets_bullet_out_of_bound
+                        invoke  InvalidateRect, hWnd, NULL, FALSE
+                .elseif eax == ID_TIMER_gene
+                        mov eax, cur_interface
+                        .if eax == in_game
+                                invoke  _random_object_gene
+                        .endif
+                .endif
 
         .elseif eax == WM_LBUTTONUP
                 mov eax, cur_interface
@@ -532,13 +485,13 @@ _WinMain        proc
 _WinMain        endp
 
 start:
-        ; invoke time, 0
-        ; invoke srand, eax
-        ; invoke rand
-        ; call    _WinMain
-        ; invoke  ExitProcess, NULL
+        invoke time, 0
+        invoke srand, eax
+        invoke rand
+        call    _WinMain
+        invoke  ExitProcess, NULL      
         ; invoke _collision_test
+        ; invoke _two_two_enum_test
         ; invoke _sst_test
-        invoke _collision_test
         ret
 end     start

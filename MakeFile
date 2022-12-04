@@ -1,5 +1,5 @@
 EXE = main.exe 
-OBJS = main.obj ldf.obj 
+OBJS = main.obj ldf.obj lja.obj sst.obj data.obj
 RES = main.res 
 
 LINK_FLAGS = /subsystem:console
@@ -18,26 +18,9 @@ clean:
 	del *.res
 	del *.obj
 
-# 生成ldf.exe
-ldf:
-	ml $(ML_FLAGS) ldf.asm
-	link $(LINK_FLAGS) ldf.obj
-	del *.obj
 
-# 生成lja.exe
-lja:
-	ml $(ML_FLAGS) lja.asm
-	link $(LINK_FLAGS) lja.obj
-	del *.obj
-
-# 生成sst.exe
-sst:
-	ml $(ML_FLAGS) sst.asm
-	link $(LINK_FLAGS) sst.obj
-	del *.obj
-
-ASM_DEV = main_dev.asm ldf_dev.asm lja_dev.asm sst_dev.asm
-OBJS_DEV = main_dev.obj ldf_dev.obj lja_dev.obj sst_dev.obj 
+ASM_DEV = main_dev.asm ldf_dev.asm lja_dev.asm sst_dev.asm data.asm
+OBJS_DEV = main_dev.obj ldf_dev.obj lja_dev.obj sst_dev.obj data.obj
 
 main_dev:
 	rc main.rc
@@ -47,22 +30,18 @@ main_dev:
 
 # 生成ldf_dev.exe
 ldf_dev:
-	ml $(ML_FLAGS) ldf_dev.asm
-	link $(LINK_FLAGS) ldf_dev.obj
+	ml $(ML_FLAGS) ldf_dev.asm data.asm
+	link $(LINK_FLAGS) ldf_dev.obj data.obj
 	del *.obj
 
 # 生成lja_dev.exe
 lja_dev:
-	ml $(ML_FLAGS) lja_dev.asm
-	link $(LINK_FLAGS) lja_dev.obj
+	ml $(ML_FLAGS) lja_dev.asm data.asm
+	link $(LINK_FLAGS) lja_dev.obj data.obj
 	del *.obj
 
 # 生成sst_dev.exe
 sst_dev:
-	ml $(ML_FLAGS) sst_dev.asm
-	link $(LINK_FLAGS) sst_dev.obj
+	ml $(ML_FLAGS) sst_dev.asm data.asm
+	link $(LINK_FLAGS) sst_dev.obj data.obj
 	del *.obj
-
-# # 生成ldf_dev.obj文件
-# ldf_obj:
-# 	ml $(ML_FLAGS) ldf_dev.asm

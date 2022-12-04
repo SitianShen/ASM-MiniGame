@@ -2,7 +2,44 @@
 .model flat, stdcall
 option casemap: none
 
-include global.inc
+include global_dev.inc
+
+extrn player:Subject         
+extrn bullet:Subject             
+extrn targets:dword ;不知道会不会有bug，本地调试很正常
+
+;zzl own
+extrn button_play:Button      
+extrn button_start:Button      
+extrn button_back:Button      
+extrn button_exit:Button       
+extrn backGround:BackGround       
+extrn object_DC:Object_DC        
+
+extrn hInstance:dword       
+extrn hWinMain:dword      
+extrn hDCBack:dword         
+extrn hDCGame:dword         
+extrn hDCObj1:dword        
+extrn dwNowBack:dword     
+
+extrn flag_jump:dword               
+extrn flag_movleft:dword          
+extrn flag_movright:dword           
+extrn stdtime_jump:dword            
+extrn time_jump:dword              
+extrn stdtime_mov:dword             
+extrn time_mov:dword             
+extrn cur_interface:dword     
+
+extrn target_number:dword       
+extrn speed:dword
+
+extrn object1H:dword   
+extrn object1W:dword      
+extrn object_move_v:dword   
+extrn POSCNT:dword          ; NEXTPOS的计数器
+
 .code
 ;speed = 2 —— 正常， 4 —— 快速， 8 —— 超快速
 _next_position proc stdcall ptrBase :ptr BASE
@@ -21,13 +58,14 @@ _next_position proc stdcall ptrBase :ptr BASE
 
         mov esi, ptrBase
         assume  esi: ptr BASE
-
         mov ecx, [esi].course_id
+        ; .if eax & 10 == 0
         .if ecx == 2 ;正中间跑道
                 mov eax, speed
                 add [esi].posy, eax
 
         .elseif ecx == 1 ;最左边跑道
+
                 mov eax, speed
                 add [esi].posy, eax
                 mov ecx, POSCNT
@@ -111,6 +149,7 @@ _next_position proc stdcall ptrBase :ptr BASE
                 sub [esi].posx, eax
 
         .endif
+        ; .endif
         mov eax, POSCNT
         ; 增大体积
         and eax, 10
