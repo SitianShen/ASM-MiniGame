@@ -29,6 +29,7 @@ public cur_interface
 
 public target_number       
 public speed
+public base_speed
 
 public object1H   
 public object1W      

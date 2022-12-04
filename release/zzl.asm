@@ -15,6 +15,7 @@ _Init_bullet endp
 
 _initAll proc
         invoke _Init_car
+        mov player.score, 100
         invoke _Init_bullet
         mov target_number, 0
         ret
@@ -313,7 +314,6 @@ _show_score proc
                 pop ecx
 
                 sub ecx, scoreBoard_each_LX
-                sub edx, scoreBoard_each_LY
         .endw
                 
 
@@ -339,7 +339,7 @@ _move_object proc hWnd
 
                 invoke  TransparentBlt, hDCGame, 0, 0, gameH, gameW, backGround.DC_pd, 0, 0, 1000, 1000, SRCCOPY
 
-;draw obj
+;draw obj 1
                 mov ecx, target_number
                 xor eax, eax
                 .while eax < ecx
@@ -349,7 +349,9 @@ _move_object proc hWnd
                         mul ebx
                         lea esi, targets[eax]
                         assume esi :ptr Targets
-                        .if [esi].base.alive == 1
+                        push edx
+                        mov edx, [esi].base.posy
+                        .if [esi].base.alive == 1 && edx<player.base.posy
                                 push ecx
                                 invoke  TransparentBlt, 
                                         hDCGame, 
@@ -358,11 +360,38 @@ _move_object proc hWnd
                                         [esi].base.DC, 0, 0, PROP_LX, PROP_LY, 16777215
                                 pop ecx
                         .endif
+                        pop edx
                         pop eax
                         inc eax
                 .endw
 ;draw car
                 invoke  TransparentBlt, hDCGame, player.base.posx, player.base.posy, player.base.lengthx, player.base.lengthy, player.base.DC, 0, 0, PLAYER_LX, PLAYER_LY, 16777215
+
+;draw obj 1
+                mov ecx, target_number
+                xor eax, eax
+                .while eax < ecx
+                        push eax
+                        mov edx, 0
+                        mov ebx, sizeofTargets
+                        mul ebx
+                        lea esi, targets[eax]
+                        assume esi :ptr Targets
+                        push edx
+                        mov edx, [esi].base.posy
+                        .if [esi].base.alive == 1 && edx>player.base.posy
+                                push ecx
+                                invoke  TransparentBlt, 
+                                        hDCGame, 
+                                        [esi].base.posx, [esi].base.posy, 
+                                        [esi].base.lengthx, [esi].base.lengthy, 
+                                        [esi].base.DC, 0, 0, PROP_LX, PROP_LY, 16777215
+                                pop ecx
+                        .endif
+                        pop edx
+                        pop eax
+                        inc eax
+                .endw
 
                 invoke _show_score
                 invoke  TransparentBlt, hDCGame, 0, 0, gameH, gameW, backGround.DC_pu, 0, 0, 1000, 1000, 16777215
