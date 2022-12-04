@@ -41,7 +41,7 @@ _collision_Player_with_ACC proto :ptr Targets
 _collision_Player_with_DEC proto :ptr Targets
 _collision_Player_with_HARD proto :ptr Targets
 _collision_Player_with_SOFT proto :ptr Targets
-_collision_bullet_with_HARD proto :ptr Targets
+_collision_bullet_with_SOFT proto :ptr Targets
 _two_two_enum proto
 _two_two_enum_test proto
 

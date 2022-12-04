@@ -9,6 +9,8 @@ include global_extrn.inc
 szCollision byte "collision check", 0ah, 0
 szCollisionEnd byte "collision end", 0ah, 0
 debug_str byte "%s", 0
+szBulletWithHard byte "bullet hit Hard", 0ah, 0
+szCarWithHard byte "cart hit Hard", 0ah, 0
 
 .code
 
@@ -259,7 +261,7 @@ _collision_Player_with_HARD proc HARD_target:ptr Targets
         assume esi:ptr Subject
         
         mov [esi].base.alive, 0
-        ; invoke printf, offset debug_int, [esi].score
+        invoke printf, offset debug_str, offset szCarWithHard
 
         ret
 _collision_Player_with_HARD endp
@@ -286,14 +288,14 @@ _collision_Player_with_SOFT proc SOFT_target:ptr Targets
 _collision_Player_with_SOFT endp
 
 
-_collision_bullet_with_HARD proc HARD_target:ptr Targets
-        ;得到HARD结构体
+_collision_bullet_with_SOFT proc HARD_target:ptr Targets
+        ;得到SOFT结构体
         mov esi, HARD_target
         assume esi:ptr Targets
 
         ; invoke printf, offset debug_int, [esi].typeid
 
-        ;HARD消失
+        ;SOFT消失
         mov [esi].base.alive, 0
         
         ;得到bullet结构体
@@ -303,8 +305,10 @@ _collision_bullet_with_HARD proc HARD_target:ptr Targets
         ;bullet消失
         mov [esi].base.alive, 0
 
+        invoke printf, offset debug_str, offset szBulletWithHard
+
         ret
-_collision_bullet_with_HARD endp
+_collision_bullet_with_SOFT endp
 
 
 _two_two_enum proc uses ebx
@@ -395,23 +399,7 @@ _two_two_enum proc uses ebx
                         .endif
                         
                 .elseif [esi].typeid == OBST_HARD
-                        invoke _check_collision, addr bullet.base, addr [esi].base
-                        mov @collisionFlag, eax
 
-                        ; invoke printf, offset debug_int, [esi].typeid
-                        ; invoke printf, offset debug_int, @collisionFlag
-
-                        .if @collisionFlag == 1
-                                invoke _collision_bullet_with_HARD, esi
-                        .else
-                                invoke _check_collision, addr player.base, addr [esi].base
-                                mov @collisionFlag, eax
-                                .if @collisionFlag == 1
-                                        invoke _collision_bullet_with_HARD, esi
-                                .endif
-                        .endif
-
-                .elseif [esi].typeid == OBST_SOFT
                         invoke _check_collision, addr player.base, addr [esi].base
                         mov @collisionFlag, eax
 
@@ -419,7 +407,27 @@ _two_two_enum proc uses ebx
                         ; invoke printf, offset debug_int, @collisionFlag
 
                         .if @collisionFlag == 1
-                                invoke _collision_Player_with_SOFT, esi
+                                invoke _collision_Player_with_HARD, esi
+                        .endif
+                .elseif [esi].typeid == OBST_SOFT
+                        mov @collisionFlag, 0
+
+                        .if bullet.base.alive == 1
+                                invoke _check_collision, addr bullet.base, addr [esi].base
+                                mov @collisionFlag, eax
+                        .endif
+
+                        ; invoke printf, offset debug_int, [esi].typeid
+                        ; invoke printf, offset debug_int, @collisionFlag
+
+                        .if @collisionFlag == 1
+                                invoke _collision_bullet_with_SOFT, esi
+                        .else
+                                invoke _check_collision, addr player.base, addr [esi].base
+                                mov @collisionFlag, eax
+                                .if @collisionFlag == 1
+                                        invoke _collision_Player_with_SOFT, esi
+                                .endif
                         .endif
                 .endif
 
