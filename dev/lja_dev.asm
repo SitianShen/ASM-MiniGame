@@ -274,4 +274,7 @@ _targets_bullet_out_of_bound proc
 ret
 _targets_bullet_out_of_bound endp
 
+start:
+        
+end start
 end

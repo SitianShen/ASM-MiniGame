@@ -50,7 +50,7 @@ _targets_bullet_out_of_bound proto
 ; lja functions
 _next_position proto :ptr BASE         ;每个道具移动
 _change_all_position proto      ;遍历所有道具，使之移动
-
+_targets_bullet_out_of_bound proto
 
 
 ;=====================================================

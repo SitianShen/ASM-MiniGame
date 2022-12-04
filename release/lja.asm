@@ -241,6 +241,7 @@ _change_all_position proc stdcall       ;遍历所有道具改变位置
         .endif
 ret
 _change_all_position endp
+
 _targets_bullet_out_of_bound proc
         ; 判断道具越界
         mov ecx, target_number
