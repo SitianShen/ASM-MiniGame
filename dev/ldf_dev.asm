@@ -47,6 +47,9 @@ _check_collision proc uses ebx, @objectOne:ptr BASE, @objectTwo:ptr BASE
                 ret
         .endif
 
+        mov esi, @objectOne
+        assume esi:ptr BASE
+
         ;objectOne
         mov eax, [esi].posx
         mov @objectOnePosX, eax
@@ -59,6 +62,10 @@ _check_collision proc uses ebx, @objectOne:ptr BASE, @objectTwo:ptr BASE
 
         mov eax, [esi].lengthy
         mov @objectOneLengthY, eax
+
+
+        mov esi, @objectTwo
+        assume esi:ptr BASE
 
         ;objectTwo
         mov eax, [esi].posx
@@ -135,6 +142,14 @@ _check_collision proc uses ebx, @objectOne:ptr BASE, @objectTwo:ptr BASE
         mov eax, @distanceX
         mov ebx, @distanceY
         .if @criticalX >= eax && @criticalY >= ebx
+                ; invoke printf, offset debug_int, @criticalX
+                ; invoke printf, offset debug_int, @criticalY
+                ; invoke printf, offset debug_int, @distanceX
+                ; invoke printf, offset debug_int, @distanceY
+                ; invoke printf, offset debug_int, @objectOnePosX
+                ; invoke printf, offset debug_int, @objectOnePosY
+                ; invoke printf, offset debug_int, @objectTwoPosX
+                ; invoke printf, offset debug_int, @objectTwoPosY
                 mov eax, 1
                 ret
         .endif
@@ -252,6 +267,9 @@ _collision_Player_with_HARD proc HARD_target:ptr Targets
         assume esi:ptr Targets
 
         ; invoke printf, offset debug_int, [esi].typeid
+        ; invoke printf, offset debug_int, [esi].base.posx
+        ; invoke printf, offset debug_int, [esi].base.posy
+
 
         ;HARD消失
         mov [esi].base.alive, 0
@@ -260,7 +278,9 @@ _collision_Player_with_HARD proc HARD_target:ptr Targets
         lea esi, player
         assume esi:ptr Subject
         
-        mov [esi].base.alive, 0
+        ; mov [esi].base.alive, 0
+        ; invoke printf, offset debug_int, [esi].base.posx
+        ; invoke printf, offset debug_int, [esi].base.posy
         invoke printf, offset debug_str, offset szCarWithHard
 
         ret
@@ -305,7 +325,6 @@ _collision_bullet_with_SOFT proc HARD_target:ptr Targets
         ;bullet消失
         mov [esi].base.alive, 0
 
-        invoke printf, offset debug_str, offset szBulletWithHard
 
         ret
 _collision_bullet_with_SOFT endp
@@ -365,6 +384,7 @@ _two_two_enum proc uses ebx
                         .endif
 
                 .elseif [esi].typeid == MONEY_2
+                        invoke printf, offset debug_int, [esi].typeid
                         invoke _check_collision, addr player.base, addr [esi].base
                         mov @collisionFlag, eax
 
@@ -569,7 +589,7 @@ _two_two_enum_test proc
         assume esi :ptr Targets
 
         mov [esi].base.posx, 1
-        mov [esi].base.posy, 1
+        mov [esi].base.posy, 2
         mov [esi].base.lengthx, 3
         mov [esi].base.lengthy, 4
         mov [esi].base.alive, 1
