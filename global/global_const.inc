@@ -112,7 +112,7 @@ charW           equ     400
 sizeofTargets   equ     sizeof Targets
 
 ;ldf lja own
-slow_level      equ     1
 normal_level    equ     2
 fast_level      equ     4
 high_level      equ     8
+
