@@ -255,6 +255,11 @@ _collision_Player_with_HARD proc HARD_target:ptr Targets
         mov [esi].base.alive, 0
 
         ;TODO 游戏结束
+        lea esi, player
+        assume esi:ptr Subject
+        
+        mov [esi].base.alive, 0
+        ; invoke printf, offset debug_int, [esi].score
 
         ret
 _collision_Player_with_HARD endp
