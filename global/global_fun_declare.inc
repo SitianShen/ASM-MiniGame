@@ -7,6 +7,7 @@ rand proto c
 
 ;========================= zzl zzl zzl zzl ============================
 ; zzl functions
+_Init_bullet proto
 _initAll proto
 _random_object_gene proto
 _set_char_pos proto

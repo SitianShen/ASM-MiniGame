@@ -8,8 +8,14 @@ include global_extrn.inc
 .code
 
 ;zzl part #################################################################
+_Init_bullet proc
+        mov bullet.base.alive, 0
+        ret
+_Init_bullet endp
+
 _initAll proc
         invoke _Init_car
+        invoke _Init_bullet
         mov target_number, 0
         ret
 _initAll endp
