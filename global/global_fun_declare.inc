@@ -18,6 +18,7 @@ _deleteAll proto
 _Quit proto
 _draw_button proto :ptr Button, :dword, :dword, :dword
 _move_object proto :dword
+_show_score proto
 
 ;========================= sst sst sst sst ============================
 ; sst functions

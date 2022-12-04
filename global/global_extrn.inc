@@ -1,6 +1,8 @@
 extrn player:Subject         
 extrn bullet:Subject             
 extrn targets:dword ;不知道会不会有bug，本地调试很正常
+extrn digitals_DC:dword
+
 
 ;zzl own
 extrn button_play:Button      

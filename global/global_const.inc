@@ -117,6 +117,12 @@ IDB_DIG8 equ 1008
 IDB_DIG9 equ 1009
 DIG_LX equ 500
 DIG_LY equ 500   
+scoreBoard_lst_X   equ 100
+scoreBoard_lst_Y   equ 60
+scoreBoard_dig_LX  equ 50
+scoreBoard_dig_LY  equ 50
+scoreBoard_each_LX equ 50
+scoreBoard_each_LY equ 50
 
 
 gameH           equ     600
