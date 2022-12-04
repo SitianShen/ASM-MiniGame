@@ -30,6 +30,7 @@ extrn cur_interface:dword
 
 extrn target_number:dword       
 extrn speed:dword
+extrn base_speed:dword
 extrn speed_acc_time:dword
 extrn speed_dec_time:dword
 
