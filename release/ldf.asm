@@ -311,6 +311,9 @@ _collision_Player_with_SOFT proc SOFT_target:ptr Targets
         assume esi:ptr Subject
 
         add [esi].score, OBST_SOFT_SCORE
+        .if [esi].score < 0
+                mov [esi].score, 0
+        .endif
         invoke printf, offset debug_int, [esi].score
 
         ret
