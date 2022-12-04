@@ -489,7 +489,8 @@ start:
         invoke srand, eax
         invoke rand
         call    _WinMain
-        invoke  ExitProcess, NULL      
+        invoke  ExitProcess, NULL   
+        ; invoke printf, offset debug_int, eax   
         ; invoke _collision_test
         ; invoke _two_two_enum_test
         ; invoke _sst_test
