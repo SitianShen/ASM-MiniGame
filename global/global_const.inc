@@ -131,6 +131,7 @@ charH           equ     400
 charW           equ     400
 sizeofTargets   equ     sizeof Targets
 
+
 ;ldf lja own
 slow_level      equ     2
 normal_level    equ     4
