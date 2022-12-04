@@ -31,6 +31,8 @@ extrn cur_interface:dword
 extrn target_number:dword       
 extrn speed:dword
 
+extrn base_speed:dword
+
 extrn object1H:dword   
 extrn object1W:dword      
 extrn object_move_v:dword   

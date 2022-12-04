@@ -177,8 +177,16 @@ _change_all_position proc stdcall       ;遍历所有道具改变位置
         .if eax > 1024
                 mov POSCNT, 0
         .endif
+
+        mov eax, speed
+        mov edx, 0
+        mov ebx, 4
+        mul ebx
+        mov ecx, eax
+        push ecx
         invoke rand
-        and eax, 8
+        pop ecx
+        and eax, ecx
         .if eax == 0 
                 mov ecx, target_number
                 xor eax, eax
