@@ -29,6 +29,7 @@ dwNowBack       dd      ?
 
 ;========================  data data data data ==========================
 
+
 .data
 flag_jump               dd      0
 flag_movleft            dd      0
