@@ -6,7 +6,7 @@ include global_dev.inc
 include global_extrn.inc
 
 .code
-;speed = 2 —— 正常， 4 —— 快速， 8 —— 超快速
+;speed =  1 —— 快，2 —— 正常， 3 —— 慢
 _next_position proc stdcall ptrBase :ptr BASE
         ; local cur_speed :dword
         ; mov bx, speed
@@ -28,7 +28,7 @@ _next_position proc stdcall ptrBase :ptr BASE
         .if ecx == 2 ;正中间跑道
                 invoke rand
                 mov ecx, eax
-                mov eax, speed
+                mov eax, base_speed
                 add [esi].posy, eax
                 and ecx, 100
                 .if ecx == 0
@@ -40,7 +40,7 @@ _next_position proc stdcall ptrBase :ptr BASE
 
         .elseif ecx == 1 ;最左边跑道
 
-                mov eax, speed
+                mov eax, base_speed
                 add [esi].posy, eax
                 mov ecx, POSCNT
                 and ecx, 3
@@ -56,7 +56,7 @@ _next_position proc stdcall ptrBase :ptr BASE
                 sub [esi].posx, eax
 
         .elseif ecx == 3 ;最右边跑道
-                mov eax, speed
+                mov eax, base_speed
                 add [esi].posy, eax
                 mov ecx, POSCNT
                 .if ecx & 3
@@ -71,7 +71,7 @@ _next_position proc stdcall ptrBase :ptr BASE
                 add [esi].posx, eax
         
         .elseif ecx == 0 ;左侧风景
-                mov eax, speed
+                mov eax, base_speed
                 add [esi].posy, eax
                 mov ecx, POSCNT
                 and ecx, 10
@@ -87,7 +87,7 @@ _next_position proc stdcall ptrBase :ptr BASE
                 sub [esi].posx, eax
 
         .elseif ecx == 4 ;右侧风景
-                mov eax, speed
+                mov eax, base_speed
                 add [esi].posy, eax
                 mov ecx, POSCNT
                 and ecx, 10
@@ -106,7 +106,7 @@ _next_position proc stdcall ptrBase :ptr BASE
 
                 invoke rand
                 mov ecx, eax
-                mov eax, speed
+                mov eax, base_speed
                 sub [esi].posy, eax
                 and ecx, 100
                 .if ecx == 0
@@ -117,7 +117,7 @@ _next_position proc stdcall ptrBase :ptr BASE
                 .endif
 
         .elseif ecx == 5 ;左边跑道的子弹
-                mov eax, speed
+                mov eax, base_speed
                 sub [esi].posy, eax
                 mov ecx, POSCNT
                 and ecx, 1
@@ -133,7 +133,7 @@ _next_position proc stdcall ptrBase :ptr BASE
                 add [esi].posx, eax
 
         .elseif ecx == 7 ;右边跑道的子弹
-                mov eax, speed
+                mov eax, base_speed
                 sub [esi].posy, eax
                 mov ecx, POSCNT
                 and ecx, 1
@@ -154,7 +154,7 @@ _next_position proc stdcall ptrBase :ptr BASE
         ; 增大体积
         and eax, 2
         .if eax == 0
-                mov eax, speed
+                mov eax, base_speed
                 mov edx, 0
                 mov ebx, 2
                 div ebx
@@ -176,6 +176,14 @@ _change_all_position proc stdcall       ;遍历所有道具改变位置
         mov eax, POSCNT
         .if eax > 1024
                 mov POSCNT, 0
+        .endif
+
+        .if speed_acc_time 
+                dec speed_acc_time
+        .elseif speed_dec_time  
+                dec speed_dec_time
+        .else
+                mov speed, 2
         .endif
 
         mov eax, speed
