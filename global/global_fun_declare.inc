@@ -81,7 +81,7 @@ _BeginBGM_SOUND proto ;开始界面，选择Play和Start要播放这个音效
 _Stop_BGM_SOUND proto ;游戏结束的时候StopBGM, 播放END
 _Stop_END_SOUND proto ;开始新的一局，StopEnd，播放BGM
 _Stop_Gameover_SOUND proto ;
-_Stop_BeginBEM_SOUND proto ;按下Play，就要关闭BeginBGM，播放游戏BGM
+_Stop_BeginBGM_SOUND proto ;按下Play，就要关闭BeginBGM，播放游戏BGM
 
 ;========================= lja lja lja lja ============================
 ; lja functions

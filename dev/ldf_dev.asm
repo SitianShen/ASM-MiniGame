@@ -832,10 +832,10 @@ _BeginBGM_SOUND proc
         ret
 _BeginBGM_SOUND endp
 
-_Stop_BeginBEM_SOUND proc
+_Stop_BeginBGM_SOUND proc
         invoke mciSendString, offset szStopBeginBGM, NULL, 0, NULL   
         ret
-_Stop_BeginBEM_SOUND endp
+_Stop_BeginBGM_SOUND endp
 
 ;====================== have stop ==================
 
