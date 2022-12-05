@@ -192,8 +192,26 @@ szOpenBGM byte "open sound/BGM.mp3 alias BGM",0
 szPlayBGM byte "play BGM repeat",0
 szCloseBGM byte "close BGM", 0
 
-;END
+;End
 szOpenEnd byte "open sound/End.mp3 alias End",0
 szPlayEnd byte "play End",0
 szCloseEnd byte "close End", 0
 
+;Gameover
+szOpenGameover byte "open sound/Gameover.mp3 alias Gameover",0
+szPlayGameover byte "play Gameover",0
+szCloseGameover byte "close Gameover", 0
+
+;Launch
+szOpenLaunch byte "open sound/Launch.mp3 alias Launch",0
+szPlayLaunch byte "play Launch",0
+
+;BeginBGM
+szOpenBeginBGM byte "open sound/BeginBGM.mp3 alias BeginBGM",0
+szPlayBeginBGM byte "play BeginBGM repeat",0
+szCloseBeginBGM byte "close BeginBGM", 0
+
+;CarMove
+szOpenCarMove byte "open sound/CarMove.mp3 alias CarMove",0
+szPlayCarMove byte "play CarMove",0
+szCloseCarMove byte "close CarMove", 0

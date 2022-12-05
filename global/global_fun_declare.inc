@@ -65,6 +65,12 @@ _BGM_SOUND proto
 _END_SOUND proto
 _CLOSE_BGM_SOUND proto
 _CLOSE_END_SOUND proto
+_Gameover_SOUND proto
+_Close_Gameover_SOUND proto
+_Launch_SOUND proto
+_BeginBGM_SOUND proto
+_Close_BeginBEM_SOUND proto
+_CarMove_SOUND proto
 
 ;========================= lja lja lja lja ============================
 ; lja functions
