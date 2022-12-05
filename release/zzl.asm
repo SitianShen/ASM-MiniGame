@@ -304,7 +304,7 @@ _show_score proc
         mov edx, scoreBoard_lst_Y
         
         mov eax, player.score
-        .while eax > 0
+        .repeat
                 push ecx
                 push edx
 
@@ -329,13 +329,46 @@ _show_score proc
                 pop ecx
 
                 sub ecx, scoreBoard_each_LX
-        .endw
-                
-
-                
+        .until eax <= 0   
         ret
 _show_score endp
 
+_show_lifes proc   
+        local @digit
+
+        mov ecx, res_live_X
+        mov edx, res_live_Y
+        
+        mov eax, player.base.alive
+        .repeat
+                push ecx
+                push edx
+
+                xor edx, edx
+                mov ecx, 10
+                div ecx
+                mov @digit, edx
+
+                pop edx
+                pop ecx
+                push ecx
+                push edx
+                push eax
+
+                mov esi, @digit
+                invoke  TransparentBlt, 
+                        hDCGame, ecx, edx, res_live_LX, res_live_LY, 
+                        [digitals_DC+4*esi], 0, 0, DIG_LX, DIG_LY, 16777215
+
+                pop eax
+                pop edx
+                pop ecx
+
+                sub ecx, res_live_LX
+        .until eax <= 0 
+
+        ret
+_show_lifes endp
 _move_object proc hWnd
         local @mouse:POINT
         local @window:RECT
@@ -354,15 +387,16 @@ _move_object proc hWnd
 
                 invoke  TransparentBlt, hDCGame, 0, 0, gameH, gameW, backGround.DC_pd, 0, 0, 1000, 1000, SRCCOPY
 ;draw pause
-        
                 invoke  _draw_button, addr button_pause, hWnd, button_pause_LX, button_pause_LY
 ;draw hp
+
                 invoke  TransparentBlt, 
                         hDCGame, 
                         HP_place_X, HP_place_Y,
                         HP_place_LX, HP_place_LY, 
-                        Object_DC.coin, 0, 0, PROP_LX, PROP_LY, 16777215
+                        object_DC.hp_p, 0, 0, PROP_LX, PROP_LY, 16777215
 
+                invoke _show_lifes
 ;draw obj 1
                 mov ecx, target_number
                 xor eax, eax

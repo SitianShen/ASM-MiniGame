@@ -135,11 +135,16 @@ scoreBoard_dig_LY  equ 50
 scoreBoard_each_LX equ 50
 scoreBoard_each_LY equ 50
 
+res_live_X   equ 490
+res_live_Y   equ 42
+res_live_LX  equ 30
+res_live_LY  equ 30
+
 IDB_HPP equ 500
-HP_place_X equ 100
-HP_place_Y equ 100
-HP_place_LX equ 200
-HP_place_LY equ 200
+HP_place_X equ 300
+HP_place_Y equ -125
+HP_place_LX equ 366
+HP_place_LY equ 366
 
 
 gameH           equ     600
