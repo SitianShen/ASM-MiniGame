@@ -709,6 +709,7 @@ _Open_ALL_SOUND proc
         invoke mciSendString, offset szOpenEnd, NULL, 0, NULL
         invoke mciSendString, offset szOpenGameover, NULL, 0, NULL
         invoke mciSendString, offset szOpenBeginBGM, NULL, 0, NULL
+        ret
 _Open_ALL_SOUND endp
 
 _Close_ALL_SOUND proc
@@ -727,7 +728,7 @@ _Close_ALL_SOUND proc
         invoke mciSendString, offset szCloseEnd, NULL, 0, NULL
         invoke mciSendString, offset szCloseGameover, NULL, 0, NULL
         invoke mciSendString, offset szCloseBeginBGM, NULL, 0, NULL
-        
+        ret
 _Close_ALL_SOUND endp
         
 ;==================== no stop =================
@@ -738,6 +739,8 @@ _Jump_SOUND endp
 
 _collision_Player_with_MONEY_1_SOUND proc
         invoke mciSendString, offset szPlayMoneyOne, NULL, 0, NULL
+        ; invoke mciGetErrorString, eax, offset szPlayError, sizeof szPlayError
+        ; invoke printf, offset debug_str, offset szPlayError
         ret
 _collision_Player_with_MONEY_1_SOUND endp
 
@@ -859,13 +862,15 @@ _collision_SOUND_test proc
         ret
 _collision_SOUND_test endp
 
-; start:
-;         ; call    _WinMain
-;         ; invoke  ExitProcess, NULL
+start:
+        ; call    _WinMain
+        ; invoke  ExitProcess, NULL
+        invoke _Open_ALL_SOUND
         
-;         ; invoke _collision_test
-;         invoke _collision_SOUND_test
-        
-;         ret
-; end     start
-end
+        ; invoke _collision_test
+        invoke _collision_SOUND_test
+
+        invoke _Close_ALL_SOUND
+        ret
+end     start
+; end
