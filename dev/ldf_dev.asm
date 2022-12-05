@@ -674,6 +674,12 @@ _two_two_enum_test proc
         ret
 _two_two_enum_test endp
 
+_Jump_SOUND proc
+        invoke mciSendString, offset szOpenJump, NULL, 0, NULL
+        invoke mciSendString, offset szPlayJump, NULL, 0, NULL
+        ret
+_Jump_SOUND endp
+
 _collision_Player_with_MONEY_1_SOUND proc
         invoke mciSendString, offset szOpenMoneyOne, NULL, 0, NULL
         invoke mciSendString, offset szPlayMoneyOne, NULL, 0, NULL
@@ -743,25 +749,28 @@ _CLOSE_END_SOUND proc
 _CLOSE_END_SOUND endp
 
 _collision_SOUND_test proc
-        invoke mciSendString, offset szOpenDemo, NULL, 0, NULL
-        invoke mciSendString, offset szPlayDemo, NULL, 0, NULL
-
+        ; invoke mciSendString, offset szOpenDemo, NULL, 0, NULL
+        ; invoke mciSendString, offset szPlayDemo, NULL, 0, NULL
         ; invoke mciSendString, offset szCloseDemo, NULL, 0, NULL
         ; invoke mciGetErrorString, eax, offset szPlayError, sizeof szPlayError
         ; invoke printf, offset debug_str, offset szPlayError
         ; invoke printf, offset debug_int, eax
         ; invoke printf, offset debug_str, offset szPlaySuccess
         ; invoke system, offset szPause
+
+        invoke _BGM_SOUND
+        ; invoke _Jump_SOUND
+        ; invoke _collision_Player_with_MONEY_1_SOUND
         ret
 _collision_SOUND_test endp
 
-start:
-        ; call    _WinMain
-        ; invoke  ExitProcess, NULL
+; start:
+;         ; call    _WinMain
+;         ; invoke  ExitProcess, NULL
         
-        ; invoke _collision_test
-        invoke _collision_SOUND_test
+;         ; invoke _collision_test
+;         invoke _collision_SOUND_test
         
-        ret
-end     start
-; end
+;         ret
+; end     start
+end

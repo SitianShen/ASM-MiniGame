@@ -53,6 +53,7 @@ _two_two_enum proto
 _two_two_enum_test proto
 
 ;sound
+_Jump_SOUND proto
 _collision_Player_with_MONEY_1_SOUND proto
 _collision_Player_with_MONEY_2_SOUND proto
 _collision_Player_with_ACC_SOUND proto

@@ -155,6 +155,10 @@ szPlayDemo byte "play demoMusic",0
 szStopDemo byte "stop demoMusic",0
 szCloseDemo byte "close demoMusic",0
 
+;Jump
+szOpenJump byte "open sound/Jump.mp3 alias Jump",0
+szPlayJump byte "play Jump",0
+
 ;MoneyOne
 szOpenMoneyOne byte "open sound/MoneyOne.mp3 alias MoneyOne",0
 szPlayMoneyOne byte "play MoneyOne",0

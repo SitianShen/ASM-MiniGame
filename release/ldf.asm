@@ -12,6 +12,22 @@ debug_str byte "%s", 0
 szBulletWithHard byte "bullet hit Hard", 0ah, 0
 szCarWithHard byte "cart hit Hard", 0ah, 0
 
+;sound
+szPlaySuccess byte "Play Success", 0ah, 0
+szPause byte "Pause", 0
+; szOpenDemo equ TEXT("open demo.mp3 alias demoMusic")
+; szPlayDemo equ TEXT("play demoMusic")
+; szStopDemo equ TEXT("stop demoMusic")
+; szCloseDemo equ TEXT("close demoMusic")
+; szOpenDemo dw 'o','p','e','n',' ','d','e','m','o','.','m','p','3',' ','a','l','i','a','s',' ','d','e','m','o','M','u','s','i','c',0
+; szPlayDemo dw 'p','l','a','y',' ','d','e','m','o','M','u','s','i','c',0
+; szStopDemo dw 's','t','o','p',' ','d','e','m','o','M','u','s','i','c',0
+; szCloseDemo dw 'c','l','o','s','e',' ','d','e','m','o','M','u','s','i','c',0
+
+.data?
+szPlayError byte 1000 dup(?)
+wCharptr dd ?
+
 .code
 
 ;3 check collision 每一帧调用
@@ -297,10 +313,10 @@ _collision_Player_with_HARD proc HARD_target:ptr Targets
         lea esi, player
         assume esi:ptr Subject
         
-        mov [esi].base.alive, 0
+        ; mov [esi].base.alive, 0
         ; invoke printf, offset debug_int, [esi].base.posx
         ; invoke printf, offset debug_int, [esi].base.posy
-        ; invoke printf, offset debug_str, offset szCarWithHard
+        invoke printf, offset debug_str, offset szCarWithHard
 
         ret
 _collision_Player_with_HARD endp
@@ -407,6 +423,7 @@ _two_two_enum proc uses ebx
 
                         .if @collisionFlag == 1
                                 invoke _collision_Player_with_MONEY_1, esi
+                                
                         .endif
                 .elseif [esi].typeid == MONEY_2
                         ; invoke printf, offset debug_int, [esi].typeid
@@ -657,13 +674,103 @@ _two_two_enum_test proc
         ret
 _two_two_enum_test endp
 
+_Jump_SOUND proc
+        invoke mciSendString, offset szOpenJump, NULL, 0, NULL
+        invoke mciSendString, offset szPlayJump, NULL, 0, NULL
+        ret
+_Jump_SOUND endp
+
+_collision_Player_with_MONEY_1_SOUND proc
+        invoke mciSendString, offset szOpenMoneyOne, NULL, 0, NULL
+        invoke mciSendString, offset szPlayMoneyOne, NULL, 0, NULL
+        ret
+_collision_Player_with_MONEY_1_SOUND endp
+
+
+_collision_Player_with_MONEY_2_SOUND proc
+        invoke mciSendString, offset szOpenMoneyTwo, NULL, 0, NULL
+        invoke mciSendString, offset szPlayMoneyTwo, NULL, 0, NULL       
+        ret
+_collision_Player_with_MONEY_2_SOUND endp
+
+
+_collision_Player_with_ACC_SOUND proc
+        invoke mciSendString, offset szOpenACC, NULL, 0, NULL
+        invoke mciSendString, offset szPlayACC, NULL, 0, NULL    
+        ret
+_collision_Player_with_ACC_SOUND endp
+
+
+_collision_Player_with_DEC_SOUND proc
+        invoke mciSendString, offset szOpenDEC, NULL, 0, NULL
+        invoke mciSendString, offset szPlayDEC, NULL, 0, NULL 
+        ret
+_collision_Player_with_DEC_SOUND endp
+
+_collision_Player_with_HARD_SOUND proc
+        invoke mciSendString, offset szOpenHARD, NULL, 0, NULL
+        invoke mciSendString, offset szPlayHARD, NULL, 0, NULL         
+        ret
+_collision_Player_with_HARD_SOUND endp
+
+
+_collision_Player_with_SOFT_SOUND proc
+        invoke mciSendString, offset szOpenSOFT, NULL, 0, NULL
+        invoke mciSendString, offset szPlaySOFT, NULL, 0, NULL         
+        ret
+_collision_Player_with_SOFT_SOUND endp
+
+_collision_bullet_with_SOFT_SOUND proc 
+        invoke mciSendString, offset szOpenBulletHitSOFT, NULL, 0, NULL
+        invoke mciSendString, offset szPlayBulletHitSOFT, NULL, 0, NULL       
+        ret
+_collision_bullet_with_SOFT_SOUND endp
+
+_BGM_SOUND proc 
+        invoke mciSendString, offset szOpenBGM, NULL, 0, NULL
+        invoke mciSendString, offset szPlayBGM, NULL, 0, NULL       
+        ret
+_BGM_SOUND endp
+
+_END_SOUND proc 
+        invoke mciSendString, offset szOpenEnd, NULL, 0, NULL
+        invoke mciSendString, offset szPlayEnd, NULL, 0, NULL       
+        ret
+_END_SOUND endp
+
+_CLOSE_BGM_SOUND proc 
+        invoke mciSendString, offset szCloseBGM, NULL, 0, NULL    
+        ret
+_CLOSE_BGM_SOUND endp
+
+_CLOSE_END_SOUND proc
+        invoke mciSendString, offset szCloseEnd, NULL, 0, NULL    
+        ret
+_CLOSE_END_SOUND endp
+
+_collision_SOUND_test proc
+        ; invoke mciSendString, offset szOpenDemo, NULL, 0, NULL
+        ; invoke mciSendString, offset szPlayDemo, NULL, 0, NULL
+        ; invoke mciSendString, offset szCloseDemo, NULL, 0, NULL
+        ; invoke mciGetErrorString, eax, offset szPlayError, sizeof szPlayError
+        ; invoke printf, offset debug_str, offset szPlayError
+        ; invoke printf, offset debug_int, eax
+        ; invoke printf, offset debug_str, offset szPlaySuccess
+        ; invoke system, offset szPause
+
+        invoke _BGM_SOUND
+        ; invoke _Jump_SOUND
+        ; invoke _collision_Player_with_MONEY_1_SOUND
+        ret
+_collision_SOUND_test endp
 
 ; start:
 ;         ; call    _WinMain
 ;         ; invoke  ExitProcess, NULL
         
 ;         ; invoke _collision_test
-;         invoke _two_two_enum_test
+;         invoke _collision_SOUND_test
+        
 ;         ret
 ; end     start
 end
