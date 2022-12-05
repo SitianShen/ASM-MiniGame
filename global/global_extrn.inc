@@ -12,7 +12,7 @@ extrn button_exit:Button
 extrn button_retry:Button 
 extrn button_pause:Button   
 extrn backGround:BackGround       
-extrn object_DC:Object_DC        
+extrn object_DC:Object_DC     
 
 extrn hInstance:dword       
 extrn hWinMain:dword      

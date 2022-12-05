@@ -44,5 +44,6 @@ Object_DC struct
         accp    dd      ?
         decp    dd      ?
         coin    dd      ?
+        hp_p    dd      ?
 Object_DC ends
 

@@ -19,6 +19,7 @@ button_pause      Button <>
 backGround        BackGround <>
 object_DC         Object_DC <>
 
+
 hInstance       dd      ?
 hWinMain        dd      ?
 hDCBack         dd      ?
