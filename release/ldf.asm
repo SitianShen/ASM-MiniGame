@@ -203,6 +203,8 @@ _collision_test proc
 _collision_test endp
 
 _collision_Player_with_MONEY_1 proc moneyOne:ptr Targets
+        invoke _collision_Player_with_MONEY_1_SOUND
+
         ;得到MONEY_1结构体
         mov esi, moneyOne
         assume esi:ptr Targets
@@ -297,6 +299,8 @@ _collision_Player_with_DEC endp
 
 
 _collision_Player_with_HARD proc HARD_target:ptr Targets 
+        invoke _collision_Player_with_HARD_SOUND
+        
         ;得到HARD结构体
         mov esi, HARD_target
         assume esi:ptr Targets
@@ -323,6 +327,8 @@ _collision_Player_with_HARD endp
 
 
 _collision_Player_with_SOFT proc SOFT_target:ptr Targets
+        
+        
         ;得到SOFT结构体
         mov esi, SOFT_target
         assume esi:ptr Targets
@@ -347,6 +353,8 @@ _collision_Player_with_SOFT endp
 
 
 _collision_bullet_with_SOFT proc HARD_target:ptr Targets
+        invoke _collision_bullet_with_SOFT_SOUND
+        
         ;得到SOFT结构体
         mov esi, HARD_target
         assume esi:ptr Targets
@@ -791,11 +799,13 @@ _collision_SOUND_test proc
         ; invoke printf, offset debug_str, offset szPlayError
         ; invoke printf, offset debug_int, eax
         ; invoke printf, offset debug_str, offset szPlaySuccess
-        ; invoke system, offset szPause
+        
 
-        invoke _BGM_SOUND
+        ; invoke _BGM_SOUND
+        ; invoke _END_SOUND
         ; invoke _Jump_SOUND
         ; invoke _collision_Player_with_MONEY_1_SOUND
+        invoke system, offset szPause
         ret
 _collision_SOUND_test endp
 
