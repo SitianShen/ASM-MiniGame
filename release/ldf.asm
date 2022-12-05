@@ -203,6 +203,7 @@ _collision_test proc
 _collision_test endp
 
 _collision_Player_with_MONEY_1 proc moneyOne:ptr Targets
+        ;音效
         invoke _collision_Player_with_MONEY_1_SOUND
 
         ;得到MONEY_1结构体
@@ -247,6 +248,9 @@ _collision_Player_with_MONEY_2 endp
 
 
 _collision_Player_with_ACC proc ACC_target:ptr Targets
+        ;音效
+        invoke _collision_Player_with_ACC_SOUND
+
         ;得到ACC结构体
         mov esi, ACC_target
         assume esi:ptr Targets
@@ -273,6 +277,9 @@ _collision_Player_with_ACC endp
 
 
 _collision_Player_with_DEC proc DEC_target:ptr Targets
+        ;音效
+        invoke _collision_Player_with_DEC_SOUND
+
         ;得到DEC结构体
         mov esi, DEC_target
         assume esi:ptr Targets
@@ -299,6 +306,7 @@ _collision_Player_with_DEC endp
 
 
 _collision_Player_with_HARD proc HARD_target:ptr Targets 
+        ;音效
         invoke _collision_Player_with_HARD_SOUND
         
         ;得到HARD结构体
@@ -327,7 +335,8 @@ _collision_Player_with_HARD endp
 
 
 _collision_Player_with_SOFT proc SOFT_target:ptr Targets
-        
+        ;音效
+        invoke _collision_Player_with_SOFT_SOUND
         
         ;得到SOFT结构体
         mov esi, SOFT_target
@@ -353,6 +362,7 @@ _collision_Player_with_SOFT endp
 
 
 _collision_bullet_with_SOFT proc HARD_target:ptr Targets
+        ;音效
         invoke _collision_bullet_with_SOFT_SOUND
         
         ;得到SOFT结构体
@@ -682,114 +692,153 @@ _two_two_enum_test proc
         ret
 _two_two_enum_test endp
 
-_Jump_SOUND proc
+
+_Open_ALL_SOUND proc
         invoke mciSendString, offset szOpenJump, NULL, 0, NULL
+        invoke mciSendString, offset szOpenMoneyOne, NULL, 0, NULL
+        ; invoke mciSendString, offset szOpenMoneyTwo, NULL, 0, NULL
+        invoke mciSendString, offset szOpenACC, NULL, 0, NULL
+        invoke mciSendString, offset szOpenDEC, NULL, 0, NULL
+        invoke mciSendString, offset szOpenHARD, NULL, 0, NULL
+        invoke mciSendString, offset szOpenSOFT, NULL, 0, NULL
+        invoke mciSendString, offset szOpenBulletHitSOFT, NULL, 0, NULL
+        invoke mciSendString, offset szOpenLaunch, NULL, 0, NULL
+        invoke mciSendString, offset szOpenCarMove, NULL, 0, NULL
+
+        invoke mciSendString, offset szOpenBGM, NULL, 0, NULL
+        invoke mciSendString, offset szOpenEnd, NULL, 0, NULL
+        invoke mciSendString, offset szOpenGameover, NULL, 0, NULL
+        invoke mciSendString, offset szOpenBeginBGM, NULL, 0, NULL
+_Open_ALL_SOUND endp
+
+_Close_ALL_SOUND proc
+        invoke mciSendString, offset szCloseJump, NULL, 0, NULL
+        invoke mciSendString, offset szCloseMoneyOne, NULL, 0, NULL
+        ; invoke mciSendString, offset szCloseMoneyTwo, NULL, 0, NULL
+        invoke mciSendString, offset szCloseACC, NULL, 0, NULL
+        invoke mciSendString, offset szCloseDEC, NULL, 0, NULL
+        invoke mciSendString, offset szCloseHARD, NULL, 0, NULL
+        invoke mciSendString, offset szCloseSOFT, NULL, 0, NULL
+        invoke mciSendString, offset szCloseBulletHitSOFT, NULL, 0, NULL
+        invoke mciSendString, offset szCloseLaunch, NULL, 0, NULL
+        invoke mciSendString, offset szCloseCarMove, NULL, 0, NULL
+
+        invoke mciSendString, offset szCloseBGM, NULL, 0, NULL
+        invoke mciSendString, offset szCloseEnd, NULL, 0, NULL
+        invoke mciSendString, offset szCloseGameover, NULL, 0, NULL
+        invoke mciSendString, offset szCloseBeginBGM, NULL, 0, NULL
+        
+_Close_ALL_SOUND endp
+        
+==================== no stop =================
+_Jump_SOUND proc
         invoke mciSendString, offset szPlayJump, NULL, 0, NULL
         ret
 _Jump_SOUND endp
 
 _collision_Player_with_MONEY_1_SOUND proc
-        invoke mciSendString, offset szOpenMoneyOne, NULL, 0, NULL
         invoke mciSendString, offset szPlayMoneyOne, NULL, 0, NULL
         ret
 _collision_Player_with_MONEY_1_SOUND endp
 
 
 _collision_Player_with_MONEY_2_SOUND proc
-        invoke mciSendString, offset szOpenMoneyTwo, NULL, 0, NULL
         invoke mciSendString, offset szPlayMoneyTwo, NULL, 0, NULL       
         ret
 _collision_Player_with_MONEY_2_SOUND endp
 
 
 _collision_Player_with_ACC_SOUND proc
-        invoke mciSendString, offset szOpenACC, NULL, 0, NULL
         invoke mciSendString, offset szPlayACC, NULL, 0, NULL    
         ret
 _collision_Player_with_ACC_SOUND endp
 
-
-_collision_Player_with_DEC_SOUND proc
-        invoke mciSendString, offset szOpenDEC, NULL, 0, NULL
+_collision_Player_with_DEC_SOUND proc   
         invoke mciSendString, offset szPlayDEC, NULL, 0, NULL 
         ret
 _collision_Player_with_DEC_SOUND endp
 
 _collision_Player_with_HARD_SOUND proc
-        invoke mciSendString, offset szOpenHARD, NULL, 0, NULL
-        invoke mciSendString, offset szPlayHARD, NULL, 0, NULL         
+        invoke mciSendString, offset szPlayHARD, NULL, 0, NULL       
         ret
 _collision_Player_with_HARD_SOUND endp
 
 
 _collision_Player_with_SOFT_SOUND proc
-        invoke mciSendString, offset szOpenSOFT, NULL, 0, NULL
         invoke mciSendString, offset szPlaySOFT, NULL, 0, NULL         
         ret
 _collision_Player_with_SOFT_SOUND endp
 
-_collision_bullet_with_SOFT_SOUND proc 
-        invoke mciSendString, offset szOpenBulletHitSOFT, NULL, 0, NULL
+_collision_bullet_with_SOFT_SOUND proc
         invoke mciSendString, offset szPlayBulletHitSOFT, NULL, 0, NULL       
         ret
 _collision_bullet_with_SOFT_SOUND endp
 
-
-_BGM_SOUND proc 
-        invoke mciSendString, offset szOpenBGM, NULL, 0, NULL
+;BGM
+_BGM_SOUND proc
         invoke mciSendString, offset szPlayBGM, NULL, 0, NULL       
         ret
 _BGM_SOUND endp
 
-_CLOSE_BGM_SOUND proc 
-        invoke mciSendString, offset szCloseBGM, NULL, 0, NULL    
+_Stop_BGM_SOUND proc
+        invoke mciSendString, offset szStopBGM, NULL, 0, NULL    
         ret
-_CLOSE_BGM_SOUND endp
+_Stop_BGM_SOUND endp
 
-_END_SOUND proc 
-        invoke mciSendString, offset szOpenEnd, NULL, 0, NULL
-        invoke mciSendString, offset szPlayEnd, NULL, 0, NULL       
-        ret
-_END_SOUND endp
-
-_CLOSE_END_SOUND proc
-        invoke mciSendString, offset szCloseEnd, NULL, 0, NULL    
-        ret
-_CLOSE_END_SOUND endp
-
-_Gameover_SOUND proc
-        invoke mciSendString, offset szOpenGameover, NULL, 0, NULL
-        invoke mciSendString, offset szPlayGameover, NULL, 0, NULL         
-        ret
-_Gameover_SOUND endp
-
-_Close_Gameover_SOUND proc
-        invoke mciSendString, offset szCloseGameover, NULL, 0, NULL   
-        ret
-_Close_Gameover_SOUND endp
-
+;Launch
 _Launch_SOUND proc
-        invoke mciSendString, offset szOpenLaunch, NULL, 0, NULL
         invoke mciSendString, offset szPlayLaunch, NULL, 0, NULL     
         ret
 _Launch_SOUND endp
 
+;CarMove
+_CarMove_SOUND proc
+        invoke mciSendString, offset szPlayCarMove, NULL, 0, NULL         
+        ret        
+_CarMove_SOUND endp
+
+==================== no stop =================
+
+====================== have stop ==================
+
+;END
+_END_SOUND proc 
+        invoke mciSendString, offset szPlayEnd, NULL, 0, NULL       
+        ret
+_END_SOUND endp
+
+_Stop_END_SOUND proc
+        invoke mciSendString, offset szStopEnd, NULL, 0, NULL    
+        ret
+_Stop_END_SOUND endp
+
+;Gameover
+_Gameover_SOUND proc
+        invoke mciSendString, offset szPlayGameover, NULL, 0, NULL         
+        ret
+_Gameover_SOUND endp
+
+_Stop_Gameover_SOUND proc
+        invoke mciSendString, offset szStopGameover, NULL, 0, NULL   
+        ret
+_Stop_Gameover_SOUND endp
+
+;BeginBGM
 _BeginBGM_SOUND proc
-        invoke mciSendString, offset szOpenBeginBGM, NULL, 0, NULL
         invoke mciSendString, offset szPlayBeginBGM, NULL, 0, NULL         
         ret
 _BeginBGM_SOUND endp
 
-_Close_BeginBEM_SOUND proc
-        invoke mciSendString, offset szCloseBeginBGM, NULL, 0, NULL   
+_Stop_BeginBEM_SOUND proc
+        invoke mciSendString, offset szStopBeginBGM, NULL, 0, NULL   
         ret
-_Close_BeginBEM_SOUND endp
+_Stop_BeginBEM_SOUND endp
 
-_CarMove_SOUND proc
-        invoke mciSendString, offset szOpenCarMove, NULL, 0, NULL
-        invoke mciSendString, offset szPlayCarMove, NULL, 0, NULL         
-        ret        
-_CarMove_SOUND endp
+====================== have stop ==================
+
+
+
+
 
 _collision_SOUND_test proc
         ; invoke mciSendString, offset szOpenDemo, NULL, 0, NULL
@@ -804,8 +853,9 @@ _collision_SOUND_test proc
         ; invoke _BGM_SOUND
         ; invoke _END_SOUND
         ; invoke _Jump_SOUND
+        invoke _collision_Player_with_MONEY_1_SOUND
         ; invoke _collision_Player_with_MONEY_1_SOUND
-        invoke system, offset szPause
+        ; invoke system, offset szPause
         ret
 _collision_SOUND_test endp
 

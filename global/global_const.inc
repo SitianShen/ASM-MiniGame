@@ -168,62 +168,76 @@ szCloseDemo byte "close demoMusic",0
 
 ;Jump
 szOpenJump byte "open sound/Jump.mp3 alias Jump",0
-szPlayJump byte "play Jump",0
+szPlayJump byte "play Jump", 0
+szCloseJump byte "close Jump", 0
 
 ;MoneyOne
 szOpenMoneyOne byte "open sound/MoneyOne.mp3 alias MoneyOne",0
-szPlayMoneyOne byte "play MoneyOne wait",0
+szPlayMoneyOne byte "play MoneyOne from 0",0
 szCloseMoneyOne byte "close MoneyOne",0
 
 ;MoneyTwo
 szOpenMoneyTwo byte "open sound/MoneyTwo.mp3 alias MoneyTwo",0
-szPlayMoneyTwo byte "play MoneyTwo",0
+szPlayMoneyTwo byte "play MoneyTwo from 0",0
+szCloseMoneyTwo byte "close MoneyTwo", 0
 
 ;ACC
 szOpenACC byte "open sound/ACC.mp3 alias ACC",0
-szPlayACC byte "play ACC",0
+szPlayACC byte "play ACC from 0",0
+szCloseACC byte "close ACC", 0
 
 ;DEC
 szOpenDEC byte "open sound/DEC.mp3 alias DEC",0
-szPlayDEC byte "play DEC",0
+szPlayDEC byte "play DEC from 0",0
+szCloseDEC byte "close DEC", 0
 
 ;HARD
 szOpenHARD byte "open sound/HARD.mp3 alias HARD",0
-szPlayHARD byte "play HARD",0
+szPlayHARD byte "play HARD from 0",0
+szCloseHARD byte "close HARD",0
 
 ;SOFT
 szOpenSOFT byte "open sound/SOFT.mp3 alias SOFT",0
-szPlaySOFT byte "play SOFT",0
+szPlaySOFT byte "play SOFT from 0",0
+szCloseSOFT byte "close SOFT", 0
 
 ;BulletHitSOFT
 szOpenBulletHitSOFT byte "open sound/BulletHitSOFT.mp3 alias BulletHitSOFT",0
-szPlayBulletHitSOFT byte "play BulletHitSOFT",0
-
-;BGM
-szOpenBGM byte "open sound/BGM.mp3 alias BGM",0
-szPlayBGM byte "play BGM repeat",0
-szCloseBGM byte "close BGM", 0
-
-;End
-szOpenEnd byte "open sound/End.mp3 alias End",0
-szPlayEnd byte "play End",0
-szCloseEnd byte "close End", 0
-
-;Gameover
-szOpenGameover byte "open sound/Gameover.mp3 alias Gameover",0
-szPlayGameover byte "play Gameover",0
-szCloseGameover byte "close Gameover", 0
+szPlayBulletHitSOFT byte "play BulletHitSOFT from 0",0
+szCloseBulletHitSOFT byte "close BulletHitSOFT", 0
 
 ;Launch
 szOpenLaunch byte "open sound/Launch.mp3 alias Launch",0
-szPlayLaunch byte "play Launch",0
-
-;BeginBGM
-szOpenBeginBGM byte "open sound/BeginBGM.mp3 alias BeginBGM",0
-szPlayBeginBGM byte "play BeginBGM repeat",0
-szCloseBeginBGM byte "close BeginBGM", 0
+szPlayLaunch byte "play Launch from 0",0
+szCloseLaunch byte "close Launch", 0
 
 ;CarMove
 szOpenCarMove byte "open sound/CarMove.mp3 alias CarMove",0
-szPlayCarMove byte "play CarMove",0
+szPlayCarMove byte "play CarMove from 0",0
 szCloseCarMove byte "close CarMove", 0
+
+;BGM
+szOpenBGM byte "open sound/BGM.mp3 alias BGM",0
+szPlayBGM byte "play BGM from 0 repeat",0
+szCloseBGM byte "close BGM", 0
+szStopBGM byte "stop BGM", 0
+
+;End
+szOpenEnd byte "open sound/End.mp3 alias End",0
+szPlayEnd byte "play End from 0",0
+szCloseEnd byte "close End", 0
+szStopEnd byte "stop End", 0
+
+;Gameover
+szOpenGameover byte "open sound/Gameover.mp3 alias Gameover",0
+szPlayGameover byte "play Gameover from 0",0
+szCloseGameover byte "close Gameover", 0
+szStopGameover byte "stop Gameover", 0
+
+;BeginBGM
+szOpenBeginBGM byte "open sound/BeginBGM.mp3 alias BeginBGM",0
+szPlayBeginBGM byte "play BeginBGM from 0 repeat",0
+szCloseBeginBGM byte "close BeginBGM", 0
+szStopBeginBGM byte "stop BeginBGM", 0
+
+
