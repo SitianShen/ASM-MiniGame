@@ -730,7 +730,7 @@ _Close_ALL_SOUND proc
         
 _Close_ALL_SOUND endp
         
-==================== no stop =================
+;==================== no stop =================
 _Jump_SOUND proc
         invoke mciSendString, offset szPlayJump, NULL, 0, NULL
         ret
@@ -797,9 +797,9 @@ _CarMove_SOUND proc
         ret        
 _CarMove_SOUND endp
 
-==================== no stop =================
+;==================== no stop =================
 
-====================== have stop ==================
+;====================== have stop ==================
 
 ;END
 _END_SOUND proc 
@@ -834,7 +834,7 @@ _Stop_BeginBEM_SOUND proc
         ret
 _Stop_BeginBEM_SOUND endp
 
-====================== have stop ==================
+;====================== have stop ==================
 
 
 

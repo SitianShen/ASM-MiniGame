@@ -168,7 +168,9 @@ start:
         invoke time, 0
         invoke srand, eax
         invoke rand
+        invoke _Open_ALL_SOUND
         call    _WinMain
+        invoke _Close_ALL_SOUND
         invoke  ExitProcess, NULL   
         ; invoke printf, offset debug_int, eax   
         ; invoke _collision_test
