@@ -161,7 +161,8 @@ szPlayJump byte "play Jump",0
 
 ;MoneyOne
 szOpenMoneyOne byte "open sound/MoneyOne.mp3 alias MoneyOne",0
-szPlayMoneyOne byte "play MoneyOne",0
+szPlayMoneyOne byte "play MoneyOne wait",0
+szCloseMoneyOne byte "close MoneyOne",0
 
 ;MoneyTwo
 szOpenMoneyTwo byte "open sound/MoneyTwo.mp3 alias MoneyTwo",0
