@@ -61,8 +61,7 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                                 mov button_play.is_click, 0
                                 ;播放开始游戏的BGM
                                 invoke _BGM_SOUND
-                        .endif
-                        .if eax == button_start.is_click
+                        .elseif eax == button_start.is_click
                                 mov cur_interface, in_intro
                                 mov button_start.is_click, 0
                                 
@@ -94,7 +93,6 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                                 mov cur_interface, in_game
                                 mov button_pause.is_click, 0
                         .endif
-
                 .endif
 
         .elseif eax == WM_KEYDOWN
