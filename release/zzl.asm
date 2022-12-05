@@ -214,6 +214,7 @@ _createAll proc
         invoke  _load_common_pic, addr object_DC.accp, IDB_PROP_ACC
         invoke  _load_common_pic, addr object_DC.decp, IDB_PROP_DEC
         invoke  _load_common_pic, addr object_DC.coin, IDB_PROP_MONEY
+        invoke  _load_common_pic, addr object_DC.HP_p, IDB_HPP
 ;��ʼ�����ؼ� button
         invoke _load_button, addr button_play,  IDB_BUTTON_PLAY_1,  IDB_BUTTON_PLAY_2
         invoke _load_button, addr button_start, IDB_BUTTON_START_1, IDB_BUTTON_START_2
@@ -354,6 +355,13 @@ _move_object proc hWnd
 ;draw pause
         
                 invoke  _draw_button, addr button_pause, hWnd, button_pause_LX, button_pause_LY
+;draw hp
+                invoke  TransparentBlt, 
+                        hDCGame, 
+                        HP_place_X, HP_place_Y,
+                        HP_place_LX, HP_place_LY, 
+                        Object_DC.hp_p, 0, 0, PROP_LX, PROP_LY, 16777215
+
 ;draw obj 1
                 mov ecx, target_number
                 xor eax, eax

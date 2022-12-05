@@ -39,6 +39,8 @@
 
 # define IDB_PLAYER          400
 
+# define IDB_HPP             500
+
 # define IDB_DIG0            1000
 # define IDB_DIG1            1001
 # define IDB_DIG2            1002
@@ -103,3 +105,5 @@ IDB_DIG6    BITMAP  "resource/dig6.bmp"
 IDB_DIG7    BITMAP  "resource/dig7.bmp"
 IDB_DIG8    BITMAP  "resource/dig8.bmp"
 IDB_DIG9    BITMAP  "resource/dig9.bmp"
+
+IDB_HPP     BITMAP  "resource/HP_place.bmp"
