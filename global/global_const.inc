@@ -186,8 +186,10 @@ szPlayBulletHitSOFT byte "play BulletHitSOFT",0
 ;BGM
 szOpenBGM byte "open sound/BGM.mp3 alias BGM",0
 szPlayBGM byte "play BGM repeat",0
+szCloseBGM byte "close BGM", 0
 
 ;END
 szOpenEnd byte "open sound/End.mp3 alias End",0
 szPlayEnd byte "play End",0
+szCloseEnd byte "close End", 0
 

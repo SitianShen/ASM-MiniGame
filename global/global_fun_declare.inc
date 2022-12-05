@@ -52,6 +52,19 @@ _collision_bullet_with_SOFT proto :ptr Targets
 _two_two_enum proto
 _two_two_enum_test proto
 
+;sound
+_collision_Player_with_MONEY_1_SOUND proto
+_collision_Player_with_MONEY_2_SOUND proto
+_collision_Player_with_ACC_SOUND proto
+_collision_Player_with_DEC_SOUND proto
+_collision_Player_with_HARD_SOUND proto
+_collision_Player_with_SOFT_SOUND proto
+_collision_bullet_with_SOFT_SOUND proto
+_BGM_SOUND proto
+_END_SOUND proto
+_CLOSE_BGM_SOUND proto
+_CLOSE_END_SOUND proto
+
 ;========================= lja lja lja lja ============================
 ; lja functions
 _next_position proto :ptr BASE         ;每个道具移动
