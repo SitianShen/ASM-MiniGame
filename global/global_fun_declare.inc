@@ -56,7 +56,9 @@ _two_two_enum_test proto
 _Open_ALL_SOUND proto
 _Close_ALL_SOUND proto
 
-_Jump_SOUND proto
+
+
+;这些是碰撞音效，ldf来管
 _collision_Player_with_MONEY_1_SOUND proto
 _collision_Player_with_MONEY_2_SOUND proto
 _collision_Player_with_ACC_SOUND proto
@@ -64,18 +66,22 @@ _collision_Player_with_DEC_SOUND proto
 _collision_Player_with_HARD_SOUND proto
 _collision_Player_with_SOFT_SOUND proto
 _collision_bullet_with_SOFT_SOUND proto
-_BGM_SOUND proto
-_END_SOUND proto
 
-_Gameover_SOUND proto
-_Launch_SOUND proto
-_BeginBGM_SOUND proto
-_CarMove_SOUND proto
+;这些音效要zzl来管
+_Jump_SOUND proto ;跳跃时要触发这个音效
+_Launch_SOUND proto ;发射子弹时要触发这个音效
+_CarMove_SOUND proto ;小车左右移动时要触发这个音效
 
-_Stop_BGM_SOUND proto
-_Stop_END_SOUND proto
-_Stop_Gameover_SOUND proto
-_Stop_BeginBEM_SOUND proto
+_BGM_SOUND proto ;Play时要触发这个音效
+_END_SOUND proto ;得分界面的时候要播放
+_Gameover_SOUND proto ;HP为0，游戏结束时要播放的音效
+_BeginBGM_SOUND proto ;开始界面，选择Play和Start要播放这个音效
+
+
+_Stop_BGM_SOUND proto ;游戏结束的时候StopBGM, 播放END
+_Stop_END_SOUND proto ;开始新的一局，StopEnd，播放BGM
+_Stop_Gameover_SOUND proto ;
+_Stop_BeginBEM_SOUND proto ;按下Play，就要关闭BeginBGM，播放游戏BGM
 
 ;========================= lja lja lja lja ============================
 ; lja functions
