@@ -160,7 +160,7 @@ normal_level    equ     2
 fast_level      equ     1
 speed_item_time      equ     100 ;加速/减速道具的持续时间
 
-;sound
+;=================== sound sound sound sound ===========================
 szOpenDemo byte "open sound/demo.mp3 alias demoMusic",0
 szPlayDemo byte "play demoMusic",0
 szStopDemo byte "stop demoMusic",0
@@ -230,7 +230,7 @@ szStopEnd byte "stop End", 0
 
 ;Gameover
 szOpenGameover byte "open sound/Gameover.mp3 alias Gameover",0
-szPlayGameover byte "play Gameover from 0",0
+szPlayGameover byte "play Gameover from 0 wait",0
 szCloseGameover byte "close Gameover", 0
 szStopGameover byte "stop Gameover", 0
 
@@ -240,4 +240,4 @@ szPlayBeginBGM byte "play BeginBGM from 0 repeat",0
 szCloseBeginBGM byte "close BeginBGM", 0
 szStopBeginBGM byte "stop BeginBGM", 0
 
-
+;=================== sound sound sound sound ===========================
