@@ -203,6 +203,7 @@ _collision_test proc
 _collision_test endp
 
 _collision_Player_with_MONEY_1 proc moneyOne:ptr Targets
+        ;音效
         invoke _collision_Player_with_MONEY_1_SOUND
 
         ;得到MONEY_1结构体
@@ -247,6 +248,9 @@ _collision_Player_with_MONEY_2 endp
 
 
 _collision_Player_with_ACC proc ACC_target:ptr Targets
+        ;音效
+        invoke _collision_Player_with_ACC_SOUND
+
         ;得到ACC结构体
         mov esi, ACC_target
         assume esi:ptr Targets
@@ -273,6 +277,9 @@ _collision_Player_with_ACC endp
 
 
 _collision_Player_with_DEC proc DEC_target:ptr Targets
+        ;音效
+        invoke _collision_Player_with_DEC_SOUND
+
         ;得到DEC结构体
         mov esi, DEC_target
         assume esi:ptr Targets
@@ -299,6 +306,7 @@ _collision_Player_with_DEC endp
 
 
 _collision_Player_with_HARD proc HARD_target:ptr Targets 
+        ;音效
         invoke _collision_Player_with_HARD_SOUND
         
         ;得到HARD结构体
@@ -327,7 +335,8 @@ _collision_Player_with_HARD endp
 
 
 _collision_Player_with_SOFT proc SOFT_target:ptr Targets
-        
+        ;音效
+        invoke _collision_Player_with_SOFT_SOUND
         
         ;得到SOFT结构体
         mov esi, SOFT_target
@@ -353,6 +362,7 @@ _collision_Player_with_SOFT endp
 
 
 _collision_bullet_with_SOFT proc HARD_target:ptr Targets
+        ;音效
         invoke _collision_bullet_with_SOFT_SOUND
         
         ;得到SOFT结构体
@@ -690,7 +700,7 @@ _Open_ALL_SOUND proc
         invoke mciSendString, offset szOpenACC, NULL, 0, NULL
         invoke mciSendString, offset szOpenDEC, NULL, 0, NULL
         invoke mciSendString, offset szOpenHARD, NULL, 0, NULL
-        ; invoke mciSendString, offset szOpenSOFT, NULL, 0, NULL
+        invoke mciSendString, offset szOpenSOFT, NULL, 0, NULL
         invoke mciSendString, offset szOpenBulletHitSOFT, NULL, 0, NULL
         invoke mciSendString, offset szOpenLaunch, NULL, 0, NULL
         invoke mciSendString, offset szOpenCarMove, NULL, 0, NULL
@@ -708,7 +718,7 @@ _Close_ALL_SOUND proc
         invoke mciSendString, offset szCloseACC, NULL, 0, NULL
         invoke mciSendString, offset szCloseDEC, NULL, 0, NULL
         invoke mciSendString, offset szCloseHARD, NULL, 0, NULL
-        ; invoke mciSendString, offset szCloseSOFT, NULL, 0, NULL
+        invoke mciSendString, offset szCloseSOFT, NULL, 0, NULL
         invoke mciSendString, offset szCloseBulletHitSOFT, NULL, 0, NULL
         invoke mciSendString, offset szCloseLaunch, NULL, 0, NULL
         invoke mciSendString, offset szCloseCarMove, NULL, 0, NULL
