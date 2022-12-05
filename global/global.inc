@@ -14,6 +14,8 @@ button_play       Button <>
 button_start      Button <>
 button_back       Button <>
 button_exit       Button <>
+button_retry      Button <>
+button_pause      Button <>
 backGround        BackGround <>
 object_DC         Object_DC <>
 

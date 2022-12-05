@@ -31,6 +31,12 @@
 # define IDB_PROP_BULLETL    318
 # define IDB_PROP_BULLETM    319
 # define IDB_PROP_BULLETR    320
+
+# define IDB_BUTTON_RETRY_1 321
+# define IDB_BUTTON_RETRY_2 322
+# define IDB_BUTTON_PAUSE_1 323
+# define IDB_BUTTON_PAUSE_2 324
+
 # define IDB_PLAYER          400
 
 # define IDB_DIG0            1000
@@ -70,6 +76,10 @@ IDB_BUTTON_PLAY_1   BITMAP      "resource/button_play_1.bmp"
 IDB_BUTTON_PLAY_2   BITMAP      "resource/button_play_2.bmp"
 IDB_BUTTON_START_1  BITMAP      "resource/button_start_1.bmp"
 IDB_BUTTON_START_2  BITMAP      "resource/button_start_2.bmp"
+IDB_BUTTON_RETRY_1 BITMAP       "resource/button_retry_1.bmp"
+IDB_BUTTON_RETRY_2 BITMAP       "resource/button_retry_2.bmp"
+IDB_BUTTON_PAUSE_1 BITMAP       "resource/button_pause_1.bmp"
+IDB_BUTTON_PAUSE_2 BITMAP       "resource/button_pause_2.bmp"
 
 IDB_PROP_MONEY      BITMAP       "resource/prop_money.bmp"
 IDB_PROP_ABSTSOFT   BITMAP       "resource/prop_obstsoft.bmp"

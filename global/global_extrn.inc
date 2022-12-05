@@ -8,7 +8,9 @@ extrn digitals_DC:dword
 extrn button_play:Button      
 extrn button_start:Button      
 extrn button_back:Button      
-extrn button_exit:Button       
+extrn button_exit:Button     
+extrn button_retry:Button 
+extrn button_pause:Button   
 extrn backGround:BackGround       
 extrn object_DC:Object_DC        
 
