@@ -38,9 +38,12 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                 mov     eax, wParam
                 .if     eax == ID_TIMER
                         invoke  _move_object, hWnd
-                        invoke _change_all_position
-                        invoke _targets_bullet_out_of_bound
-                        invoke _two_two_enum
+                        mov eax, cur_interface
+                        .if eax == in_game
+                                invoke _change_all_position
+                                invoke _targets_bullet_out_of_bound
+                                invoke _two_two_enum
+                        .endif
                         invoke  InvalidateRect, hWnd, NULL, FALSE
                 .elseif eax == ID_TIMER_gene
                         mov eax, cur_interface
@@ -55,20 +58,40 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                         mov eax, 1
                         .if eax == button_play.is_click
                                 mov cur_interface, in_game
+                                mov button_play.is_click, 0
                         .endif
                         .if eax == button_start.is_click
                                 mov cur_interface, in_intro
+                                mov button_start.is_click, 0
                         .endif
                 .elseif eax == in_intro
                         mov eax, 1
                         .if eax == button_back.is_click
                                 mov cur_interface, in_begining
+                                mov button_back.is_click, 0
                         .endif
                 .elseif eax == in_over
                         mov eax, 1
                         .if eax == button_exit.is_click
                                 invoke _Quit
+                                mov button_exit.is_click, 0
+                        .elseif eax == button_retry.is_click
+                                invoke _initAll
+                                mov cur_interface, in_begining
+                                mov button_retry.is_click, 0
                         .endif
+                .elseif eax == in_game
+                        mov eax, 1
+                        .if eax == button_pause.is_click
+                                mov cur_interface, in_pause
+                        .endif
+                .elseif eax == in_pause
+                        mov eax, 1
+                        .if eax == button_pause.is_click
+                                mov cur_interface, in_game
+                                mov button_pause.is_click, 0
+                        .endif
+
                 .endif
 
         .elseif eax == WM_KEYDOWN

@@ -6,7 +6,9 @@ public targets
 public button_play      
 public button_start      
 public button_back      
-public button_exit       
+public button_exit    
+public button_retry
+public button_pause   
 public backGround       
 public object_DC        
 public digitals_DC

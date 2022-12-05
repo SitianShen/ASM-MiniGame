@@ -126,6 +126,17 @@ _set_char_pos proc
         mov button_exit.base.posy, 260
         mov button_exit.base.lengthx, button_exit_LX/2
         mov button_exit.base.lengthy, button_exit_LY/2
+
+
+        mov button_retry.base.posx, 200
+        mov button_retry.base.posy, 260
+        mov button_retry.base.lengthx, button_retry_LX/2
+        mov button_retry.base.lengthy, button_retry_LY/2
+
+        mov button_pause.base.posx, 200
+        mov button_pause.base.posy, 20
+        mov button_pause.base.lengthx, button_pause_LX/2
+        mov button_pause.base.lengthy, button_pause_LY/2
         ret
 _set_char_pos endp
 
@@ -208,6 +219,8 @@ _createAll proc
         invoke _load_button, addr button_start, IDB_BUTTON_START_1, IDB_BUTTON_START_2
         invoke _load_button, addr button_exit,  IDB_BUTTON_EXIT_1,  IDB_BUTTON_EXIT_2
         invoke _load_button, addr button_back,  IDB_BUTTON_BACK_1,  IDB_BUTTON_BACK_2
+        invoke _load_button, addr button_retry,  IDB_BUTTON_RETRY_1,  IDB_BUTTON_RETRY_2
+        invoke _load_button, addr button_pause,  IDB_BUTTON_PAUSE_1,  IDB_BUTTON_PAUSE_2
 
         invoke _set_char_pos
 ;set car
@@ -278,7 +291,7 @@ _draw_button proc button:ptr Button, hWnd, LX, LY
         invoke  TransparentBlt, 
                 hDCGame, 
                 [esi].base.posx, [esi].base.posy, [esi].base.lengthx, [esi].base.lengthy, 
-                edx, 0, 0, LX, LY, 16777215      
+                edx, 0, 0, LX, LY, 16777215 
         ret
 _draw_button endp
 
@@ -338,7 +351,9 @@ _move_object proc hWnd
                 invoke _Move_process
 
                 invoke  TransparentBlt, hDCGame, 0, 0, gameH, gameW, backGround.DC_pd, 0, 0, 1000, 1000, SRCCOPY
-
+;draw pause
+        
+                invoke  _draw_button, addr button_pause, hWnd, button_pause_LX, button_pause_LY
 ;draw obj 1
                 mov ecx, target_number
                 xor eax, eax
@@ -351,7 +366,7 @@ _move_object proc hWnd
                         assume esi :ptr Targets
                         push edx
                         mov edx, [esi].base.posy
-                        .if [esi].base.alive == 1 && edx<player.base.posy
+                        .if [esi].base.alive == 1 && edx<cary
                                 push ecx
                                 invoke  TransparentBlt, 
                                         hDCGame, 
@@ -379,7 +394,7 @@ _move_object proc hWnd
                         assume esi :ptr Targets
                         push edx
                         mov edx, [esi].base.posy
-                        .if [esi].base.alive == 1 && edx>player.base.posy
+                        .if [esi].base.alive == 1 && edx>cary
                                 push ecx
                                 invoke  TransparentBlt, 
                                         hDCGame, 
@@ -402,6 +417,7 @@ _move_object proc hWnd
         .elseif eax == in_over
                 invoke  TransparentBlt, hDCGame, 0, 0, gameH, gameW, backGround.DC_e, 0, 0, 1000, 1000, SRCCOPY
                 invoke  _draw_button, addr button_exit, hWnd, button_exit_LX, button_exit_LY
+                invoke  _draw_button, addr button_retry, hWnd, button_retry_LX, button_retry_LY
 
         .endif
 ;         mov eax, object1H

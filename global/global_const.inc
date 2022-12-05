@@ -29,6 +29,7 @@ in_begining             equ 0
 in_game                 equ 1
 in_intro                equ 2
 in_over                 equ 3
+in_pause                equ 4
 
 
 ;sst own
@@ -100,6 +101,16 @@ IDB_PROP_DEC        equ 317
 IDB_PROP_BULLETL    equ 318
 IDB_PROP_BULLETM    equ 319
 IDB_PROP_BULLETR    equ 320
+
+IDB_BUTTON_RETRY_1    equ 321
+IDB_BUTTON_RETRY_2    equ 322
+button_retry_LX       equ 192 
+button_retry_LY       equ 92
+
+IDB_BUTTON_PAUSE_1    equ 323
+IDB_BUTTON_PAUSE_2    equ 324
+button_pause_LX       equ 110 
+button_pause_LY       equ 52
 
 IDB_PLAYER          equ 400 
 PLAYER_LX equ 500
