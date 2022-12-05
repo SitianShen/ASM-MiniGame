@@ -691,6 +691,7 @@ _Jump_SOUND endp
 _collision_Player_with_MONEY_1_SOUND proc
         invoke mciSendString, offset szOpenMoneyOne, NULL, 0, NULL
         invoke mciSendString, offset szPlayMoneyOne, NULL, 0, NULL
+        ; invoke mciSendString, offset szCloseMoneyOne, NULL, 0, NULL
         ret
 _collision_Player_with_MONEY_1_SOUND endp
 
@@ -717,7 +718,8 @@ _collision_Player_with_DEC_SOUND endp
 
 _collision_Player_with_HARD_SOUND proc
         invoke mciSendString, offset szOpenHARD, NULL, 0, NULL
-        invoke mciSendString, offset szPlayHARD, NULL, 0, NULL         
+        invoke mciSendString, offset szPlayHARD, NULL, 0, NULL
+        invoke mciSendString, offset szCloseHARD, NULL, 0, NULL        
         ret
 _collision_Player_with_HARD_SOUND endp
 
@@ -804,6 +806,7 @@ _collision_SOUND_test proc
         ; invoke _BGM_SOUND
         ; invoke _END_SOUND
         ; invoke _Jump_SOUND
+        invoke _collision_Player_with_MONEY_1_SOUND
         ; invoke _collision_Player_with_MONEY_1_SOUND
         invoke system, offset szPause
         ret
