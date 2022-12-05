@@ -9,3 +9,9 @@ includelib      user32.lib
 includelib      kernel32.lib
 includelib      Msimg32.lib
 includelib      msvcrt.lib
+
+;sound
+;windows 的 inc文件和lib文件同名
+include winmm.inc
+includelib Winmm.lib
+

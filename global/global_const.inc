@@ -138,3 +138,45 @@ normal_level    equ     2
 fast_level      equ     1
 speed_item_time      equ     100 ;加速/减速道具的持续时间
 
+;sound
+szOpenDemo byte "open sound/demo.mp3 alias demoMusic",0
+szPlayDemo byte "play demoMusic",0
+szStopDemo byte "stop demoMusic",0
+szCloseDemo byte "close demoMusic",0
+
+;MoneyOne
+szOpenMoneyOne byte "open sound/MoneyOne.mp3 alias MoneyOne",0
+szPlayMoneyOne byte "play MoneyOne",0
+
+;MoneyTwo
+szOpenMoneyTwo byte "open sound/MoneyTwo.mp3 alias MoneyTwo",0
+szPlayMoneyTwo byte "play MoneyTwo",0
+
+;ACC
+szOpenACC byte "open sound/ACC.mp3 alias ACC",0
+szPlayACC byte "play ACC",0
+
+;DEC
+szOpenDEC byte "open sound/DEC.mp3 alias DEC",0
+szPlayDEC byte "play DEC",0
+
+;HARD
+szOpenHARD byte "open sound/HARD.mp3 alias HARD",0
+szPlayHARD byte "play HARD",0
+
+;SOFT
+szOpenSOFT byte "open sound/SOFT.mp3 alias SOFT",0
+szPlaySOFT byte "play SOFT",0
+
+;BulletHitSOFT
+szOpenBulletHitSOFT byte "open sound/BulletHitSOFT.mp3 alias BulletHitSOFT",0
+szPlayBulletHitSOFT byte "play BulletHitSOFT",0
+
+;BGM
+szOpenBGM byte "open sound/BGM.mp3 alias BGM",0
+szPlayBGM byte "play BGM repeat",0
+
+;END
+szOpenEnd byte "open sound/End.mp3 alias End",0
+szPlayEnd byte "play End",0
+

@@ -4,6 +4,11 @@ printf proto c:dword,:vararg
 srand proto c:dword,:vararg
 time proto c:dword,:vararg
 rand proto c
+system proto c:dword
+
+;sound
+
+
 
 ;========================= zzl zzl zzl zzl ============================
 ; zzl functions

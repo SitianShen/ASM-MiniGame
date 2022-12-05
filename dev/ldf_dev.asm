@@ -12,6 +12,22 @@ debug_str byte "%s", 0
 szBulletWithHard byte "bullet hit Hard", 0ah, 0
 szCarWithHard byte "cart hit Hard", 0ah, 0
 
+;sound
+szPlaySuccess byte "Play Success", 0ah, 0
+szPause byte "Pause", 0
+; szOpenDemo equ TEXT("open demo.mp3 alias demoMusic")
+; szPlayDemo equ TEXT("play demoMusic")
+; szStopDemo equ TEXT("stop demoMusic")
+; szCloseDemo equ TEXT("close demoMusic")
+; szOpenDemo dw 'o','p','e','n',' ','d','e','m','o','.','m','p','3',' ','a','l','i','a','s',' ','d','e','m','o','M','u','s','i','c',0
+; szPlayDemo dw 'p','l','a','y',' ','d','e','m','o','M','u','s','i','c',0
+; szStopDemo dw 's','t','o','p',' ','d','e','m','o','M','u','s','i','c',0
+; szCloseDemo dw 'c','l','o','s','e',' ','d','e','m','o','M','u','s','i','c',0
+
+.data?
+szPlayError byte 1000 dup(?)
+wCharptr dd ?
+
 .code
 
 ;3 check collision 每一帧调用
@@ -688,12 +704,20 @@ _collision_Player_with_SOFT_SOUND proc
 _collision_Player_with_SOFT_SOUND endp
 
 _collision_bullet_with_SOFT_SOUND proc 
-
+       
         ret
 _collision_bullet_with_SOFT_SOUND endp
 
 _collision_SOUND_test proc
+        invoke mciSendString, offset szOpenDemo, NULL, 0, NULL
+        invoke mciSendString, offset szPlayDemo, NULL, 0, NULL
 
+        ; invoke mciSendString, offset szCloseDemo, NULL, 0, NULL
+        ; invoke mciGetErrorString, eax, offset szPlayError, sizeof szPlayError
+        ; invoke printf, offset debug_str, offset szPlayError
+        ; invoke printf, offset debug_int, eax
+        ; invoke printf, offset debug_str, offset szPlaySuccess
+        invoke system, offset szPause
         ret
 _collision_SOUND_test endp
 
@@ -703,6 +727,7 @@ start:
         
         ; invoke _collision_test
         invoke _collision_SOUND_test
+        
         ret
 end     start
 ; end
