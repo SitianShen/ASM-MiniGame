@@ -374,6 +374,10 @@ _move_object proc hWnd
         local @window:RECT
 
         .if player.base.alive == 0 && cur_interface == in_game
+                invoke _Stop_BGM_SOUND
+                invoke _Gameover_SOUND
+                invoke _Stop_Gameover_SOUND
+                invoke _END_SOUND
                 mov cur_interface, in_over
         .endif
 
