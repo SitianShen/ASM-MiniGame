@@ -57,6 +57,8 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                 .if eax == in_begining 
                         mov eax, 1
                         .if eax == button_play.is_click
+                                invoke _Stop_BeginBGM_SOUND
+                                invoke _BGM_SOUND
                                 mov cur_interface, in_game
                                 mov button_play.is_click, 0
                                 ;播放开始游戏的BGM
@@ -75,10 +77,13 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                 .elseif eax == in_over
                         mov eax, 1
                         .if eax == button_exit.is_click
+                                invoke _Stop_END_SOUND
                                 invoke _Quit
                                 mov button_exit.is_click, 0
                         .elseif eax == button_retry.is_click
                                 invoke _initAll
+                                invoke _Stop_END_SOUND
+                                invoke _BeginBGM_SOUND
                                 mov cur_interface, in_begining
                                 mov button_retry.is_click, 0
                         .endif
@@ -99,7 +104,9 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                 mov eax, wParam
                 .if eax == 87 
                         invoke _Action_jump
+                        invoke _Jump_SOUND
                 .elseif eax == 65
+                        invoke _CarMove_SOUND
                         invoke _Action_left
                 .elseif eax == 68
                         invoke _Action_right
@@ -169,6 +176,7 @@ start:
         invoke srand, eax
         invoke rand
         invoke _Open_ALL_SOUND
+        invoke _BeginBGM_SOUND
         call    _WinMain
         invoke _Close_ALL_SOUND
         invoke  ExitProcess, NULL   
