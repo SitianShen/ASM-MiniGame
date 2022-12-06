@@ -35,7 +35,7 @@ wCharptr dd ?
 ;同时维护targets数组的数量target_number
 ;返回值为1代表碰撞
 ;返回值为0代表没有碰撞 
-_check_collision proc uses ebx, @objectOne:ptr BASE, @objectTwo:ptr BASE
+_check_collision proc uses ebx esi, @objectOne:ptr BASE, @objectTwo:ptr BASE
         local @objectOnePosX, @objectOnePosY
         local @objectOneLengthX, @objectOneLengthY
 
@@ -202,7 +202,7 @@ _collision_test proc
         ret
 _collision_test endp
 
-_collision_Player_with_MONEY_1 proc moneyOne:ptr Targets
+_collision_Player_with_MONEY_1 proc uses esi, moneyOne:ptr Targets
         ;音效
         invoke _collision_Player_with_MONEY_1_SOUND
 
@@ -226,7 +226,7 @@ _collision_Player_with_MONEY_1 proc moneyOne:ptr Targets
 _collision_Player_with_MONEY_1 endp
 
 
-_collision_Player_with_MONEY_2 proc moneyTwo:ptr Targets
+_collision_Player_with_MONEY_2 proc uses esi,  moneyTwo:ptr Targets
         ;得到MONEY_2结构体
         mov esi, moneyTwo
         assume esi :ptr Targets
@@ -247,7 +247,7 @@ _collision_Player_with_MONEY_2 proc moneyTwo:ptr Targets
 _collision_Player_with_MONEY_2 endp
 
 
-_collision_Player_with_ACC proc ACC_target:ptr Targets
+_collision_Player_with_ACC proc uses esi,  ACC_target:ptr Targets
         ;音效
         invoke _collision_Player_with_ACC_SOUND
 
@@ -276,7 +276,7 @@ _collision_Player_with_ACC proc ACC_target:ptr Targets
 _collision_Player_with_ACC endp
 
 
-_collision_Player_with_DEC proc DEC_target:ptr Targets
+_collision_Player_with_DEC proc uses esi,  DEC_target:ptr Targets
         ;音效
         invoke _collision_Player_with_DEC_SOUND
 
@@ -305,7 +305,7 @@ _collision_Player_with_DEC proc DEC_target:ptr Targets
 _collision_Player_with_DEC endp 
 
 
-_collision_Player_with_HARD proc HARD_target:ptr Targets 
+_collision_Player_with_HARD proc uses esi,  HARD_target:ptr Targets 
         ;音效
         invoke _collision_Player_with_HARD_SOUND
         
@@ -334,7 +334,7 @@ _collision_Player_with_HARD proc HARD_target:ptr Targets
 _collision_Player_with_HARD endp
 
 
-_collision_Player_with_SOFT proc SOFT_target:ptr Targets
+_collision_Player_with_SOFT proc uses esi,  SOFT_target:ptr Targets
         ;音效
         invoke _collision_Player_with_SOFT_SOUND
         
@@ -361,7 +361,7 @@ _collision_Player_with_SOFT proc SOFT_target:ptr Targets
 _collision_Player_with_SOFT endp
 
 
-_collision_bullet_with_SOFT proc SOFT_target:ptr Targets
+_collision_bullet_with_SOFT proc uses esi,  SOFT_target:ptr Targets
         ;音效
         invoke _collision_bullet_with_SOFT_SOUND
         
@@ -373,13 +373,9 @@ _collision_bullet_with_SOFT proc SOFT_target:ptr Targets
 
         ;SOFT消失
         mov [esi].base.alive, 0
-        
-        ;得到bullet结构体
-        lea esi, bullet
-        assume esi:ptr Subject
 
         ;bullet消失
-        mov [esi].base.alive, 0
+        mov bullet.base.alive, 0
 
         ret
 _collision_bullet_with_SOFT endp
@@ -510,16 +506,13 @@ _two_two_enum proc uses ebx
                         .if bullet.base.alive == 1
                                 invoke _check_collision, addr bullet.base, addr [esi].base
                                 mov @collisionFlag, eax
-                                invoke printf, offset debug_int, @collisionFlag
+                                ; invoke printf, offset debug_int, @collisionFlag
                         .endif
 
                         ; invoke printf, offset debug_int, [esi].typeid
                         ; invoke printf, offset debug_int, @collisionFlag
 
                         .if @collisionFlag == 1
-                                
-                                mov eax, @targetByteOffset
-                                lea esi, targets[eax]
                                 invoke _collision_bullet_with_SOFT, esi
                         .else
                                 .if flag_jump == 1 
