@@ -20,7 +20,8 @@ _next_position proc stdcall ptrBase :ptr BASE
         ; local @randnum :dword
         ; invoke rand
         ; mov @randnum, eax
-
+        local @TMP :dword
+        mov @TMP, 0
         mov esi, ptrBase
         assume  esi: ptr BASE
         mov ecx, [esi].course_id
@@ -167,8 +168,15 @@ _next_position proc stdcall ptrBase :ptr BASE
                         add [esi].lengthy, eax
 
                 .else 
-                        sub [esi].lengthx, eax
-                        sub [esi].lengthy, eax
+                        mov @TMP, eax
+                        invoke rand
+                        mov ecx, eax
+                        and ecx, 2
+                        .if ecx 
+                                mov eax, @TMP
+                                sub [esi].lengthx, eax
+                                sub [esi].lengthy, eax
+                        .endif
                 .endif
         .endif
         assume  esi: nothing
@@ -254,6 +262,9 @@ _targets_bullet_out_of_bound proc
         .if bullet.base.alive == 1
                 .if bullet.base.posx <= 10 || bullet.base.posx >= gameW-100 \
                 || bullet.base.posy <= 10 || bullet.base.posy >= gameW-130
+                        mov bullet.base.alive, 0
+                .endif
+                .if bullet.base.posy < 80
                         mov bullet.base.alive, 0
                 .endif
         .endif
