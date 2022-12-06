@@ -161,6 +161,7 @@ _next_position proc stdcall ptrBase :ptr BASE
                 mov edx, 0
                 mov ebx, 2
                 div ebx
+                mov ecx, [esi].course_id
                 .if ecx != 5 && ecx != 6 && ecx != 7
                         add [esi].lengthx, eax
                         add [esi].lengthy, eax
