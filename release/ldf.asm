@@ -52,10 +52,12 @@ _check_collision proc uses ebx esi, @objectOne:ptr BASE, @objectTwo:ptr BASE
         mov esi, @objectOne
         assume esi:ptr BASE
         mov eax, [esi].course_id
+        and eax, 3
 
         mov esi, @objectTwo
         assume esi:ptr BASE
 
+        ;course_id不相同，直接判断不会碰撞
         .if [esi].course_id != eax
                 mov eax, 0
                 ; invoke printf, offset szInt, @objectOne.course_id
@@ -507,6 +509,7 @@ _two_two_enum proc uses ebx
                                 invoke _check_collision, addr bullet.base, addr [esi].base
                                 mov @collisionFlag, eax
                                 ; invoke printf, offset debug_int, @collisionFlag
+                                ; invoke printf, offset debug_int, bullet.base.course_id
                         .endif
 
                         ; invoke printf, offset debug_int, [esi].typeid
