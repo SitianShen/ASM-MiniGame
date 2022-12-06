@@ -264,7 +264,7 @@ _targets_bullet_out_of_bound proc
                 || bullet.base.posy <= 10 || bullet.base.posy >= gameW-130
                         mov bullet.base.alive, 0
                 .endif
-                .if bullet.base.posy < 80
+                .if bullet.base.posy < 230
                         mov bullet.base.alive, 0
                 .endif
         .endif
