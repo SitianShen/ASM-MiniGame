@@ -9,6 +9,10 @@ include global_extrn.inc
 
 ;zzl part #################################################################
 _shot_bullet proc
+        mov eax, bullet.base.alive
+        .if eax == 1
+                ret
+        .endif
         mov eax, player.base.course_id
         add eax, 4 
         .if eax == 5
