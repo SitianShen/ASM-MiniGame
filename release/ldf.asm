@@ -327,7 +327,7 @@ _collision_Player_with_HARD proc uses esi,  HARD_target:ptr Targets
         lea esi, player
         assume esi:ptr Subject
         
-        ; mov [esi].base.alive, 0
+        mov [esi].base.alive, 0
         ; invoke printf, offset debug_int, [esi].base.posx
         ; invoke printf, offset debug_int, [esi].base.posy
         invoke printf, offset debug_str, offset szCarWithHard
