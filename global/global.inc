@@ -45,7 +45,7 @@ cur_interface           dd  0
 
 target_number   dd      0         
 speed      dd      2
-base_speed  dd      2
+base_speed  dd      1
 speed_acc_time dd 0
 speed_dec_time dd 0
 

@@ -25,7 +25,7 @@ _next_position proc stdcall ptrBase :ptr BASE
         assume  esi: ptr BASE
         mov ecx, [esi].course_id
         .if [esi].posy > 300
-                mov base_speed, 4
+                mov base_speed, 2
         .endif
         ; .if eax & 10 == 0
         .if ecx == 2 ;正中间跑道
