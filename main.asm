@@ -109,6 +109,7 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                         invoke _CarMove_SOUND
                         invoke _Action_left
                 .elseif eax == 68
+                        invoke _CarMove_SOUND
                         invoke _Action_right
                 .elseif eax == 13
                         invoke _shot_bullet

@@ -25,7 +25,7 @@ _next_position proc stdcall ptrBase :ptr BASE
         assume  esi: ptr BASE
         mov ecx, [esi].course_id
         .if [esi].posy > 300
-                mov base_speed, 4
+                mov base_speed, 2
         .endif
         ; .if eax & 10 == 0
         .if ecx == 2 ;正中间跑道
@@ -251,8 +251,8 @@ _targets_bullet_out_of_bound proc
 
         ; 判断子弹越界
         .if bullet.base.alive == 1
-                .if bullet.base.posx <= 380 || bullet.base.posx >= gameW-100 \
-                || bullet.base.posy <= 380 || bullet.base.posy >= gameW-130
+                .if bullet.base.posx <= 10 || bullet.base.posx >= gameW-100 \
+                || bullet.base.posy <= 10 || bullet.base.posy >= gameW-130
                         mov bullet.base.alive, 0
                 .endif
         .endif
