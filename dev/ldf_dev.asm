@@ -9,7 +9,7 @@ include global_extrn.inc
 szCollision byte "collision check", 0ah, 0
 szCollisionEnd byte "collision end", 0ah, 0
 debug_str byte "%s", 0
-szBulletWithHard byte "bullet hit Hard", 0ah, 0
+szBulletWithSOFT byte "bullet hit SOFT", 0ah, 0
 szCarWithHard byte "cart hit Hard", 0ah, 0
 
 ;sound
@@ -361,12 +361,12 @@ _collision_Player_with_SOFT proc SOFT_target:ptr Targets
 _collision_Player_with_SOFT endp
 
 
-_collision_bullet_with_SOFT proc HARD_target:ptr Targets
+_collision_bullet_with_SOFT proc SOFT_target:ptr Targets
         ;音效
         invoke _collision_bullet_with_SOFT_SOUND
         
         ;得到SOFT结构体
-        mov esi, HARD_target
+        mov esi, SOFT_target
         assume esi:ptr Targets
 
         ; invoke printf, offset debug_int, [esi].typeid
@@ -376,11 +376,10 @@ _collision_bullet_with_SOFT proc HARD_target:ptr Targets
         
         ;得到bullet结构体
         lea esi, bullet
-        assume esi:ptr Targets
+        assume esi:ptr Subject
 
         ;bullet消失
         mov [esi].base.alive, 0
-
 
         ret
 _collision_bullet_with_SOFT endp
@@ -511,12 +510,16 @@ _two_two_enum proc uses ebx
                         .if bullet.base.alive == 1
                                 invoke _check_collision, addr bullet.base, addr [esi].base
                                 mov @collisionFlag, eax
+                                ; invoke printf, offset debug_int, bullet.base.lengthx
+                                ; invoke printf, offset debug_int, bullet.base.lengthy
                         .endif
 
                         ; invoke printf, offset debug_int, [esi].typeid
                         ; invoke printf, offset debug_int, @collisionFlag
 
                         .if @collisionFlag == 1
+                                mov eax, @targetByteOffset
+                                lea esi, targets[eax]
                                 invoke _collision_bullet_with_SOFT, esi
                         .else
                                 .if flag_jump == 1 
@@ -862,15 +865,15 @@ _collision_SOUND_test proc
         ret
 _collision_SOUND_test endp
 
-start:
-        ; call    _WinMain
-        ; invoke  ExitProcess, NULL
-        invoke _Open_ALL_SOUND
+; start:
+;         ; call    _WinMain
+;         ; invoke  ExitProcess, NULL
+;         invoke _Open_ALL_SOUND
         
-        ; invoke _collision_test
-        invoke _collision_SOUND_test
+;         ; invoke _collision_test
+;         invoke _collision_SOUND_test
 
-        invoke _Close_ALL_SOUND
-        ret
-end     start
-; end
+;         invoke _Close_ALL_SOUND
+;         ret
+; end     start
+end
