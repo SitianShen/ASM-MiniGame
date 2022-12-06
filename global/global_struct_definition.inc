@@ -45,5 +45,8 @@ Object_DC struct
         decp    dd      ?
         coin    dd      ?
         hp_p    dd      ?
+        bltL    dd      ?
+        bltM    dd      ?
+        bltR    dd      ?
 Object_DC ends
 

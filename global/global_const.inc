@@ -46,10 +46,17 @@ obj_init_ly                   equ 36
 ;obj init pos  
 remote_y                equ 190
 remote_x0               equ 80+50+30+30+35
-remote_x5               equ 120+50+30+30+30
-remote_x6               equ 160+50+30+35
-remote_x7               equ 200+50+50
+remote_x1               equ 120+50+30+30+30
+remote_x2               equ 160+50+30+35
+remote_x3               equ 200+50+50
 remote_x4               equ 240+50+40
+
+bullet_init_lx                   equ 36
+bullet_init_ly                   equ 36
+; bullet_init_y                    equ 400
+; bullet_init_x5               equ 120
+; bullet_init_x6               equ 160+50+30+35
+; bullet_init_x7               equ 200+50+50+60+80
 
 
 

@@ -8,6 +8,27 @@ include global_extrn.inc
 .code
 
 ;zzl part #################################################################
+_shot_bullet proc
+        mov eax, player.base.course_id
+        add eax, 4 
+        .if eax == 5
+                mov ebx, object_DC.bltL
+        .elseif eax == 6
+                mov ebx, object_DC.bltM
+        .elseif eax == 7
+                mov ebx, object_DC.bltR
+        .endif
+        mov bullet.base.course_id, eax
+        mov bullet.base.DC, ebx
+        mov bullet.base.lengthx, bullet_init_lx
+        mov bullet.base.lengthy, bullet_init_ly
+        mov eax, player.base.posx
+        mov bullet.base.posx, eax
+        mov eax, player.base.posy
+        mov bullet.base.posy, eax
+        mov bullet.base.alive, 1
+        ret
+_shot_bullet endp
 _Init_bullet proc
         mov bullet.base.alive, 0
         ret
@@ -89,11 +110,11 @@ _random_object_gene proc
         .if eax == 0
                 mov [esi].base.posx, remote_x0
         .elseif eax == 1
-                mov [esi].base.posx, remote_x5
+                mov [esi].base.posx, remote_x1
         .elseif eax == 2
-                mov [esi].base.posx, remote_x6
+                mov [esi].base.posx, remote_x2
         .elseif eax == 3
-                mov [esi].base.posx, remote_x7
+                mov [esi].base.posx, remote_x3
         .elseif eax == 4
                 mov [esi].base.posx, remote_x4
         .endif
@@ -215,6 +236,9 @@ _createAll proc
         invoke  _load_common_pic, addr object_DC.decp, IDB_PROP_DEC
         invoke  _load_common_pic, addr object_DC.coin, IDB_PROP_MONEY
         invoke  _load_common_pic, addr object_DC.hp_p, IDB_HPP
+        invoke  _load_common_pic, addr object_DC.bltL, IDB_PROP_BULLETL
+        invoke  _load_common_pic, addr object_DC.bltM, IDB_PROP_BULLETM
+        invoke  _load_common_pic, addr object_DC.bltR, IDB_PROP_BULLETR          
 
 ;��ʼ�����ؼ� button
         invoke _load_button, addr button_play,  IDB_BUTTON_PLAY_1,  IDB_BUTTON_PLAY_2
@@ -454,6 +478,18 @@ _move_object proc hWnd
                         pop eax
                         inc eax
                 .endw
+;draw bullet
+                mov eax, bullet.base.alive
+                .if eax == 1
+                        invoke  TransparentBlt, 
+                                hDCGame, 
+                                bullet.base.posx, bullet.base.posy, 
+                                bullet.base.lengthx, bullet.base.lengthy, 
+                                bullet.base.DC, 0, 0, PROP_LX, PROP_LY, 16777215
+                .endif
+
+                ; invoke        GetLastError
+                ; invoke printf, offset debug_int, eax   
 
                 invoke _show_score
                 invoke  TransparentBlt, hDCGame, 0, 0, gameH, gameW, backGround.DC_pu, 0, 0, 1000, 1000, 16777215
