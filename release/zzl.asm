@@ -27,8 +27,10 @@ _shot_bullet proc
         mov bullet.base.lengthx, bullet_init_lx
         mov bullet.base.lengthy, bullet_init_ly
         mov eax, player.base.posx
+        add eax, carLX/2
         mov bullet.base.posx, eax
         mov eax, player.base.posy
+        add eax, carLY/2
         mov bullet.base.posy, eax
         mov bullet.base.alive, 1
         ret
