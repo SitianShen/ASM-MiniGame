@@ -171,6 +171,7 @@ slow_level      equ     3
 normal_level    equ     2
 fast_level      equ     1
 speed_item_time      equ     100 ;加速/减速道具的持续时间
+speed_controller     equ    2
 
 ;=================== sound sound sound sound ===========================
 szOpenDemo byte "open sound/demo.mp3 alias demoMusic",0
