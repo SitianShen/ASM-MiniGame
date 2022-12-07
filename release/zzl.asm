@@ -43,6 +43,7 @@ _Init_bullet endp
 _initAll proc
         invoke _Init_car
         mov player.score, 0
+        mov player.base.alive, 3
         invoke _Init_bullet
         mov target_number, 0
         ret
