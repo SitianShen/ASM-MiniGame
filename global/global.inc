@@ -28,8 +28,6 @@ hDCObj1         dd      ?
 dwNowBack       dd      ?
 
 
-
-
 ;========================  data data data data ==========================
 
 
