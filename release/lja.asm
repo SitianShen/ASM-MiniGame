@@ -112,19 +112,19 @@ _next_position proc stdcall ptrBase :ptr BASE
                 mov ecx, eax
                 mov eax, base_speed
                 sub [esi].posy, eax
-                and ecx, 100
-                .if ecx == 0
-                        mov edx, 0
-                        mov ebx, 2
-                        div ebx
-                        add [esi].posx, eax
-                .endif
+                ; and ecx, 100
+                ; .if ecx == 0
+                ;         mov edx, 0
+                ;         mov ebx, 2
+                ;         div ebx
+                ;         add [esi].posx, eax
+                ; .endif
 
         .elseif ecx == 5 ;左边跑道的子弹
                 mov eax, base_speed
                 sub [esi].posy, eax
                 mov ecx, POSCNT
-                and ecx, 1
+                and ecx, 100
                 .if ecx 
                         mov edx, 0
                         mov ebx, 2
@@ -140,7 +140,7 @@ _next_position proc stdcall ptrBase :ptr BASE
                 mov eax, base_speed
                 sub [esi].posy, eax
                 mov ecx, POSCNT
-                and ecx, 1
+                and ecx, 80
                 .if ecx 
                         mov edx, 0
                         mov ebx, 2

@@ -42,7 +42,8 @@ _Init_bullet endp
 
 _initAll proc
         invoke _Init_car
-        mov player.score, 100
+        mov player.score, 0
+        mov player.base.alive, 3
         invoke _Init_bullet
         mov target_number, 0
         ret
@@ -399,6 +400,42 @@ _show_lifes proc
 
         ret
 _show_lifes endp
+
+_draw_final_score proc
+        local @digit
+
+        mov ecx, fscoreBoard_lst_X
+        mov edx, fscoreBoard_lst_Y
+        
+        mov eax, player.score
+        .repeat
+                push ecx
+                push edx
+
+                xor edx, edx
+                mov ecx, 10
+                div ecx
+                mov @digit, edx
+
+                pop edx
+                pop ecx
+                push ecx
+                push edx
+                push eax
+
+                mov esi, @digit
+                invoke  TransparentBlt, 
+                        hDCGame, ecx, edx, fscoreBoard_dig_LX, fscoreBoard_dig_LY, 
+                        [digitals_DC+4*esi], 0, 0, DIG_LX, DIG_LY, 16777215
+
+                pop eax
+                pop edx
+                pop ecx
+
+                sub ecx, DIG_LX
+        .until eax <= 0      
+        ret
+_draw_final_score endp
 _move_object proc hWnd
         local @mouse:POINT
         local @window:RECT
@@ -506,6 +543,7 @@ _move_object proc hWnd
         .elseif eax == in_over
                 invoke  TransparentBlt, hDCGame, 0, 0, gameH, gameW, backGround.DC_e, 0, 0, 1000, 1000, SRCCOPY
                 invoke  _draw_button, addr button_exit, hWnd, button_exit_LX, button_exit_LY
+                invoke  _draw_final_score
                 invoke  _draw_button, addr button_retry, hWnd, button_retry_LX, button_retry_LY
 
         .endif
