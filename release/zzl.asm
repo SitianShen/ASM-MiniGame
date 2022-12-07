@@ -164,7 +164,7 @@ _set_char_pos proc
         mov button_start.base.lengthx, button_start_LX
         mov button_start.base.lengthy, button_start_LY
 
-        mov button_back.base.posx, 400
+        mov button_back.base.posx, 410
         mov button_back.base.posy, 500
         mov button_back.base.lengthx, button_back_LX/2
         mov button_back.base.lengthy, button_back_LY/2
