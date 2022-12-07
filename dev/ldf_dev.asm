@@ -307,7 +307,8 @@ _collision_Player_with_DEC proc uses esi,  DEC_target:ptr Targets
 _collision_Player_with_DEC endp 
 
 
-_collision_Player_with_HARD proc uses esi,  HARD_target:ptr Targets 
+_collision_Player_with_HARD proc uses esi,  HARD_target:ptr Targets
+ 
         ;音效
         invoke _collision_Player_with_HARD_SOUND
         
