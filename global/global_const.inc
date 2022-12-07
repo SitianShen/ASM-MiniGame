@@ -252,4 +252,5 @@ szPlayBeginBGM byte "play BeginBGM from 0 repeat",0
 szCloseBeginBGM byte "close BeginBGM", 0
 szStopBeginBGM byte "stop BeginBGM", 0
 
+
 ;=================== sound sound sound sound ===========================
