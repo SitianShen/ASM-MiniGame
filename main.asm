@@ -31,7 +31,7 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                 invoke  _createAll
                 invoke  _initAll
                 invoke  SetTimer, hWinMain, ID_TIMER, 15, NULL
-                invoke  SetTimer, hWinMain, ID_TIMER_gene, 1200, NULL
+                invoke  SetTimer, hWinMain, ID_TIMER_gene, 600, NULL
 
 
         .elseif eax == WM_TIMER
