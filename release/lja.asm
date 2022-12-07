@@ -201,7 +201,7 @@ _change_all_position proc stdcall       ;遍历所有道具改变位置
 
         mov eax, speed
         mov edx, 0
-        mov ebx, 2
+        mov ebx, speed_controller
         mul ebx
         mov ecx, eax
         push ecx
