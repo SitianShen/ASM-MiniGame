@@ -1,7 +1,7 @@
 ;========================  const const const const ==========================
 
 .const 
-szClassName     db      'run away from covid-19', 0
+szClassName     db      'Run away from covid-19', 0
 debug_int       db      '%d', 0ah, 0
 szInt       db      '%d', 0ah, 0
 
@@ -171,7 +171,6 @@ slow_level      equ     3
 normal_level    equ     2
 fast_level      equ     1
 speed_item_time      equ     100 ;加速/减速道具的持续时间
-speed_controller     equ    2
 
 ;=================== sound sound sound sound ===========================
 szOpenDemo byte "open sound/demo.mp3 alias demoMusic",0
