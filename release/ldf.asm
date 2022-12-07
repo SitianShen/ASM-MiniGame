@@ -355,9 +355,10 @@ _collision_Player_with_SOFT proc uses esi,  SOFT_target:ptr Targets
         lea esi, player
         assume esi:ptr Subject
 
-        add [esi].score, OBST_SOFT_SCORE
-        .if [esi].score < 0
+        .if [esi].score == 0
                 mov [esi].score, 0
+        .elseif
+                add [esi].score, OBST_SOFT_SCORE
         .endif
         invoke printf, offset debug_int, [esi].score
 

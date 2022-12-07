@@ -68,8 +68,15 @@ _random_object_gene proc
         invoke rand
         and eax, 15
 
-        .if eax > 7
+        .if eax > 12
                 mov eax, 7
+        .endif
+        .if eax > 9
+                mov eax, 3
+        .endif
+
+        .if eax > 7
+                mov eax, 4
         .endif
 
         mov @id, eax
