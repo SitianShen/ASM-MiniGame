@@ -142,10 +142,11 @@ scoreBoard_dig_LY  equ 50
 scoreBoard_each_LX equ 50
 scoreBoard_each_LY equ 50
 
-fscoreBoard_lst_X   equ 300
+fscoreBoard_lst_X   equ 310
 fscoreBoard_lst_Y   equ 150
 fscoreBoard_dig_LX  equ 60
 fscoreBoard_dig_LY  equ 60
+fscoreBoard_each_LX  equ 15
 
 res_live_X   equ 490
 res_live_Y   equ 42
@@ -167,8 +168,8 @@ sizeofTargets   equ     sizeof Targets
 
 
 ;ldf lja own
-slow_level      equ     3
-normal_level    equ     2
+slow_level      equ     8
+normal_level    equ     4
 fast_level      equ     1
 speed_item_time      equ     100 ;加速/减速道具的持续时间
 

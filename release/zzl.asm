@@ -68,8 +68,15 @@ _random_object_gene proc
         invoke rand
         and eax, 15
 
-        .if eax > 7
+        .if eax > 12
                 mov eax, 7
+        .endif
+        .if eax > 9
+                mov eax, 3
+        .endif
+
+        .if eax > 7
+                mov eax, 4
         .endif
 
         mov @id, eax
@@ -157,7 +164,7 @@ _set_char_pos proc
         mov button_start.base.lengthx, button_start_LX
         mov button_start.base.lengthy, button_start_LY
 
-        mov button_back.base.posx, 400
+        mov button_back.base.posx, 410
         mov button_back.base.posy, 500
         mov button_back.base.lengthx, button_back_LX/2
         mov button_back.base.lengthy, button_back_LY/2
@@ -444,7 +451,7 @@ _draw_final_score proc
                 pop edx
                 pop ecx
 
-                sub ecx, DIG_LX
+                sub ecx, scoreBoard_each_LX
         .until eax <= 0      
         ret
 _draw_final_score endp
