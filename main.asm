@@ -21,8 +21,8 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                 sub     eax, @stPs.rcPaint.left
                 mov     ecx, @stPs.rcPaint.bottom
                 sub     ecx, @stPs.rcPaint.top
-                ; ???????????????????DC
-                ; ??1???????WM_PAINT???????????
+
+
                 invoke  BitBlt, @hDC, @stPs.rcPaint.left, @stPs.rcPaint.top, eax, ecx, hDCGame, @stPs.rcPaint.left, @stPs.rcPaint.top, SRCCOPY
                 invoke  EndPaint, hWnd, addr @stPs
         .elseif eax == WM_CREATE

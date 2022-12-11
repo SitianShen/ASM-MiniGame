@@ -1,12 +1,18 @@
 include global_dev.inc
 
 ;========================  data? ? ? ? ? ==========================
+;哪些变量需要维护两份——zzl
+;翻转，屏幕带个口罩，扣血，从天而降的子弹
+
+
 
 .data?
 
-player          Subject <>             
+player          Subject <>             ;两份
 bullet          Subject <>              
 targets         Targets  1000 dup(<>) 
+
+
 digitals_DC     dd 10 dup(?) 
 
 ;zzl own
@@ -56,8 +62,8 @@ POSCNT          dd      0; NEXTPOS的计数器
 
 ;==================== 共生模式 ===========================
 
-
-
+gameTime    dd     ?
+board       dd     boardHorizontal*boardVertical dup(?)
 
 ;==================== 共生模式 ===========================
 
