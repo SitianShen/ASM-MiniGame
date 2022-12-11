@@ -455,7 +455,11 @@ _draw_final_score proc
         .until eax <= 0      
         ret
 _draw_final_score endp
+
 _move_object proc hWnd
+
+        local @aaaaa:CImage
+        
         local @mouse:POINT
         local @window:RECT
 

@@ -115,8 +115,6 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                         invoke _shot_bullet
                 .endif
 
-
-
         .elseif eax == WM_CLOSE
                 invoke  _Quit
         .else
