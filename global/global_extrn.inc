@@ -41,3 +41,11 @@ extrn object1H:dword
 extrn object1W:dword      
 extrn object_move_v:dword   
 extrn POSCNT:dword          ; NEXTPOS的计数器
+
+
+;==================== 共生模式 ===========================
+
+
+
+
+;==================== 共生模式 ===========================
