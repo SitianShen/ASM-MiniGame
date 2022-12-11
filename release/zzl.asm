@@ -451,7 +451,7 @@ _draw_final_score proc
                 pop edx
                 pop ecx
 
-                sub ecx, DIG_LX
+                sub ecx, scoreBoard_each_LX
         .until eax <= 0      
         ret
 _draw_final_score endp

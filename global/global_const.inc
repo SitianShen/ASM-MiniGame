@@ -142,10 +142,11 @@ scoreBoard_dig_LY  equ 50
 scoreBoard_each_LX equ 50
 scoreBoard_each_LY equ 50
 
-fscoreBoard_lst_X   equ 300
+fscoreBoard_lst_X   equ 310
 fscoreBoard_lst_Y   equ 150
 fscoreBoard_dig_LX  equ 60
 fscoreBoard_dig_LY  equ 60
+fscoreBoard_each_LX  equ 15
 
 res_live_X   equ 490
 res_live_Y   equ 42
