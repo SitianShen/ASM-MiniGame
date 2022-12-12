@@ -110,6 +110,14 @@ _targets_bullet_out_of_bound proto
 ;========================= ldf ldf ldf ldf ============================
 ; ldf functions
 
+_coll ision_Player_with_medicine proto :dword, :dword
+_collision_Player_with_redVirus proto :dword, :dword
+_collision_Player_with_greenVirus proto :dword, :dword
+_collision_Player_with_hotPot proto :dword, :dword
+_collision_Player_with_n95mask proto :dword, :dword
+_collision_Player_with_temperature proto :dword, :dword
+_two_two_enum_symbiotic proto :dword, :dword, :dword
+
 
 ;sound
 _Play_medicine_SOUND proto
@@ -120,6 +128,7 @@ _Play_n95mask_SOUND proto
 _Stop_n95mask_SOUND proto
 _Play_temperature_SOUND proto
 _Stop_temperature_SOUND proto
+
 
 ;========================= lja lja lja lja ============================
 ; lja functions

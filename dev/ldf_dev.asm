@@ -919,11 +919,20 @@ _Player_get_item proc Player_new:ptr Subject, itemId:dword
 _Player_get_item endp
 
 
-_collision_Player_with_medicine proc uses ebx, mainPlayer: ptr Subject
+_collision_Player_with_medicine proc uses ebx, mainPlayer: ptr Subject, medicine_target:ptr Targets
+        ;medicine消失
+        mov ebx, medicine_target
+        assume ebx: ptr Targets
+
+        mov [ebx].base.alive, 0
+
+        ; invoke printf, offset debug_int, [ebx].typeid
+
+        ;吃到药的效果
         mov ebx, mainPlayer
         assume ebx: ptr Subject
 
-        ;吃到药的效果
+        
         .if [ebx].status == Infection
                 ;仅当感染，HP+1
                 inc [ebx].base.alive
@@ -935,11 +944,20 @@ _collision_Player_with_medicine proc uses ebx, mainPlayer: ptr Subject
         ret
 _collision_Player_with_medicine endp
 
-_collision_Player_with_redVirus proc uses ebx, mainPlayer: ptr Subject
+_collision_Player_with_redVirus proc uses ebx, mainPlayer: ptr Subject, redVirus_target:ptr Targets
+        ;redVirus消失
+        mov ebx, redVirus_target
+        assume ebx: ptr Targets
+
+        mov [ebx].base.alive, 0
+
+        ; invoke printf, offset debug_int, [ebx].typeid
+        
+        ;吃到红色病毒的效果
         mov ebx, mainPlayer
         assume ebx: ptr Subject
 
-        ;吃到红色病毒的效果
+        
         .if [ebx].status == Immunity
                 ;免疫期抵抗红色病毒
                 ret
@@ -955,11 +973,20 @@ _collision_Player_with_redVirus proc uses ebx, mainPlayer: ptr Subject
         ret
 _collision_Player_with_redVirus endp
 
-_collision_Player_with_greenVirus proc uses ebx, mainPlayer: ptr Subject
+_collision_Player_with_greenVirus proc uses ebx, mainPlayer: ptr Subject, greenVirus_target:ptr Targets
+        ;greenVirus消失
+        mov ebx, greenVirus_target
+        assume ebx: ptr Targets
+
+        mov [ebx].base.alive, 0
+
+        ; invoke printf, offset debug_int, [ebx].typeid
+        
+        ;吃到绿色病毒的效果
         mov ebx, mainPlayer
         assume ebx: ptr Subject
 
-        ;吃到绿色病毒的效果
+        
         ;非感染，非免疫
         .if [ebx].status != Immunity && [ebx].status != Infection
                 inc [ebx].score ;exp+1
@@ -969,30 +996,64 @@ _collision_Player_with_greenVirus proc uses ebx, mainPlayer: ptr Subject
         ret
 _collision_Player_with_greenVirus endp
 
-_collision_Player_with_hotPot proc uses ebx
+_collision_Player_with_hotPot proc uses ebx, mainPlayer: ptr Subject, hotPot_target:ptr Targets
+        ;hotPot消失
+        mov ebx, hotPot_target
+        assume ebx: ptr Targets
+
+        mov [ebx].base.alive, 0
+
+        ; invoke printf, offset debug_int, [ebx].typeid
+        
+        ;吃到hotPot
         mov ebx, mainPlayer
         assume ebx: ptr Subject
 
-        ;吃到hotPot的效果
-
+        
+        mov [ebx].has_hotpot, 300
+        
+        
+        invoke _hotpot_effect, addr playerOne, addr playerTwo
         ret
 _collision_Player_with_hotPot endp
 
-_collision_Player_with_n95mask proc uses ebx, mainPlayer: ptr Subject
+_collision_Player_with_n95mask proc uses ebx, mainPlayer: ptr Subject, n95mask_target:ptr Targets
+        ;n95mask消失
+        mov ebx, n95mask_target
+        assume ebx: ptr Targets
+
+        mov [ebx].base.alive, 0
+
+        ; invoke printf, offset debug_int, [ebx].typeid
+        
+        ;吃到n95mask
         mov ebx, mainPlayer
         assume ebx: ptr Subject
 
-        ;吃到n95mask的效果
+        
+        mov [ebx].has_mask, 
 
+        invoke _mask_effect, addr playerOne, addr playerTwo
         ret
 _collision_Player_with_n95mask endp
 
-_collision_Player_with_temperature proc uses ebx, mainPlayer: ptr Subject
+_collision_Player_with_temperature proc uses ebx, mainPlayer: ptr Subject, temperature_target:ptr Targets
+        ;temperature消失
+        mov ebx, temperature_target
+        assume ebx: ptr Targets
+
+        mov [ebx].base.alive, 0
+
+        ; invoke printf, offset debug_int, [ebx].typeid
+
+        ;吃到temperature
         mov ebx, mainPlayer
         assume ebx: ptr Subject
+        
+        mov [ebx].has_fever, 300
 
-        ;吃到temperature的效果
-
+        
+        invoke _fever_effect, addr playerOne, addr playerTwo
         ret
 _collision_Player_with_temperature endp
 
@@ -1052,7 +1113,7 @@ _two_two_enum_symbiotic  proc uses esi ebx ecx, mainPlayer:ptr Subject, mainTarg
 
                         ;如果撞上了
                         .if @collisionFlag == 1
-
+                                invoke _collision_Player_with_medicine, mainPlayer, esi
                         .endif
 
                         ; invoke printf, offset debug_int, [esi].typeid
@@ -1069,7 +1130,7 @@ _two_two_enum_symbiotic  proc uses esi ebx ecx, mainPlayer:ptr Subject, mainTarg
                         
                         ;如果撞上了
                         .if @collisionFlag == 1
-                                
+                                invoke _collision_Player_with_redVirus, mainPlayer, esi
                         .endif
 
                         ; invoke printf, offset debug_int, [esi].typeid
@@ -1086,7 +1147,7 @@ _two_two_enum_symbiotic  proc uses esi ebx ecx, mainPlayer:ptr Subject, mainTarg
 
                         ;如果撞上了
                         .if @collisionFlag == 1
-                                
+                                invoke _collision_Player_with_greenVirus, mainPlayer, esi
                         .endif
 
                         ; invoke printf, offset debug_int, [esi].typeid
@@ -1103,7 +1164,7 @@ _two_two_enum_symbiotic  proc uses esi ebx ecx, mainPlayer:ptr Subject, mainTarg
 
                         ;如果撞上了
                         .if @collisionFlag == 1
-                                
+                                invoke _collision_Player_with_hotPot, mainPlayer, esi
                         .endif
 
                         ; invoke printf, offset debug_int, [esi].typeid
@@ -1120,7 +1181,7 @@ _two_two_enum_symbiotic  proc uses esi ebx ecx, mainPlayer:ptr Subject, mainTarg
 
                         ;如果撞上了
                         .if @collisionFlag == 1
-                                
+                                invoke _collision_Player_with_n95mask, mainPlayer, esi
                         .endif
 
 
@@ -1137,10 +1198,10 @@ _two_two_enum_symbiotic  proc uses esi ebx ecx, mainPlayer:ptr Subject, mainTarg
 
                         ;如果撞上了
                         .if @collisionFlag == 1
-                                
+                                invoke _collision_Player_with_temperature, mainPlayer, esi
                         .endif
 
-                        invoke printf, offset debug_int, [esi].typeid
+                        ; invoke printf, offset debug_int, [esi].typeid
                 .endif
 
                 ; 获取要附带的结构体地址
@@ -1229,7 +1290,7 @@ _two_two_enum_symbiotic endp
 _two_two_enum_symbiotic_test proc
         ; invoke printf, offset debug_int, [esi].base.posx
         ;给player赋值
-        lea esi, player
+        lea esi, playerOne
         assume esi :ptr Subject
 
         mov [esi].base.posx, 1
@@ -1253,7 +1314,7 @@ _two_two_enum_symbiotic_test proc
         mov [esi].base.alive, 1
         mov [esi].base.DC, 1
         mov [esi].base.rel_v, 1
-        mov [esi].base.course_id, 0
+        mov [esi].base.course_id, 1
         mov [esi].typeid, medicine
 
         ; invoke _two_two_enum
@@ -1269,13 +1330,13 @@ _two_two_enum_symbiotic_test proc
         assume esi :ptr Targets
 
         mov [esi].base.posx, 1
-        mov [esi].base.posy, 2
-        mov [esi].base.lengthx, 3
-        mov [esi].base.lengthy, 4
+        mov [esi].base.posy, 1
+        mov [esi].base.lengthx, 1
+        mov [esi].base.lengthy, 1
         mov [esi].base.alive, 1
         mov [esi].base.DC, 1
         mov [esi].base.rel_v, 1
-        mov [esi].base.course_id, 0
+        mov [esi].base.course_id, 1
         mov [esi].typeid, temperature
 
         mov target_number_one, 2
