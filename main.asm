@@ -35,18 +35,26 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                 .elseif eax == WM_TIMER
                         mov     eax, wParam
                         .if     eax == ID_TIMER
-                                invoke  _draw_object, hWnd, hDCGame
                                 mov eax, cur_interface
-                                .if eax == in_game
-                                        invoke _change_all_position
-                                        invoke _targets_bullet_out_of_bound
-                                        invoke _two_two_enum
+                                .if eax != in_2p_game
+                                        invoke  _draw_object, hWnd, hDCGame, addr player, addr targets, target_number
+                                        mov eax, cur_interface
+                                        .if eax == in_game
+                                                invoke _change_all_position
+                                                invoke _targets_bullet_out_of_bound
+                                                invoke _two_two_enum
+                                        .endif
+                                .elseif eax == in_2p_game
+                                        invoke  _draw_object, hWnd, hDCGame, addr playerOne, addr targetsOne, target_number_one
+                                        ;write here for 1p
                                 .endif
                                 invoke  InvalidateRect, hWnd, NULL, FALSE
                         .elseif eax == ID_TIMER_gene
                                 mov eax, cur_interface
                                 .if eax == in_game
-                                        invoke  _random_object_gene
+                                        invoke  _random_object_gene, addr targets, addr target_number
+                                .elseif eax == in_2p_game
+                                        invoke  _random_object_gene, addr targetsOne, addr target_number_one
                                 .endif
                         .endif
 
@@ -128,12 +136,12 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
 
                 .elseif eax == WM_TIMER
                         mov     eax, wParam
-                        .if     eax == ID_TIMER2 
-                                invoke  _draw_object, hWnd, hDCGame2
+                        .if     eax == ID_TIMER2
+                                invoke  _draw_object, hWnd, hDCGame2, addr playerTwo, addr targetsTwo, target_number_two
                                 invoke  InvalidateRect, hWnd, NULL, FALSE
                         ; .elseif eax == ID_TIMER_gene2
                         ;         mov eax, cur_interface
-                        ;         .if eax == in_game
+                        ;         .if eax == in_2p_game
                         ;                 invoke  _random_object_gene
                         ;         .endif
                         .endif
@@ -217,6 +225,14 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
         mov ebx, playerList2.choose_confirm
         .if eax == 1 && ebx == 1
                 mov cur_interface, in_2p_game
+                mov ebx, playerList.curid
+                mov eax, [playerList.DC+8*ebx]
+                mov playerOne.base.DC, eax
+                mov ebx, playerList2.curid
+                mov eax, [playerList2.DC+8*ebx]  
+                mov playerTwo.base.DC, eax 
+                mov playerList.choose_confirm, 0
+                mov playerList2.choose_confirm, 0
         .endif
 
         invoke  DefWindowProc, hWnd, uMsg, wParam, lParam
@@ -276,6 +292,7 @@ _WinMain        proc
         invoke  SetTimer, hWinMain, ID_TIMER_gene, 600, NULL ;generate
 
         invoke  SetTimer, hWinMain2, ID_TIMER2, 15, NULL ;flush
+        invoke  SetTimer, hWinMain2, ID_TIMER_gene2, 600, NULL ;generate
 
         .while  TRUE
                 invoke  GetMessage, addr @stMsg, NULL, 0, 0
