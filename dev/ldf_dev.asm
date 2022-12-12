@@ -918,6 +918,86 @@ _Player_get_item proc Player_new:ptr Subject, itemId:dword
         
 _Player_get_item endp
 
+
+_collision_Player_with_medicine proc uses ebx, mainPlayer: ptr Subject
+        mov ebx, mainPlayer
+        assume ebx: ptr Subject
+
+        ;吃到药的效果
+        .if [ebx].status == Infection
+                ;仅当感染，HP+1
+                inc [ebx].base.alive
+        .endif
+
+        ;非免疫, 状态改为免疫期，结果一定是免疫期
+        mov [ebx].status, Immunity
+        
+        ret
+_collision_Player_with_medicine endp
+
+_collision_Player_with_redVirus proc uses ebx, mainPlayer: ptr Subject
+        mov ebx, mainPlayer
+        assume ebx: ptr Subject
+
+        ;吃到红色病毒的效果
+        .if [ebx].status == Immunity
+                ;免疫期抵抗红色病毒
+                ret
+        .endif
+
+        ;非免疫，则一定最终状态为感染期
+        mov [ebx].status, Infection
+
+        ;非感染，HP-1
+        .if [ebx].status != Infection
+                dec [ebx].base.alive
+        .endif
+        ret
+_collision_Player_with_redVirus endp
+
+_collision_Player_with_greenVirus proc uses ebx, mainPlayer: ptr Subject
+        mov ebx, mainPlayer
+        assume ebx: ptr Subject
+
+        ;吃到绿色病毒的效果
+        ;非感染，非免疫
+        .if [ebx].status != Immunity && [ebx].status != Infection
+                inc [ebx].score ;exp+1
+                mov [ebx].status, Asymptomatic ;状态改为无症状
+        .endif
+        
+        ret
+_collision_Player_with_greenVirus endp
+
+_collision_Player_with_hotPot proc uses ebx
+        mov ebx, mainPlayer
+        assume ebx: ptr Subject
+
+        ;吃到hotPot的效果
+
+        ret
+_collision_Player_with_hotPot endp
+
+_collision_Player_with_n95mask proc uses ebx, mainPlayer: ptr Subject
+        mov ebx, mainPlayer
+        assume ebx: ptr Subject
+
+        ;吃到n95mask的效果
+
+        ret
+_collision_Player_with_n95mask endp
+
+_collision_Player_with_temperature proc uses ebx, mainPlayer: ptr Subject
+        mov ebx, mainPlayer
+        assume ebx: ptr Subject
+
+        ;吃到temperature的效果
+
+        ret
+_collision_Player_with_temperature endp
+
+
+
 ;调用示例 invoke _two_two_enum_symbiotic, addr playerOne, targetsOne, target_number_one
 _two_two_enum_symbiotic  proc uses esi ebx ecx, mainPlayer:ptr Subject, mainTargets:dword, mainTargetsNumber:dword
         ; ============== declare ==============
@@ -970,7 +1050,12 @@ _two_two_enum_symbiotic  proc uses esi ebx ecx, mainPlayer:ptr Subject, mainTarg
                                 mov @collisionFlag, eax
                         .endif
 
-                        invoke printf, offset debug_int, [esi].typeid
+                        ;如果撞上了
+                        .if @collisionFlag == 1
+
+                        .endif
+
+                        ; invoke printf, offset debug_int, [esi].typeid
 
                 .elseif [esi].typeid == redVirus ;红色病毒
                         .if flag_jump == 1
@@ -981,8 +1066,13 @@ _two_two_enum_symbiotic  proc uses esi ebx ecx, mainPlayer:ptr Subject, mainTarg
                                 invoke _check_collision, addr [ebx].base, addr [esi].base
                                 mov @collisionFlag, eax
                         .endif
+                        
+                        ;如果撞上了
+                        .if @collisionFlag == 1
+                                
+                        .endif
 
-                        invoke printf, offset debug_int, [esi].typeid
+                        ; invoke printf, offset debug_int, [esi].typeid
 
                 .elseif [esi].typeid == greenVirus ;绿色病毒
                         .if flag_jump == 1
@@ -992,6 +1082,11 @@ _two_two_enum_symbiotic  proc uses esi ebx ecx, mainPlayer:ptr Subject, mainTarg
                                 assume ebx: ptr Subject
                                 invoke _check_collision, addr [ebx].base, addr [esi].base
                                 mov @collisionFlag, eax
+                        .endif
+
+                        ;如果撞上了
+                        .if @collisionFlag == 1
+                                
                         .endif
 
                         ; invoke printf, offset debug_int, [esi].typeid
@@ -1006,7 +1101,12 @@ _two_two_enum_symbiotic  proc uses esi ebx ecx, mainPlayer:ptr Subject, mainTarg
                                 mov @collisionFlag, eax
                         .endif
 
-                        invoke printf, offset debug_int, [esi].typeid
+                        ;如果撞上了
+                        .if @collisionFlag == 1
+                                
+                        .endif
+
+                        ; invoke printf, offset debug_int, [esi].typeid
 
                 .elseif [esi].typeid == n95mask ;口罩
                         .if flag_jump == 1
@@ -1018,8 +1118,13 @@ _two_two_enum_symbiotic  proc uses esi ebx ecx, mainPlayer:ptr Subject, mainTarg
                                 mov @collisionFlag, eax
                         .endif
 
-                        invoke printf, offset debug_int, [esi].typeid
+                        ;如果撞上了
+                        .if @collisionFlag == 1
+                                
+                        .endif
 
+
+                        ; invoke printf, offset debug_int, [esi].typeid
                 .elseif [esi].typeid == temperature ;测温计
                         .if flag_jump == 1
                                 mov @collisionFlag, 0
@@ -1028,6 +1133,11 @@ _two_two_enum_symbiotic  proc uses esi ebx ecx, mainPlayer:ptr Subject, mainTarg
                                 assume ebx: ptr Subject
                                 invoke _check_collision, addr [ebx].base, addr [esi].base
                                 mov @collisionFlag, eax
+                        .endif
+
+                        ;如果撞上了
+                        .if @collisionFlag == 1
+                                
                         .endif
 
                         invoke printf, offset debug_int, [esi].typeid
@@ -1077,21 +1187,6 @@ _two_two_enum_symbiotic  proc uses esi ebx ecx, mainPlayer:ptr Subject, mainTarg
 
                                 mov eax, [esi].base.course_id
                                 mov [ebx].base.course_id, eax
-
-                                mov eax, [esi].typeid
-                                mov [ebx].typeid, eax
-
-                                mov eax, [esi].typeid
-                                mov [ebx].typeid, eax
-
-                                mov eax, [esi].typeid
-                                mov [ebx].typeid, eax
-
-                                mov eax, [esi].typeid
-                                mov [ebx].typeid, eax
-
-                                mov eax, [esi].typeid
-                                mov [ebx].typeid, eax
 
                                 mov eax, [esi].typeid
                                 mov [ebx].typeid, eax
