@@ -6,6 +6,7 @@ export default defineUserConfig({
     title: 'Run away from covid-19',
     description: 'The War of Viruses',
     theme: defaultTheme(),
+    base:'/asm-game/game-web/',
     // alias: {
     //     '@theme/Navbar.vue': path.resolve(__dirname, './components/Navbar.vue'),
     // },
