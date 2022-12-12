@@ -6,10 +6,10 @@ set lib=%Masm32Dir%\lib;%lib%;
 set path=%Masm32Dir%\Bin;%Masm32Dir%;%PATH%
 @REM 不能递归
 
-set Win10Kits=C:\Program Files (x86)\Windows Kits\10
-set include=%Win10Kits%\Include;%include%
-set lib=%Win10Kits%\Lib;%lib%
-set path=%Win10Kits%\bin;%Win10Kits%;%PATH%
+@REM set Win10Kits=C:\Program Files (x86)\Windows Kits\10
+@REM set include=%Win10Kits%\Include;%include%
+@REM set lib=%Win10Kits%\Lib;%lib%
+@REM set path=%Win10Kits%\bin;%Win10Kits%;%PATH%
 
 @REM for /f "delims=" %%i in ('dir /ad/b/s "%Win10Kits%"') do (
 @REM     echo %%i
@@ -30,10 +30,10 @@ set path=%Win10Kits%\bin;%Win10Kits%;%PATH%
 @REM     set include=%include%;%%i
 @REM )
 
-set MSVC=D:\Community\VC\Tools\MSVC\14.16.27023
-set include=%MSVC%\include;%include%;
-set lib=%MSVC%\Lib;%lib%
-set path=%MSVC%\bin;%MSVC%;%PATH%
+@REM set MSVC=D:\Community\VC\Tools\MSVC\14.16.27023
+@REM set include=%MSVC%\include;%include%;
+@REM set lib=%MSVC%\Lib;%lib%
+@REM set path=%MSVC%\bin;%MSVC%;%PATH%
 
 @REM FOR /D %MSVC%\Include %%i in (*) do (
 @REM     set include=%include%;%%i
@@ -48,7 +48,7 @@ set path=%MSVC%\bin;%MSVC%;%PATH%
 @REM )
 
 nmake clean
-@REM nmake main
+nmake main
 @REM cl.exe /c ldf_gif.cpp
 @REM Link /subsystem:console ldf_gif.obj
 @REM nmake ldf_dev && ldf_dev.exe
