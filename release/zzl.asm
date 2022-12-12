@@ -701,6 +701,12 @@ _draw_object proc hWnd, hDCGame_ptr
                         invoke  TransparentBlt, hDCGame_ptr, 0, 0, gameH, gameW, backGround.DC_2p_c, 0, 0, 1000, 1000, SRCCOPY
                         invoke _draw_player_choose, hDCGame_ptr
                 .endif
+        .elseif eax == in_2p_game
+                        invoke  TransparentBlt, hDCGame_ptr, 0, 0, gameH, gameW, backGround.DC_pd, 0, 0, 1000, 1000, SRCCOPY
+        ;draw pause
+                        invoke  _draw_button, addr button_pause, hWnd, button_pause_LX, button_pause_LY, hDCGame_ptr
+                        
+                        invoke  TransparentBlt, hDCGame_ptr, 0, 0, gameH, gameW, backGround.DC_pu, 0, 0, 1000, 1000, 16777215
         .endif
 ;         mov eax, object1H
 ;         mov ebx, object1W

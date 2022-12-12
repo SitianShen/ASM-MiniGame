@@ -213,11 +213,11 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                 ret
         .endif
 ;check confirmed
-        ; mov eax, playerList.choose_confirm
-        ; mov ebx, playerList2.choose_confirm
-        ; .if eax == 1 && ebx == 1
-        ;         mov cur_interface, in_2p_game
-        ; .endif
+        mov eax, playerList.choose_confirm
+        mov ebx, playerList2.choose_confirm
+        .if eax == 1 && ebx == 1
+                mov cur_interface, in_2p_game
+        .endif
 
         invoke  DefWindowProc, hWnd, uMsg, wParam, lParam
         ret
