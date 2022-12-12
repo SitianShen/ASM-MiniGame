@@ -260,7 +260,7 @@ _draw_button proc button:ptr Button, hWnd, LX, LY
         ret
 _draw_button endp
 
-_move_object proc hWnd
+_draw_object proc hWnd
         local @mouse:POINT
         local @window:RECT
 
@@ -326,7 +326,7 @@ _move_object proc hWnd
 ;         invoke  TransparentBlt, hDCGame, 10, 10, eax, ebx, 
 ;                                 env_objecet_3.DC, 0,  0,  object1H_init, object1W_init, 16777215
         ret
-_move_object endp
+_draw_object endp
 
 
 start:

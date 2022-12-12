@@ -33,6 +33,7 @@ BackGround struct
         DC_pd   dd     ?
         DC_i    dd      ?
         DC_e    dd      ?
+        DC_2p_c dd      ?
 BackGround ends
 
 Object_DC struct

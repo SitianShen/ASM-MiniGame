@@ -4,6 +4,7 @@ public targets
 
 ;zzl own
 public button_play      
+public button_2p_play  
 public button_start      
 public button_back      
 public button_exit    
