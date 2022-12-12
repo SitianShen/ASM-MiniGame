@@ -82,10 +82,11 @@ _initAll proc
         ret
 _initAll endp
 
-_random_object_gene proc
+_random_object_gene proc @targets_ptr: ptr dword, @target_number_ptr: ptr dword
         local @id, @offs
-        mov esi, offset targets
-        mov ecx, target_number
+        mov esi, @targets_ptr
+        mov edi, @target_number_ptr
+        mov ecx, [edi]
         .while ecx != 0 
                 dec ecx
                 add esi, sizeofTargets
@@ -178,9 +179,9 @@ _random_object_gene proc
                 mov [esi].base.posx, remote_x4
         .endif
 
-        mov eax, target_number
-        inc eax
-        mov target_number, eax
+        mov esi, @target_number_ptr
+        assume esi:ptr dword
+        inc [esi]
 
         ret
 _random_object_gene endp
@@ -441,13 +442,16 @@ _show_score proc hDCGame_ptr
         ret
 _show_score endp
 
-_show_lifes proc hDCGame_ptr
+_show_lifes proc hDCGame_ptr, player_addr
         local @digit
+
+        mov esi, player_addr
+        assume esi:ptr Subject
 
         mov ecx, res_live_X
         mov edx, res_live_Y
         
-        mov eax, player.base.alive
+        mov eax, [esi].base.alive
         .repeat
                 push ecx
                 push edx
@@ -557,7 +561,8 @@ _draw_player_choose proc hDCGame_ptr
         ret
 _draw_player_choose endp
 
-_draw_object proc hWnd, hDCGame_ptr
+_draw_object proc hWnd, hDCGame_ptr, player_addr: ptr Subject, @targets_ptr: ptr Targets, @target_number
+        
         
         local @mouse:POINT
         local @window:RECT
@@ -595,7 +600,7 @@ _draw_object proc hWnd, hDCGame_ptr
                                 HP_place_LX, HP_place_LY, 
                                 object_DC.hp_p, 0, 0, PROP_LX, PROP_LY, 16777215
 
-                        invoke _show_lifes, hDCGame_ptr
+                        invoke _show_lifes, hDCGame_ptr, player_addr
         ;draw obj 1
                         mov ecx, target_number
                         xor eax, eax
@@ -705,7 +710,77 @@ _draw_object proc hWnd, hDCGame_ptr
                         invoke  TransparentBlt, hDCGame_ptr, 0, 0, gameH, gameW, backGround.DC_pd, 0, 0, 1000, 1000, SRCCOPY
         ;draw pause
                         invoke  _draw_button, addr button_pause, hWnd, button_pause_LX, button_pause_LY, hDCGame_ptr
+
+        ;draw obj 1
+                        mov ecx, @target_number
+                        mov esi, @targets_ptr
+                        assume esi :ptr Targets
                         
+                        xor eax, eax
+                        .while eax < ecx
+                                push eax
+                                push ecx
+                                push esi
+
+                                mov edx, [esi].base.posy
+                                .if [esi].base.alive == 1 && edx<cary
+                                        invoke  TransparentBlt, 
+                                                hDCGame_ptr, 
+                                                [esi].base.posx, [esi].base.posy, 
+                                                [esi].base.lengthx, [esi].base.lengthy, 
+                                                [esi].base.DC, 0, 0, PROP_LX, PROP_LY, 16777215
+                                .endif
+
+                                pop esi
+                                pop ecx
+                                pop eax
+
+                                inc eax
+                                add esi, sizeofTargets
+                        .endw
+
+        ;draw car     
+                        mov esi, player_addr
+                        assume esi: ptr Subject
+                        invoke  TransparentBlt, hDCGame_ptr, [esi].base.posx, [esi].base.posy, [esi].base.lengthx, [esi].base.lengthy, [esi].base.DC, 0, 0, PLAYER_LX, PLAYER_LY, 16777215
+        ;draw obj 1
+                        mov ecx, @target_number
+                        mov esi, @targets_ptr
+                        assume esi :ptr Targets
+                        
+                        xor eax, eax
+                        .while eax < ecx
+                                push eax
+                                push ecx
+                                push esi
+
+                                mov edx, [esi].base.posy
+                                .if [esi].base.alive == 1 && edx>cary
+                                        invoke  TransparentBlt, 
+                                                hDCGame_ptr, 
+                                                [esi].base.posx, [esi].base.posy, 
+                                                [esi].base.lengthx, [esi].base.lengthy, 
+                                                [esi].base.DC, 0, 0, PROP_LX, PROP_LY, 16777215
+                                .endif
+
+                                pop esi
+                                pop ecx
+                                pop eax
+
+                                inc eax
+                                add esi, sizeofTargets
+                        .endw
+        ;draw life
+
+                        invoke  TransparentBlt, 
+                                hDCGame_ptr, 
+                                HP_place_X, HP_place_Y,
+                                HP_place_LX, HP_place_LY, 
+                                object_DC.hp_p, 0, 0, PROP_LX, PROP_LY, 16777215
+
+                        invoke _show_lifes, hDCGame_ptr, player_addr
+        ;
+
                         invoke  TransparentBlt, hDCGame_ptr, 0, 0, gameH, gameW, backGround.DC_pu, 0, 0, 1000, 1000, 16777215
         .endif
 ;         mov eax, object1H

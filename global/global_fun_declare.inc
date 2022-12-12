@@ -14,7 +14,7 @@ system proto c:dword
 ; zzl functions
 _Init_bullet proto
 _initAll proto
-_random_object_gene proto
+_random_object_gene proto, :ptr dword, :ptr dword
 _set_char_pos proto
 _load_button proto :ptr Button, :dword, :dword
 _load_common_pic proto :dword, :dword
@@ -22,7 +22,7 @@ _createAll proto
 _deleteAll proto
 _Quit proto
 _draw_button proto :ptr Button, :dword, :dword, :dword, :dword
-_draw_object proto :dword, :dword
+_draw_object proto :dword, :dword, :ptr Subject, :ptr Targets, :dword
 _show_score proto :dword
 _shot_bullet proto
 _init_2p_mode proto
