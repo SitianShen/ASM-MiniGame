@@ -46,6 +46,7 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                                         .endif
                                 .elseif eax == in_2p_game
                                         invoke  _draw_object, hWnd, hDCGame, addr playerOne, addr targetsOne, target_number_one
+                                        ;write here for 1p
                                 .endif
                                 invoke  InvalidateRect, hWnd, NULL, FALSE
                         .elseif eax == ID_TIMER_gene

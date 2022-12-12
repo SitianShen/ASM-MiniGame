@@ -110,7 +110,7 @@ _targets_bullet_out_of_bound proto
 ;========================= ldf ldf ldf ldf ============================
 ; ldf functions
 
-_coll ision_Player_with_medicine proto :dword, :dword
+; _coll ision_Player_with_medicine proto :dword, :dword
 _collision_Player_with_redVirus proto :dword, :dword
 _collision_Player_with_greenVirus proto :dword, :dword
 _collision_Player_with_hotPot proto :dword, :dword
