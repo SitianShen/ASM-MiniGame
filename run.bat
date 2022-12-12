@@ -6,6 +6,7 @@ set lib=%Masm32Dir%\lib;%lib%
 set path=%Masm32Dir%\Bin;%Masm32Dir%;%PATH%
 
 
+@REM g++ -o demp.obj demo.cpp
 nmake clean
 nmake main
 @REM nmake ldf_dev && ldf_dev.exe

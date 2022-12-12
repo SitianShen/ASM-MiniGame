@@ -169,8 +169,8 @@ HP_place_LX equ 366
 HP_place_LY equ 366
 
 
-gameH           equ     600+30
-gameW           equ     600+30
+gameH           equ     600
+gameW           equ     600
 charH           equ     400
 charW           equ     400
 sizeofTargets   equ     sizeof Targets

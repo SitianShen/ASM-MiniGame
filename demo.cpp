@@ -1,6 +1,7 @@
 #include <windows.h>
 #include <objidl.h>
 #include <gdiplus.h>
+#include <stdio.h>
 using namespace Gdiplus;
 #pragma comment (lib,"Gdiplus.lib")
 #define ID_TIMER 101
@@ -142,3 +143,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message,
         return DefWindowProc(hWnd, message, wParam, lParam);
     }
 } // WndProc
+
+int main(){
+    printf("hello world!");
+    return;
+}
+
+
+void gifcreate(){
+    
+}
