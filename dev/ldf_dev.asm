@@ -868,7 +868,7 @@ _Player_get_item proc Player_new:ptr Subject, itemId:dword
 _Player_get_item endp
 
 
-_two_two_enum_symbiotic proc mainPlayer:ptr Subject, mainTargets:dword
+_two_two_enum_symbiotic proc mainPlayer:ptr Subject, mainTargets:dword, mainTargetsNumber:dword
         ; ============== declare ==============
         ;一些和target有关的局部变量
         local @new_target_number
