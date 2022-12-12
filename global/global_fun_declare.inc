@@ -84,6 +84,9 @@ _Stop_END_SOUND proto ;开始新的一局，StopEnd，播放BGM
 _Stop_Gameover_SOUND proto ;
 _Stop_BeginBGM_SOUND proto ;按下Play，就要关闭BeginBGM，播放游戏BGM
 
+;C functions
+printHelloWorld proto c
+
 ;========================= lja lja lja lja ============================
 ; lja functions
 _next_position proto :ptr BASE         ;每个道具移动

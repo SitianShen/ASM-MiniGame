@@ -613,7 +613,6 @@ _two_two_enum proc uses ebx
         ret
 _two_two_enum endp
 
-
 _two_two_enum_test proc
         ;给bullet赋值
         lea esi, bullet
@@ -864,15 +863,20 @@ _collision_SOUND_test proc
         ret
 _collision_SOUND_test endp
 
-; start:
-;         ; call    _WinMain
-;         ; invoke  ExitProcess, NULL
-;         invoke _Open_ALL_SOUND
+_Player_get_item proc Player_new:ptr Subject, itemId:dword
         
-;         ; invoke _collision_test
-;         invoke _collision_SOUND_test
+_Player_get_item endp
 
-;         invoke _Close_ALL_SOUND
-;         ret
-; end     start
-end
+start:
+        ; call    _WinMain
+        ; invoke  ExitProcess, NULL
+        ; invoke _Open_ALL_SOUND
+        
+        ; invoke _collision_test
+        ; invoke _collision_SOUND_test
+
+        ; invoke _Close_ALL_SOUND
+        invoke printHelloWorld
+        ret
+end     start
+; end

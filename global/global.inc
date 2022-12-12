@@ -8,9 +8,12 @@ include global_dev.inc
 
 .data?
 
+======================== 单人模式 ======================
+
 player          Subject <>             ;两份
 bullet          Subject <>              
 targets         Targets  1000 dup(<>) 
+
 
 
 digitals_DC     dd 10 dup(?) 
@@ -68,6 +71,25 @@ gameTime    dd     ?
 board       dd     boardHorizontal*boardVertical dup(?)
 
 ;==================== 共生模式 ===========================
+
+======================== 双人模式 ======================
+
+playerOne          Subject <>             ;两份
+bulletOne          Subject <>              
+targetsOne         Targets  1000 dup(<>) 
+
+
+
+;一个进程,WASD（移动左边这个窗口），上下左右(移动右边这个窗口)
+
+
+
+playerTwo          Subject <>             ;两份
+bulletTwo          Subject <>              
+targetsTwo         Targets  1000 dup(<>) 
+
+
+======================== 双人模式 ======================
 
 
 
