@@ -288,8 +288,8 @@ _hotpot_effect proc stdcall ptrPlayerOne:ptr Subject, ptrPlayerTwo:ptr Subject
         mov ecx, ptrPlayerTwo
         assume  ecx: ptr Subject 
 
-        mov [esi].has_hotpot, 300
-        mov [ecx].has_hotpot, 300
+        mov [esi].has_hotpot, time_3s
+        mov [ecx].has_hotpot, time_3s
         mov eax, [esi].status
         mov ebx, [ecx].status
 
@@ -315,7 +315,7 @@ _mask_effect proc stdcall ptrPlayerOne:ptr Subject, ptrPlayerTwo:ptr Subject
 
         mov esi, ptrPlayerTwo
         assume  esi: ptr Subject 
-        mov [esi].has_mask, 300
+        mov [esi].has_mask, time_3s
         assume esi: nothing
 
 ret
@@ -327,7 +327,7 @@ _fever_effect proc stdcall ptrPlayerOne:ptr Subject, ptrPlayerTwo:ptr Subject
         
         mov esi, ptrPlayerTwo
         assume  esi: ptr Subject 
-        mov [esi].has_fever, 300
+        mov [esi].has_fever, time_3s
         assume esi: nothing
 
 ret
@@ -372,7 +372,7 @@ _change_status proc stdcall ptrPlayerOne:ptr Subject, ptrPlayerTwo:ptr Subject
                 
                 mov [esi].status, 101
                 mov [ecx].status, 101
-                mov change_two_status_cnt, 500
+                mov change_two_status_cnt, time_5s
         .else
                 dec change_two_status_cnt
         .endif
@@ -381,50 +381,68 @@ ret
 _change_status endp
 
 
-; _change_all_position_symbiotic proc stdcall       ;遍历所有道具改变位置
+_change_all_position_symbiotic proc stdcall       ;遍历所有道具改变位置
 
-;         mov eax, speed
-;         mov edx, 0
-;         mov ebx, 0
-;         mul ebx
-;         mov ecx, eax
-;         push ecx
-;         invoke rand
-;         pop ecx
-;         and eax, ecx
-;         .if eax == 0 
-;                 mov ecx, target_number
-;                 xor eax, eax
-;                 .while eax < ecx
-;                         push eax
-;                         mov edx, 0
-;                         mov ebx, sizeofTargets
-;                         mul ebx
-;                         lea esi, targets[eax]
-;                         assume esi :ptr Targets
-;                         .if [esi].base.alive == 1
-;                                 invoke _next_position, addr [esi].base
-;                         .endif
-;                         assume  esi: nothing
-;                         pop eax
-;                         inc eax
-;                 .endw
-;                 ; 移动子弹
-;                 lea esi, bullet
-;                 assume esi :ptr Targets
-;                 .if [esi].base.alive == 1
-;                         invoke _next_position, addr [esi].base
-;                 .endif
-;                 assume  esi: nothing
-;         .endif
-; ret
-; _change_all_position_symbiotic endp
+        mov eax, speed
+        mov edx, 0
+        mov ebx, 0
+        mul ebx
+        mov ecx, eax
+        push ecx
+        invoke rand
+        pop ecx
+        and eax, ecx
+        .if eax == 0 
+                mov ecx, target_number_one
+                xor eax, eax
+                .while eax < ecx
+                        push eax
+                        mov edx, 0
+                        mov ebx, sizeofTargets
+                        mul ebx
+                        lea esi, targetsOne[eax]
+                        assume esi :ptr Targets
+                        .if [esi].base.alive == 1
+                                invoke _next_position, addr [esi].base
+                        .endif
+                        assume  esi: nothing
+                        pop eax
+                        inc eax
+                .endw
 
+                mov ecx, target_number_two
+                xor eax, eax
+                .while eax < ecx
+                        push eax
+                        mov edx, 0
+                        mov ebx, sizeofTargets
+                        mul ebx
+                        lea esi, targetsTwo[eax]
+                        assume esi :ptr Targets
+                        .if [esi].base.alive == 1
+                                invoke _next_position, addr [esi].base
+                        .endif
+                        assume  esi: nothing
+                        pop eax
+                        inc eax
+                .endw
+                ; 移动子弹
+                lea esi, bulletOne
+                assume esi :ptr Targets
+                .if [esi].base.alive == 1
+                        invoke _next_position, addr [esi].base
+                .endif
+                assume  esi: nothing
 
-
-
-
-
+                lea esi, bulletTwo
+                assume esi :ptr Targets
+                .if [esi].base.alive == 1
+                        invoke _next_position, addr [esi].base
+                .endif
+                assume  esi: nothing
+        .endif
+ret
+_change_all_position_symbiotic endp
 
 
 

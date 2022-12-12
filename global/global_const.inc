@@ -303,8 +303,8 @@ greenVirus      equ 502 ;绿色病毒
 hotPot          equ 600 ;火锅
 n95mask         equ 601 ;口罩
 temperature     equ 602 ;测温计
-time_3s         equ 300
-time_5s         equ 500
+time_3s         equ 300 ;持续三秒
+time_5s         equ 500 ;持续三秒
 
 
 ;sound
