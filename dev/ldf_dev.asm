@@ -919,7 +919,7 @@ _Player_get_item proc Player_new:ptr Subject, itemId:dword
 _Player_get_item endp
 
 ;调用示例 invoke _two_two_enum_symbiotic, addr playerOne, targetsOne, target_number_one
-_two_two_enum_symbiotic  proc uses esi ebx, mainPlayer:ptr Subject, mainTargets:dword, mainTargetsNumber:dword
+_two_two_enum_symbiotic  proc uses esi ebx ecx, mainPlayer:ptr Subject, mainTargets:dword, mainTargetsNumber:dword
         ; ============== declare ==============
         ;一些和target有关的局部变量
         local @new_target_number
@@ -946,19 +946,19 @@ _two_two_enum_symbiotic  proc uses esi ebx, mainPlayer:ptr Subject, mainTargets:
 
         .while TRUE
                 ; 循环次数判定
-                mov eax, @target_number_index
-                .break .if target_number == eax
-
-                ; invoke printf, offset debug_int, eax
                 ; invoke printf, offset debug_int, @targetByteOffset
+                mov eax, @target_number_index
+                mov ecx, mainTargetsNumber
+                assume ecx:ptr dword
                 
+                .break .if [ecx] == eax
+
                 ; 得到结构体
-                mov eax, @targetByteOffset
-                lea esi, mainTargets[eax]
+                mov eax, mainTargets
+                add eax, @targetByteOffset
+                mov esi, eax
                 assume esi:ptr Targets
 
-                ; invoke printf, offset debug_int, [esi].typeid
-                
                 ; 判断逻辑
                 .if [esi].typeid == medicine ;药
                         .if flag_jump == 1
@@ -970,6 +970,8 @@ _two_two_enum_symbiotic  proc uses esi ebx, mainPlayer:ptr Subject, mainTargets:
                                 mov @collisionFlag, eax
                         .endif
 
+                        invoke printf, offset debug_int, [esi].typeid
+
                 .elseif [esi].typeid == redVirus ;红色病毒
                         .if flag_jump == 1
                                 mov @collisionFlag, 0
@@ -979,6 +981,8 @@ _two_two_enum_symbiotic  proc uses esi ebx, mainPlayer:ptr Subject, mainTargets:
                                 invoke _check_collision, addr [ebx].base, addr [esi].base
                                 mov @collisionFlag, eax
                         .endif
+
+                        invoke printf, offset debug_int, [esi].typeid
 
                 .elseif [esi].typeid == greenVirus ;绿色病毒
                         .if flag_jump == 1
@@ -990,6 +994,8 @@ _two_two_enum_symbiotic  proc uses esi ebx, mainPlayer:ptr Subject, mainTargets:
                                 mov @collisionFlag, eax
                         .endif
 
+                        ; invoke printf, offset debug_int, [esi].typeid
+
                 .elseif [esi].typeid == hotPot ;火锅
                         .if flag_jump == 1
                                 mov @collisionFlag, 0
@@ -999,6 +1005,8 @@ _two_two_enum_symbiotic  proc uses esi ebx, mainPlayer:ptr Subject, mainTargets:
                                 invoke _check_collision, addr [ebx].base, addr [esi].base
                                 mov @collisionFlag, eax
                         .endif
+
+                        invoke printf, offset debug_int, [esi].typeid
 
                 .elseif [esi].typeid == n95mask ;口罩
                         .if flag_jump == 1
@@ -1010,6 +1018,8 @@ _two_two_enum_symbiotic  proc uses esi ebx, mainPlayer:ptr Subject, mainTargets:
                                 mov @collisionFlag, eax
                         .endif
 
+                        invoke printf, offset debug_int, [esi].typeid
+
                 .elseif [esi].typeid == temperature ;测温计
                         .if flag_jump == 1
                                 mov @collisionFlag, 0
@@ -1020,14 +1030,16 @@ _two_two_enum_symbiotic  proc uses esi ebx, mainPlayer:ptr Subject, mainTargets:
                                 mov @collisionFlag, eax
                         .endif
 
+                        invoke printf, offset debug_int, [esi].typeid
                 .endif
 
-                ;获取要附带的结构体地址
-                mov eax, @targetByteOffset
-                lea esi, mainTargets[eax]
+                ; 获取要附带的结构体地址
+                mov eax, mainTargets
+                add eax, @targetByteOffset
+                mov esi, eax
                 assume esi:ptr Targets
 
-                ; invoke printf, offset debug_int, [esi].base.alive
+                ; ; invoke printf, offset debug_int, [esi].base.alive
                 
                 ;覆盖targets
                 .if [esi].base.alive == 1
@@ -1036,8 +1048,9 @@ _two_two_enum_symbiotic  proc uses esi ebx, mainPlayer:ptr Subject, mainTargets:
                         .if eax != @target_number_index
                                 
                                 ;获取要覆盖的结构体地址
-                                mov eax, @newTargetByteOffset
-                                lea ebx, mainTargets[eax]
+                                mov eax, mainTargets
+                                add eax, @newTargetByteOffset
+                                mov ebx, [eax]
                                 assume ebx :ptr Targets
 
                                 ;覆盖
@@ -1067,6 +1080,21 @@ _two_two_enum_symbiotic  proc uses esi ebx, mainPlayer:ptr Subject, mainTargets:
 
                                 mov eax, [esi].typeid
                                 mov [ebx].typeid, eax
+
+                                mov eax, [esi].typeid
+                                mov [ebx].typeid, eax
+
+                                mov eax, [esi].typeid
+                                mov [ebx].typeid, eax
+
+                                mov eax, [esi].typeid
+                                mov [ebx].typeid, eax
+
+                                mov eax, [esi].typeid
+                                mov [ebx].typeid, eax
+
+                                mov eax, [esi].typeid
+                                mov [ebx].typeid, eax
                         .endif
                         
                         ;递增offset
@@ -1093,7 +1121,9 @@ _two_two_enum_symbiotic  proc uses esi ebx, mainPlayer:ptr Subject, mainTargets:
         ;修改target_number
         mov eax, @new_target_number
         ; inc eax
-        mov target_number, eax
+        mov ecx, mainTargetsNumber
+        assume ecx:ptr dword
+        mov [ecx], eax
 
         ; invoke printf, offset debug_int, @new_target_number
         ; invoke printf, offset debug_str, offset szCollisionEnd
@@ -1102,23 +1132,76 @@ _two_two_enum_symbiotic  proc uses esi ebx, mainPlayer:ptr Subject, mainTargets:
 _two_two_enum_symbiotic endp
 
 _two_two_enum_symbiotic_test proc
+        ; invoke printf, offset debug_int, [esi].base.posx
+        ;给player赋值
+        lea esi, player
+        assume esi :ptr Subject
+
+        mov [esi].base.posx, 1
+        mov [esi].base.posy, 1
+        mov [esi].base.lengthx, 1
+        mov [esi].base.lengthy, 1
+        mov [esi].base.alive, 1
+        mov [esi].base.DC, 1
+        mov [esi].base.rel_v, 1
+        mov [esi].base.course_id, 1
+        mov [esi].score, 1
+
+        ;第零个targets
+        lea esi, targetsOne[0]
+        assume esi :ptr Targets
+
+        mov [esi].base.posx, 1
+        mov [esi].base.posy, 1
+        mov [esi].base.lengthx, 1
+        mov [esi].base.lengthy, 1
+        mov [esi].base.alive, 1
+        mov [esi].base.DC, 1
+        mov [esi].base.rel_v, 1
+        mov [esi].base.course_id, 0
+        mov [esi].typeid, medicine
+
+        ; invoke _two_two_enum
+        ; .if [esi].typeid == MONEY_1
+        ;         invoke printf, offset szInt, targets[0].typeid
+        ; .endif
+        
+        ; invoke printf, offset debug_int, [esi].base.posx
+        ; invoke printf, offset debug_int, [esi].typeid
+
+        ; 第一个targets
+        lea esi, targetsOne[sizeofTargets]
+        assume esi :ptr Targets
+
+        mov [esi].base.posx, 1
+        mov [esi].base.posy, 2
+        mov [esi].base.lengthx, 3
+        mov [esi].base.lengthy, 4
+        mov [esi].base.alive, 1
+        mov [esi].base.DC, 1
+        mov [esi].base.rel_v, 1
+        mov [esi].base.course_id, 0
+        mov [esi].typeid, temperature
+
+        mov target_number_one, 2
+
+        ; lea esi, targetsOne[sizeofTargets]
+        ; assume esi :ptr Targets
+        ; invoke printf, offset debug_int, [esi].typeid
+        ; ret
+        ; invoke printf, offset debug_int, targetsOne
+
+        invoke _two_two_enum_symbiotic, addr playerOne, addr targetsOne, addr target_number_one
 
         ret
 _two_two_enum_symbiotic_test endp
 
 start:
-        ; call    _WinMain
-        ; invoke  ExitProcess, NULL
-        invoke _Open_ALL_SOUND
-        
-        ; invoke _collision_test
-        invoke _collision_SOUND_test
-        
-
-
-        invoke _Close_ALL_SOUND
+        ; invoke _Open_ALL_SOUND
+        ; invoke _collision_SOUND_test
+        ; invoke _Close_ALL_SOUND
         ; invoke printHelloWorld
-        ; invoke _two_two_enum_symbiotic_test
+        invoke _two_two_enum_symbiotic_test
         ret
 end     start
 ; end
