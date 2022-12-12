@@ -273,25 +273,68 @@ ret
 _targets_bullet_out_of_bound endp
 
 ;聚餐
-_hotpot_effect proc stdcall PlayerOne:ptr Subject, PlayerTwo:ptr Subject
+_hotpot_effect proc stdcall ptrPlayerOne:ptr Subject, ptrPlayerTwo:ptr Subject
 
+        ; Immunity        equ 100 ;免疫期
+        ; Exposure        equ 101 ;暴露期
+        ; Asymptomatic    equ 102 ;无症状
+        ; Infection       equ 103 ;感染期
 
+        ; 显示一个图像
+        ; invoke ......
+        mov esi, ptrPlayerOne
+        assume  esi: ptr Subject 
+        mov ecx, ptrPlayerTwo
+        assume  ecx: ptr Subject 
 
+        mov eax, [esi].status
+        mov ebx, [ecx].status
 
+        .if eax == 101 && ebx == 102
+                inc [esi].exp
+                mov [esi].status, 102
+        .elseif eax == 101 && ebx == 103
+                dec [esi].hp
+                mov [esi].status, 103
+        .elseif eax == 102 && ebx == 103
+                dec [esi].hp
+                mov [esi].status, 103
+        .endif
+
+        assume esi: nothing
+        assume ecx: nothing
 ret
 _hotpot_effect endp
 
 ;口罩
-_mask_effect proc stdcall PlayerOne:ptr Subject, PlayerTwo:ptr Subject
+_mask_effect proc stdcall ptrPlayerOne:ptr Subject, ptrPlayerTwo:ptr Subject
 
-
+        mov esi, ptrPlayerTwo
+        assume  esi: ptr Subject 
+        mov eax, [esi].has_mask
+        .if eax > 0
+                inc [esi].has_mask
+                ;出现口罩
+                ; invoke ....
+        .endif
+        assume esi: nothing
 
 ret
 _mask_effect endp
 
-;测温计
-_fever_effect proc stdcall PlayerOne:ptr Subject, PlayerTwo:ptr Subject 
 
+
+;测温计
+_fever_effect proc stdcall ptrPlayerOne:ptr Subject, ptrPlayerTwo:ptr Subject
+        
+        mov esi, ptrPlayerTwo
+        assume  esi: ptr Subject 
+        mov eax, [esi].has_fever
+        .if eax > 0
+                inc [esi].has_fever
+                ; 出现左右方向置反
+        .endif
+        assume esi: nothing
 
 ret
 _fever_effect endp
@@ -299,8 +342,21 @@ _fever_effect endp
 
 
 ;状态的自动转换
-_change_status proc stdcall 
+_change_status proc stdcall ptrPlayerOne:ptr Subject, ptrPlayerTwo:ptr Subject
 
+        mov eax, change_two_status_cnt
+        .if eax == 0 
+                mov esi, ptrPlayerOne
+                assume  esi: ptr Subject 
+                mov ecx, ptrPlayerTwo
+                assume  ecx: ptr Subject 
+                
+                mov [esi].status, 101
+                mov [ecx].status, 101
+                mov change_two_status_cnt, 500
+        .else
+                inc change_two_status_cnt
+        .endif
 
 ret
 _change_status endp
