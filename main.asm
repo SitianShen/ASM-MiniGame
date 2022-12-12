@@ -14,7 +14,7 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
 
         
         ; invoke printf, offset debug_int, hWnd
-        ; invoke printf, offset debug_int, hWinMain
+        ; invoke printf, offset debug_int, hWinMain2
         mov eax, hWnd
         .if eax == hWinMain  
                 mov     eax, uMsg
@@ -67,6 +67,8 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                                 .elseif eax == button_2p_play.is_click
                                         invoke _Stop_BeginBGM_SOUND
                                         invoke  ShowWindow, hWinMain2, SW_SHOWNORMAL
+                                        invoke        GetLastError
+                                        invoke printf, offset debug_int, eax   
                                         invoke _init_2p_mode
                                         mov cur_interface, in_2p_choose
                                         mov button_2p_play.is_click, 0
@@ -141,7 +143,7 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                         ret
                 .endif
         .endif
-
+; keydown
         mov     eax, uMsg
         .if eax == WM_KEYDOWN  
                 mov eax, cur_interface
@@ -210,6 +212,12 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                 .endif
                 ret
         .endif
+;check confirmed
+        ; mov eax, playerList.choose_confirm
+        ; mov ebx, playerList2.choose_confirm
+        ; .if eax == 1 && ebx == 1
+        ;         mov cur_interface, in_2p_game
+        ; .endif
 
         invoke  DefWindowProc, hWnd, uMsg, wParam, lParam
         ret

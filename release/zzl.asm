@@ -568,7 +568,6 @@ _draw_object proc hWnd, hDCGame_ptr
                 invoke _Stop_Gameover_SOUND
                 invoke _END_SOUND
                 mov cur_interface, in_over
-                invoke  DestroyWindow, hWinMain2
         .endif
 
         mov eax, cur_interface
