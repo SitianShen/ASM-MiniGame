@@ -50,11 +50,11 @@ extrn POSCNT:dword          ; NEXTPOS的计数器
 
 ;==================== 共生模式 ===========================
 
-extrn playerOne:dword 
+extrn playerOne:Subject 
 extrn targetsOne:dword 
 extrn target_number_one:dword 
 
-extrn playerTwo:dword 
+extrn playerTwo:Subject 
 extrn targetsTwo:dword 
 extrn target_number_two:dword 
 
