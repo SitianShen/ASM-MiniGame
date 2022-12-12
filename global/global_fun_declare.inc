@@ -124,6 +124,13 @@ _Stop_temperature_SOUND proto
 ;========================= lja lja lja lja ============================
 ; lja functions
 
+_hotpot_effect proto :ptr Subject, :ptr Subject
+_mask_effect proto :ptr Subject, :ptr Subject
+_fever_effect proto :ptr Subject, :ptr Subject
+_check_player_effect proto :ptr Subject
+_check_all_effect proto :ptr Subject, :ptr Subject
+_change_status proto :ptr Subject, :ptr Subject
+
 ;========================= sst sst sst sst ============================
 ; sst functions
 
