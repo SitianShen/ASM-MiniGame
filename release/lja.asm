@@ -374,7 +374,7 @@ _change_status proc stdcall ptrPlayerOne:ptr Subject, ptrPlayerTwo:ptr Subject
                 mov [ecx].status, 101
                 mov change_two_status_cnt, 500
         .else
-                inc change_two_status_cnt
+                dec change_two_status_cnt
         .endif
 
 ret
