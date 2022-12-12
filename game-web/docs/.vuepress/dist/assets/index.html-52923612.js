@@ -32,20 +32,35 @@ import{_ as n,p as e,q as a,a1 as r}from"./framework-7e1a102e.js";const t={},s=r
 
 
 PlayerOne:ptr Subject  PlayerTwo:ptr Subject
+
 2：不同状态下的玩家互相接触的效果
+
     聚餐：a玩家吃到一个“聚餐”道具的时候，{
+
         1.交互显示：显示一个图像，
+
         2.根据两者状态修改玩家属性 {
+
             暴露期-无症状：吃一个绿病毒
+
             暴露期-感染 : 吃一个红病毒
+
             无症状-感染： 吃一个红病毒
+
         }
+
     }   
+
     口罩：a玩家{
+
         b遮挡一个玩家视野3s
+
     }
+
     测温计：a玩家{
+
         b玩家左右方向键置反3s
+
     }
 
 3.状态的自动转换{
