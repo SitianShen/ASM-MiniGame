@@ -281,12 +281,15 @@ _hotpot_effect proc stdcall ptrPlayerOne:ptr Subject, ptrPlayerTwo:ptr Subject
         ; Infection       equ 103 ;感染期
 
         ; 显示一个图像
-        ; invoke ......
+
+
         mov esi, ptrPlayerOne
         assume  esi: ptr Subject 
         mov ecx, ptrPlayerTwo
         assume  ecx: ptr Subject 
 
+        mov [esi].has_hotpot, 300
+        mov [ecx].has_hotpot, 300
         mov eax, [esi].status
         mov ebx, [ecx].status
 
@@ -306,22 +309,17 @@ _hotpot_effect proc stdcall ptrPlayerOne:ptr Subject, ptrPlayerTwo:ptr Subject
 ret
 _hotpot_effect endp
 
+
 ;口罩
 _mask_effect proc stdcall ptrPlayerOne:ptr Subject, ptrPlayerTwo:ptr Subject
 
         mov esi, ptrPlayerTwo
         assume  esi: ptr Subject 
-        mov eax, [esi].has_mask
-        .if eax > 0
-                inc [esi].has_mask
-                ;出现口罩
-                ; invoke ....
-        .endif
+        mov [esi].has_mask, 300
         assume esi: nothing
 
 ret
 _mask_effect endp
-
 
 
 ;测温计
@@ -329,17 +327,38 @@ _fever_effect proc stdcall ptrPlayerOne:ptr Subject, ptrPlayerTwo:ptr Subject
         
         mov esi, ptrPlayerTwo
         assume  esi: ptr Subject 
-        mov eax, [esi].has_fever
-        .if eax > 0
-                inc [esi].has_fever
-                ; 出现左右方向置反
-        .endif
+        mov [esi].has_fever, 300
         assume esi: nothing
 
 ret
 _fever_effect endp
 
 
+_check_player_effect proc stdcall ptrPlayer:ptr Subject
+        mov esi, ptrPlayer
+        assume  esi: ptr Subject 
+
+        mov eax, [esi].has_hotpot
+        .if eax > 0
+                dec [esi].has_hotpot
+        .endif
+        mov eax, [esi].has_mask
+        .if eax > 0
+                dec [esi].has_mask
+        .endif
+        mov eax, [esi].has_fever
+        .if eax > 0
+                dec [esi].has_fever
+        .endif
+        assume esi: nothing
+ret
+_check_player_effect endp
+
+_check_all_effect proc stdcall ptrPlayerOne:ptr Subject, ptrPlayerTwo:ptr Subject
+        invoke _check_player_effect, ptrPlayerOne
+        invoke _check_player_effect, ptrPlayerTwo
+ret
+_check_all_effect endp
 
 ;状态的自动转换
 _change_status proc stdcall ptrPlayerOne:ptr Subject, ptrPlayerTwo:ptr Subject
