@@ -1,0 +1,27 @@
+Arguments: 
+  D:\nodejs\node.exe C:\Users\LDF020103\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add -D vuepress@next
+
+PATH: 
+  C:\Program Files (x86)\Common Files\Oracle\Java\javapath;D:\VMware\bin\;D:\Anaconda3;D:\Anaconda3\Library\mingw-w64\bin;D:\Anaconda3\Library\usr\bin;D:\Anaconda3\Library\bin;D:\Anaconda3\Scripts;D:\vscode\ins\bin;C:\Users\LDF020103\AppData\Roaming\npm;D:\MentorGraphics\9.5PADS\SDD_HOME\common\win32\lib;D:\MentorGraphics\9.5PADS\SDD_HOME\CAMCAD;D:\java\IntelliJ IDEA Community Edition 2021.3.1\bin;D:\pycharm\PyCharm Community Edition 2021.2.2\bin;C:\Users\LDF020103\AppData\Local\Microsoft\WindowsApps;C:\Windows\System32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\WINDOWS\System32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;D:\mysql\mysql-8.0.28-winx64\bin;C:\Program Files\Microsoft SQL Server\Client SDK\ODBC\170\Tools\Binn\;C:\Program Files (x86)\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files\Microsoft SQL Server\150\Tools\Binn\;C:\Program Files\Microsoft SQL Server\150\DTS\Binn\;C:\Program Files (x86)\Microsoft SQL Server\150\DTS\Binn\;C:\Program Files\Azure Data Studio\bin;D:\Pandoc\pandoc-2.11.3.2-windows-x86_64\pandoc-2.11.3.2;D:\tomcat\apache-tomcat-9.0.62-windows-x64\apache-tomcat-9.0.62\lib;D:\tomcat\apache-tomcat-9.0.62-windows-x64\apache-tomcat-9.0.62\bin;D:\tomcat\apache-tomcat-9.0.62-windows-x64\apache-tomcat-9.0.62\lib\servlet-api.jar;D:\nodejs\;D:\Git\bin;D:\python\Scripts\pip.exe;D:\python\python.exe;D:\Anaconda3\Scripts\conda.exe;D:\wxminiapp\ins\dll;D:\QT\ins\5.8\mingw53_32\bin;D:\QT\ins\5.8\mingw53_32;D:\QT\ins\Tools\mingw530_32\bin;D:\Vim\vim90;D:\Cygwin\bin;D:\mingw\x86_64-8.1.0-release-posix-seh-rt_v6-rev0\mingw64\bin;D:\vcpkg\vcpkg.exe;D:\Xshell7\;D:\nasm;D:\tomcat\apache-tomcat-9.0.62-windows-x64\apache-tomcat-9.0.62\bin;D:\tomcat\apache-tomcat-9.0.62-windows-x64\apache-tomcat-9.0.62\lib;D:\LINGO64_18\;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;D:\masm32\bin;D:\masm32\include;D:\masm32\lib;C:\Users\LDF020103\AppData\Local\Microsoft\WindowsApps;D:\pycharm\PyCharm Community Edition 2021.2.2\bin;;D:\java\IntelliJ IDEA Community Edition 2021.3.1\bin;;D:\MentorGraphics\9.5PADS\SDD_HOME\CAMCAD;D:\MentorGraphics\9.5PADS\SDD_HOME\common\win32\lib;C:\Program Files\Azure Data Studio\bin;D:\Clion\ins\CLion 2021.1.3\bin;;D:\webStorm\ins\WebStorm 2022.1.2\bin;;C:\Users\LDF020103\AppData\Roaming\npm;D:\Vscode\ins\Microsoft VS Code\bin;D:\java\ins\IntelliJ IDEA 2021.2\bin;
+
+Yarn version: 
+  1.22.19
+
+Node version: 
+  16.15.0
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: getaddrinfo ENOTFOUND registry.npm.taobao.org
+      at GetAddrInfoReqWrap.onlookup [as oncomplete] (node:dns:71:26)
+
+npm manifest: 
+  No manifest
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile
