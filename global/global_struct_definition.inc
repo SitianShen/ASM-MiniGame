@@ -13,8 +13,8 @@ Subject struct
         base    BASE  <> 
         score           dd      ?
 
-        state           dd      ?; four of the state
-        choose_done     dd      ?; finish pic choose
+        HP              dd      ?
+        exp             dd      ?
 Subject ends
 
 Targets struct

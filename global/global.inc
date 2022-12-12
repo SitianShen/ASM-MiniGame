@@ -77,19 +77,18 @@ board       dd     boardHorizontal*boardVertical dup(?)
 
 ; ======================== 双人模式 ======================
 
-playerOne          Subject <>             ;两份
-bulletOne          Subject <>              
+playerOne          Subject <>             ;两份          
 targetsOne         Targets  1000 dup(<>) 
-
+target_number_one   dd      0
 
 
 ;一个进程,WASD（移动左边这个窗口），上下左右(移动右边这个窗口)
 
 
 
-playerTwo          Subject <>             ;两份
-bulletTwo          Subject <>              
+playerTwo          Subject <>             ;两份      
 targetsTwo         Targets  1000 dup(<>) 
+target_number_two   dd      0
 
 
 ; ======================== 双人模式 ======================

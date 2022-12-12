@@ -50,8 +50,12 @@ extrn POSCNT:dword          ; NEXTPOS的计数器
 
 ;==================== 共生模式 ===========================
 
-extrn gameTime:dword
-extrn board:dword
+extrn playerOne
+extrn targetsOne
+extrn target_number_one
 
+extrn playerTwo
+extrn targetsTwo
+extrn target_number_two
 
 ;==================== 共生模式 ===========================
