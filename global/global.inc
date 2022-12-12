@@ -70,8 +70,6 @@ POSCNT          dd      0; NEXTPOS的计数器
 
 ;==================== 共生模式 ===========================
 
-gameTime    dd     ?
-board       dd     boardHorizontal*boardVertical dup(?)
 
 ;==================== 共生模式 ===========================
 

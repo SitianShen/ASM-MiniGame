@@ -300,7 +300,7 @@ redVirus        equ 501 ;红色病毒
 greenVirus      equ 502 ;绿色病毒
 
 hotPot          equ 600 ;火锅
-mask            equ 601 ;口罩
+n95mask         equ 601 ;口罩
 temperature     equ 602 ;测温计
 
 

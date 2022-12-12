@@ -455,12 +455,7 @@ _two_two_enum proc uses ebx
                         .endif
 
                 .elseif [esi].typeid == PROP_ACC_SELF
-                        .if flag_jump == 1
-                                mov @collisionFlag, 0
-                        .else
-                                invoke _check_collision, addr player.base, addr [esi].base
-                                mov @collisionFlag, eax
-                        .endif
+                        
 
                         ; invoke printf, offset debug_int, [esi].typeid
                         ; invoke printf, offset debug_int, @collisionFlag
@@ -908,18 +903,35 @@ _two_two_enum_symbiotic proc mainPlayer:ptr Subject, mainTargets:dword, mainTarg
                 ; invoke printf, offset debug_int, [esi].typeid
                 
                 ; 判断逻辑
-                .if [esi].typeid == MONEY_1
+                .if [esi].typeid == Immunity
+                        .if flag_jump == 1
+                                mov @collisionFlag, 0
+                        .else
+                                invoke _check_collision, addr player.base, addr [esi].base
+                                mov @collisionFlag, eax
+                        .endif
 
-                .elseif [esi].typeid == MONEY_2
-
-                .elseif [esi].typeid == PROP_ACC_SELF
 
 
-                .elseif [esi].typeid == PROP_DEC_SELF
+                .elseif [esi].typeid == Exposure
 
-                .elseif [esi].typeid == OBST_HARD
+                .elseif [esi].typeid == Asymptomatic
 
-                .elseif [esi].typeid == OBST_SOFT
+
+                .elseif [esi].typeid == Infection
+
+
+                .elseif [esi].typeid == medicine
+
+                .elseif [esi].typeid == redVirus
+
+                .elseif [esi].typeid == greenVirus
+
+                .elseif [esi].typeid == hotPot
+
+                .elseif [esi].typeid == mask
+
+                .elseif [esi].typeid == temperature
 
                 .endif
 
