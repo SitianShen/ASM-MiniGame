@@ -381,6 +381,48 @@ ret
 _change_status endp
 
 
+; _change_all_position_symbiotic proc stdcall       ;遍历所有道具改变位置
+
+;         mov eax, speed
+;         mov edx, 0
+;         mov ebx, 0
+;         mul ebx
+;         mov ecx, eax
+;         push ecx
+;         invoke rand
+;         pop ecx
+;         and eax, ecx
+;         .if eax == 0 
+;                 mov ecx, target_number
+;                 xor eax, eax
+;                 .while eax < ecx
+;                         push eax
+;                         mov edx, 0
+;                         mov ebx, sizeofTargets
+;                         mul ebx
+;                         lea esi, targets[eax]
+;                         assume esi :ptr Targets
+;                         .if [esi].base.alive == 1
+;                                 invoke _next_position, addr [esi].base
+;                         .endif
+;                         assume  esi: nothing
+;                         pop eax
+;                         inc eax
+;                 .endw
+;                 ; 移动子弹
+;                 lea esi, bullet
+;                 assume esi :ptr Targets
+;                 .if [esi].base.alive == 1
+;                         invoke _next_position, addr [esi].base
+;                 .endif
+;                 assume  esi: nothing
+;         .endif
+; ret
+; _change_all_position_symbiotic endp
+
+
+
+
 
 
 
