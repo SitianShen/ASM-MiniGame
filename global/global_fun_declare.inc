@@ -25,6 +25,7 @@ _draw_button proto :ptr Button, :dword, :dword, :dword, :dword
 _draw_object proto :dword, :dword
 _show_score proto :dword
 _shot_bullet proto
+_init_2p_mode proto
 
 ;========================= sst sst sst sst ============================
 ; sst functions
