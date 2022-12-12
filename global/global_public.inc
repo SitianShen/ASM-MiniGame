@@ -18,6 +18,7 @@ public hWinMain
 public hWinMain2      
 public hDCBack         
 public hDCGame         
+public hDCGame2         
 public hDCObj1        
 public dwNowBack     
 

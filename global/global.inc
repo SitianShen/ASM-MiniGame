@@ -31,6 +31,7 @@ hWinMain        dd      ?
 hWinMain2        dd      ?
 hDCBack         dd      ?
 hDCGame         dd      ?
+hDCGame2         dd      ?
 hDCObj1         dd      ?
 dwNowBack       dd      ?
 

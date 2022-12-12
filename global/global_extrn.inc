@@ -18,7 +18,8 @@ extrn hInstance:dword
 extrn hWinMain:dword       
 extrn hWinMain2:dword      
 extrn hDCBack:dword         
-extrn hDCGame:dword         
+extrn hDCGame:dword           
+extrn hDCGame2:dword         
 extrn hDCObj1:dword        
 extrn dwNowBack:dword     
 

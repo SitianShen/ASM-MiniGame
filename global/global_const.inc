@@ -61,7 +61,8 @@ bullet_init_ly                   equ 36
 
 
 ID_TIMER        equ     1
-ID_TIMER_gene   equ     2
+ID_TIMER2        equ    2
+ID_TIMER_gene   equ     3
 IDB_BACKG_BEGINING       equ     99
 IDB_BACKG_INTRO          equ     98
 IDB_BACKG_PLAY           equ     97
