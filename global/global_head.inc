@@ -12,7 +12,6 @@ includelib      kernel32.lib
 includelib      Msimg32.lib
 includelib      msvcrt.lib
 includelib      gdiplus.lib
-includelib     windows.lib
 
 ;sound
 ;windows 的 inc文件和lib文件同名

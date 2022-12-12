@@ -457,8 +457,6 @@ _draw_final_score proc
 _draw_final_score endp
 
 _move_object proc hWnd
-
-        local @aaaaa:CImage
         
         local @mouse:POINT
         local @window:RECT
@@ -469,6 +467,7 @@ _move_object proc hWnd
                 invoke _Stop_Gameover_SOUND
                 invoke _END_SOUND
                 mov cur_interface, in_over
+                invoke  DestroyWindow, hWinMain2
         .endif
 
         mov eax, cur_interface

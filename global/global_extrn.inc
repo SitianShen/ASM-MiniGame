@@ -15,7 +15,8 @@ extrn backGround:BackGround
 extrn object_DC:Object_DC     
 
 extrn hInstance:dword       
-extrn hWinMain:dword      
+extrn hWinMain:dword       
+extrn hWinMain2:dword      
 extrn hDCBack:dword         
 extrn hDCGame:dword         
 extrn hDCObj1:dword        

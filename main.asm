@@ -11,7 +11,6 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                 local   @stPs: PAINTSTRUCT
                 local   @hDC
                 local   @stPos: POINT
-
         mov     eax, uMsg
 
         .if eax == WM_PAINT
@@ -24,6 +23,13 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                 ; ???????????????????DC
                 ; ??1???????WM_PAINT???????????
                 invoke  BitBlt, @hDC, @stPs.rcPaint.left, @stPs.rcPaint.top, eax, ecx, hDCGame, @stPs.rcPaint.left, @stPs.rcPaint.top, SRCCOPY
+                ; mov     eax, @stPs.rcPaint.right
+                ; sub     eax, @stPs.rcPaint.left
+                ; mov     ecx, @stPs.rcPaint.bottom
+                ; sub     ecx, @stPs.rcPaint.top
+                ; mov     edx, @stPs.rcPaint.left
+                ; add     edx, gameH
+                ; invoke  BitBlt, @hDC, edx, @stPs.rcPaint.top, eax, ecx, hDCGame, @stPs.rcPaint.left, @stPs.rcPaint.top, SRCCOPY
                 invoke  EndPaint, hWnd, addr @stPs
         .elseif eax == WM_CREATE
                 mov     eax, hWnd
@@ -53,10 +59,13 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                 .endif
 
         .elseif eax == WM_LBUTTONUP
+                invoke printf, offset debug_int, wParam
                 mov eax, cur_interface
                 .if eax == in_begining 
+                invoke printf, offset debug_int, button_start.is_click
                         mov eax, 1
                         .if eax == button_play.is_click
+                                invoke  ShowWindow, hWinMain2, SW_SHOWNORMAL
                                 invoke _Stop_BeginBGM_SOUND
                                 invoke _BGM_SOUND
                                 mov cur_interface, in_game
@@ -158,11 +167,17 @@ _WinMain        proc
         invoke  CreateWindowEx, NULL, \
                 offset szClassName, offset szClassName, \
                 WS_OVERLAPPEDWINDOW, \
-                0, 0, gameH+13, gameW+33, \
+                0, 0, gameH, gameW, \
                 NULL, NULL, hInstance, NULL
         mov     hWinMain, eax
         invoke  ShowWindow, hWinMain, SW_SHOWNORMAL
         invoke  UpdateWindow, hWinMain
+        invoke  CreateWindowEx, NULL, \
+                offset szClassName, offset szClassName, \
+                WS_OVERLAPPEDWINDOW, \
+                gameH, 0, gameH, gameW, \
+                NULL, NULL, hInstance, NULL
+        mov     hWinMain2, eax
         .while  TRUE
                 invoke  GetMessage, addr @stMsg, NULL, 0, 0
                 .break  .if     eax == 0
