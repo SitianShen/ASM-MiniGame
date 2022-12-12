@@ -245,6 +245,13 @@ _createAll proc
         mov     @hBmpBack, eax
         invoke  SelectObject, hDCGame, @hBmpBack ; set draw area to DC
         invoke  DeleteObject, @hBmpBack
+
+        invoke  CreateCompatibleDC, @hDC
+        mov     hDCGame2, eax
+        invoke  CreateCompatibleBitmap, @hDC, gameH, gameW
+        mov     @hBmpBack, eax
+        invoke  SelectObject, hDCGame2, @hBmpBack ; set draw area to DC
+        invoke  DeleteObject, @hBmpBack
 ;backgrounds
         invoke  _load_common_pic, addr backGround.DC_b, IDB_BACKG_BEGINING
         invoke  _load_common_pic, addr backGround.DC_i, IDB_BACKG_INTRO
@@ -457,8 +464,6 @@ _draw_final_score proc
 _draw_final_score endp
 
 _move_object proc hWnd
-
-        ; local @aaaaa:CImage
         
         local @mouse:POINT
         local @window:RECT
@@ -469,6 +474,7 @@ _move_object proc hWnd
                 invoke _Stop_Gameover_SOUND
                 invoke _END_SOUND
                 mov cur_interface, in_over
+                invoke  DestroyWindow, hWinMain2
         .endif
 
         mov eax, cur_interface
