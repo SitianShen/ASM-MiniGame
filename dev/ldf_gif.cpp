@@ -1,12 +1,12 @@
 #include <windows.h>
 #include <objidl.h>
 #include <gdiplus.h>
-#include <stdio.h>
+// #include <stdio.h>
 using namespace Gdiplus;
 #pragma comment (lib,"Gdiplus.lib")
 #define ID_TIMER 101
 
-//Image* m_pImage;
+Image* m_pImage;
 
 LRESULT CALLBACK WndProc(HWND, UINT, WPARAM, LPARAM);
 
@@ -144,12 +144,12 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message,
     }
 } // WndProc
 
-int main(){
-    printf("hello world!");
-    return;
-}
+// void printHelloWorld(){
+//     printf("hello world!");
+//     return;
+// }
 
-
-void gifcreate(){
-    
-}
+// int main(){ 
+//     printHelloWorld();
+//     return 0;
+// }

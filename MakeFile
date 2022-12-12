@@ -3,6 +3,7 @@ ASM = main.asm release/zzl.asm release/ldf.asm release/lja.asm release/sst.asm d
 # ASM = main.asm zzl.asm ldf.asm lja.asm sst.asm data.asm
 OBJS = main.obj zzl.obj ldf.obj lja.obj sst.obj data.obj
 RES = main.res 
+CL = D:\Community\VC\Tools\MSVC\14.16.27023\bin\Hostx64\x64\cl.exe
 
 LINK_FLAGS = /subsystem:console
 ML_FLAGS = /c /coff
@@ -26,6 +27,7 @@ main:
 clean:
 	del *.res
 	del *.obj
+	del *.o
 
 
 # ASM_DEV = main_dev.asm zzl_dev.asm ldf_dev.asm lja_dev.asm sst_dev.asm data.asm
@@ -50,9 +52,10 @@ zzl_dev:
 # 生成ldf_dev.exe
 ldf_dev:
 	del *.exe
+	$(CL) /c dev/ldf_gif.cpp
 	rc main.rc
 	ml $(ML_FLAGS) dev/ldf_dev.asm data.asm
-	link $(LINK_FLAGS) ldf_dev.obj data.obj main.res
+	link $(LINK_FLAGS) ldf_dev.obj data.obj main.res ldf_gif.obj
 	nmake clean
 # ldf_dev.exe
 
