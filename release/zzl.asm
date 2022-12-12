@@ -31,12 +31,8 @@ _init_2p_players proc cur_player
 _init_2p_players endp
 
 _init_2p_mode proc
-        ; _init_2p_players playerOne
-        ; _init_2p_players playerTwo
-        ; mov eax, playerList.curid
-        ; mov playerOne.base.DC, [playerList.DC+4*eax]
-        ; mov eax, playerList2.curid
-        ; mov playerTwo.base.DC, [playerList2.DC+4*eax]
+        _init_2p_players playerOne
+        _init_2p_players playerTwo
         ret
 _init_2p_mode endp
 

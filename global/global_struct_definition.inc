@@ -12,6 +12,8 @@ BASE ends
 Subject struct 
         base    BASE  <> 
         score           dd      ?
+
+        
 Subject ends
 
 Targets struct
