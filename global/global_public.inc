@@ -13,6 +13,8 @@ public button_pause
 public backGround       
 public object_DC        
 public digitals_DC
+public playerList
+public playerList2
 
 public hInstance       
 public hWinMain      

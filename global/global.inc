@@ -25,6 +25,8 @@ button_retry      Button <>
 button_pause      Button <>
 backGround        BackGround <>
 object_DC         Object_DC <>
+playerList        PlayerList<>
+playerList2        PlayerList<>
 
 
 hInstance       dd      ?
