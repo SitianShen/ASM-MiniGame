@@ -13,8 +13,6 @@ Subject struct
         base    BASE  <> 
         score           dd      ?
         status          dd      ?
-        hp              dd      ?
-        exp             dd      ?
         has_mask        dd      ?
         has_fever       dd      ?
 

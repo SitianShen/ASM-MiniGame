@@ -291,13 +291,13 @@ _hotpot_effect proc stdcall ptrPlayerOne:ptr Subject, ptrPlayerTwo:ptr Subject
         mov ebx, [ecx].status
 
         .if eax == 101 && ebx == 102
-                inc [esi].exp
+                inc [esi].score
                 mov [esi].status, 102
         .elseif eax == 101 && ebx == 103
-                dec [esi].hp
+                dec [esi].base.alive
                 mov [esi].status, 103
         .elseif eax == 102 && ebx == 103
-                dec [esi].hp
+                dec [esi].base.alive
                 mov [esi].status, 103
         .endif
 
