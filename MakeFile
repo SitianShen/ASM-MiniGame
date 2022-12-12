@@ -52,10 +52,9 @@ zzl_dev:
 # 生成ldf_dev.exe
 ldf_dev:
 	del *.exe
-	$(CL) /c dev/ldf_gif.cpp
 	rc main.rc
 	ml $(ML_FLAGS) dev/ldf_dev.asm data.asm
-	link $(LINK_FLAGS) ldf_dev.obj data.obj main.res ldf_gif.obj
+	link $(LINK_FLAGS) ldf_dev.obj data.obj main.res
 	nmake clean
 # ldf_dev.exe
 

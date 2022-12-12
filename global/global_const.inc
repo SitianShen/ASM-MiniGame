@@ -317,6 +317,7 @@ szPlayhotPot byte "play hotPot from 0", 0
 szClosehotPot byte "close hotPot", 0
 szStophotPot byte "stop hotPot", 0
 
+;n95mask
 szOpenn95mask byte "open sound/n95mask.mp3 alias n95mask", 0
 szPlayn95mask byte "play n95mask from 0", 0
 szClosen95mask byte "close n95mask", 0
