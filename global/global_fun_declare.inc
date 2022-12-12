@@ -110,13 +110,13 @@ _targets_bullet_out_of_bound proto
 ;========================= ldf ldf ldf ldf ============================
 ; ldf functions
 
-_coll ision_Player_with_medicine proto :dword, :dword
-_collision_Player_with_redVirus proto :dword, :dword
-_collision_Player_with_greenVirus proto :dword, :dword
-_collision_Player_with_hotPot proto :dword, :dword
-_collision_Player_with_n95mask proto :dword, :dword
-_collision_Player_with_temperature proto :dword, :dword
-_two_two_enum_symbiotic proto :dword, :dword, :dword
+_collision_Player_with_medicine proto :ptr Subject, :ptr Targets
+_collision_Player_with_redVirus proto :ptr Subject, :ptr Targets
+_collision_Player_with_greenVirus proto :ptr Subject, :ptr Targets
+_collision_Player_with_hotPot proto :ptr Subject, :ptr Targets
+_collision_Player_with_n95mask proto :ptr Subject, :ptr Targets
+_collision_Player_with_temperature proto :ptr Subject, :ptr Targets
+_two_two_enum_symbiotic proto :ptr Subject, :dword, :dword
 _two_two_enum_symbiotic_test proto
 
 ;sound

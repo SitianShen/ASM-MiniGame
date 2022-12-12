@@ -915,7 +915,7 @@ _collision_SOUND_test proc
 _collision_SOUND_test endp
 
 
-_collision_Player_with_medicine proc uses ebx, mainPlayer: ptr Subject, medicine_target:ptr Targets
+_collision_Player_with_medicine proc uses ebx, mainPlayer:ptr Subject, medicine_target:ptr Targets
         ;medicine消失
         mov ebx, medicine_target
         assume ebx: ptr Targets
