@@ -12,6 +12,7 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                 local   @hDC
                 local   @stPos: POINT
 
+        
         ; invoke printf, offset debug_int, hWnd
         ; invoke printf, offset debug_int, hWinMain
         mov eax, hWnd
@@ -102,21 +103,6 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                                 .endif
                         .endif
 
-                .elseif eax == WM_KEYDOWN
-                        mov eax, wParam
-                        .if eax == 87 
-                                invoke _Action_jump
-                                invoke _Jump_SOUND
-                        .elseif eax == 65
-                                invoke _CarMove_SOUND
-                                invoke _Action_left
-                        .elseif eax == 68
-                                invoke _CarMove_SOUND
-                                invoke _Action_right
-                        .elseif eax == 13
-                                invoke _shot_bullet
-                        .endif
-
                 .elseif eax == WM_CLOSE
                         invoke  _Quit
                 .else
@@ -124,7 +110,6 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                         ret
                 .endif
                 xor     eax, eax
-                ret
         .elseif eax == hWinMain2
                 mov     eax, uMsg
                 .if eax == WM_PAINT
@@ -141,12 +126,6 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                         mov     eax, wParam
                         .if     eax == ID_TIMER2 
                                 invoke  _draw_object, hWnd, hDCGame2
-                                mov eax, cur_interface
-                                .if eax == in_game
-                                        invoke _change_all_position
-                                        invoke _targets_bullet_out_of_bound
-                                        invoke _two_two_enum
-                                .endif
                                 invoke  InvalidateRect, hWnd, NULL, FALSE
                         ; .elseif eax == ID_TIMER_gene2
                         ;         mov eax, cur_interface
@@ -156,7 +135,59 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                         .endif
                 .endif
         .endif
-        
+
+        mov     eax, uMsg
+        .if eax == WM_KEYDOWN 
+                mov eax, cur_interface
+                .if eax == in_game
+                        mov eax, wParam
+                        .if eax == 87 
+                                invoke _Action_jump
+                                invoke _Jump_SOUND
+                        .elseif eax == 65
+                                invoke _CarMove_SOUND
+                                invoke _Action_left
+                        .elseif eax == 68
+                                invoke _CarMove_SOUND
+                                invoke _Action_right
+                        .elseif eax == 13
+                                invoke _shot_bullet
+                        .endif
+                .elseif eax == in_2p_choose
+                        mov eax, wParam
+                        .if eax == 65
+                                dec playerList.curid
+                                mov eax, playerList.curid
+                                .if eax == -1
+                                        add eax, player_pic_number
+                                .endif
+                                mov playerList.curid, eax
+                        .elseif eax == 68
+                                inc playerList.curid
+                                mov eax, playerList.curid
+                                .if eax == 4  
+                                        sub eax, player_pic_number
+                                .endif
+                                mov playerList.curid, eax
+                        .elseif eax == 37
+                                dec playerList2.curid
+                                mov eax, playerList2.curid
+                                .if eax == -1
+                                        add eax, player_pic_number
+                                .endif
+                                mov playerList2.curid, eax
+                        .elseif eax == 39
+                                inc playerList2.curid
+                                mov eax, playerList2.curid
+                                .if eax == 4 
+                                        sub eax, player_pic_number
+                                .endif
+                                mov playerList2.curid, eax
+                        .endif
+                .endif
+                ret
+        .endif
+
         invoke  DefWindowProc, hWnd, uMsg, wParam, lParam
         ret
 _ProcWinMain    endp

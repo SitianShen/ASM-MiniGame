@@ -8,7 +8,7 @@ include global_dev.inc
 
 .data?
 
-======================== 单人模式 ======================
+; ======================== 单人模式 ======================
 
 player          Subject <>             ;两份
 bullet          Subject <>              
@@ -28,6 +28,8 @@ button_retry      Button <>
 button_pause      Button <>
 backGround        BackGround <>
 object_DC         Object_DC <>
+playerList        PlayerList<>
+playerList2        PlayerList<>
 
 
 hInstance       dd      ?
@@ -73,7 +75,7 @@ board       dd     boardHorizontal*boardVertical dup(?)
 
 ;==================== 共生模式 ===========================
 
-======================== 双人模式 ======================
+; ======================== 双人模式 ======================
 
 playerOne          Subject <>             ;两份
 bulletOne          Subject <>              
@@ -90,7 +92,7 @@ bulletTwo          Subject <>
 targetsTwo         Targets  1000 dup(<>) 
 
 
-======================== 双人模式 ======================
+; ======================== 双人模式 ======================
 
 
 

@@ -168,6 +168,24 @@ HP_place_Y equ -125
 HP_place_LX equ 366
 HP_place_LY equ 366
 
+;------player choose
+player_pic_number equ 4
+IDB_PLAYER1_1 equ       401
+IDB_PLAYER1_2 equ       402
+IDB_PLAYER2_1 equ       403
+IDB_PLAYER2_2 equ       404
+IDB_PLAYER3_1 equ       405
+IDB_PLAYER3_2 equ       406
+IDB_PLAYER4_1 equ       407
+IDB_PLAYER4_2 equ       408
+
+player_pic_choose_X equ -20
+player_pic_choose_Y equ 240
+player_pic_choose_LX equ 200
+player_pic_choose_LY equ 200
+player_pic_choose_each_LX equ 140
+
+
 
 gameH           equ     600
 gameW           equ     600

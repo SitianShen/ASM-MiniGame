@@ -53,8 +53,11 @@ Object_DC struct
         bltR    dd      ?
 Object_DC ends
 
-
-
+;-----------------player choose-----------------
+PlayerList struct
+        DC              dd 4*2 dup(?) 
+        curid           dd ?
+PlayerList ends
 
 ;==================== 共生模式 ===========================
 

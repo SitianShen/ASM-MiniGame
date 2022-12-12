@@ -42,6 +42,14 @@
 # define IDB_BUTTON_2p_PLAY_2  326
 
 # define IDB_PLAYER          400
+# define IDB_PLAYER1_1       401
+# define IDB_PLAYER1_2       402
+# define IDB_PLAYER2_1       403
+# define IDB_PLAYER2_2       404
+# define IDB_PLAYER3_1       405
+# define IDB_PLAYER3_2       406
+# define IDB_PLAYER4_1       407
+# define IDB_PLAYER4_2       408
 
 # define IDB_HPP             500
 
@@ -114,3 +122,12 @@ IDB_DIG8    BITMAP  "resource/dig8.bmp"
 IDB_DIG9    BITMAP  "resource/dig9.bmp"
 
 IDB_HPP     BITMAP  "resource/HP_place.bmp"
+
+IDB_PLAYER1_1            BITMAP      "resource/player1_1.bmp"
+IDB_PLAYER1_2            BITMAP      "resource/player1_2.bmp"
+IDB_PLAYER2_1            BITMAP      "resource/player2_1.bmp"
+IDB_PLAYER2_2            BITMAP      "resource/player2_2.bmp"
+IDB_PLAYER3_1            BITMAP      "resource/player3_1.bmp"
+IDB_PLAYER3_2            BITMAP      "resource/player3_2.bmp"
+IDB_PLAYER4_1            BITMAP      "resource/player4_1.bmp"
+IDB_PLAYER4_2            BITMAP      "resource/player4_2.bmp"

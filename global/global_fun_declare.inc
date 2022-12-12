@@ -21,9 +21,9 @@ _load_common_pic proto :dword, :dword
 _createAll proto
 _deleteAll proto
 _Quit proto
-_draw_button proto :ptr Button, :dword, :dword, :dword
+_draw_button proto :ptr Button, :dword, :dword, :dword, :dword
 _draw_object proto :dword, :dword
-_show_score proto
+_show_score proto :dword
 _shot_bullet proto
 
 ;========================= sst sst sst sst ============================
