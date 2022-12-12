@@ -109,7 +109,13 @@ _targets_bullet_out_of_bound proto
 
 ;========================= ldf ldf ldf ldf ============================
 ; ldf functions
-_get_game_item proto :ptr Human, :dword
+
+
+;sound
+_Play_medicine_SOUND proto
+_Play_hotPot_SOUND proto
+_Play_n95mask_SOUND proto
+_Play_temperature_SOUND proto
 
 ;========================= lja lja lja lja ============================
 ; lja functions

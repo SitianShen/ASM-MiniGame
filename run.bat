@@ -7,8 +7,8 @@ set path=%Masm32Dir%\Bin;%Masm32Dir%;%PATH%;
 
 
 nmake clean
-nmake main
-@REM nmake ldf_dev && ldf_dev.exe
+@REM nmake main
+nmake ldf_dev && ldf_dev.exe
 @REM nmake sst_dev && sst_dev.exe
 @REM nmake zzl_dev && zzl_dev.exe
 @REM nmake lja_dev && lja_dev.exe

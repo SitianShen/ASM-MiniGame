@@ -704,6 +704,11 @@ _Open_ALL_SOUND proc
         invoke mciSendString, offset szOpenEnd, NULL, 0, NULL
         invoke mciSendString, offset szOpenGameover, NULL, 0, NULL
         invoke mciSendString, offset szOpenBeginBGM, NULL, 0, NULL
+        
+        invoke mciSendString, offset szOpenmedicine, NULL, 0, NULL
+        invoke mciSendString, offset szOpenhotPot, NULL, 0, NULL
+        invoke mciSendString, offset szOpenn95mask, NULL, 0, NULL
+        invoke mciSendString, offset szOpentemperature, NULL, 0, NULL
         ret
 _Open_ALL_SOUND endp
 
@@ -723,6 +728,11 @@ _Close_ALL_SOUND proc
         invoke mciSendString, offset szCloseEnd, NULL, 0, NULL
         invoke mciSendString, offset szCloseGameover, NULL, 0, NULL
         invoke mciSendString, offset szCloseBeginBGM, NULL, 0, NULL
+        
+        invoke mciSendString, offset szClosemedicine, NULL, 0, NULL
+        invoke mciSendString, offset szClosehotPot, NULL, 0, NULL
+        invoke mciSendString, offset szClosen95mask, NULL, 0, NULL
+        invoke mciSendString, offset szClosetemperature, NULL, 0, NULL
         ret
 _Close_ALL_SOUND endp
         
@@ -838,6 +848,52 @@ _Stop_BeginBGM_SOUND endp
 
 
 
+
+
+;================ 共生模式  ======================
+
+;sound
+
+_Play_medicine_SOUND proc
+        invoke mciSendString, offset szPlaymedicine, NULL, 0, NULL
+        ret
+_Play_medicine_SOUND endp
+
+_Stop_medicine_SOUND proc
+        invoke mciSendString, offset szStopmedicine, NULL, 0, NULL
+        ret
+_Stop_medicine_SOUND endp
+
+_Play_hotPot_SOUND proc
+        invoke mciSendString, offset szPlayhotPot, NULL, 0, NULL
+        ret
+_Play_hotPot_SOUND endp
+
+_Stop_hotPot_SOUND proc
+        invoke mciSendString, offset szStophotPot, NULL, 0, NULL
+        ret
+_Stop_hotPot_SOUND endp
+
+_Play_n95mask_SOUND proc
+        invoke mciSendString, offset szPlayn95mask, NULL, 0, NULL
+        ret
+_Play_n95mask_SOUND endp
+
+_Stop_n95mask_SOUND proc
+        invoke mciSendString, offset szStopn95mask, NULL, 0, NULL
+        ret
+_Stop_n95mask_SOUND endp
+
+_Play_temperature_SOUND proc
+        invoke mciSendString, offset szPlaytemperature, NULL, 0, NULL
+        ret
+_Play_temperature_SOUND endp
+
+_Stop_temperature_SOUND proc
+        invoke mciSendString, offset szStoptemperature, NULL, 0, NULL
+        ret
+_Stop_temperature_SOUND endp
+
 _collision_SOUND_test proc
         ; invoke mciSendString, offset szOpenDemo, NULL, 0, NULL
         ; invoke mciSendString, offset szPlayDemo, NULL, 0, NULL
@@ -851,9 +907,10 @@ _collision_SOUND_test proc
         ; invoke _BGM_SOUND
         ; invoke _END_SOUND
         ; invoke _Jump_SOUND
-        invoke _collision_Player_with_MONEY_1_SOUND
         ; invoke _collision_Player_with_MONEY_1_SOUND
-        ; invoke system, offset szPause
+        invoke _Play_medicine_SOUND
+        ; invoke _collision_Player_with_MONEY_1_SOUND
+        invoke system, offset szPause
         ret
 _collision_SOUND_test endp
 
@@ -861,8 +918,8 @@ _Player_get_item proc Player_new:ptr Subject, itemId:dword
         
 _Player_get_item endp
 
-
-_two_two_enum_symbiotic proc mainPlayer:ptr Subject, mainTargets:dword, mainTargetsNumber:dword
+;调用示例 invoke _two_two_enum_symbiotic, addr playerOne, targetsOne, target_number_one
+_two_two_enum_symbiotic  proc uses esi ebx, mainPlayer:ptr Subject, mainTargets:dword, mainTargetsNumber:dword
         ; ============== declare ==============
         ;一些和target有关的局部变量
         local @new_target_number
@@ -897,47 +954,77 @@ _two_two_enum_symbiotic proc mainPlayer:ptr Subject, mainTargets:dword, mainTarg
                 
                 ; 得到结构体
                 mov eax, @targetByteOffset
-                lea esi, targets[eax]
+                lea esi, mainTargets[eax]
                 assume esi:ptr Targets
 
                 ; invoke printf, offset debug_int, [esi].typeid
                 
                 ; 判断逻辑
-                .if [esi].typeid == Immunity
+                .if [esi].typeid == medicine ;药
                         .if flag_jump == 1
                                 mov @collisionFlag, 0
                         .else
-                                invoke _check_collision, addr player.base, addr [esi].base
+                                mov ebx, mainPlayer
+                                assume ebx: ptr Subject
+                                invoke _check_collision, addr [ebx].base, addr [esi].base
                                 mov @collisionFlag, eax
                         .endif
 
+                .elseif [esi].typeid == redVirus ;红色病毒
+                        .if flag_jump == 1
+                                mov @collisionFlag, 0
+                        .else
+                                mov ebx, mainPlayer
+                                assume ebx: ptr Subject
+                                invoke _check_collision, addr [ebx].base, addr [esi].base
+                                mov @collisionFlag, eax
+                        .endif
 
+                .elseif [esi].typeid == greenVirus ;绿色病毒
+                        .if flag_jump == 1
+                                mov @collisionFlag, 0
+                        .else
+                                mov ebx, mainPlayer
+                                assume ebx: ptr Subject
+                                invoke _check_collision, addr [ebx].base, addr [esi].base
+                                mov @collisionFlag, eax
+                        .endif
 
-                .elseif [esi].typeid == Exposure
+                .elseif [esi].typeid == hotPot ;火锅
+                        .if flag_jump == 1
+                                mov @collisionFlag, 0
+                        .else
+                                mov ebx, mainPlayer
+                                assume ebx: ptr Subject
+                                invoke _check_collision, addr [ebx].base, addr [esi].base
+                                mov @collisionFlag, eax
+                        .endif
 
-                .elseif [esi].typeid == Asymptomatic
+                .elseif [esi].typeid == n95mask ;口罩
+                        .if flag_jump == 1
+                                mov @collisionFlag, 0
+                        .else
+                                mov ebx, mainPlayer
+                                assume ebx: ptr Subject
+                                invoke _check_collision, addr [ebx].base, addr [esi].base
+                                mov @collisionFlag, eax
+                        .endif
 
-
-                .elseif [esi].typeid == Infection
-
-
-                .elseif [esi].typeid == medicine
-
-                .elseif [esi].typeid == redVirus
-
-                .elseif [esi].typeid == greenVirus
-
-                .elseif [esi].typeid == hotPot
-
-                .elseif [esi].typeid == mask
-
-                .elseif [esi].typeid == temperature
+                .elseif [esi].typeid == temperature ;测温计
+                        .if flag_jump == 1
+                                mov @collisionFlag, 0
+                        .else
+                                mov ebx, mainPlayer
+                                assume ebx: ptr Subject
+                                invoke _check_collision, addr [ebx].base, addr [esi].base
+                                mov @collisionFlag, eax
+                        .endif
 
                 .endif
 
                 ;获取要附带的结构体地址
                 mov eax, @targetByteOffset
-                lea esi, targets[eax]
+                lea esi, mainTargets[eax]
                 assume esi:ptr Targets
 
                 ; invoke printf, offset debug_int, [esi].base.alive
@@ -950,7 +1037,7 @@ _two_two_enum_symbiotic proc mainPlayer:ptr Subject, mainTargets:dword, mainTarg
                                 
                                 ;获取要覆盖的结构体地址
                                 mov eax, @newTargetByteOffset
-                                lea ebx, targets[eax]
+                                lea ebx, mainTargets[eax]
                                 assume ebx :ptr Targets
 
                                 ;覆盖
@@ -1014,16 +1101,24 @@ _two_two_enum_symbiotic proc mainPlayer:ptr Subject, mainTargets:dword, mainTarg
         ret
 _two_two_enum_symbiotic endp
 
+_two_two_enum_symbiotic_test proc
+
+        ret
+_two_two_enum_symbiotic_test endp
+
 start:
         ; call    _WinMain
         ; invoke  ExitProcess, NULL
-        ; invoke _Open_ALL_SOUND
+        invoke _Open_ALL_SOUND
         
         ; invoke _collision_test
-        ; invoke _collision_SOUND_test
+        invoke _collision_SOUND_test
+        
 
-        ; invoke _Close_ALL_SOUND
+
+        invoke _Close_ALL_SOUND
         ; invoke printHelloWorld
+        ; invoke _two_two_enum_symbiotic_test
         ret
 end     start
 ; end
