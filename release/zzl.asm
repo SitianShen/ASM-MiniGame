@@ -458,7 +458,7 @@ _draw_final_score endp
 
 _move_object proc hWnd
 
-        local @aaaaa:CImage
+        ; local @aaaaa:CImage
         
         local @mouse:POINT
         local @window:RECT
