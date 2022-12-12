@@ -31,8 +31,13 @@ _init_2p_players proc cur_player
 _init_2p_players endp
 
 _init_2p_mode proc
-        _init_2p_players playerOne
-        _init_2p_players playerTwo
+        invoke _init_2p_players, offset playerOne
+        invoke _init_2p_players, offset playerTwo
+        mov playerList.curid, 0
+        mov playerList2.curid, 0
+        mov playerList.choose_confirm, 0
+        mov playerList2.choose_confirm, 0
+        
         ret
 _init_2p_mode endp
 
@@ -676,8 +681,27 @@ _draw_object proc hWnd, hDCGame_ptr
                         invoke  _draw_button, addr button_retry, hWnd, button_retry_LX, button_retry_LY, hDCGame_ptr
                 .endif
         .elseif eax == in_2p_choose
-                invoke  TransparentBlt, hDCGame_ptr, 0, 0, gameH, gameW, backGround.DC_2p_c, 0, 0, 1000, 1000, SRCCOPY
-                invoke _draw_player_choose, hDCGame_ptr
+                xor edx, edx
+                mov eax, hDCGame_ptr
+                .if eax == hDCGame
+                        mov eax, playerList.choose_confirm
+                        .if eax == 1
+                                mov edx, 1
+                        .endif
+                .endif
+                mov eax, hDCGame_ptr
+                .if eax == hDCGame2
+                        mov eax, playerList2.choose_confirm
+                        .if eax == 1
+                                mov edx, 1
+                        .endif
+                .endif
+                .if edx == 1
+                        invoke  TransparentBlt, hDCGame_ptr, 0, 0, gameH, gameW, backGround.DC_2p_cc, 0, 0, 1000, 1000, SRCCOPY
+                .else
+                        invoke  TransparentBlt, hDCGame_ptr, 0, 0, gameH, gameW, backGround.DC_2p_c, 0, 0, 1000, 1000, SRCCOPY
+                        invoke _draw_player_choose, hDCGame_ptr
+                .endif
         .endif
 ;         mov eax, object1H
 ;         mov ebx, object1W

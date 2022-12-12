@@ -135,6 +135,7 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                         ;                 invoke  _random_object_gene
                         ;         .endif
                         .endif
+                .elseif eax == WM_KEYDOWN  
                 .else
                         invoke  DefWindowProc, hWnd, uMsg, wParam, lParam
                         ret
@@ -161,33 +162,50 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                 .elseif eax == in_2p_choose
                         mov eax, wParam
                         .if eax == 65
-                                dec playerList.curid
-                                mov eax, playerList.curid
-                                .if eax == -1
-                                        add eax, player_pic_number
+                                mov eax, playerList.choose_confirm
+                                .if eax == 0 
+                                        dec playerList.curid
+                                        mov eax, playerList.curid
+                                        .if eax == -1
+                                                add eax, player_pic_number
+                                        .endif
+                                        mov playerList.curid, eax
                                 .endif
-                                mov playerList.curid, eax
                         .elseif eax == 68
-                                inc playerList.curid
-                                mov eax, playerList.curid
-                                .if eax == 4  
-                                        sub eax, player_pic_number
+                                mov eax, playerList.choose_confirm
+                                .if eax == 0 
+                                        inc playerList.curid
+                                        mov eax, playerList.curid
+                                        .if eax == 4  
+                                                sub eax, player_pic_number
+                                        .endif
+                                        mov playerList.curid, eax
                                 .endif
-                                mov playerList.curid, eax
+                        .elseif eax == 32
+                                mov playerList.choose_confirm, 1
+
                         .elseif eax == 37
-                                dec playerList2.curid
-                                mov eax, playerList2.curid
-                                .if eax == -1
-                                        add eax, player_pic_number
+                                mov eax, playerList2.choose_confirm
+                                .if eax == 0 
+                                        dec playerList2.curid
+                                        mov eax, playerList2.curid
+                                        .if eax == -1
+                                                add eax, player_pic_number
+                                        .endif
+                                        mov playerList2.curid, eax
                                 .endif
-                                mov playerList2.curid, eax
                         .elseif eax == 39
-                                inc playerList2.curid
-                                mov eax, playerList2.curid
-                                .if eax == 4 
-                                        sub eax, player_pic_number
+                                mov eax, playerList2.choose_confirm
+                                .if eax == 0 
+                                        inc playerList2.curid
+                                        mov eax, playerList2.curid
+                                        .if eax == 4 
+                                                sub eax, player_pic_number
+                                        .endif
+                                        mov playerList2.curid, eax
                                 .endif
-                                mov playerList2.curid, eax
+                        .elseif eax == 13
+                                mov playerList2.choose_confirm, 1
                         .endif
                 .endif
                 ret

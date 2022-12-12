@@ -12,8 +12,6 @@ BASE ends
 Subject struct 
         base    BASE  <> 
         score           dd      ?
-
-        
 Subject ends
 
 Targets struct
@@ -57,6 +55,8 @@ Object_DC ends
 PlayerList struct
         DC              dd 4*2 dup(?) 
         curid           dd ?
+
+        choose_confirm  dd      ?
 PlayerList ends
 
 ;==================== 共生模式 ===========================
