@@ -54,9 +54,11 @@ public change_two_status_cnt
 public playerOne
 public targetsOne
 public target_number_one
+public bulletOne
 
 public playerTwo
 public targetsTwo
 public target_number_two
+public bulletTwo
 
 ;==================== 共生模式 ===========================
