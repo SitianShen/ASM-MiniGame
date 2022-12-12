@@ -269,7 +269,49 @@ _targets_bullet_out_of_bound proc
                 .endif
         .endif
 ret
+
 _targets_bullet_out_of_bound endp
+
+;聚餐
+_hotpot_effect proc stdcall PlayerOne:ptr Subject, PlayerTwo:ptr Subject
+
+
+
+
+ret
+_hotpot_effect endp
+
+;口罩
+_mask_effect proc stdcall PlayerOne:ptr Subject, PlayerTwo:ptr Subject
+
+
+
+ret
+_mask_effect endp
+
+;测温计
+_fever_effect proc stdcall PlayerOne:ptr Subject, PlayerTwo:ptr Subject 
+
+
+ret
+_fever_effect endp
+
+
+
+;状态的自动转换
+_change_status proc stdcall 
+
+
+ret
+_change_status endp
+
+
+
+
+
+
+
+
 
 ; start:
 ;         ret
