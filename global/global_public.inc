@@ -50,7 +50,12 @@ public POSCNT
 
 ;==================== 共生模式 ===========================
 
-public gameTime
-public board
+public playerOne
+public targetsOne
+public target_number_one
+
+public playerTwo
+public targetsTwo
+public target_number_two
 
 ;==================== 共生模式 ===========================

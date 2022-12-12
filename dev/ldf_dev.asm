@@ -26,7 +26,6 @@ szPause byte "Pause", 0
 
 .data?
 szPlayError byte 1000 dup(?)
-wCharptr dd ?
 
 .code
 
@@ -910,109 +909,18 @@ _two_two_enum_symbiotic proc mainPlayer:ptr Subject, mainTargets:dword, mainTarg
                 
                 ; 判断逻辑
                 .if [esi].typeid == MONEY_1
-                        .if flag_jump == 1
-                                mov @collisionFlag, 0
-                        .else
-                                invoke _check_collision, addr player.base, addr [esi].base 
-                                mov @collisionFlag, eax
-                        .endif
-                        
-                        ; invoke printf, offset debug_int, [esi].typeid
-                        ; invoke printf, offset debug_int, @collisionFlag
 
-                        .if @collisionFlag == 1
-                                invoke _collision_Player_with_MONEY_1, esi
-                                
-                        .endif
                 .elseif [esi].typeid == MONEY_2
-                        ; invoke printf, offset debug_int, [esi].typeid
-                        invoke _check_collision, addr player.base, addr [esi].base
-                        mov @collisionFlag, eax
-
-                        ; invoke printf, offset debug_int, [esi].typeid
-                        ; invoke printf, offset debug_int, @collisionFlag
-
-                        .if @collisionFlag == 1
-                                invoke _collision_Player_with_MONEY_2, esi
-                        .endif
 
                 .elseif [esi].typeid == PROP_ACC_SELF
-                        .if flag_jump == 1
-                                mov @collisionFlag, 0
-                        .else
-                                invoke _check_collision, addr player.base, addr [esi].base
-                                mov @collisionFlag, eax
-                        .endif
 
-                        ; invoke printf, offset debug_int, [esi].typeid
-                        ; invoke printf, offset debug_int, @collisionFlag
-                        
-                        .if @collisionFlag == 1
-                                invoke _collision_Player_with_ACC, esi
-                        .endif
 
                 .elseif [esi].typeid == PROP_DEC_SELF
 
-                        .if flag_jump == 1
-                                mov @collisionFlag, 0
-                        .else
-                                invoke _check_collision, addr player.base, addr [esi].base
-                                mov @collisionFlag, eax
-                        .endif
-
-                        
-
-                        ; invoke printf, offset debug_int, [esi].typeid
-                        ; invoke printf, offset debug_int, @collisionFlag
-
-
-                        .if @collisionFlag == 1
-                                invoke _collision_Player_with_DEC, esi
-                        .endif
-                        
                 .elseif [esi].typeid == OBST_HARD
 
-                        .if flag_jump == 1
-                                mov @collisionFlag, 0
-                        .else
-                                invoke _check_collision, addr player.base, addr [esi].base
-                                mov @collisionFlag, eax
-                        .endif
-
-                        ; invoke printf, offset debug_int, [esi].typeid
-                        ; invoke printf, offset debug_int, @collisionFlag
-
-                        .if @collisionFlag == 1
-                                invoke _collision_Player_with_HARD, esi
-                        .endif
                 .elseif [esi].typeid == OBST_SOFT
 
-                        mov @collisionFlag, 0
-
-                        .if bullet.base.alive == 1
-                                invoke _check_collision, addr bullet.base, addr [esi].base
-                                mov @collisionFlag, eax
-                                ; invoke printf, offset debug_int, @collisionFlag
-                                ; invoke printf, offset debug_int, bullet.base.course_id
-                        .endif
-
-                        ; invoke printf, offset debug_int, [esi].typeid
-                        ; invoke printf, offset debug_int, @collisionFlag
-
-                        .if @collisionFlag == 1
-                                invoke _collision_bullet_with_SOFT, esi
-                        .else
-                                .if flag_jump == 1 
-                                        mov @collisionFlag, 0
-                                .else
-                                        invoke _check_collision, addr player.base, addr [esi].base
-                                        mov @collisionFlag, eax    
-                                .endif
-                                
-                                .if @collisionFlag == 1
-                                        invoke _collision_Player_with_SOFT, esi
-                                .endif
-                        .endif
                 .endif
 
                 ;获取要附带的结构体地址
@@ -1103,7 +1011,7 @@ start:
         ; invoke _collision_SOUND_test
 
         ; invoke _Close_ALL_SOUND
-        invoke printHelloWorld
+        ; invoke printHelloWorld
         ret
 end     start
 ; end
