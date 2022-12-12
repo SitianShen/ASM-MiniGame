@@ -47,7 +47,7 @@ extrn object1W:dword
 extrn object_move_v:dword   
 extrn POSCNT:dword          ; NEXTPOS的计数器
 
-
+extrn change_two_status_cnt:dword 
 ;==================== 共生模式 ===========================
 
 extrn playerOne:Subject 

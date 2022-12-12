@@ -12,6 +12,10 @@ BASE ends
 Subject struct 
         base    BASE  <> 
         score           dd      ?
+        status          dd      ?
+        has_mask        dd      ?
+        has_fever       dd      ?
+
 Subject ends
 
 Targets struct
