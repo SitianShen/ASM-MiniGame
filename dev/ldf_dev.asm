@@ -1048,7 +1048,6 @@ _collision_Player_with_temperature proc uses ebx, mainPlayer: ptr Subject, tempe
         
         mov [ebx].has_fever, time_3s
 
-        
         ; invoke _fever_effect, addr playerOne, addr playerTwo
         ret
 _collision_Player_with_temperature endp
