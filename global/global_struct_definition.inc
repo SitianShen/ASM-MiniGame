@@ -12,6 +12,10 @@ BASE ends
 Subject struct 
         base    BASE  <> 
         score           dd      ?
+        status          dd      ?
+        has_hotpot      dd      ?
+        has_mask        dd      ?
+        has_fever       dd      ?
 Subject ends
 
 Targets struct
@@ -61,15 +65,7 @@ PlayerList ends
 
 ;==================== 共生模式 ===========================
 
-Human struct
-        boardX          dd      ?
-        boardY          dd      ?
-        toward          dd      ?
-        exp             dd      ?
-        HP              dd      ?
-        state           dd      ?
-        duration        dd      ?       
-Human ends
+
 
 ;==================== 共生模式 ===========================
 

@@ -52,10 +52,9 @@ zzl_dev:
 # 生成ldf_dev.exe
 ldf_dev:
 	del *.exe
-	$(CL) /c dev/ldf_gif.cpp
 	rc main.rc
-	ml $(ML_FLAGS) dev/ldf_dev.asm data.asm
-	link $(LINK_FLAGS) ldf_dev.obj data.obj main.res ldf_gif.obj
+	ml $(ML_FLAGS) dev/ldf_dev.asm dev/lja_dev.asm data.asm
+	link $(LINK_FLAGS) ldf_dev.obj lja_dev.obj data.obj main.res
 	nmake clean
 # ldf_dev.exe
 
@@ -72,7 +71,7 @@ lja_dev:
 sst_dev:
 	del *.exe
 	rc main.rc
-	ml $(ML_FLAGS) dev/sst_dev.asm data.asm
+	ml $(ML_FLAGS) dev/sst_dev.asm data.asm 
 	link $(LINK_FLAGS) sst_dev.obj data.obj main.res
 	nmake clean
 # sst_dev.exe

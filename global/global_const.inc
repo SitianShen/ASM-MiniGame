@@ -303,8 +303,33 @@ greenVirus      equ 502 ;绿色病毒
 hotPot          equ 600 ;火锅
 n95mask         equ 601 ;口罩
 temperature     equ 602 ;测温计
+time_3s         equ 300
+time_5s         equ 500
 
 
+;sound
+;medicine
+szOpenmedicine byte "open sound/medicine.mp3 alias medicine", 0
+szPlaymedicine byte "play medicine from 0", 0
+szClosemedicine byte "close medicine", 0
+szStopmedicine byte "stop medicine", 0
 
+;hotPot
+szOpenhotPot byte "open sound/hotPot.mp3 alias hotPot", 0
+szPlayhotPot byte "play hotPot from 0", 0
+szClosehotPot byte "close hotPot", 0
+szStophotPot byte "stop hotPot", 0
+
+;n95mask
+szOpenn95mask byte "open sound/n95mask.mp3 alias n95mask", 0
+szPlayn95mask byte "play n95mask from 0", 0
+szClosen95mask byte "close n95mask", 0
+szStopn95mask byte "stop n95mask", 0
+
+;temperature
+szOpentemperature byte "open sound/temperature.mp3 alias temperature", 0
+szPlaytemperature byte "play temperature from 0", 0
+szClosetemperature byte "close temperature", 0
+szStoptemperature byte "stop temperature", 0
 
 ;==================== 共生模式 ===========================

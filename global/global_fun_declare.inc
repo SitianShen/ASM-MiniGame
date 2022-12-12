@@ -95,6 +95,7 @@ _change_all_position proto      ;遍历所有道具，使之移动
 _targets_bullet_out_of_bound proto
 
 
+
 ;=====================================================
 
 
@@ -108,10 +109,36 @@ _targets_bullet_out_of_bound proto
 
 ;========================= ldf ldf ldf ldf ============================
 ; ldf functions
-_get_game_item proto :ptr Human, :dword
+
+_coll ision_Player_with_medicine proto :dword, :dword
+_collision_Player_with_redVirus proto :dword, :dword
+_collision_Player_with_greenVirus proto :dword, :dword
+_collision_Player_with_hotPot proto :dword, :dword
+_collision_Player_with_n95mask proto :dword, :dword
+_collision_Player_with_temperature proto :dword, :dword
+_two_two_enum_symbiotic proto :dword, :dword, :dword
+_two_two_enum_symbiotic_test proto
+
+;sound
+_Play_medicine_SOUND proto
+_Stop_medicine_SOUND proto
+_Play_hotPot_SOUND proto
+_Stop_hotPot_SOUND proto
+_Play_n95mask_SOUND proto
+_Stop_n95mask_SOUND proto
+_Play_temperature_SOUND proto
+_Stop_temperature_SOUND proto
+
 
 ;========================= lja lja lja lja ============================
 ; lja functions
+
+_hotpot_effect proto :ptr Subject, :ptr Subject
+_mask_effect proto :ptr Subject, :ptr Subject
+_fever_effect proto :ptr Subject, :ptr Subject
+_check_player_effect proto :ptr Subject
+_check_all_effect proto :ptr Subject, :ptr Subject
+_change_status proto :ptr Subject, :ptr Subject
 
 ;========================= sst sst sst sst ============================
 ; sst functions
