@@ -117,7 +117,7 @@ _collision_Player_with_hotPot proto :dword, :dword
 _collision_Player_with_n95mask proto :dword, :dword
 _collision_Player_with_temperature proto :dword, :dword
 _two_two_enum_symbiotic proto :dword, :dword, :dword
-
+_two_two_enum_symbiotic_test proto
 
 ;sound
 _Play_medicine_SOUND proto

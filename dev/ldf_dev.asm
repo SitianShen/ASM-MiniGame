@@ -914,10 +914,6 @@ _collision_SOUND_test proc
         ret
 _collision_SOUND_test endp
 
-_Player_get_item proc Player_new:ptr Subject, itemId:dword
-        
-_Player_get_item endp
-
 
 _collision_Player_with_medicine proc uses ebx, mainPlayer: ptr Subject, medicine_target:ptr Targets
         ;medicine消失
@@ -1013,7 +1009,7 @@ _collision_Player_with_hotPot proc uses ebx, mainPlayer: ptr Subject, hotPot_tar
         mov [ebx].has_hotpot, 300
         
         
-        invoke _hotpot_effect, addr playerOne, addr playerTwo
+        ; invoke _hotpot_effect, addr playerOne, addr playerTwo
         ret
 _collision_Player_with_hotPot endp
 
@@ -1031,9 +1027,9 @@ _collision_Player_with_n95mask proc uses ebx, mainPlayer: ptr Subject, n95mask_t
         assume ebx: ptr Subject
 
         
-        mov [ebx].has_mask, 
+        mov [ebx].has_mask, time_3s
 
-        invoke _mask_effect, addr playerOne, addr playerTwo
+        ; invoke _mask_effect, addr playerOne, addr playerTwo
         ret
 _collision_Player_with_n95mask endp
 
@@ -1050,10 +1046,10 @@ _collision_Player_with_temperature proc uses ebx, mainPlayer: ptr Subject, tempe
         mov ebx, mainPlayer
         assume ebx: ptr Subject
         
-        mov [ebx].has_fever, 300
+        mov [ebx].has_fever, time_3s
 
         
-        invoke _fever_effect, addr playerOne, addr playerTwo
+        ; invoke _fever_effect, addr playerOne, addr playerTwo
         ret
 _collision_Player_with_temperature endp
 
