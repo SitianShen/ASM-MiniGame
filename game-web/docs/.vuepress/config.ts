@@ -5,7 +5,6 @@ export default defineUserConfig({
     lang: 'zh-CN',
     title: 'Run away from covid-19',
     description: 'The War of Viruses',
-    dest: path.resolve(__dirname, '../../dist/vuepress'),
     theme: defaultTheme(),
     // alias: {
     //     '@theme/Navbar.vue': path.resolve(__dirname, './components/Navbar.vue'),
