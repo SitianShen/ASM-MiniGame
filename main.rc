@@ -1,5 +1,6 @@
 # include   <resource.h>
 
+# define IDB_BACKG_2p_CHOOSECONFIRM 94
 # define IDB_BACKG_2p_CHOOSE      95
 # define IDB_BACKG_END      96
 # define IDB_BACKG_PLAY     97
@@ -64,6 +65,7 @@
 # define IDB_DIG8            1008
 # define IDB_DIG9            1009
 
+IDB_BACKG_2p_CHOOSECONFIRM      BITMAP      "resource/background_2p_choose_confirm.bmp"
 IDB_BACKG_2p_CHOOSE BITMAP      "resource/background_2p_choose.bmp"
 IDB_BACKG           BITMAP      "resource/background.bmp"
 IDB_BACKG_BEGINING  BITMAP      "resource/background_begining.bmp"

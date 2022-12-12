@@ -13,8 +13,8 @@ Subject struct
         base    BASE  <> 
         score           dd      ?
 
-        HP              dd      ?
-        exp             dd      ?
+        state           dd      ?; four of the state
+        choose_done     dd      ?; finish pic choose
 Subject ends
 
 Targets struct
@@ -31,11 +31,12 @@ Button ends
 
 BackGround struct
         DC_b    dd      ?
-        DC_pu   dd     ?
-        DC_pd   dd     ?
+        DC_pu   dd      ?
+        DC_pd   dd      ?
         DC_i    dd      ?
         DC_e    dd      ?
         DC_2p_c dd      ?
+        DC_2p_cc dd     ?
 BackGround ends
 
 Object_DC struct

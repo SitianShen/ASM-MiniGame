@@ -8,6 +8,38 @@ include global_extrn.inc
 .code
 
 ;zzl part #################################################################
+
+_init_2p_players proc cur_player
+        mov esi, cur_player
+        assume esi: ptr Subject
+        
+        mov [esi].base.course_id, 2
+        mov [esi].base.alive, 3
+        mov [esi].score, 0
+
+        mov [esi].base.rel_v, 0
+
+        mov eax, carx1
+        mov [esi].base.posx, eax
+
+        mov ebx, cary
+        mov [esi].base.posy, ebx
+
+        mov [esi].base.lengthx, carLX
+        mov [esi].base.lengthy, carLY
+        ret
+_init_2p_players endp
+
+_init_2p_mode proc
+        ; _init_2p_players playerOne
+        ; _init_2p_players playerTwo
+        ; mov eax, playerList.curid
+        ; mov playerOne.base.DC, [playerList.DC+4*eax]
+        ; mov eax, playerList2.curid
+        ; mov playerTwo.base.DC, [playerList2.DC+4*eax]
+        ret
+_init_2p_mode endp
+
 _shot_bullet proc
         mov eax, bullet.base.alive
         .if eax == 1
@@ -283,6 +315,7 @@ _createAll proc
         invoke  _load_common_pic, addr backGround.DC_pd, IDB_BACKG_PLAYD
         invoke  _load_common_pic, addr backGround.DC_e, IDB_BACKG_END
         invoke  _load_common_pic, addr backGround.DC_2p_c, IDB_BACKG_2p_CHOOSE
+        invoke  _load_common_pic, addr backGround.DC_2p_cc, IDB_BACKG_2p_CHOOSECONFIRM
 ;�������� env obj
 ;set prop
         invoke  _load_common_pic, addr object_DC.env1, IDB_OBJ1

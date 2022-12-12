@@ -61,13 +61,13 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                                         mov cur_interface, in_game
                                         mov button_play.is_click, 0
                                         ;播放开始游戏的BGM
-                                        invoke _BGM_SOUND
                                 .elseif eax == button_start.is_click
                                         mov cur_interface, in_intro
                                         mov button_start.is_click, 0
                                 .elseif eax == button_2p_play.is_click
                                         invoke _Stop_BeginBGM_SOUND
                                         invoke  ShowWindow, hWinMain2, SW_SHOWNORMAL
+                                        invoke _init_2p_mode
                                         mov cur_interface, in_2p_choose
                                         mov button_2p_play.is_click, 0
                                 .endif
@@ -105,6 +105,8 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
 
                 .elseif eax == WM_CLOSE
                         invoke  _Quit
+                
+                .elseif eax == WM_KEYDOWN  
                 .else
                         invoke  DefWindowProc, hWnd, uMsg, wParam, lParam
                         ret
@@ -133,13 +135,16 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                         ;                 invoke  _random_object_gene
                         ;         .endif
                         .endif
+                .else
+                        invoke  DefWindowProc, hWnd, uMsg, wParam, lParam
+                        ret
                 .endif
         .endif
 
         mov     eax, uMsg
-        .if eax == WM_KEYDOWN 
+        .if eax == WM_KEYDOWN  
                 mov eax, cur_interface
-                .if eax == in_game
+                .if eax == in_game 
                         mov eax, wParam
                         .if eax == 87 
                                 invoke _Action_jump
