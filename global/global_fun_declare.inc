@@ -113,9 +113,13 @@ _targets_bullet_out_of_bound proto
 
 ;sound
 _Play_medicine_SOUND proto
+_Stop_medicine_SOUND proto
 _Play_hotPot_SOUND proto
+_Stop_hotPot_SOUND proto
 _Play_n95mask_SOUND proto
+_Stop_n95mask_SOUND proto
 _Play_temperature_SOUND proto
+_Stop_temperature_SOUND proto
 
 ;========================= lja lja lja lja ============================
 ; lja functions
