@@ -61,15 +61,7 @@ PlayerList ends
 
 ;==================== 共生模式 ===========================
 
-; Human struct
-;         boardX          dd      ?
-;         boardY          dd      ?
-;         toward          dd      ?
-;         exp             dd      ?
-;         HP              dd      ?
-;         state           dd      ?
-;         duration        dd      ?       
-; Human ends
+
 
 ;==================== 共生模式 ===========================
 
