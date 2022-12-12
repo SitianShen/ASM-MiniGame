@@ -26,7 +26,6 @@ szPause byte "Pause", 0
 
 .data?
 szPlayError byte 1000 dup(?)
-wCharptr dd ?
 
 .code
 
@@ -456,12 +455,7 @@ _two_two_enum proc uses ebx
                         .endif
 
                 .elseif [esi].typeid == PROP_ACC_SELF
-                        .if flag_jump == 1
-                                mov @collisionFlag, 0
-                        .else
-                                invoke _check_collision, addr player.base, addr [esi].base
-                                mov @collisionFlag, eax
-                        .endif
+                        
 
                         ; invoke printf, offset debug_int, [esi].typeid
                         ; invoke printf, offset debug_int, @collisionFlag
@@ -613,7 +607,6 @@ _two_two_enum proc uses ebx
         ret
 _two_two_enum endp
 
-
 _two_two_enum_test proc
         ;给bullet赋值
         lea esi, bullet
@@ -711,6 +704,11 @@ _Open_ALL_SOUND proc
         invoke mciSendString, offset szOpenEnd, NULL, 0, NULL
         invoke mciSendString, offset szOpenGameover, NULL, 0, NULL
         invoke mciSendString, offset szOpenBeginBGM, NULL, 0, NULL
+        
+        invoke mciSendString, offset szOpenmedicine, NULL, 0, NULL
+        invoke mciSendString, offset szOpenhotPot, NULL, 0, NULL
+        invoke mciSendString, offset szOpenn95mask, NULL, 0, NULL
+        invoke mciSendString, offset szOpentemperature, NULL, 0, NULL
         ret
 _Open_ALL_SOUND endp
 
@@ -730,6 +728,11 @@ _Close_ALL_SOUND proc
         invoke mciSendString, offset szCloseEnd, NULL, 0, NULL
         invoke mciSendString, offset szCloseGameover, NULL, 0, NULL
         invoke mciSendString, offset szCloseBeginBGM, NULL, 0, NULL
+        
+        invoke mciSendString, offset szClosemedicine, NULL, 0, NULL
+        invoke mciSendString, offset szClosehotPot, NULL, 0, NULL
+        invoke mciSendString, offset szClosen95mask, NULL, 0, NULL
+        invoke mciSendString, offset szClosetemperature, NULL, 0, NULL
         ret
 _Close_ALL_SOUND endp
         
@@ -845,6 +848,52 @@ _Stop_BeginBGM_SOUND endp
 
 
 
+
+
+;================ 共生模式  ======================
+
+;sound
+
+_Play_medicine_SOUND proc
+        invoke mciSendString, offset szPlaymedicine, NULL, 0, NULL
+        ret
+_Play_medicine_SOUND endp
+
+_Stop_medicine_SOUND proc
+        invoke mciSendString, offset szStopmedicine, NULL, 0, NULL
+        ret
+_Stop_medicine_SOUND endp
+
+_Play_hotPot_SOUND proc
+        invoke mciSendString, offset szPlayhotPot, NULL, 0, NULL
+        ret
+_Play_hotPot_SOUND endp
+
+_Stop_hotPot_SOUND proc
+        invoke mciSendString, offset szStophotPot, NULL, 0, NULL
+        ret
+_Stop_hotPot_SOUND endp
+
+_Play_n95mask_SOUND proc
+        invoke mciSendString, offset szPlayn95mask, NULL, 0, NULL
+        ret
+_Play_n95mask_SOUND endp
+
+_Stop_n95mask_SOUND proc
+        invoke mciSendString, offset szStopn95mask, NULL, 0, NULL
+        ret
+_Stop_n95mask_SOUND endp
+
+_Play_temperature_SOUND proc
+        invoke mciSendString, offset szPlaytemperature, NULL, 0, NULL
+        ret
+_Play_temperature_SOUND endp
+
+_Stop_temperature_SOUND proc
+        invoke mciSendString, offset szStoptemperature, NULL, 0, NULL
+        ret
+_Stop_temperature_SOUND endp
+
 _collision_SOUND_test proc
         ; invoke mciSendString, offset szOpenDemo, NULL, 0, NULL
         ; invoke mciSendString, offset szPlayDemo, NULL, 0, NULL
@@ -858,21 +907,464 @@ _collision_SOUND_test proc
         ; invoke _BGM_SOUND
         ; invoke _END_SOUND
         ; invoke _Jump_SOUND
-        invoke _collision_Player_with_MONEY_1_SOUND
         ; invoke _collision_Player_with_MONEY_1_SOUND
-        ; invoke system, offset szPause
+        invoke _Play_medicine_SOUND
+        ; invoke _collision_Player_with_MONEY_1_SOUND
+        invoke system, offset szPause
         ret
 _collision_SOUND_test endp
 
-; start:
-;         ; call    _WinMain
-;         ; invoke  ExitProcess, NULL
-;         invoke _Open_ALL_SOUND
-        
-;         ; invoke _collision_test
-;         invoke _collision_SOUND_test
 
-;         invoke _Close_ALL_SOUND
+_collision_Player_with_medicine proc uses ebx, mainPlayer:ptr Subject, medicine_target:ptr Targets
+        ;medicine音效
+        invoke _Play_medicine_SOUND
+
+        ;medicine消失
+        mov ebx, medicine_target
+        assume ebx: ptr Targets
+
+        mov [ebx].base.alive, 0
+
+        ; invoke printf, offset debug_int, [ebx].typeid
+
+        ;吃到药的效果
+        mov ebx, mainPlayer
+        assume ebx: ptr Subject
+
+        
+        .if [ebx].status == Infection
+                ;仅当感染，HP+1
+                inc [ebx].base.alive
+        .endif
+
+        ;非免疫, 状态改为免疫期，结果一定是免疫期
+        mov [ebx].status, Immunity
+        
+        ret
+_collision_Player_with_medicine endp
+
+_collision_Player_with_redVirus proc uses ebx, mainPlayer: ptr Subject, redVirus_target:ptr Targets
+        ;redVirus消失
+        mov ebx, redVirus_target
+        assume ebx: ptr Targets
+
+        mov [ebx].base.alive, 0
+
+        ; invoke printf, offset debug_int, [ebx].typeid
+        
+        ;吃到红色病毒的效果
+        mov ebx, mainPlayer
+        assume ebx: ptr Subject
+
+        
+        .if [ebx].status == Immunity
+                ;免疫期抵抗红色病毒
+                ret
+        .endif
+
+        ;非免疫，则一定最终状态为感染期
+        mov [ebx].status, Infection
+
+        ;非感染，HP-1
+        .if [ebx].status != Infection
+                dec [ebx].base.alive
+        .endif
+        ret
+_collision_Player_with_redVirus endp
+
+_collision_Player_with_greenVirus proc uses ebx, mainPlayer: ptr Subject, greenVirus_target:ptr Targets
+        ;greenVirus消失
+        mov ebx, greenVirus_target
+        assume ebx: ptr Targets
+
+        mov [ebx].base.alive, 0
+
+        ; invoke printf, offset debug_int, [ebx].typeid
+        
+        ;吃到绿色病毒的效果
+        mov ebx, mainPlayer
+        assume ebx: ptr Subject
+
+        
+        ;非感染，非免疫
+        .if [ebx].status != Immunity && [ebx].status != Infection
+                inc [ebx].score ;exp+1
+                mov [ebx].status, Asymptomatic ;状态改为无症状
+        .endif
+        
+        ret
+_collision_Player_with_greenVirus endp
+
+_collision_Player_with_hotPot proc uses ebx, mainPlayer: ptr Subject, hotPot_target:ptr Targets
+        ;hotPot音效
+        invoke _Play_hotPot_SOUND
+
+        ;hotPot消失
+        mov ebx, hotPot_target
+        assume ebx: ptr Targets
+
+        mov [ebx].base.alive, 0
+
+        ; invoke printf, offset debug_int, [ebx].typeid
+        
+        ;吃到hotPot
+        mov ebx, mainPlayer
+        assume ebx: ptr Subject
+
+        
+        mov [ebx].has_hotpot, 300
+        
+        
+        ; invoke _hotpot_effect, addr playerOne, addr playerTwo
+        ret
+_collision_Player_with_hotPot endp
+
+_collision_Player_with_n95mask proc uses ebx, mainPlayer: ptr Subject, n95mask_target:ptr Targets
+        ;n95mask音效
+        invoke _Play_n95mask_SOUND
+
+        ;n95mask消失
+        mov ebx, n95mask_target
+        assume ebx: ptr Targets
+
+        mov [ebx].base.alive, 0
+
+        ; invoke printf, offset debug_int, [ebx].typeid
+        
+        ;吃到n95mask
+        mov ebx, mainPlayer
+        assume ebx: ptr Subject
+
+        
+        mov [ebx].has_mask, time_3s
+
+        ; invoke _mask_effect, addr playerOne, addr playerTwo
+        ret
+_collision_Player_with_n95mask endp
+
+_collision_Player_with_temperature proc uses ebx, mainPlayer: ptr Subject, temperature_target:ptr Targets
+        ;temperature音效
+        invoke _Stop_temperature_SOUND
+
+        ;temperature消失
+        mov ebx, temperature_target
+        assume ebx: ptr Targets
+
+        mov [ebx].base.alive, 0
+
+        ; invoke printf, offset debug_int, [ebx].typeid
+
+        ;吃到temperature
+        mov ebx, mainPlayer
+        assume ebx: ptr Subject
+        
+        mov [ebx].has_fever, time_3s
+
+        ; invoke _fever_effect, addr playerOne, addr playerTwo
+        ret
+_collision_Player_with_temperature endp
+
+
+
+;调用示例 invoke _two_two_enum_symbiotic, addr playerOne, targetsOne, target_number_one
+_two_two_enum_symbiotic  proc uses esi ebx ecx, mainPlayer:ptr Subject, mainTargets:dword, mainTargetsNumber:dword
+        ; ============== declare ==============
+        ;一些和target有关的局部变量
+        local @new_target_number
+
+        local @new_target_number_index
+        local @newTargetByteOffset
+        ; local @new_targets[1000]:Targets ;这个RE了？？？，如果程序卡顿了，大概率RE了
+        local @target_number_index
+        local @targetByteOffset
+
+        ; 碰撞逻辑
+        local @collisionFlag
+
+        ; invoke printf, offset debug_str, offset szCollision
+        ; ============== init ==============
+        ; Old
+        mov @targetByteOffset, 0
+        mov @target_number_index, 0
+
+        ; New
+        mov @new_target_number, 0
+        mov @new_target_number_index, 0
+        mov @newTargetByteOffset, 0
+
+        .while TRUE
+                ; 循环次数判定
+                ; invoke printf, offset debug_int, @targetByteOffset
+                mov eax, @target_number_index
+                mov ecx, mainTargetsNumber
+                assume ecx:ptr dword
+                
+                .break .if [ecx] == eax
+
+                ; 得到结构体
+                mov eax, mainTargets
+                add eax, @targetByteOffset
+                mov esi, eax
+                assume esi:ptr Targets
+
+                ; 判断逻辑
+                .if [esi].typeid == medicine ;药
+                        .if flag_jump == 1
+                                mov @collisionFlag, 0
+                        .else
+                                mov ebx, mainPlayer
+                                assume ebx: ptr Subject
+                                invoke _check_collision, addr [ebx].base, addr [esi].base
+                                mov @collisionFlag, eax
+                        .endif
+
+                        ;如果撞上了
+                        .if @collisionFlag == 1
+                                invoke _collision_Player_with_medicine, mainPlayer, esi
+                        .endif
+
+                        ; invoke printf, offset debug_int, [esi].typeid
+
+                .elseif [esi].typeid == redVirus ;红色病毒
+                        .if flag_jump == 1
+                                mov @collisionFlag, 0
+                        .else
+                                mov ebx, mainPlayer
+                                assume ebx: ptr Subject
+                                invoke _check_collision, addr [ebx].base, addr [esi].base
+                                mov @collisionFlag, eax
+                        .endif
+                        
+                        ;如果撞上了
+                        .if @collisionFlag == 1
+                                invoke _collision_Player_with_redVirus, mainPlayer, esi
+                        .endif
+
+                        ; invoke printf, offset debug_int, [esi].typeid
+
+                .elseif [esi].typeid == greenVirus ;绿色病毒
+                        .if flag_jump == 1
+                                mov @collisionFlag, 0
+                        .else
+                                mov ebx, mainPlayer
+                                assume ebx: ptr Subject
+                                invoke _check_collision, addr [ebx].base, addr [esi].base
+                                mov @collisionFlag, eax
+                        .endif
+
+                        ;如果撞上了
+                        .if @collisionFlag == 1
+                                invoke _collision_Player_with_greenVirus, mainPlayer, esi
+                        .endif
+
+                        ; invoke printf, offset debug_int, [esi].typeid
+
+                .elseif [esi].typeid == hotPot ;火锅
+                        .if flag_jump == 1
+                                mov @collisionFlag, 0
+                        .else
+                                mov ebx, mainPlayer
+                                assume ebx: ptr Subject
+                                invoke _check_collision, addr [ebx].base, addr [esi].base
+                                mov @collisionFlag, eax
+                        .endif
+
+                        ;如果撞上了
+                        .if @collisionFlag == 1
+                                invoke _collision_Player_with_hotPot, mainPlayer, esi
+                        .endif
+
+                        ; invoke printf, offset debug_int, [esi].typeid
+
+                .elseif [esi].typeid == n95mask ;口罩
+                        .if flag_jump == 1
+                                mov @collisionFlag, 0
+                        .else
+                                mov ebx, mainPlayer
+                                assume ebx: ptr Subject
+                                invoke _check_collision, addr [ebx].base, addr [esi].base
+                                mov @collisionFlag, eax
+                        .endif
+
+                        ;如果撞上了
+                        .if @collisionFlag == 1
+                                invoke _collision_Player_with_n95mask, mainPlayer, esi
+                        .endif
+
+
+                        ; invoke printf, offset debug_int, [esi].typeid
+                .elseif [esi].typeid == temperature ;测温计
+                        .if flag_jump == 1
+                                mov @collisionFlag, 0
+                        .else
+                                mov ebx, mainPlayer
+                                assume ebx: ptr Subject
+                                invoke _check_collision, addr [ebx].base, addr [esi].base
+                                mov @collisionFlag, eax
+                        .endif
+
+                        ;如果撞上了
+                        .if @collisionFlag == 1
+                                invoke _collision_Player_with_temperature, mainPlayer, esi
+                        .endif
+
+                        ; invoke printf, offset debug_int, [esi].typeid
+                .endif
+
+                ; 获取要附带的结构体地址
+                mov eax, mainTargets
+                add eax, @targetByteOffset
+                mov esi, eax
+                assume esi:ptr Targets
+
+                ; ; invoke printf, offset debug_int, [esi].base.alive
+                
+                ;覆盖targets
+                .if [esi].base.alive == 1
+                        ; invoke printf, offset debug_int, [esi].typeid
+                        mov eax, @new_target_number_index
+                        .if eax != @target_number_index
+                                
+                                ;获取要覆盖的结构体地址
+                                mov eax, mainTargets
+                                add eax, @newTargetByteOffset
+                                mov ebx, [eax]
+                                assume ebx :ptr Targets
+
+                                ;覆盖
+                                mov eax, [esi].base.posx
+                                mov [ebx].base.posx, eax
+
+                                mov eax, [esi].base.posy
+                                mov [ebx].base.posy, eax
+                                
+                                mov eax, [esi].base.lengthx
+                                mov [ebx].base.lengthx, eax
+
+                                mov eax, [esi].base.lengthy
+                                mov [ebx].base.lengthy, eax
+
+                                mov eax, [esi].base.alive
+                                mov [ebx].base.alive, eax
+
+                                mov eax, [esi].base.DC
+                                mov [ebx].base.DC, eax
+
+                                mov eax, [esi].base.rel_v
+                                mov [ebx].base.rel_v, eax
+
+                                mov eax, [esi].base.course_id
+                                mov [ebx].base.course_id, eax
+
+                                mov eax, [esi].typeid
+                                mov [ebx].typeid, eax
+                        .endif
+                        
+                        ;递增offset
+                        mov eax, sizeofTargets
+                        add eax, @newTargetByteOffset
+                        mov @newTargetByteOffset, eax
+
+                        ;递增number和index
+                        inc @new_target_number
+                        inc @new_target_number_index
+                .endif
+                
+                
+                
+                ;递增offset
+                mov eax, sizeofTargets
+                add eax, @targetByteOffset
+                mov @targetByteOffset, eax
+
+                ;递增index
+                inc @target_number_index
+        .endw
+
+        ;修改target_number
+        mov eax, @new_target_number
+        ; inc eax
+        mov ecx, mainTargetsNumber
+        assume ecx:ptr dword
+        mov [ecx], eax
+
+        ; invoke printf, offset debug_int, @new_target_number
+        ; invoke printf, offset debug_str, offset szCollisionEnd
+
+        ret
+_two_two_enum_symbiotic endp
+
+_two_two_enum_symbiotic_test proc
+        ; invoke printf, offset debug_int, [esi].base.posx
+        ;给player赋值
+        lea esi, playerOne
+        assume esi :ptr Subject
+
+        mov [esi].base.posx, 1
+        mov [esi].base.posy, 1
+        mov [esi].base.lengthx, 1
+        mov [esi].base.lengthy, 1
+        mov [esi].base.alive, 1
+        mov [esi].base.DC, 1
+        mov [esi].base.rel_v, 1
+        mov [esi].base.course_id, 1
+        mov [esi].score, 1
+
+        ;第零个targets
+        lea esi, targetsOne[0]
+        assume esi :ptr Targets
+
+        mov [esi].base.posx, 1
+        mov [esi].base.posy, 1
+        mov [esi].base.lengthx, 1
+        mov [esi].base.lengthy, 1
+        mov [esi].base.alive, 1
+        mov [esi].base.DC, 1
+        mov [esi].base.rel_v, 1
+        mov [esi].base.course_id, 1
+        mov [esi].typeid, medicine
+
+        ; invoke _two_two_enum
+        ; .if [esi].typeid == MONEY_1
+        ;         invoke printf, offset szInt, targets[0].typeid
+        ; .endif
+        
+        ; invoke printf, offset debug_int, [esi].base.posx
+        ; invoke printf, offset debug_int, [esi].typeid
+
+        ; 第一个targets
+        lea esi, targetsOne[sizeofTargets]
+        assume esi :ptr Targets
+
+        mov [esi].base.posx, 1
+        mov [esi].base.posy, 1
+        mov [esi].base.lengthx, 1
+        mov [esi].base.lengthy, 1
+        mov [esi].base.alive, 1
+        mov [esi].base.DC, 1
+        mov [esi].base.rel_v, 1
+        mov [esi].base.course_id, 1
+        mov [esi].typeid, temperature
+
+        mov target_number_one, 2
+
+        ; lea esi, targetsOne[sizeofTargets]
+        ; assume esi :ptr Targets
+        ; invoke printf, offset debug_int, [esi].typeid
+        ; ret
+        ; invoke printf, offset debug_int, targetsOne
+
+        invoke _two_two_enum_symbiotic, addr playerOne, addr targetsOne, addr target_number_one
+
+        ret
+_two_two_enum_symbiotic_test endp
+
+; start:
+;         ; invoke _Open_ALL_SOUND
+;         ; invoke _collision_SOUND_test
+;         ; invoke _Close_ALL_SOUND
+;         ; invoke printHelloWorld
+;         invoke _two_two_enum_symbiotic_test
 ;         ret
 ; end     start
 end
