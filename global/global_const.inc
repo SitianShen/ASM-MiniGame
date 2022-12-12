@@ -287,32 +287,20 @@ szStopBeginBGM byte "stop BeginBGM", 0
 
 
 ;==================== 共生模式 ===========================
-;初始化常量
-boardHorizontal equ 10
-boardVertical   equ 10
-initHP          equ 5
-empty           equ 0
-
-
 ;状态编码
 Immunity        equ 100 ;免疫期
-Exposure        equ 200 ;暴露期
-Asymptomatic    equ 300 ;无症状
-Infection       equ 400 ;感染期
-
-;移动
-upward          equ 1000 ;向上
-downward        equ 1001 ;向下
-leftward        equ 1002 ;向左
-rightward       equ 1003 ;向右
+Exposure        equ 101 ;暴露期
+Asymptomatic    equ 102 ;无症状
+Infection       equ 103 ;感染期
 
 ;道具编码
-vaccine         equ 500 ;疫苗
+medicine        equ 500 ;药
 redVirus        equ 501 ;红色病毒
 greenVirus      equ 502 ;绿色病毒
 
-;游戏时间从100s开始倒计时,或者可以不死不休哈哈哈哈哈
-lengthPlay      equ 100 
+hotPot          equ 600 ;火锅
+mask            equ 601 ;口罩
+temperature     equ 602 ;测温计
 
 
 
