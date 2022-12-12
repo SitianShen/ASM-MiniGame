@@ -20,6 +20,7 @@ digitals_DC     dd 10 dup(?)
 
 ;zzl own
 button_play       Button <>
+button_2p_play       Button <>
 button_start      Button <>
 button_back       Button <>
 button_exit       Button <>

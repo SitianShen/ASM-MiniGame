@@ -1,5 +1,6 @@
 # include   <resource.h>
 
+# define IDB_BACKG_2p_CHOOSE      95
 # define IDB_BACKG_END      96
 # define IDB_BACKG_PLAY     97
 # define IDB_BACKG_PLAYU    90
@@ -37,6 +38,9 @@
 # define IDB_BUTTON_PAUSE_1 323
 # define IDB_BUTTON_PAUSE_2 324
 
+# define IDB_BUTTON_2p_PLAY_1  325
+# define IDB_BUTTON_2p_PLAY_2  326
+
 # define IDB_PLAYER          400
 
 # define IDB_HPP             500
@@ -52,6 +56,7 @@
 # define IDB_DIG8            1008
 # define IDB_DIG9            1009
 
+IDB_BACKG_2p_CHOOSE BITMAP      "resource/background_2p_choose.bmp"
 IDB_BACKG           BITMAP      "resource/background.bmp"
 IDB_BACKG_BEGINING  BITMAP      "resource/background_begining.bmp"
 IDB_BACKG_INTRO     BITMAP      "resource/background_intro.bmp"
@@ -78,10 +83,12 @@ IDB_BUTTON_PLAY_1   BITMAP      "resource/button_play_1.bmp"
 IDB_BUTTON_PLAY_2   BITMAP      "resource/button_play_2.bmp"
 IDB_BUTTON_START_1  BITMAP      "resource/button_start_1.bmp"
 IDB_BUTTON_START_2  BITMAP      "resource/button_start_2.bmp"
-IDB_BUTTON_RETRY_1 BITMAP       "resource/button_retry_1.bmp"
-IDB_BUTTON_RETRY_2 BITMAP       "resource/button_retry_2.bmp"
-IDB_BUTTON_PAUSE_1 BITMAP       "resource/button_pause_1.bmp"
-IDB_BUTTON_PAUSE_2 BITMAP       "resource/button_pause_2.bmp"
+IDB_BUTTON_RETRY_1  BITMAP      "resource/button_retry_1.bmp"
+IDB_BUTTON_RETRY_2  BITMAP      "resource/button_retry_2.bmp"
+IDB_BUTTON_PAUSE_1  BITMAP      "resource/button_pause_1.bmp"
+IDB_BUTTON_PAUSE_2  BITMAP      "resource/button_pause_2.bmp"
+IDB_BUTTON_2p_PLAY_1 BITMAP      "resource/button_2p_play_1.bmp"
+IDB_BUTTON_2p_PLAY_2 BITMAP      "resource/button_2p_play_2.bmp"
 
 IDB_PROP_MONEY      BITMAP       "resource/prop_money.bmp"
 IDB_PROP_ABSTSOFT   BITMAP       "resource/prop_obstsoft.bmp"

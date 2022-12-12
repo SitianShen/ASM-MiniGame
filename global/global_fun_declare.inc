@@ -22,7 +22,7 @@ _createAll proto
 _deleteAll proto
 _Quit proto
 _draw_button proto :ptr Button, :dword, :dword, :dword
-_move_object proto :dword
+_draw_object proto :dword, :dword
 _show_score proto
 _shot_bullet proto
 

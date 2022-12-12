@@ -184,6 +184,11 @@ _set_char_pos proc
         mov button_pause.base.posy, 20
         mov button_pause.base.lengthx, button_pause_LX/2
         mov button_pause.base.lengthy, button_pause_LY/2
+
+        mov button_2p_play.base.posx, 200
+        mov button_2p_play.base.posy, 435
+        mov button_2p_play.base.lengthx, button_2p_play_LX
+        mov button_2p_play.base.lengthy, button_2p_play_LY
         ret
 _set_char_pos endp
 
@@ -258,6 +263,7 @@ _createAll proc
         invoke  _load_common_pic, addr backGround.DC_pu, IDB_BACKG_PLAYU
         invoke  _load_common_pic, addr backGround.DC_pd, IDB_BACKG_PLAYD
         invoke  _load_common_pic, addr backGround.DC_e, IDB_BACKG_END
+        invoke  _load_common_pic, addr backGround.DC_2p_c, IDB_BACKG_2p_CHOOSE
 ;�������� env obj
 ;set prop
         invoke  _load_common_pic, addr object_DC.env1, IDB_OBJ1
@@ -280,6 +286,7 @@ _createAll proc
         invoke _load_button, addr button_back,  IDB_BUTTON_BACK_1,  IDB_BUTTON_BACK_2
         invoke _load_button, addr button_retry,  IDB_BUTTON_RETRY_1,  IDB_BUTTON_RETRY_2
         invoke _load_button, addr button_pause,  IDB_BUTTON_PAUSE_1,  IDB_BUTTON_PAUSE_2
+        invoke _load_button, addr button_2p_play,IDB_BUTTON_2p_PLAY_1,  IDB_BUTTON_2p_PLAY_2
 
         invoke _set_char_pos
 ;set car
@@ -463,7 +470,7 @@ _draw_final_score proc
         ret
 _draw_final_score endp
 
-_move_object proc hWnd
+_draw_object proc hWnd, hDCGame_ptr
         
         local @mouse:POINT
         local @window:RECT
@@ -479,19 +486,20 @@ _move_object proc hWnd
 
         mov eax, cur_interface
         .if eax == in_begining 
-                invoke  TransparentBlt, hDCGame, 0, 0, gameH, gameW, backGround.DC_b, 0, 0, 1000, 1000, SRCCOPY
+                invoke  TransparentBlt, hDCGame_ptr, 0, 0, gameH, gameW, backGround.DC_b, 0, 0, 1000, 1000, SRCCOPY
                 invoke  _draw_button, addr button_play, hWnd, button_play_LX, button_play_LY
+                invoke  _draw_button, addr button_2p_play, hWnd, button_2p_play_LX, button_2p_play_LY
                 invoke  _draw_button, addr button_start, hWnd, button_start_LX, button_start_LY
         .elseif eax == in_game
                 invoke _Move_process
 
-                invoke  TransparentBlt, hDCGame, 0, 0, gameH, gameW, backGround.DC_pd, 0, 0, 1000, 1000, SRCCOPY
+                invoke  TransparentBlt, hDCGame_ptr, 0, 0, gameH, gameW, backGround.DC_pd, 0, 0, 1000, 1000, SRCCOPY
 ;draw pause
                 invoke  _draw_button, addr button_pause, hWnd, button_pause_LX, button_pause_LY
 ;draw hp
 
                 invoke  TransparentBlt, 
-                        hDCGame, 
+                        hDCGame_ptr, 
                         HP_place_X, HP_place_Y,
                         HP_place_LX, HP_place_LY, 
                         object_DC.hp_p, 0, 0, PROP_LX, PROP_LY, 16777215
@@ -512,7 +520,7 @@ _move_object proc hWnd
                         .if [esi].base.alive == 1 && edx<cary
                                 push ecx
                                 invoke  TransparentBlt, 
-                                        hDCGame, 
+                                        hDCGame_ptr, 
                                         [esi].base.posx, [esi].base.posy, 
                                         [esi].base.lengthx, [esi].base.lengthy, 
                                         [esi].base.DC, 0, 0, PROP_LX, PROP_LY, 16777215
@@ -523,7 +531,7 @@ _move_object proc hWnd
                         inc eax
                 .endw
 ;draw car
-                invoke  TransparentBlt, hDCGame, player.base.posx, player.base.posy, player.base.lengthx, player.base.lengthy, player.base.DC, 0, 0, PLAYER_LX, PLAYER_LY, 16777215
+                invoke  TransparentBlt, hDCGame_ptr, player.base.posx, player.base.posy, player.base.lengthx, player.base.lengthy, player.base.DC, 0, 0, PLAYER_LX, PLAYER_LY, 16777215
 
 ;draw obj 1
                 mov ecx, target_number
@@ -540,7 +548,7 @@ _move_object proc hWnd
                         .if [esi].base.alive == 1 && edx>cary
                                 push ecx
                                 invoke  TransparentBlt, 
-                                        hDCGame, 
+                                        hDCGame_ptr, 
                                         [esi].base.posx, [esi].base.posy, 
                                         [esi].base.lengthx, [esi].base.lengthy, 
                                         [esi].base.DC, 0, 0, PROP_LX, PROP_LY, 16777215
@@ -554,7 +562,7 @@ _move_object proc hWnd
                 mov eax, bullet.base.alive
                 .if eax == 1
                         invoke  TransparentBlt, 
-                                hDCGame, 
+                                hDCGame_ptr, 
                                 bullet.base.posx, bullet.base.posy, 
                                 bullet.base.lengthx, bullet.base.lengthy, 
                                 bullet.base.DC, 0, 0, PROP_LX, PROP_LY, 16777215
@@ -564,17 +572,18 @@ _move_object proc hWnd
                 ; invoke printf, offset debug_int, eax   
 
                 invoke _show_score
-                invoke  TransparentBlt, hDCGame, 0, 0, gameH, gameW, backGround.DC_pu, 0, 0, 1000, 1000, 16777215
+                invoke  TransparentBlt, hDCGame_ptr, 0, 0, gameH, gameW, backGround.DC_pu, 0, 0, 1000, 1000, 16777215
         
         .elseif eax == in_intro
-                invoke  TransparentBlt, hDCGame, 0, 0, gameH, gameW, backGround.DC_i, 0, 0, 1000, 1000, SRCCOPY
+                invoke  TransparentBlt, hDCGame_ptr, 0, 0, gameH, gameW, backGround.DC_i, 0, 0, 1000, 1000, SRCCOPY
                 invoke  _draw_button, addr button_back, hWnd, button_back_LX, button_back_LY
         .elseif eax == in_over
-                invoke  TransparentBlt, hDCGame, 0, 0, gameH, gameW, backGround.DC_e, 0, 0, 1000, 1000, SRCCOPY
+                invoke  TransparentBlt, hDCGame_ptr, 0, 0, gameH, gameW, backGround.DC_e, 0, 0, 1000, 1000, SRCCOPY
                 invoke  _draw_button, addr button_exit, hWnd, button_exit_LX, button_exit_LY
                 invoke  _draw_final_score
                 invoke  _draw_button, addr button_retry, hWnd, button_retry_LX, button_retry_LY
-
+        .elseif eax == in_2p_choose
+                invoke  TransparentBlt, hDCGame_ptr, 0, 0, gameH, gameW, backGround.DC_2p_c, 0, 0, 1000, 1000, 16777215
         .endif
 ;         mov eax, object1H
 ;         mov ebx, object1W
@@ -594,7 +603,7 @@ _move_object proc hWnd
 ;         invoke  TransparentBlt, hDCGame, 10, 10, eax, ebx, 
 ;                                 env_objecet_3.DC, 0,  0,  object1H_init, object1W_init, 16777215
         ret
-_move_object endp
+_draw_object endp
 
 
 

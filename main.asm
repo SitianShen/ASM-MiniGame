@@ -12,8 +12,8 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                 local   @hDC
                 local   @stPos: POINT
 
-        invoke printf, offset debug_int, hWnd
-        invoke printf, offset debug_int, hWinMain
+        ; invoke printf, offset debug_int, hWnd
+        ; invoke printf, offset debug_int, hWinMain
         mov eax, hWnd
         .if eax == hWinMain  
                 mov     eax, uMsg
@@ -34,7 +34,7 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                 .elseif eax == WM_TIMER
                         mov     eax, wParam
                         .if     eax == ID_TIMER
-                                invoke  _move_object, hWnd
+                                invoke  _draw_object, hWnd, hDCGame
                                 mov eax, cur_interface
                                 .if eax == in_game
                                         invoke _change_all_position
@@ -55,8 +55,6 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                         .if eax == in_begining 
                                 mov eax, 1
                                 .if eax == button_play.is_click
-                                        invoke  ShowWindow, hWinMain2, SW_SHOWNORMAL
-                                        invoke  SetTimer, hWinMain2, ID_TIMER2, 15, NULL ;flush
                                         invoke _Stop_BeginBGM_SOUND
                                         invoke _BGM_SOUND
                                         mov cur_interface, in_game
@@ -66,7 +64,11 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                                 .elseif eax == button_start.is_click
                                         mov cur_interface, in_intro
                                         mov button_start.is_click, 0
-                                        
+                                .elseif eax == button_2p_play.is_click
+                                        invoke _Stop_BeginBGM_SOUND
+                                        invoke  ShowWindow, hWinMain2, SW_SHOWNORMAL
+                                        mov cur_interface, in_2p_choose
+                                        mov button_2p_play.is_click, 0
                                 .endif
                         .elseif eax == in_intro
                                 mov eax, 1
@@ -123,6 +125,36 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                 .endif
                 xor     eax, eax
                 ret
+        .elseif eax == hWinMain2
+                mov     eax, uMsg
+                .if eax == WM_PAINT
+                        invoke  BeginPaint, hWnd, addr @stPs
+                        mov     @hDC, eax
+                        mov     eax, @stPs.rcPaint.right
+                        sub     eax, @stPs.rcPaint.left
+                        mov     ecx, @stPs.rcPaint.bottom
+                        sub     ecx, @stPs.rcPaint.top
+                        invoke  BitBlt, @hDC, @stPs.rcPaint.left, @stPs.rcPaint.top, eax, ecx, hDCGame2, @stPs.rcPaint.left, @stPs.rcPaint.top, SRCCOPY
+                        invoke  EndPaint, hWnd, addr @stPs
+
+                .elseif eax == WM_TIMER
+                        mov     eax, wParam
+                        .if     eax == ID_TIMER2 
+                                invoke  _draw_object, hWnd, hDCGame2
+                                mov eax, cur_interface
+                                .if eax == in_game
+                                        invoke _change_all_position
+                                        invoke _targets_bullet_out_of_bound
+                                        invoke _two_two_enum
+                                .endif
+                                invoke  InvalidateRect, hWnd, NULL, FALSE
+                        ; .elseif eax == ID_TIMER_gene2
+                        ;         mov eax, cur_interface
+                        ;         .if eax == in_game
+                        ;                 invoke  _random_object_gene
+                        ;         .endif
+                        .endif
+                .endif
         .endif
         
         invoke  DefWindowProc, hWnd, uMsg, wParam, lParam
@@ -180,6 +212,8 @@ _WinMain        proc
         invoke  _initAll
         invoke  SetTimer, hWinMain, ID_TIMER, 15, NULL ;flush
         invoke  SetTimer, hWinMain, ID_TIMER_gene, 600, NULL ;generate
+
+        invoke  SetTimer, hWinMain2, ID_TIMER2, 15, NULL ;flush
 
         .while  TRUE
                 invoke  GetMessage, addr @stMsg, NULL, 0, 0

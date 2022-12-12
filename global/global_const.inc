@@ -30,6 +30,8 @@ in_game                 equ 1
 in_intro                equ 2
 in_over                 equ 3
 in_pause                equ 4
+in_2p_choose            equ 5
+in_2p_game              equ 6
 
 
 ;sst own
@@ -63,6 +65,7 @@ bullet_init_ly                   equ 36
 ID_TIMER        equ     1
 ID_TIMER2        equ    2
 ID_TIMER_gene   equ     3
+IDB_BACKG_2p_CHOOSE      equ     95
 IDB_BACKG_BEGINING       equ     99
 IDB_BACKG_INTRO          equ     98
 IDB_BACKG_PLAY           equ     97
@@ -93,6 +96,11 @@ IDB_BUTTON_PLAY_1  equ 309
 IDB_BUTTON_PLAY_2  equ 310
 button_play_LX     equ 200
 button_play_LY     equ 85
+
+IDB_BUTTON_2p_PLAY_1  equ 325
+IDB_BUTTON_2p_PLAY_2  equ 326
+button_2p_play_LX     equ 200
+button_2p_play_LY     equ 85
 
 IDB_BUTTON_START_1 equ 311
 IDB_BUTTON_START_2 equ 312
@@ -161,8 +169,8 @@ HP_place_LX equ 366
 HP_place_LY equ 366
 
 
-gameH           equ     600+30
-gameW           equ     600+30
+gameH           equ     600
+gameW           equ     600
 charH           equ     400
 charW           equ     400
 sizeofTargets   equ     sizeof Targets
