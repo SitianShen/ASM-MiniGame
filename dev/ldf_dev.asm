@@ -916,6 +916,9 @@ _collision_SOUND_test endp
 
 
 _collision_Player_with_medicine proc uses ebx, mainPlayer:ptr Subject, medicine_target:ptr Targets
+        ;medicine音效
+        invoke _Play_medicine_SOUND
+
         ;medicine消失
         mov ebx, medicine_target
         assume ebx: ptr Targets
@@ -993,6 +996,9 @@ _collision_Player_with_greenVirus proc uses ebx, mainPlayer: ptr Subject, greenV
 _collision_Player_with_greenVirus endp
 
 _collision_Player_with_hotPot proc uses ebx, mainPlayer: ptr Subject, hotPot_target:ptr Targets
+        ;hotPot音效
+        invoke _Play_hotPot_SOUND
+
         ;hotPot消失
         mov ebx, hotPot_target
         assume ebx: ptr Targets
@@ -1014,6 +1020,9 @@ _collision_Player_with_hotPot proc uses ebx, mainPlayer: ptr Subject, hotPot_tar
 _collision_Player_with_hotPot endp
 
 _collision_Player_with_n95mask proc uses ebx, mainPlayer: ptr Subject, n95mask_target:ptr Targets
+        ;n95mask音效
+        invoke _Play_n95mask_SOUND
+
         ;n95mask消失
         mov ebx, n95mask_target
         assume ebx: ptr Targets
@@ -1034,6 +1043,9 @@ _collision_Player_with_n95mask proc uses ebx, mainPlayer: ptr Subject, n95mask_t
 _collision_Player_with_n95mask endp
 
 _collision_Player_with_temperature proc uses ebx, mainPlayer: ptr Subject, temperature_target:ptr Targets
+        ;temperature音效
+        invoke _Stop_temperature_SOUND
+
         ;temperature消失
         mov ebx, temperature_target
         assume ebx: ptr Targets
@@ -1347,12 +1359,12 @@ _two_two_enum_symbiotic_test proc
         ret
 _two_two_enum_symbiotic_test endp
 
-start:
-        ; invoke _Open_ALL_SOUND
-        ; invoke _collision_SOUND_test
-        ; invoke _Close_ALL_SOUND
-        ; invoke printHelloWorld
-        invoke _two_two_enum_symbiotic_test
-        ret
-end     start
-; end
+; start:
+;         ; invoke _Open_ALL_SOUND
+;         ; invoke _collision_SOUND_test
+;         ; invoke _Close_ALL_SOUND
+;         ; invoke printHelloWorld
+;         invoke _two_two_enum_symbiotic_test
+;         ret
+; end     start
+end
