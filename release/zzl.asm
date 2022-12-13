@@ -389,12 +389,12 @@ _set_char_pos proc
         mov button_changeR.base.lengthy, button_pause_rel_LY/3*2
 
         mov button_left.base.posx, 410
-        mov button_left.base.posy, 440
+        mov button_left.base.posy, 400
         mov button_left.base.lengthx, button_lr_LX
         mov button_left.base.lengthy, button_lr_LY
 
-        mov button_right.base.posx, 450
-        mov button_right.base.posy, 440
+        mov button_right.base.posx, 490
+        mov button_right.base.posy, 400
         mov button_right.base.lengthx, button_lr_LX
         mov button_right.base.lengthy, button_lr_LY
         ret
