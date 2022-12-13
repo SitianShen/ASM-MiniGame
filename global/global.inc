@@ -66,6 +66,7 @@ object1H         dd     57
 object1W         dd     86
 object_move_v    dd     1
 POSCNT          dd      0; NEXTPOS的计数器
+TESTCNT          dd      0
 change_two_status_cnt   dd  0
 
 

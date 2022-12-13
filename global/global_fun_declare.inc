@@ -145,6 +145,7 @@ _check_player_effect proto :ptr Subject
 _check_all_effect proto :ptr Subject, :ptr Subject
 _change_status proto :ptr Subject, :ptr Subject
 _change_all_position_symbiotic proto
+_targets_bullet_out_of_bound_symbiotic proto
 
 ;========================= sst sst sst sst ============================
 ; sst functions

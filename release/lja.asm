@@ -23,7 +23,7 @@ _next_position proc stdcall ptrBase :ptr BASE
 
         local @TMP :dword
         mov @TMP, 0
-
+        ; invoke printf, offset debug_int, TESTCNT
         inc POSCNT
         mov eax, POSCNT
         .if eax > 1024
@@ -54,6 +54,9 @@ _next_position proc stdcall ptrBase :ptr BASE
 
                 mov eax, base_speed
                 add [esi].posy, eax
+
+                mov edx, [esi].posy
+                ; invoke printf, offset debug_int, [esi].posy
                 mov ecx, POSCNT
                 and ecx, 3
                 .if ecx == 0
@@ -396,6 +399,8 @@ _change_all_position_symbiotic proc stdcall       ; 双人模式遍历所有道�
         ; .if eax > 1024
         ;         mov POSCNT, 0
         ; .endif
+        inc TESTCNT
+
         mov eax, speed
         mov edx, 0
         mov ebx, 0
@@ -406,6 +411,7 @@ _change_all_position_symbiotic proc stdcall       ; 双人模式遍历所有道�
         pop ecx
         and eax, ecx
         .if eax == 0 
+
                 mov ecx, target_number_one
                 xor eax, eax
                 .while eax < ecx
@@ -456,6 +462,75 @@ _change_all_position_symbiotic proc stdcall       ; 双人模式遍历所有道�
         .endif
 ret
 _change_all_position_symbiotic endp
+
+_targets_bullet_out_of_bound_symbiotic proc
+        ; 判断道具越界
+        mov ecx, target_number_one
+        xor eax, eax
+        .while eax < ecx
+                push eax
+                mov edx, 0
+                mov ebx, sizeofTargets
+                mul ebx
+                lea esi, targetsOne[eax]
+                assume esi :ptr Targets
+                .if [esi].base.alive == 1
+                        ; invoke printf, debug_int, [esi].base.posy
+                        .if [esi].base.posx <= 10 || [esi].base.posx >= gameW-100 \
+                        || [esi].base.posy <= 10 || [esi].base.posy >= gameH-130
+                                mov [esi].base.alive, 0
+                        .endif
+                .endif
+                assume esi: nothing
+                pop eax
+                inc eax
+        .endw
+
+        mov ecx, target_number_two
+        xor eax, eax
+        .while eax < ecx
+                push eax
+                mov edx, 0
+                mov ebx, sizeofTargets
+                mul ebx
+                lea esi, targetsTwo[eax]
+                assume esi :ptr Targets
+                .if [esi].base.alive == 1
+                        ; invoke printf, debug_int, [esi].base.posy
+                        .if [esi].base.posx <= 10 || [esi].base.posx >= gameW-100 \
+                        || [esi].base.posy <= 10 || [esi].base.posy >= gameH-130
+                                mov [esi].base.alive, 0
+                        .endif
+                .endif
+                assume esi: nothing
+                pop eax
+                inc eax
+        .endw
+
+        ; 判断子弹越界
+        .if bulletOne.base.alive == 1
+                .if bulletOne.base.posx <= 10 || bulletOne.base.posx >= gameW-100 \
+                || bulletOne.base.posy <= 10 || bulletOne.base.posy >= gameW-130
+                        mov bulletOne.base.alive, 0
+                .endif
+                .if bulletOne.base.posy < 230
+                        mov bulletOne.base.alive, 0
+                .endif
+        .endif
+        
+        .if bulletTwo.base.alive == 1
+                .if bulletTwo.base.posx <= 10 || bulletTwo.base.posx >= gameW-100 \
+                || bulletTwo.base.posy <= 10 || bulletTwo.base.posy >= gameW-130
+                        mov bulletTwo.base.alive, 0
+                .endif
+                .if bulletTwo.base.posy < 230
+                        mov bulletTwo.base.alive, 0
+                .endif
+        .endif
+ret
+
+_targets_bullet_out_of_bound_symbiotic endp
+
 
 
 

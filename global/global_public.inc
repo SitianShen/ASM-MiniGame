@@ -46,6 +46,8 @@ public object1H
 public object1W      
 public object_move_v  
 public POSCNT
+public TESTCNT
+
 public change_two_status_cnt
 
 
