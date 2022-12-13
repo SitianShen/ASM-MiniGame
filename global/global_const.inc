@@ -97,23 +97,23 @@ button_exit_LY     equ 84
 
 IDB_BUTTON_PLAY_1  equ 309
 IDB_BUTTON_PLAY_2  equ 310
-button_play_LX     equ 200
-button_play_LY     equ 85
+button_play_LX     equ 184
+button_play_LY     equ 86
 
 IDB_BUTTON_2p_PLAY_1  equ 325
 IDB_BUTTON_2p_PLAY_2  equ 326
-button_2p_play_LX     equ 200
-button_2p_play_LY     equ 85
+button_2p_play_LX     equ 184
+button_2p_play_LY     equ 86
 
 IDB_BUTTON_2p_LOAD_1 equ 327
 IDB_BUTTON_2p_LOAD_2 equ 328
-button_2p_load_LX equ 200
-button_2p_load_LY equ 85
+button_2p_load_LX equ 184
+button_2p_load_LY equ 86
 
 IDB_BUTTON_START_1 equ 311
 IDB_BUTTON_START_2 equ 312
-button_start_LX     equ 265
-button_start_LY     equ 83
+button_start_LX     equ 184
+button_start_LY     equ 86
 
 PROP_LX equ 500
 PROP_LY equ 500

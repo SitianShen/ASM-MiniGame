@@ -96,6 +96,7 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                         ;         .endif
                         .endif
                 .elseif eax == WM_KEYDOWN  
+                .elseif eax == WM_LBUTTONUP
                 .else
                         invoke  DefWindowProc, hWnd, uMsg, wParam, lParam
                         ret
@@ -246,8 +247,8 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                                 mov button_retry.is_click, 0
                         .endif
                 .elseif eax == in_game
-                        mov eax, 1
-                        .if eax == button_pause.is_click
+                        mov eax, 0
+                        .if eax != button_pause.is_click
                                 mov cur_interface, in_pause
                         .endif
                 .elseif eax == in_pause
@@ -257,8 +258,8 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                                 mov button_pause.is_click, 0
                         .endif
                 .elseif eax == in_2p_game
-                        mov eax, 1
-                        .if eax == button_pause.is_click
+                        invoke _check_button, addr button_pause, hWnd
+                        .if eax == 1
                                 mov cur_interface, in_2p_pause
                         .endif
                 .elseif eax == in_2p_pause

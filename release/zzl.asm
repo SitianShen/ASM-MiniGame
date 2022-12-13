@@ -221,7 +221,7 @@ _set_char_pos proc
         mov button_start.base.lengthy, button_start_LY
 
         mov button_back.base.posx, 410
-        mov button_back.base.posy, 500
+        mov button_back.base.posy, 480
         mov button_back.base.lengthx, button_back_LX/2
         mov button_back.base.lengthy, button_back_LY/2
 
@@ -402,6 +402,31 @@ _Quit           proc
         ; invoke  DestroyMenu, hMenu
         ret
 _Quit           endp
+
+_check_button proc button:ptr Button, hWnd
+        local @mouse:POINT
+        local @window:RECT
+        local @result
+        invoke	GetCursorPos,addr @mouse
+        invoke  ScreenToClient, hWnd, addr @mouse
+
+        mov esi, button
+        assume esi :ptr Button
+
+        mov eax, [esi].base.posx
+        mov ebx, [esi].base.posy
+
+        mov @result, 0
+        .if (eax <= @mouse.x) && (ebx <= @mouse.y)
+                add eax, [esi].base.lengthx
+                add ebx, [esi].base.lengthy
+                .if (eax >= @mouse.x) && (ebx >= @mouse.y)
+                        mov @result, 1
+                .endif
+        .endif
+        mov eax, @result
+        ret
+_check_button endp
 
 _draw_button proc button:ptr Button, hWnd, LX, LY, hDCGame_ptr
         local @mouse:POINT
