@@ -1157,10 +1157,10 @@ _draw_object proc uses eax ebx ecx edx edi esi, hWnd, hDCGame_ptr, player_addr: 
                 assume esi: ptr Subject
                 .if [esi].base.alive == 0
                         invoke  TransparentBlt, hDCGame_ptr, 0, 0, gameH, gameW, backGround.DC_ov_l, 0, 0, 1000, 1000, SRCCOPY
-                        invoke _draw_final_score2p, hDCGame_ptr, [esi].score, 0,0,100,100,20
+                        invoke _draw_final_score2p, hDCGame_ptr, [esi].score, 330,335,40,40,20
                 .else
                         invoke  TransparentBlt, hDCGame_ptr, 0, 0, gameH, gameW, backGround.DC_ov_w, 0, 0, 1000, 1000, SRCCOPY
-                        invoke _draw_final_score2p, hDCGame_ptr, [esi].score, 0,0,100,100,20
+                        invoke _draw_final_score2p, hDCGame_ptr, [esi].score, 530,330,40,40,20
                 .endif
                 mov esi, player_addr
                 assume esi: ptr Subject
