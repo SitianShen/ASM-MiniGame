@@ -30,6 +30,8 @@ button_pause      Button <>
 button_continue      Button <>
 button_save      Button <>
 button_changeR      Button <>
+button_left      Button <>
+button_right      Button <>
 backGround        BackGround <>
 object_DC         Object_DC <>
 playerList        PlayerList<>

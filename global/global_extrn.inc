@@ -17,6 +17,8 @@ extrn button_pause:Button
 extrn button_continue:Button   
 extrn button_save:Button   
 extrn button_changeR:Button   
+extrn button_left:Button   
+extrn button_right:Button   
 extrn backGround:BackGround       
 extrn object_DC:Object_DC     
 extrn playerList:PlayerList

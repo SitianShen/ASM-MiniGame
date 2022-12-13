@@ -1,12 +1,14 @@
 # include   <resource.h>
 
+# define IDB_BACKG_INTRO    80
+# define IDB_BACKG_INTRO2    81
+# define IDB_BACKG_INTRO3    82
 # define IDB_BACKG_2p_CHOOSECONFIRM 94
 # define IDB_BACKG_2p_CHOOSE      95
 # define IDB_BACKG_END      96
 # define IDB_BACKG_PLAY     97
 # define IDB_BACKG_PLAYU    90
 # define IDB_BACKG_PLAYD    91
-# define IDB_BACKG_INTRO    98
 # define IDB_BACKG_BEGINING 99
 # define IDB_BACKG          100
 # define IDB_OBJ1           101
@@ -43,6 +45,11 @@
 # define IDB_BUTTON_2p_PLAY_2  326
 # define IDB_BUTTON_2p_LOAD_1 327
 # define IDB_BUTTON_2p_LOAD_2 328
+
+# define IDB_BUTTON_LEFT_1         329
+# define IDB_BUTTON_LEFT_2         330
+# define IDB_BUTTON_RIGHT_1        331
+# define IDB_BUTTON_RIGHT_2        332
 
 # define IDB_PLAYER          400
 # define IDB_PLAYER1_1       401
@@ -90,7 +97,6 @@ IDB_BACKG_2p_CHOOSECONFIRM      BITMAP      "resource/background_2p_choose_confi
 IDB_BACKG_2p_CHOOSE BITMAP      "resource/background_2p_choose.bmp"
 IDB_BACKG           BITMAP      "resource/background.bmp"
 IDB_BACKG_BEGINING  BITMAP      "resource/background_begining.bmp"
-IDB_BACKG_INTRO     BITMAP      "resource/background_intro.bmp"
 IDB_BACKG_PLAY      BITMAP      "resource/background_play.bmp"
 IDB_BACKG_PLAYD     BITMAP      "resource/background_play_down.bmp"
 IDB_BACKG_PLAYU     BITMAP      "resource/background_play_up.bmp"
@@ -175,3 +181,14 @@ IDB_PROP_TEMP               BITMAP     "resource/prop_thermometer.bmp"
 IDB_SPE_SOFT_INFECT         BITMAP     "resource/spe_soft_infected.bmp"
 IDB_SPE_INFECT              BITMAP     "resource/spe_infected.bmp"
 IDB_SPE_CANT_INFECT         BITMAP     "resource/spe_cant_infected.bmp"
+
+
+IDB_BUTTON_LEFT_1         BITMAP      "resource/button_left_1.bmp"
+IDB_BUTTON_LEFT_2         BITMAP      "resource/button_left_2.bmp"
+IDB_BUTTON_RIGHT_1        BITMAP      "resource/button_right_1.bmp"
+IDB_BUTTON_RIGHT_2        BITMAP      "resource/button_right_2.bmp"
+
+
+IDB_BACKG_INTRO     BITMAP      "resource/background_intro.bmp"
+IDB_BACKG_INTRO2     BITMAP      "resource/background_intro2.bmp"
+IDB_BACKG_INTRO3     BITMAP      "resource/background_intro3.bmp"

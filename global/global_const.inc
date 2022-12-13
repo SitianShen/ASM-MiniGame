@@ -68,10 +68,13 @@ ID_TIMER        equ     1
 ID_TIMER2        equ    2
 ID_TIMER_gene   equ     3
 ID_TIMER_gene2  equ     4
+
+IDB_BACKG_INTRO   equ  80
+IDB_BACKG_INTRO2  equ  81
+IDB_BACKG_INTRO3  equ  82
 IDB_BACKG_2p_CHOOSECONFIRM equ   94
 IDB_BACKG_2p_CHOOSE      equ     95
 IDB_BACKG_BEGINING       equ     99
-IDB_BACKG_INTRO          equ     98
 IDB_BACKG_PLAY           equ     97
 IDB_BACKG_PLAYU          equ     90
 IDB_BACKG_PLAYD          equ     91
@@ -115,6 +118,14 @@ IDB_BUTTON_START_1 equ 311
 IDB_BUTTON_START_2 equ 312
 button_start_LX     equ 184
 button_start_LY     equ 86
+
+
+IDB_BUTTON_LEFT_1     equ     329
+IDB_BUTTON_LEFT_2     equ     330
+IDB_BUTTON_RIGHT_1    equ     331
+IDB_BUTTON_RIGHT_2    equ     332
+button_lr_LX equ 80
+button_lr_LY equ 80
 
 
 IDB_BUTTON_SAVE_1      equ  601

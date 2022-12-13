@@ -43,6 +43,8 @@ BackGround struct
         DC_pu   dd      ?
         DC_pd   dd      ?
         DC_i    dd      ?
+        DC_i2    dd      ?
+        DC_i3    dd      ?
         DC_e    dd      ?
         DC_2p_c dd      ?
         DC_2p_cc dd     ?

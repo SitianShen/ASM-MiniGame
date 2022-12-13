@@ -11,6 +11,8 @@ public button_back
 public button_exit    
 public button_retry
 public button_pause  
+public button_left 
+public button_right  
 public button_continue
 public button_save
 public button_changeR

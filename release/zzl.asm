@@ -387,6 +387,16 @@ _set_char_pos proc
         mov button_changeR.base.posy, 322
         mov button_changeR.base.lengthx, button_pause_rel_LX/3*2
         mov button_changeR.base.lengthy, button_pause_rel_LY/3*2
+
+        mov button_left.base.posx, 410
+        mov button_left.base.posy, 440
+        mov button_left.base.lengthx, button_lr_LX
+        mov button_left.base.lengthy, button_lr_LY
+
+        mov button_right.base.posx, 450
+        mov button_right.base.posy, 440
+        mov button_right.base.lengthx, button_lr_LX
+        mov button_right.base.lengthy, button_lr_LY
         ret
 _set_char_pos endp
 
@@ -477,6 +487,8 @@ _createAll proc
 ;backgrounds
         invoke  _load_common_pic, addr backGround.DC_b, IDB_BACKG_BEGINING
         invoke  _load_common_pic, addr backGround.DC_i, IDB_BACKG_INTRO
+        invoke  _load_common_pic, addr backGround.DC_i2, IDB_BACKG_INTRO2
+        invoke  _load_common_pic, addr backGround.DC_i3, IDB_BACKG_INTRO3
         invoke  _load_common_pic, addr backGround.DC_pu, IDB_BACKG_PLAYU
         invoke  _load_common_pic, addr backGround.DC_pd, IDB_BACKG_PLAYD
         invoke  _load_common_pic, addr backGround.DC_e, IDB_BACKG_END
@@ -522,6 +534,8 @@ _createAll proc
         invoke _load_button, addr button_save, IDB_BUTTON_SAVE_1,  IDB_BUTTON_SAVE_2
         invoke _load_button, addr button_continue, IDB_BUTTON_CONTINUE_1,  IDB_BUTTON_CONTINUE_2
         invoke _load_button, addr button_changeR, IDB_BUTTON_CHANGER_1,  IDB_BUTTON_CHANGER_2
+        invoke _load_button, addr button_left, IDB_BUTTON_LEFT_1,  IDB_BUTTON_LEFT_2
+        invoke _load_button, addr button_right, IDB_BUTTON_RIGHT_1,  IDB_BUTTON_RIGHT_2
         invoke _set_char_pos
 ;set car
         invoke  _load_common_pic, addr player.base.DC, IDB_PLAYER
@@ -884,6 +898,9 @@ _draw_object proc hWnd, hDCGame_ptr, player_addr: ptr Subject, @targets_ptr: ptr
                 .if eax == hWinMain
                         invoke  TransparentBlt, hDCGame_ptr, 0, 0, gameH, gameW, backGround.DC_i, 0, 0, 1000, 1000, SRCCOPY
                         invoke  _draw_button, addr button_back, hWnd, button_back_LX, button_back_LY, hDCGame_ptr
+                        invoke  _draw_button, addr button_left, hWnd, button_lr_LX, button_lr_LY, hDCGame_ptr
+                        invoke  _draw_button, addr button_right, hWnd, button_lr_LX, button_lr_LY, hDCGame_ptr
+
                 .endif
         .elseif eax == in_over
                 mov eax, hWnd
