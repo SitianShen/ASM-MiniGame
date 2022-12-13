@@ -20,8 +20,16 @@ _next_position proc stdcall ptrBase :ptr BASE
         ; local @randnum :dword
         ; invoke rand
         ; mov @randnum, eax
+
         local @TMP :dword
         mov @TMP, 0
+
+        inc POSCNT
+        mov eax, POSCNT
+        .if eax > 1024
+                mov POSCNT, 0
+        .endif
+
         mov esi, ptrBase
         assume  esi: ptr BASE
         mov ecx, [esi].course_id
@@ -185,11 +193,11 @@ ret
 _next_position endp 
 
 _change_all_position proc stdcall       ;遍历所有道具改变位置
-        inc POSCNT
-        mov eax, POSCNT
-        .if eax > 1024
-                mov POSCNT, 0
-        .endif
+        ; inc POSCNT
+        ; mov eax, POSCNT
+        ; .if eax > 1024
+        ;         mov POSCNT, 0
+        ; .endif
 
         .if speed_acc_time 
                 dec speed_acc_time
@@ -383,6 +391,11 @@ _change_status endp
 
 _change_all_position_symbiotic proc stdcall       ; 双人模式遍历所有道具改变位置
 
+        ; inc POSCNT
+        ; mov eax, POSCNT
+        ; .if eax > 1024
+        ;         mov POSCNT, 0
+        ; .endif
         mov eax, speed
         mov edx, 0
         mov ebx, 0
