@@ -1422,8 +1422,29 @@ _typeid_to_picHandle proc mainTargets:dword, mainTargetsNumber:dword
                 inc @target_number_index
         .endw   
 
-        mov @playerOneCurid, playerOne.
+        mov eax, playerOne.curid
+        mov @playerOneCurid, eax
 
+        mov eax, playerTwo.curid
+        mov @playerTwoCurid, eax
+
+        mov eax, @playerOneCurid
+        shl eax, 1 ;0 2 4 6
+        shl eax, 2 ;dword4字节偏移
+        lea ebx, playerList.DC
+        add ebx, eax
+        assume ebx:ptr dword
+        mov eax, [ebx]
+        mov playerOne.base.DC, eax
+
+        mov eax, @playerTwoCurid
+        shl eax, 1 ;0 2 4 6
+        shl eax, 2 ;dword4字节偏移
+        lea ebx, playerList2.DC
+        assume ebx:ptr dword
+        add ebx, eax
+        mov eax, [ebx]
+        mov playerTwo.base.DC, eax
 
         ret     
 _typeid_to_picHandle endp
