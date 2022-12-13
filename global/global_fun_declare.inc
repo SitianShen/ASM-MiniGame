@@ -24,7 +24,7 @@ _deleteAll proto ;
 _Quit proto ;结束游戏
 _draw_button proto :ptr Button, :dword, :dword, :dword, :dword ;画按钮
 _draw_object proto :dword, :dword, :ptr Subject, :ptr Targets, :dword ;画Targets
-_show_score proto :dword ;显示分数
+_show_score proto :dword, :dword ;显示分数
 _shot_bullet proto ;发射子弹
 _init_2p_mode proto ;
 _load_game proto :dword, :dword, :dword, :dword

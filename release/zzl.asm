@@ -612,13 +612,15 @@ _draw_button proc button:ptr Button, hWnd, LX, LY, hDCGame_ptr
         ret
 _draw_button endp
 
-_show_score proc hDCGame_ptr
+_show_score proc hDCGame_ptr, @player
         local @digit
 
         mov ecx, scoreBoard_lst_X
         mov edx, scoreBoard_lst_Y
         
-        mov eax, player.score
+        mov esi, @player
+        assume esi: ptr Subject
+        mov eax, [esi].score
         .repeat
                 push ecx
                 push edx
@@ -874,7 +876,7 @@ _draw_object proc hWnd, hDCGame_ptr, player_addr: ptr Subject, @targets_ptr: ptr
                         ; invoke        GetLastError
                         ; invoke printf, offset debug_int, eax   
 
-                        invoke _show_score, hDCGame_ptr
+                        invoke _show_score, hDCGame_ptr, addr player
                         invoke  TransparentBlt, hDCGame_ptr, 0, 0, gameH, gameW, backGround.DC_pu, 0, 0, 1000, 1000, 16777215
                 .endif
         .elseif eax == in_intro
@@ -1006,6 +1008,8 @@ _draw_object proc hWnd, hDCGame_ptr, player_addr: ptr Subject, @targets_ptr: ptr
                         object_DC.hp_p, 0, 0, PROP_LX, PROP_LY, 16777215
 
                 invoke _show_lifes, hDCGame_ptr, player_addr
+;draw score
+                invoke _show_score, hDCGame_ptr, player_addr
 ;
 
                 invoke  TransparentBlt, hDCGame_ptr, 0, 0, gameH, gameW, backGround.DC_pu, 0, 0, 1000, 1000, 16777215
