@@ -218,6 +218,10 @@ player_pic_choose_LX equ 200
 player_pic_choose_LY equ 200
 player_pic_choose_each_LX equ 140
 
+IDB_SPE_SOFT_INFECT equ   800
+IDB_SPE_INFECT      equ   801
+IDB_SPE_CANT_INFECT equ   802
+
 
 
 gameH           equ     600

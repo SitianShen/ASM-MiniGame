@@ -82,6 +82,10 @@
 # define IDB_PROP_GREENVIR   704
 # define IDB_PROP_TEMP       705
 
+# define IDB_SPE_SOFT_INFECT   800
+# define IDB_SPE_INFECT        801
+# define IDB_SPE_CANT_INFECT   802
+
 IDB_BACKG_2p_CHOOSECONFIRM      BITMAP      "resource/background_2p_choose_confirm.bmp"
 IDB_BACKG_2p_CHOOSE BITMAP      "resource/background_2p_choose.bmp"
 IDB_BACKG           BITMAP      "resource/background.bmp"
@@ -167,3 +171,7 @@ IDB_PROP_MEDICINE           BITMAP     "resource/prop_medicine.bmp"
 IDB_PROP_REDVIR             BITMAP     "resource/prop_obsthard.bmp"
 IDB_PROP_GREENVIR           BITMAP     "resource/prop_obstsoft.bmp"
 IDB_PROP_TEMP               BITMAP     "resource/prop_thermometer.bmp"
+
+IDB_SPE_SOFT_INFECT         BITMAP     "resource/spe_soft_infected.bmp"
+IDB_SPE_INFECT              BITMAP     "resource/spe_infected.bmp"
+IDB_SPE_CANT_INFECT         BITMAP     "resource/spe_cant_infected.bmp"

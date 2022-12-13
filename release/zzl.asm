@@ -13,11 +13,11 @@ _save_game proc @player_ptr, @targets_ptr, @target_number_ptr, @fileName
         invoke CreateFile, @fileName, GENERIC_WRITE, 0, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL
         mov @hFile, eax
         invoke WriteFile, @hFile, @player_ptr,  sizeof Subject, addr @tmp, NULL
-        invoke printf, offset debug_int, @tmp   
+        ; invoke printf, offset debug_int, @tmp   
         invoke WriteFile, @hFile, @targets_ptr, 1000*sizeof Targets, addr @tmp, NULL
-        invoke printf, offset debug_int, @tmp   
+        ; invoke printf, offset debug_int, @tmp   
         invoke WriteFile, @hFile, @target_number_ptr, sizeof dword, addr @tmp, NULL
-        invoke printf, offset debug_int, @tmp   
+        ; invoke printf, offset debug_int, @tmp   
         invoke CloseHandle, @hFile
         ret
 _save_game endp
@@ -31,11 +31,12 @@ _load_game proc @player_ptr, @targets_ptr, @target_number_ptr, @fileName
         .endif
         mov @hFile, eax
         invoke ReadFile, @hFile, @player_ptr,  sizeof Subject, addr @tmp, NULL
-        invoke printf, offset debug_int, @tmp   
+        ; invoke printf, offset debug_int, @tmp   
         invoke ReadFile, @hFile, @targets_ptr, 1000*sizeof Targets, addr @tmp, NULL
-        invoke printf, offset debug_int, @tmp   
+        ; invoke printf, offset debug_int, @tmp   
         invoke ReadFile, @hFile, @target_number_ptr, sizeof dword, addr @tmp, NULL
-        invoke printf, offset debug_int, @tmp  
+        ; invoke printf, offset debug_int, @tmp  
+        invoke _typeid_to_picHandle, @targets_ptr, @target_number_ptr
         invoke CloseHandle, @hFile
         xor eax, eax
         ret
@@ -494,15 +495,18 @@ _createAll proc
         invoke  _load_common_pic, addr object_DC.hp_p, IDB_HPP
         invoke  _load_common_pic, addr object_DC.bltL, IDB_PROP_BULLETL
         invoke  _load_common_pic, addr object_DC.bltM, IDB_PROP_BULLETM
-        invoke  _load_common_pic, addr object_DC.bltR, IDB_PROP_BULLETR  
-        
+        invoke  _load_common_pic, addr object_DC.bltR, IDB_PROP_BULLETR  ;
+;2p new 
         invoke  _load_common_pic, addr object_DC.medicine, IDB_medicine  
         invoke  _load_common_pic, addr object_DC.redVirus, IDB_redVirus  
         invoke  _load_common_pic, addr object_DC.greenVirus, IDB_greenVirus  
         invoke  _load_common_pic, addr object_DC.hotPot, IDB_hotPot  
         invoke  _load_common_pic, addr object_DC.n95mask, IDB_n95mask  
         invoke  _load_common_pic, addr object_DC.temperature, IDB_temperature  
-
+;special effect   
+        invoke  _load_common_pic, addr object_DC.soft_inf, IDB_SPE_SOFT_INFECT
+        invoke  _load_common_pic, addr object_DC.infected, IDB_SPE_INFECT  
+        invoke  _load_common_pic, addr object_DC.cant_inf, IDB_SPE_CANT_INFECT  
 ;pause window
         invoke  _load_common_pic, addr object_DC.pauw, IDB_PAUSE_WINDOW      
 
@@ -945,6 +949,24 @@ _draw_object proc hWnd, hDCGame_ptr, player_addr: ptr Subject, @targets_ptr: ptr
                 .endw
 
 ; draw car     
+                mov esi, player_addr
+                assume esi: ptr Subject
+                mov edx, 0
+                .if [esi].status == Immunity
+                        mov edx, object_DC.cant_inf
+                .elseif [esi].status == Asymptomatic
+                        mov edx, object_DC.soft_inf
+                .elseif [esi].status == Infection
+                        mov edx, object_DC.infected
+                .endif
+                .if [esi].status != Exposure
+                        invoke  TransparentBlt, hDCGame_ptr, 
+                                [esi].base.posx, [esi].base.posy, [esi].base.lengthx, [esi].base.lengthy, 
+                                edx, 0, 0, PLAYER_LX, PLAYER_LY, 16777215                        
+                .endif
+
+                
+
                 mov esi, player_addr
                 assume esi: ptr Subject
                 invoke  TransparentBlt, hDCGame_ptr, [esi].base.posx, [esi].base.posy, [esi].base.lengthx, [esi].base.lengthy, [esi].base.DC, 0, 0, PLAYER_LX, PLAYER_LY, 16777215
