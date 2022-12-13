@@ -1376,6 +1376,8 @@ _typeid_to_picHandle proc mainTargets:dword, mainTargetsNumber:dword
         local @target_number_index
         local @targetByteOffset
 
+        local @playerOneCurid,@playerTwoCurid
+
         mov @targetByteOffset, 0
         mov @target_number_index, 0
 
@@ -1419,6 +1421,9 @@ _typeid_to_picHandle proc mainTargets:dword, mainTargetsNumber:dword
                 ;递增index
                 inc @target_number_index
         .endw   
+
+        mov @playerOneCurid, playerOne.
+
 
         ret     
 _typeid_to_picHandle endp
