@@ -383,6 +383,11 @@ _change_status endp
 
 _change_all_position_symbiotic proc stdcall       ; 双人模式遍历所有道具改变位置
 
+        inc POSCNT
+        mov eax, POSCNT
+        .if eax > 1024
+                mov POSCNT, 0
+        .endif
         mov eax, speed
         mov edx, 0
         mov ebx, 0
