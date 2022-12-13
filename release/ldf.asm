@@ -1392,7 +1392,6 @@ _typeid_to_picHandle proc mainTargets:dword, mainTargetsNumber:dword
                 add eax, @targetByteOffset
                 mov esi, eax
                 assume esi:ptr Targets
-
                 .if [esi].typeid == medicine ;药    
                         mov eax, object_DC.medicine         
                         mov [esi].base.DC, eax

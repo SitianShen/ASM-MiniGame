@@ -13,11 +13,11 @@ _save_game proc @player_ptr, @targets_ptr, @target_number_ptr, @fileName
         invoke CreateFile, @fileName, GENERIC_WRITE, 0, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL
         mov @hFile, eax
         invoke WriteFile, @hFile, @player_ptr,  sizeof Subject, addr @tmp, NULL
-        invoke printf, offset debug_int, @tmp   
+        ; invoke printf, offset debug_int, @tmp   
         invoke WriteFile, @hFile, @targets_ptr, 1000*sizeof Targets, addr @tmp, NULL
-        invoke printf, offset debug_int, @tmp   
+        ; invoke printf, offset debug_int, @tmp   
         invoke WriteFile, @hFile, @target_number_ptr, sizeof dword, addr @tmp, NULL
-        invoke printf, offset debug_int, @tmp   
+        ; invoke printf, offset debug_int, @tmp   
         invoke CloseHandle, @hFile
         ret
 _save_game endp
@@ -31,11 +31,12 @@ _load_game proc @player_ptr, @targets_ptr, @target_number_ptr, @fileName
         .endif
         mov @hFile, eax
         invoke ReadFile, @hFile, @player_ptr,  sizeof Subject, addr @tmp, NULL
-        invoke printf, offset debug_int, @tmp   
+        ; invoke printf, offset debug_int, @tmp   
         invoke ReadFile, @hFile, @targets_ptr, 1000*sizeof Targets, addr @tmp, NULL
-        invoke printf, offset debug_int, @tmp   
+        ; invoke printf, offset debug_int, @tmp   
         invoke ReadFile, @hFile, @target_number_ptr, sizeof dword, addr @tmp, NULL
-        invoke printf, offset debug_int, @tmp  
+        ; invoke printf, offset debug_int, @tmp  
+        invoke _typeid_to_picHandle, @targets_ptr, @target_number_ptr
         invoke CloseHandle, @hFile
         xor eax, eax
         ret
