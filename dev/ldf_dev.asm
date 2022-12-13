@@ -1109,7 +1109,7 @@ _two_two_enum_symbiotic  proc uses esi ebx ecx, mainPlayer:ptr Subject, mainTarg
 
                 ; 判断逻辑
                 .if [esi].typeid == medicine ;药
-                        .if flag_jump == 1
+                        .if [esi].flag_jump == 1
                                 mov @collisionFlag, 0
                         .else
                                 mov ebx, mainPlayer
@@ -1126,7 +1126,7 @@ _two_two_enum_symbiotic  proc uses esi ebx ecx, mainPlayer:ptr Subject, mainTarg
                         ; invoke printf, offset debug_int, [esi].typeid
 
                 .elseif [esi].typeid == redVirus ;红色病毒
-                        .if flag_jump == 1
+                        .if [esi].flag_jump == 1
                                 mov @collisionFlag, 0
                         .else
                                 mov ebx, mainPlayer
@@ -1143,7 +1143,7 @@ _two_two_enum_symbiotic  proc uses esi ebx ecx, mainPlayer:ptr Subject, mainTarg
                         ; invoke printf, offset debug_int, [esi].typeid
 
                 .elseif [esi].typeid == greenVirus ;绿色病毒
-                        .if flag_jump == 1
+                        .if [esi].flag_jump == 1
                                 mov @collisionFlag, 0
                         .else
                                 mov ebx, mainPlayer
@@ -1160,7 +1160,7 @@ _two_two_enum_symbiotic  proc uses esi ebx ecx, mainPlayer:ptr Subject, mainTarg
                         ; invoke printf, offset debug_int, [esi].typeid
 
                 .elseif [esi].typeid == hotPot ;火锅
-                        .if flag_jump == 1
+                        .if [esi].flag_jump == 1
                                 mov @collisionFlag, 0
                         .else
                                 mov ebx, mainPlayer
@@ -1177,7 +1177,7 @@ _two_two_enum_symbiotic  proc uses esi ebx ecx, mainPlayer:ptr Subject, mainTarg
                         ; invoke printf, offset debug_int, [esi].typeid
 
                 .elseif [esi].typeid == n95mask ;口罩
-                        .if flag_jump == 1
+                        .if [esi].flag_jump == 1
                                 mov @collisionFlag, 0
                         .else
                                 mov ebx, mainPlayer
@@ -1194,7 +1194,7 @@ _two_two_enum_symbiotic  proc uses esi ebx ecx, mainPlayer:ptr Subject, mainTarg
 
                         ; invoke printf, offset debug_int, [esi].typeid
                 .elseif [esi].typeid == temperature ;测温计
-                        .if flag_jump == 1
+                        .if [esi].flag_jump == 1
                                 mov @collisionFlag, 0
                         .else
                                 mov ebx, mainPlayer
