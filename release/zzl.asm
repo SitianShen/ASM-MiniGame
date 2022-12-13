@@ -844,10 +844,8 @@ _draw_player_choose endp
 _draw_object proc uses eax ebx ecx edx edi esi, hWnd, hDCGame_ptr, player_addr: ptr Subject, @targets_ptr: ptr Targets, @target_number
         local @mouse:POINT
         local @window:RECT
-        local @bubblex:dword
-        local @bubbley:dword
-        local @bubblew:dword
-        local @bubbleh:dword
+        local @bubblex:dword,@bubbley:dword,@bubblew:dword,@bubbleh:dword
+        local @carx, @cary, @carlx, @carly
 
         .if player.base.alive == 0 && cur_interface == in_game
                 invoke _Stop_BGM_SOUND
@@ -1082,10 +1080,25 @@ _draw_object proc uses eax ebx ecx edx edi esi, hWnd, hDCGame_ptr, player_addr: 
                 .endif
 
                 
+                mov eax, [esi].base.posx
+                sub eax, 50
+                mov @carx, eax
+
+                mov eax, [esi].base.posy
+                sub eax, 50
+                mov @cary, eax
+
+                mov eax, [esi].base.lengthx
+                shl eax, 1
+                mov @carlx, eax
+
+                mov eax, [esi].base.lengthy
+                shl eax, 1
+                mov @carly, eax
 
                 mov esi, player_addr
                 assume esi: ptr Subject
-                invoke  TransparentBlt, hDCGame_ptr, [esi].base.posx, [esi].base.posy, [esi].base.lengthx, [esi].base.lengthy, [esi].base.DC, 0, 0, PLAYER_LX, PLAYER_LY, 16777215
+                invoke  TransparentBlt, hDCGame_ptr, @carx, @cary, @carlx, @carly, [esi].base.DC, 0, 0, PLAYER_LX, PLAYER_LY, 16777215
 ;draw obj 1
                 mov ecx, @target_number
                 mov esi, @targets_ptr
