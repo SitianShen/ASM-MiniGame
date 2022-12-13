@@ -948,7 +948,8 @@ _collision_Player_with_medicine endp
 
 _collision_Player_with_redVirus proc uses ebx, mainPlayer: ptr Subject, redVirus_target:ptr Targets
         ; invoke _collision_Player_with_MONEY_2_SOUND
-        invoke _collision_Player_with_SOFT_SOUND
+        invoke _collision_Player_with_HARD_SOUND
+        
 
         ;redVirus消失
         mov ebx, redVirus_target
@@ -980,7 +981,7 @@ _collision_Player_with_redVirus endp
 
 _collision_Player_with_greenVirus proc uses ebx, mainPlayer: ptr Subject, greenVirus_target:ptr Targets
         ; invoke _collision_Player_with_MONEY_2_SOUND
-        invoke _collision_Player_with_HARD_SOUND
+        invoke _collision_Player_with_SOFT_SOUND
 
         ;greenVirus消失
         mov ebx, greenVirus_target
