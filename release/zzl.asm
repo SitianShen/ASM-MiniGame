@@ -1061,17 +1061,17 @@ _draw_object proc uses eax ebx ecx edx edi esi, hWnd, hDCGame_ptr, player_addr: 
                         mov edx, object_DC.infected
                 .endif
                 mov eax, [esi].base.posx
-                sub eax, 22
+                sub eax, 74
                 mov @bubblex, eax
                 mov eax, [esi].base.posy
-                sub eax, 0
+                sub eax, 30
                 mov @bubbley, eax
 
                 mov eax, [esi].base.lengthx
-                add eax, 40
+                add eax, 140
                 mov @bubblew, eax
                 mov eax, [esi].base.lengthy
-                add eax, 40
+                add eax, 140
                 mov @bubbleh, eax
                 .if [esi].status != Exposure
                         invoke  TransparentBlt, hDCGame_ptr, 
