@@ -222,7 +222,7 @@ _Init_car_symbiotic proc uses ebx esi, mainPlayer:ptr Subject
         ret
 _Init_car_symbiotic endp
 
-_Move_process_symbiotic proc uses ebx esi eax, mainPlayer:ptr Subject
+_Move_process_symbiotic proc uses ebx esi eax ecx, mainPlayer:ptr Subject
         mov esi, mainPlayer
         assume esi:ptr Subject
         

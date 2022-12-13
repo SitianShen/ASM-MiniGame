@@ -192,6 +192,7 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                         .elseif eax == 65
                                 invoke _CarMove_SOUND
                                 mov eax, playerOne.has_fever
+                                ; invoke printf, offset debug_int, playerOne.has_fever
                                 .if eax > 0
                                         invoke _Action_right_symbiotic, addr playerOne
                                 .else
