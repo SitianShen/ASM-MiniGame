@@ -861,7 +861,7 @@ _draw_object proc uses eax ebx ecx edx edi esi, hWnd, hDCGame_ptr, player_addr: 
                 mov eax, hWnd
                 .if eax == hWinMain
                         invoke  TransparentBlt, hDCGame_ptr, 0, 0, gameH, gameW, backGround.DC_b, 0, 0, 1000, 1000, SRCCOPY
-                        invoke  TransparentBlt, hDCGame_ptr, 200, 0, 200, 200, object_DC.titles, 0, 0, PROP_LX, PROP_LY, 16777215
+                        invoke  TransparentBlt, hDCGame_ptr, 150, -36, 300, 300, object_DC.titles, 0, 0, PROP_LX, PROP_LY, 16777215
 
                         invoke  _draw_button, addr button_play, hWnd, button_play_LX, button_play_LY, hDCGame_ptr
                         invoke  _draw_button, addr button_2p_play, hWnd, button_2p_play_LX, button_2p_play_LY, hDCGame_ptr
