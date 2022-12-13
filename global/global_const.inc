@@ -138,7 +138,13 @@ button_pause_LY       equ 52
 
 IDB_PLAYER          equ 400 
 PLAYER_LX equ 500
-PLAYER_LY equ 500         
+PLAYER_LY equ 500   
+
+IDB_PAUSE_WINDOW equ 600
+pause_window_X equ 100
+pause_window_Y equ 60
+pause_window_LX equ 360
+pause_window_LY equ 360
 
 IDB_DIG0 equ 1000
 IDB_DIG1 equ 1001

@@ -56,6 +56,8 @@
 
 # define IDB_HPP             500
 
+# define IDB_PAUSE_WINDOW    600
+
 # define IDB_DIG0            1000
 # define IDB_DIG1            1001
 # define IDB_DIG2            1002
@@ -137,3 +139,5 @@ IDB_PLAYER3_1            BITMAP      "resource/player3_1.bmp"
 IDB_PLAYER3_2            BITMAP      "resource/player3_2.bmp"
 IDB_PLAYER4_1            BITMAP      "resource/player4_1.bmp"
 IDB_PLAYER4_2            BITMAP      "resource/player4_2.bmp"
+
+IDB_PAUSE_WINDOW         BITMAP      "resource/pause_window.bmp"

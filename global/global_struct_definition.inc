@@ -60,6 +60,7 @@ Object_DC struct
         bltL    dd      ?
         bltM    dd      ?
         bltR    dd      ?
+        pauw    dd      ?
 Object_DC ends
 
 ;-----------------player choose-----------------
