@@ -27,6 +27,7 @@ _show_score proto :dword ;显示分数
 _shot_bullet proto ;发射子弹
 _init_2p_mode proto ;
 _load_game proto :dword, :dword, :dword
+_check_button proto :ptr Button, :dword
 
 ;========================= sst sst sst sst ============================
 ; sst functions
@@ -144,6 +145,7 @@ _check_player_effect proto :ptr Subject
 _check_all_effect proto :ptr Subject, :ptr Subject
 _change_status proto :ptr Subject, :ptr Subject
 _change_all_position_symbiotic proto
+_targets_bullet_out_of_bound_symbiotic proto
 
 ;========================= sst sst sst sst ============================
 ; sst functions
