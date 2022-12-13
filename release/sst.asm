@@ -306,7 +306,7 @@ _Move_process_symbiotic endp
 _Action_left_symbiotic proc uses ebx esi, mainPlayer:ptr Subject
         mov esi, mainPlayer
         assume esi:ptr Subject
-        
+        ; invoke printf, offset debug_int, [esi].base.course_id
         mov     ebx, [esi].base.course_id
         .if (ebx == 1)
                 ret
@@ -321,7 +321,7 @@ _Action_left_symbiotic endp
 _Action_right_symbiotic proc uses ebx esi, mainPlayer:ptr Subject
         mov esi, mainPlayer
         assume esi:ptr Subject
-
+        ; invoke printf, offset debug_int, [esi].base.course_id
         mov     ebx, [esi].base.course_id
         .if (ebx == 3)
                ret
