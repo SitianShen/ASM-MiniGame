@@ -360,10 +360,10 @@ _set_char_pos proc
         mov button_start.base.lengthx, button_start_LX
         mov button_start.base.lengthy, button_start_LY
 
-        mov button_back.base.posx, 410
+        mov button_back.base.posx, 472
         mov button_back.base.posy, 480
-        mov button_back.base.lengthx, button_back_LX/2
-        mov button_back.base.lengthy, button_back_LY/2
+        mov button_back.base.lengthx, button_back_LX/3
+        mov button_back.base.lengthy, button_back_LY/3
 
         mov button_exit.base.posx, 80
         mov button_exit.base.posy, 260
@@ -407,15 +407,15 @@ _set_char_pos proc
         mov button_changeR.base.lengthx, button_pause_rel_LX/3*2
         mov button_changeR.base.lengthy, button_pause_rel_LY/3*2
 
-        mov button_left.base.posx, 410
-        mov button_left.base.posy, 400
-        mov button_left.base.lengthx, button_lr_LX
-        mov button_left.base.lengthy, button_lr_LY
+        mov button_left.base.posx, 472
+        mov button_left.base.posy, 440
+        mov button_left.base.lengthx, button_lr_LX/2
+        mov button_left.base.lengthy, button_lr_LY/2
 
-        mov button_right.base.posx, 490
-        mov button_right.base.posy, 400
-        mov button_right.base.lengthx, button_lr_LX
-        mov button_right.base.lengthy, button_lr_LY
+        mov button_right.base.posx, 512
+        mov button_right.base.posy, 440
+        mov button_right.base.lengthx, button_lr_LX/2
+        mov button_right.base.lengthy, button_lr_LY/2
         ret
 _set_char_pos endp
 
