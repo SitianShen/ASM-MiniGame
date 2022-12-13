@@ -75,12 +75,12 @@
 # define IDB_DIG8            1008
 # define IDB_DIG9            1009
 
-# define IDB_PROP_MASK       601
-# define IDB_PROP_HOTPOT     600
-# define IDB_PROP_MEDICINE   500      
-# define IDB_PROP_REDVIR     501   
-# define IDB_PROP_GREENVIR   502
-# define IDB_PROP_TEMP       602
+# define IDB_PROP_MASK       700
+# define IDB_PROP_HOTPOT     701
+# define IDB_PROP_MEDICINE   702      
+# define IDB_PROP_REDVIR     703   
+# define IDB_PROP_GREENVIR   704
+# define IDB_PROP_TEMP       705
 
 IDB_BACKG_2p_CHOOSECONFIRM      BITMAP      "resource/background_2p_choose_confirm.bmp"
 IDB_BACKG_2p_CHOOSE BITMAP      "resource/background_2p_choose.bmp"
