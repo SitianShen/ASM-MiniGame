@@ -207,7 +207,7 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                                 invoke _Action_jump_symbiotic, addr playerTwo
                         .elseif eax == 37
                                 invoke _CarMove_SOUND
-                                mov eax, playerOne.has_fever
+                                mov eax, playerTwo.has_fever
                                 .if eax > 0
                                         invoke _Action_right_symbiotic, addr playerTwo
                                 .else
@@ -215,6 +215,7 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                                 .endif
                         .elseif eax == 39
                                 invoke _CarMove_SOUND
+                                mov eax, playerTwo.has_fever
                                 .if eax > 0
                                         invoke _Action_left_symbiotic, addr playerTwo
                                 .else
