@@ -1411,6 +1411,15 @@ _typeid_to_picHandle proc mainTargets:dword, mainTargetsNumber:dword
                 .elseif [esi].typeid == temperature ;测温计
                         mov eax, object_DC.temperature         
                         mov [esi].base.DC, eax
+                .elseif [esi].typeid == env1
+                        mov eax, object_DC.env1        
+                        mov [esi].base.DC, eax
+                .elseif [esi].typeid == env2
+                        mov eax, object_DC.env2        
+                        mov [esi].base.DC, eax
+                .elseif [esi].typeid == env3
+                        mov eax, object_DC.env3        
+                        mov [esi].base.DC, eax
                 .endif
 
                 ;递增offset
