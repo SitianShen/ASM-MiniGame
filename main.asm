@@ -47,7 +47,7 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                                 .elseif eax == in_2p_game
                                         invoke _change_all_position_symbiotic ;only here
                                         invoke _targets_bullet_out_of_bound_symbiotic ;only here
-                                        ; invoke _two_two_enum_symbiotic, addr playerOne, addr targetsOne, addr target_number_one ;copy here
+                                        invoke _two_two_enum_symbiotic, addr playerOne, addr targetsOne, addr target_number_one ;copy here
                                         invoke  _draw_object, hWnd, hDCGame, addr playerOne, addr targetsOne, target_number_one
                                         ;write here for 1p
                                 .elseif eax == in_2p_pause
@@ -59,7 +59,7 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                                 .if eax == in_game
                                         invoke  _random_object_gene, addr targets, addr target_number
                                 .elseif eax == in_2p_game
-                                        invoke  _random_object_gene, addr targetsOne, addr target_number_one
+                                        invoke  _random_object_gene_2p, addr targetsOne, addr target_number_one
                                 .endif
                         .endif
 
