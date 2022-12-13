@@ -514,7 +514,8 @@ _createAll proc
         invoke  _load_common_pic, addr object_DC.greenVirus, IDB_greenVirus  
         invoke  _load_common_pic, addr object_DC.hotPot, IDB_hotPot  
         invoke  _load_common_pic, addr object_DC.n95mask, IDB_n95mask  
-        invoke  _load_common_pic, addr object_DC.temperature, IDB_temperature  
+        invoke  _load_common_pic, addr object_DC.temperature, IDB_temperature 
+        invoke  _load_common_pic, addr object_DC.eathotpot, IDB_eathotpot
 ;special effect   
         invoke  _load_common_pic, addr object_DC.soft_inf, IDB_SPE_SOFT_INFECT
         invoke  _load_common_pic, addr object_DC.infected, IDB_SPE_INFECT  
@@ -1039,14 +1040,29 @@ _draw_object proc hWnd, hDCGame_ptr, player_addr: ptr Subject, @targets_ptr: ptr
 
                 invoke  TransparentBlt, hDCGame_ptr, 0, 0, gameH, gameW, backGround.DC_pu, 0, 0, 1000, 1000, 16777215
 
+
+                mov esi, player_addr
+                assume esi: ptr Subject
+                .if [esi].has_hotpot
+                        invoke  TransparentBlt, hDCGame_ptr, eathotpot_X, eathotpot_Y, eathotpot_LX, eathotpot_LY, object_DC.eathotpot, 0, 0, PROP_LX, PROP_LY, 16777215
+                .endif
+
+                mov esi, player_addr
+                assume esi: ptr Subject
+                .if [esi].has_mask
+                        invoke  TransparentBlt, hDCGame_ptr, mask_X, mask_Y, mask_LX, mask_LY, 
+                        object_DC.n95mask, 0, 0, PROP_LX, PROP_LY, 16777215
+                .endif
+
+
                 mov eax, cur_interface
                 .if eax == in_2p_pause
-                        invoke  TransparentBlt, hDCGame_ptr, pause_window_X, pause_window_Y, pause_window_LX, pause_window_LY, 
-                                object_DC.pauw, 0, 0, PROP_LX, PROP_LY, 16777215
+                        invoke  TransparentBlt, hDCGame_ptr, pause_window_X, pause_window_Y, pause_window_LX, pause_window_LY, object_DC.pauw, 0, 0, PROP_LX, PROP_LY, 16777215
                                 
                         invoke  _draw_button, addr button_save, hWnd, button_pause_rel_LX, button_pause_rel_LY, hDCGame_ptr
                         invoke  _draw_button, addr button_continue, hWnd, button_pause_rel_LX, button_pause_rel_LY, hDCGame_ptr
                         invoke  _draw_button, addr button_changeR, hWnd, button_pause_rel_LX, button_pause_rel_LY, hDCGame_ptr
+
                 .endif
         .endif
 ;         mov eax, object1H

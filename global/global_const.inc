@@ -155,6 +155,18 @@ IDB_medicine        equ 702 ;药
 IDB_redVirus        equ 703 ;红色病毒
 IDB_greenVirus      equ 704 ;绿色病毒
 IDB_temperature     equ 705 ;测温计
+IDB_eathotpot       equ 706 ;eat 火锅
+
+eathotpot_X equ 100
+eathotpot_Y equ 100
+eathotpot_LX equ 300
+eathotpot_LY equ 300
+
+mask_X equ 80
+mask_Y equ 80
+mask_LX equ 400
+mask_LY equ 400
+
 
 IDB_BUTTON_RETRY_1    equ 321
 IDB_BUTTON_RETRY_2    equ 322

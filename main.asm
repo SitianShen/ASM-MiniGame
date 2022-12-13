@@ -12,7 +12,7 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                 local   @hDC
                 local   @stPos: POINT
 
-        ; invoke printf, offset debug_int, hWnd
+        ; invoke printf, offset debug_int, playerOne.base.course_id
         ; invoke printf, offset debug_int, hWinMain
         ; invoke printf, offset debug_int, hWinMain2
         mov eax, hWnd
@@ -48,6 +48,7 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                                         invoke _change_all_position_symbiotic ;only here
                                         invoke _targets_bullet_out_of_bound_symbiotic ;only here
                                         invoke _change_status, addr playerOne, addr playerTwo;only here
+                                        invoke _check_all_effect, addr playerOne, addr playerTwo;only here
                                         invoke _two_two_enum_symbiotic, addr playerOne, addr targetsOne, addr target_number_one ;copy here
                                         invoke  _draw_object, hWnd, hDCGame, addr playerOne, addr targetsOne, target_number_one
                                         ;write here for 1p

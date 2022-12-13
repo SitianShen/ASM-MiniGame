@@ -72,6 +72,8 @@ Object_DC struct
         hotPot         dd     ? ;火锅
         n95mask        dd     ? ;口罩
         temperature    dd     ? ;测温计
+
+        eathotpot      dd     ?
 ;special effects
         soft_inf       dd     ? ;无症状
         infected       dd     ? ;感染

@@ -88,6 +88,7 @@
 # define IDB_PROP_REDVIR     703   
 # define IDB_PROP_GREENVIR   704
 # define IDB_PROP_TEMP       705
+# define IDB_PROP_EATHOTPOT  706
 
 # define IDB_SPE_SOFT_INFECT   800
 # define IDB_SPE_INFECT        801
@@ -177,6 +178,7 @@ IDB_PROP_MEDICINE           BITMAP     "resource/prop_medicine.bmp"
 IDB_PROP_REDVIR             BITMAP     "resource/prop_obsthard.bmp"
 IDB_PROP_GREENVIR           BITMAP     "resource/prop_obstsoft.bmp"
 IDB_PROP_TEMP               BITMAP     "resource/prop_thermometer.bmp"
+IDB_PROP_EATHOTPOT          BITMAP     "resource/prop_eathotpot.bmp"
 
 IDB_SPE_SOFT_INFECT         BITMAP     "resource/spe_soft_infected.bmp"
 IDB_SPE_INFECT              BITMAP     "resource/spe_infected.bmp"

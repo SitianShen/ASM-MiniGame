@@ -223,8 +223,6 @@ _Init_car_symbiotic proc uses ebx esi, mainPlayer:ptr Subject
 _Init_car_symbiotic endp
 
 _Move_process_symbiotic proc uses ebx esi, mainPlayer:ptr Subject
-        
-        
         mov esi, mainPlayer
         assume esi:ptr Subject
         ; invoke printf, offset debug_int, [esi].base.course_id
