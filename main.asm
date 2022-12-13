@@ -188,19 +188,38 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                                 invoke _Action_jump_symbiotic, addr playerOne
                         .elseif eax == 65
                                 invoke _CarMove_SOUND
-                                invoke _Action_left_symbiotic, addr playerOne
+                                mov eax, playerOne.has_fever
+                                .if eax > 0
+                                        invoke _Action_right_symbiotic, addr playerOne
+                                .else
+                                        invoke _Action_left_symbiotic, addr playerOne
+                                .endif
                         .elseif eax == 68
                                 invoke _CarMove_SOUND
-                                invoke _Action_right_symbiotic, addr playerOne
+                                mov eax, playerOne.has_fever
+                                .if eax > 0
+                                        invoke _Action_left_symbiotic, addr playerOne
+                                .else
+                                        invoke _Action_right_symbiotic, addr playerOne
+                                .endif
                         .elseif eax == 38 
                                 invoke _Jump_SOUND
                                 invoke _Action_jump_symbiotic, addr playerTwo
                         .elseif eax == 37
                                 invoke _CarMove_SOUND
-                                invoke _Action_left_symbiotic, addr playerTwo
+                                mov eax, playerOne.has_fever
+                                .if eax > 0
+                                        invoke _Action_right_symbiotic, addr playerTwo
+                                .else
+                                        invoke _Action_left_symbiotic, addr playerTwo
+                                .endif
                         .elseif eax == 39
                                 invoke _CarMove_SOUND
-                                invoke _Action_right_symbiotic, addr playerTwo
+                                .if eax > 0
+                                        invoke _Action_left_symbiotic, addr playerTwo
+                                .else
+                                        invoke _Action_right_symbiotic, addr playerTwo
+                                .endif
                         ; .elseif eax == 13
                                 ; invoke _shot_bullet
                         .endif
