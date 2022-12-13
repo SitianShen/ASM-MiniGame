@@ -1,28 +1,19 @@
-asm-game:.
-+---dev
-|       ldf_dev.asm
-|       lja_dev.asm
-|       sst_dev.asm
-|       zzl_dev.asm
-|       
-+---game-web ;游戏文档网页
-|    
-+---global
-|       global.inc ;全局依赖
-|       global_const.inc ;全局常量定义
-|       global_dev.inc ;开发依赖
-|       global_extrn.inc ;外部变量声明
-|       global_fun_declare.inc ;函数声明
-|       global_head.inc ;依赖头文件
-|       global_public.inc ;公有变量声明
-|       global_struct_definition.inc ;结构体定义
-|       
-+---release
-|       ldf.asm
-|       lja.asm
-|       sst.asm
-|       zzl.asm
-|       
-+---resource
-|
-\---sound
+# Cyberpunk Covid-19
+
+## 游戏界面
+
+> 一些简单的界面展示
+
+
+
+## 成员介绍与分工
+
+| 朱子林  | 组长 代码逻辑设计 用户交互接口 游戏资源维护       |
+| ---- | ----------------------------- |
+| 沈思甜  | 主角移动逻辑 游戏主题设计UI制作 PPT制作       |
+| 罗家安  | 物体移动逻辑 主角状态逻辑 GUI界面美化         |
+| 林东方  | 碰撞逻辑，游戏音效，开发架构设计，游戏文档维护，PPT制作 |
+
+## 游戏介绍
+
+> 简述这款游戏的特点，设计思路，设计主题
