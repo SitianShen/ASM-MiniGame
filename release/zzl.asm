@@ -220,7 +220,7 @@ _random_object_gene proc @targets_ptr: ptr dword, @target_number_ptr: ptr dword
 _random_object_gene endp
 
 
-_random_object_gene proc @targets_ptr: ptr dword, @target_number_ptr: ptr dword
+_random_object_gene_2p proc @targets_ptr: ptr dword, @target_number_ptr: ptr dword
         local @id, @offs
         mov esi, @targets_ptr
         mov edi, @target_number_ptr
@@ -322,7 +322,7 @@ _random_object_gene proc @targets_ptr: ptr dword, @target_number_ptr: ptr dword
         inc [esi]
 
         ret
-_random_object_gene endp
+_random_object_gene_2p endp
 
 
 _set_char_pos proc

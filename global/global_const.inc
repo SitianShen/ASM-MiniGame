@@ -137,6 +137,14 @@ IDB_PROP_BULLETL    equ 318
 IDB_PROP_BULLETM    equ 319
 IDB_PROP_BULLETR    equ 320
 
+
+IDB_n95mask         equ 700 ;口罩
+IDB_hotPot          equ 701 ;火锅
+IDB_medicine        equ 702 ;药
+IDB_redVirus        equ 703 ;红色病毒
+IDB_greenVirus      equ 704 ;绿色病毒
+IDB_temperature     equ 705 ;测温计
+
 IDB_BUTTON_RETRY_1    equ 321
 IDB_BUTTON_RETRY_2    equ 322
 button_retry_LX       equ 192 
@@ -319,6 +327,10 @@ Asymptomatic    equ 102 ;无症状
 Infection       equ 103 ;感染期
 
 ;道具编码
+env1 equ 700;env
+env2 equ 701;env
+env3 equ 702;env
+
 medicine        equ 500 ;药
 redVirus        equ 501 ;红色病毒
 greenVirus      equ 502 ;绿色病毒
@@ -326,13 +338,6 @@ greenVirus      equ 502 ;绿色病毒
 hotPot          equ 600 ;火锅
 n95mask         equ 601 ;口罩
 temperature     equ 602 ;测温计
-
-IDB_medicine        equ 500 ;药
-IDB_redVirus        equ 501 ;红色病毒
-IDB_greenVirus      equ 502 ;绿色病毒
-IDB_hotPot          equ 600 ;火锅
-IDB_n95mask         equ 601 ;口罩
-IDB_temperature     equ 602 ;测温计
 
 time_3s         equ 300 ;持续三秒
 time_5s         equ 500 ;持续三秒
