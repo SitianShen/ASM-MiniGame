@@ -921,6 +921,7 @@ _collision_SOUND_test endp
 _collision_Player_with_medicine proc uses ebx, mainPlayer:ptr Subject, medicine_target:ptr Targets
         ;medicine音效
         invoke _Play_medicine_SOUND
+        ; invoke _collision_Player_with_MONEY_2_SOUND
 
         ;medicine消失
         mov ebx, medicine_target
@@ -934,7 +935,6 @@ _collision_Player_with_medicine proc uses ebx, mainPlayer:ptr Subject, medicine_
         mov ebx, mainPlayer
         assume ebx: ptr Subject
 
-        
         .if [ebx].status == Infection
                 ;仅当感染，HP+1
                 inc [ebx].base.alive
@@ -947,6 +947,9 @@ _collision_Player_with_medicine proc uses ebx, mainPlayer:ptr Subject, medicine_
 _collision_Player_with_medicine endp
 
 _collision_Player_with_redVirus proc uses ebx, mainPlayer: ptr Subject, redVirus_target:ptr Targets
+        ; invoke _collision_Player_with_MONEY_2_SOUND
+        invoke _collision_Player_with_SOFT_SOUND
+
         ;redVirus消失
         mov ebx, redVirus_target
         assume ebx: ptr Targets
@@ -976,6 +979,9 @@ _collision_Player_with_redVirus proc uses ebx, mainPlayer: ptr Subject, redVirus
 _collision_Player_with_redVirus endp
 
 _collision_Player_with_greenVirus proc uses ebx, mainPlayer: ptr Subject, greenVirus_target:ptr Targets
+        ; invoke _collision_Player_with_MONEY_2_SOUND
+        invoke _collision_Player_with_HARD_SOUND
+
         ;greenVirus消失
         mov ebx, greenVirus_target
         assume ebx: ptr Targets
@@ -999,6 +1005,8 @@ _collision_Player_with_greenVirus proc uses ebx, mainPlayer: ptr Subject, greenV
 _collision_Player_with_greenVirus endp
 
 _collision_Player_with_hotPot proc uses ebx, mainPlayer: ptr Subject, hotPot_target:ptr Targets
+        ; invoke _collision_Player_with_MONEY_2_SOUND
+
         ;hotPot音效
         invoke _Play_hotPot_SOUND
 
@@ -1020,6 +1028,8 @@ _collision_Player_with_hotPot proc uses ebx, mainPlayer: ptr Subject, hotPot_tar
 _collision_Player_with_hotPot endp
 
 _collision_Player_with_n95mask proc uses ebx, mainPlayer: ptr Subject, n95mask_target:ptr Targets
+        ; invoke _collision_Player_with_MONEY_2_SOUND
+
         ;n95mask音效
         invoke _Play_n95mask_SOUND
 
@@ -1047,8 +1057,10 @@ _collision_Player_with_n95mask proc uses ebx, mainPlayer: ptr Subject, n95mask_t
 _collision_Player_with_n95mask endp
 
 _collision_Player_with_temperature proc uses ebx, mainPlayer: ptr Subject, temperature_target:ptr Targets
+        ; invoke _collision_Player_with_MONEY_2_SOUND
+
         ;temperature音效
-        invoke _Stop_temperature_SOUND
+        invoke _Play_temperature_SOUND
 
         ;temperature消失
         mov ebx, temperature_target
@@ -1114,6 +1126,8 @@ _two_two_enum_symbiotic  proc uses esi ebx ecx, mainPlayer:ptr Subject, mainTarg
                 mov esi, eax
                 assume esi:ptr Targets
 
+                ; invoke printf, offset debug_int, [esi].typeid
+
                 mov ebx, mainPlayer
                 assume ebx: ptr Subject
 
@@ -1122,8 +1136,7 @@ _two_two_enum_symbiotic  proc uses esi ebx ecx, mainPlayer:ptr Subject, mainTarg
                         .if [ebx].flag_jump == 1
                                 mov @collisionFlag, 0
                         .else
-                                mov ebx, mainPlayer
-                                assume ebx: ptr Subject
+                                
                                 invoke _check_collision, addr [ebx].base, addr [esi].base
                                 mov @collisionFlag, eax
                         .endif
@@ -1139,8 +1152,6 @@ _two_two_enum_symbiotic  proc uses esi ebx ecx, mainPlayer:ptr Subject, mainTarg
                         .if [ebx].flag_jump == 1
                                 mov @collisionFlag, 0
                         .else
-                                mov ebx, mainPlayer
-                                assume ebx: ptr Subject
                                 invoke _check_collision, addr [ebx].base, addr [esi].base
                                 mov @collisionFlag, eax
                         .endif
@@ -1156,8 +1167,6 @@ _two_two_enum_symbiotic  proc uses esi ebx ecx, mainPlayer:ptr Subject, mainTarg
                         .if [ebx].flag_jump == 1
                                 mov @collisionFlag, 0
                         .else
-                                mov ebx, mainPlayer
-                                assume ebx: ptr Subject
                                 invoke _check_collision, addr [ebx].base, addr [esi].base
                                 mov @collisionFlag, eax
                         .endif
@@ -1173,8 +1182,6 @@ _two_two_enum_symbiotic  proc uses esi ebx ecx, mainPlayer:ptr Subject, mainTarg
                         .if [ebx].flag_jump == 1
                                 mov @collisionFlag, 0
                         .else
-                                mov ebx, mainPlayer
-                                assume ebx: ptr Subject
                                 invoke _check_collision, addr [ebx].base, addr [esi].base
                                 mov @collisionFlag, eax
                         .endif
@@ -1190,8 +1197,6 @@ _two_two_enum_symbiotic  proc uses esi ebx ecx, mainPlayer:ptr Subject, mainTarg
                         .if [ebx].flag_jump == 1
                                 mov @collisionFlag, 0
                         .else
-                                mov ebx, mainPlayer
-                                assume ebx: ptr Subject
                                 invoke _check_collision, addr [ebx].base, addr [esi].base
                                 mov @collisionFlag, eax
                         .endif
@@ -1207,8 +1212,6 @@ _two_two_enum_symbiotic  proc uses esi ebx ecx, mainPlayer:ptr Subject, mainTarg
                         .if [ebx].flag_jump == 1
                                 mov @collisionFlag, 0
                         .else
-                                mov ebx, mainPlayer
-                                assume ebx: ptr Subject
                                 invoke _check_collision, addr [ebx].base, addr [esi].base
                                 mov @collisionFlag, eax
                         .endif
@@ -1238,7 +1241,7 @@ _two_two_enum_symbiotic  proc uses esi ebx ecx, mainPlayer:ptr Subject, mainTarg
                                 ;获取要覆盖的结构体地址
                                 mov eax, mainTargets
                                 add eax, @newTargetByteOffset
-                                mov ebx, [eax]
+                                mov ebx, eax
                                 assume ebx :ptr Targets
 
                                 ;覆盖
@@ -1356,7 +1359,7 @@ _two_two_enum_symbiotic_test proc
         mov [esi].base.course_id, 1
         mov [esi].typeid, n95mask
 
-        mov target_number_one, 2
+        mov target_number_one, 1
 
         ; lea esi, targetsOne[sizeofTargets]
         ; assume esi :ptr Targets
@@ -1369,13 +1372,14 @@ _two_two_enum_symbiotic_test proc
         ret
 _two_two_enum_symbiotic_test endp
 
-start:
-        ; invoke _Open_ALL_SOUND
-        ; invoke _collision_SOUND_test
-        ; invoke _Close_ALL_SOUND
-        ; invoke printHelloWorld
-        invoke _two_two_enum_symbiotic_test
-        ; invoke printf, offset debug_int, 1
-        ret
-end     start
-; end
+; start:
+;         invoke _Open_ALL_SOUND
+;         ; invoke _collision_SOUND_test
+;         ; invoke printHelloWorld
+;         invoke _two_two_enum_symbiotic_test
+;         ; invoke _Play_medicine_SOUND
+;         invoke _Close_ALL_SOUND
+;         ; invoke printf, offset debug_int, 1
+;         ret
+; end     start
+end
