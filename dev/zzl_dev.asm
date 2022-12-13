@@ -101,6 +101,7 @@ _random_object_gene endp
 
 _set_char_pos proc
         mov button_play.base.posx, 200
+        ; mov button_play.base.posx, 500
         mov button_play.base.posy, 235
         mov button_play.base.lengthx, button_play_LX
         mov button_play.base.lengthy, button_play_LY
