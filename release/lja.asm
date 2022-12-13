@@ -304,15 +304,15 @@ _hotpot_effect proc stdcall ptrPlayerOne:ptr Subject, ptrPlayerTwo:ptr Subject
         mov eax, [esi].status
         mov ebx, [ecx].status
 
-        .if eax == 101 && ebx == 102
+        .if eax == Exposure && ebx == Asymptomatic
                 inc [esi].score
-                mov [esi].status, 102
-        .elseif eax == 101 && ebx == 103
+                mov [esi].status, Asymptomatic
+        .elseif eax == Exposure && ebx == Infection
                 dec [esi].base.alive
-                mov [esi].status, 103
-        .elseif eax == 102 && ebx == 103
+                mov [esi].status, Infection
+        .elseif eax == Asymptomatic && ebx == Infection
                 dec [esi].base.alive
-                mov [esi].status, 103
+                mov [esi].status, Infection
         .endif
 
         assume esi: nothing
@@ -381,8 +381,8 @@ _change_status proc stdcall ptrPlayerOne:ptr Subject, ptrPlayerTwo:ptr Subject
                 mov ecx, ptrPlayerTwo
                 assume  ecx: ptr Subject 
                 
-                mov [esi].status, 101
-                mov [ecx].status, 101
+                mov [esi].status, Exposure
+                mov [ecx].status, Exposure
                 mov change_two_status_cnt, time_5s
         .else
                 dec change_two_status_cnt
