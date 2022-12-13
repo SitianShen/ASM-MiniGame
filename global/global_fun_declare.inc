@@ -125,6 +125,9 @@ _collision_Player_with_temperature proto :ptr Subject, :ptr Targets
 _two_two_enum_symbiotic proto :ptr Subject, :dword, :dword
 _two_two_enum_symbiotic_test proto
 
+;存储，调用实例  invoke _typeid_to_picHandle, addr targetsOne, addr target_number_one 
+_typeid_to_picHandle proto :dword, :dword
+
 ;sound
 _Play_medicine_SOUND proto
 _Stop_medicine_SOUND proto
