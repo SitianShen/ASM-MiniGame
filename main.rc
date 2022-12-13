@@ -57,6 +57,12 @@
 # define IDB_HPP             500
 
 # define IDB_PAUSE_WINDOW    600
+# define IDB_BUTTON_SAVE_1   601
+# define IDB_BUTTON_SAVE_2    602
+# define IDB_BUTTON_CONTINUE_1    603
+# define IDB_BUTTON_CONTINUE_2    604
+# define IDB_BUTTON_CHANGER_1     605
+# define IDB_BUTTON_CHANGER_2     606
 
 # define IDB_DIG0            1000
 # define IDB_DIG1            1001
@@ -141,3 +147,9 @@ IDB_PLAYER4_1            BITMAP      "resource/player4_1.bmp"
 IDB_PLAYER4_2            BITMAP      "resource/player4_2.bmp"
 
 IDB_PAUSE_WINDOW         BITMAP      "resource/pause_window.bmp"
+IDB_BUTTON_SAVE_1         BITMAP      "resource/button_save_back_1.bmp"
+IDB_BUTTON_SAVE_2         BITMAP      "resource/button_save_back_2.bmp"
+IDB_BUTTON_CONTINUE_1         BITMAP      "resource/button_continue_1.bmp"
+IDB_BUTTON_CONTINUE_2         BITMAP      "resource/button_continue_2.bmp"
+IDB_BUTTON_CHANGER_1         BITMAP      "resource/button_changeRole_1.bmp"
+IDB_BUTTON_CHANGER_2         BITMAP      "resource/button_changeRole_2.bmp"

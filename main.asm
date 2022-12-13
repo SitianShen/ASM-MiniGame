@@ -47,7 +47,7 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                                 .elseif eax == in_2p_game
                                         invoke _change_all_position_symbiotic ;only here
                                         invoke _targets_bullet_out_of_bound_symbiotic ;only here
-                                        invoke _two_two_enum_symbiotic, addr playerOne, addr targetsOne, addr target_number_one ;copy here
+                                        ; invoke _two_two_enum_symbiotic, addr playerOne, addr targetsOne, addr target_number_one ;copy here
                                         invoke  _draw_object, hWnd, hDCGame, addr playerOne, addr targetsOne, target_number_one
                                         ;write here for 1p
                                 .elseif eax == in_2p_pause
@@ -218,9 +218,9 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                                 mov button_2p_play.is_click, 0
                         .elseif eax == button_load.is_click
                                 invoke _init_2p_mode
-                                invoke _load_game, addr playerOne, addr targetsOne, addr target_number_one
+                                invoke _load_game, addr playerOne, addr targetsOne, addr target_number_one, addr saveFileName1
                                 .if eax == 0 
-                                        invoke _load_game, addr playerTwo, addr targetsTwo, addr target_number_two
+                                        invoke _load_game, addr playerTwo, addr targetsTwo, addr target_number_two, addr saveFileName2
                                         .if eax == 0
                                                 invoke _Stop_BeginBGM_SOUND
                                                 invoke  ShowWindow, hWinMain2, SW_SHOWNORMAL
@@ -266,6 +266,23 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                                 mov cur_interface, in_2p_pause
                         .endif
                 .elseif eax == in_2p_pause
+                        invoke _check_button, addr button_save, hWnd
+                        .if eax == 1
+                                invoke _save_game, addr playerOne, addr targetsOne, addr target_number_one, addr saveFileName1
+                                invoke _save_game, addr playerTwo, addr targetsTwo, addr target_number_two, addr saveFileName2
+                                mov cur_interface, in_begining
+                                mov button_save.is_click, 0
+                        .endif
+                        invoke _check_button, addr button_continue, hWnd
+                        .if eax == 1
+                                mov cur_interface, in_2p_game
+                                mov button_save.is_click, 0
+                        .endif
+                        invoke _check_button, addr button_changeR, hWnd
+                        .if eax == 1
+                                mov cur_interface, in_2p_choose
+                                mov button_save.is_click, 0
+                        .endif
                 .endif
         .endif
 ;check confirmed

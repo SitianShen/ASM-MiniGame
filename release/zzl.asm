@@ -8,26 +8,35 @@ include global_extrn.inc
 .code
 
 ;zzl part #################################################################
-_save_game proc @player_ptr, @targets_ptr, @target_number_ptr
+_save_game proc @player_ptr, @targets_ptr, @target_number_ptr, @fileName
         local @hFile, @tmp
-        invoke CreateFile, addr saveFileName, GENERIC_WRITE, 0, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL
+        invoke CreateFile, @fileName, GENERIC_WRITE, 0, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL
         mov @hFile, eax
         invoke WriteFile, @hFile, @player_ptr,  sizeof Subject, addr @tmp, NULL
+        invoke printf, offset debug_int, @tmp   
         invoke WriteFile, @hFile, @targets_ptr, 1000*sizeof Targets, addr @tmp, NULL
+        invoke printf, offset debug_int, @tmp   
         invoke WriteFile, @hFile, @target_number_ptr, sizeof dword, addr @tmp, NULL
+        invoke printf, offset debug_int, @tmp   
+        invoke CloseHandle, @hFile
         ret
 _save_game endp
-_load_game proc @player_ptr, @targets_ptr, @target_number_ptr
+_load_game proc @player_ptr, @targets_ptr, @target_number_ptr, @fileName
         local @hFile, @tmp
-        invoke CreateFile, addr saveFileName, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL
+        invoke CreateFile, @fileName, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL
         .if eax == INVALID_HANDLE_VALUE
+                invoke printf, offset debug_int, 999   
                 mov eax, 1
                 ret
         .endif
         mov @hFile, eax
-        invoke WriteFile, @hFile, @player_ptr,  sizeof Subject, addr @tmp, NULL
-        invoke WriteFile, @hFile, @targets_ptr, 1000*sizeof Targets, addr @tmp, NULL
-        invoke WriteFile, @hFile, @target_number_ptr, sizeof dword, addr @tmp, NULL
+        invoke ReadFile, @hFile, @player_ptr,  sizeof Subject, addr @tmp, NULL
+        invoke printf, offset debug_int, @tmp   
+        invoke ReadFile, @hFile, @targets_ptr, 1000*sizeof Targets, addr @tmp, NULL
+        invoke printf, offset debug_int, @tmp   
+        invoke ReadFile, @hFile, @target_number_ptr, sizeof dword, addr @tmp, NULL
+        invoke printf, offset debug_int, @tmp   
+        invoke CloseHandle, @hFile
         xor eax, eax
         ret
 _load_game endp
@@ -55,6 +64,8 @@ _init_2p_players endp
 _init_2p_mode proc
         invoke _Init_car_symbiotic, offset playerOne
         invoke _Init_car_symbiotic, offset playerTwo
+        mov target_number_one, 0
+        mov target_number_two, 0
         mov playerList.curid, 0
         mov playerList2.curid, 0
         mov playerList.choose_confirm, 0
@@ -250,6 +261,22 @@ _set_char_pos proc
         mov button_load.base.posy, 35
         mov button_load.base.lengthx, button_2p_load_LX
         mov button_load.base.lengthy, button_2p_load_LY
+
+        
+        mov button_save.base.posx, 222
+        mov button_save.base.posy, 165
+        mov button_save.base.lengthx, button_pause_rel_LX/3*2
+        mov button_save.base.lengthy, button_pause_rel_LY/3*2
+        
+        mov button_continue.base.posx, 222
+        mov button_continue.base.posy, 243
+        mov button_continue.base.lengthx, button_pause_rel_LX/3*2
+        mov button_continue.base.lengthy, button_pause_rel_LY/3*2
+        
+        mov button_changeR.base.posx, 222
+        mov button_changeR.base.posy, 322
+        mov button_changeR.base.lengthx, button_pause_rel_LX/3*2
+        mov button_changeR.base.lengthy, button_pause_rel_LY/3*2
         ret
 _set_char_pos endp
 
@@ -372,6 +399,9 @@ _createAll proc
         invoke _load_button, addr button_pause,  IDB_BUTTON_PAUSE_1,  IDB_BUTTON_PAUSE_2
         invoke _load_button, addr button_2p_play,IDB_BUTTON_2p_PLAY_1,  IDB_BUTTON_2p_PLAY_2
         invoke _load_button, addr button_load, IDB_BUTTON_2p_LOAD_1,  IDB_BUTTON_2p_LOAD_2
+        invoke _load_button, addr button_save, IDB_BUTTON_SAVE_1,  IDB_BUTTON_SAVE_2
+        invoke _load_button, addr button_continue, IDB_BUTTON_CONTINUE_1,  IDB_BUTTON_CONTINUE_2
+        invoke _load_button, addr button_changeR, IDB_BUTTON_CHANGER_1,  IDB_BUTTON_CHANGER_2
         invoke _set_char_pos
 ;set car
         invoke  _load_common_pic, addr player.base.DC, IDB_PLAYER
@@ -846,6 +876,10 @@ _draw_object proc hWnd, hDCGame_ptr, player_addr: ptr Subject, @targets_ptr: ptr
                 .if eax == in_2p_pause
                         invoke  TransparentBlt, hDCGame_ptr, pause_window_X, pause_window_Y, pause_window_LX, pause_window_LY, 
                                 object_DC.pauw, 0, 0, PROP_LX, PROP_LY, 16777215
+                                
+                        invoke  _draw_button, addr button_save, hWnd, button_pause_rel_LX, button_pause_rel_LY, hDCGame_ptr
+                        invoke  _draw_button, addr button_continue, hWnd, button_pause_rel_LX, button_pause_rel_LY, hDCGame_ptr
+                        invoke  _draw_button, addr button_changeR, hWnd, button_pause_rel_LX, button_pause_rel_LY, hDCGame_ptr
                 .endif
         .endif
 ;         mov eax, object1H

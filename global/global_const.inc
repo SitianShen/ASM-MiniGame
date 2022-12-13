@@ -115,6 +115,16 @@ IDB_BUTTON_START_2 equ 312
 button_start_LX     equ 184
 button_start_LY     equ 86
 
+
+IDB_BUTTON_SAVE_1      equ  601
+IDB_BUTTON_SAVE_2      equ  602
+IDB_BUTTON_CONTINUE_1  equ  603
+IDB_BUTTON_CONTINUE_2  equ  604
+IDB_BUTTON_CHANGER_1   equ  605
+IDB_BUTTON_CHANGER_2   equ  606
+button_pause_rel_LX     equ 184
+button_pause_rel_LY     equ 86
+
 PROP_LX equ 500
 PROP_LY equ 500
 IDB_PROP_MONEY      equ 313
@@ -345,7 +355,8 @@ szClosetemperature byte "close temperature", 0
 szStoptemperature byte "stop temperature", 0
 
 ;==save==
-saveFileName byte "./save", 0
+saveFileName1 byte "./save1", 0
+saveFileName2 byte "./save2", 0
 ;
 
 ;==================== 共生模式 ===========================
