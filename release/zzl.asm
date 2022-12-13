@@ -809,6 +809,10 @@ _draw_player_choose endp
 _draw_object proc hWnd, hDCGame_ptr, player_addr: ptr Subject, @targets_ptr: ptr Targets, @target_number
         local @mouse:POINT
         local @window:RECT
+        local @bubblex:dword
+        local @bubbley:dword
+        local @bubblew:dword
+        local @bubbleh:dword
 
         .if player.base.alive == 0 && cur_interface == in_game
                 invoke _Stop_BGM_SOUND
@@ -1023,9 +1027,22 @@ _draw_object proc hWnd, hDCGame_ptr, player_addr: ptr Subject, @targets_ptr: ptr
                 .elseif [esi].status == Infection
                         mov edx, object_DC.infected
                 .endif
+                mov eax, [esi].base.posx
+                sub eax, 22
+                mov @bubblex, eax
+                mov eax, [esi].base.posy
+                sub eax, 0
+                mov @bubbley, eax
+
+                mov eax, [esi].base.lengthx
+                add eax, 40
+                mov @bubblew, eax
+                mov eax, [esi].base.lengthy
+                add eax, 40
+                mov @bubbleh, eax
                 .if [esi].status != Exposure
                         invoke  TransparentBlt, hDCGame_ptr, 
-                                [esi].base.posx, [esi].base.posy, [esi].base.lengthx, [esi].base.lengthy, 
+                                @bubblex, @bubbley, @bubblew, @bubbleh,  
                                 edx, 0, 0, PLAYER_LX, PLAYER_LY, 16777215                        
                 .endif
 
