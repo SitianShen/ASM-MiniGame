@@ -160,12 +160,12 @@ IDB_greenVirus      equ 704 ;绿色病毒
 IDB_temperature     equ 705 ;测温计
 IDB_eathotpot       equ 706 ;eat 火锅
 
-eathotpot_X equ 100
+eathotpot_X equ 150
 eathotpot_Y equ 100
 eathotpot_LX equ 300
 eathotpot_LY equ 300
 
-mask_X equ 80
+mask_X equ 100
 mask_Y equ 80
 mask_LX equ 400
 mask_LY equ 400
