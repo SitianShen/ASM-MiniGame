@@ -332,4 +332,8 @@ szPlaytemperature byte "play temperature from 0", 0
 szClosetemperature byte "close temperature", 0
 szStoptemperature byte "stop temperature", 0
 
+;==save==
+saveFileName byte "./save", 0
+;
+
 ;==================== 共生模式 ===========================
