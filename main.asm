@@ -47,6 +47,7 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                                 .elseif eax == in_2p_game
                                         invoke _change_all_position_symbiotic ;only here
                                         invoke _targets_bullet_out_of_bound_symbiotic ;only here
+                                        invoke _change_status, addr playerOne, addr playerTwo;only here
                                         invoke _two_two_enum_symbiotic, addr playerOne, addr targetsOne, addr target_number_one ;copy here
                                         invoke  _draw_object, hWnd, hDCGame, addr playerOne, addr targetsOne, target_number_one
                                         ;write here for 1p
@@ -290,12 +291,20 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
         mov ebx, playerList2.choose_confirm
         .if eax == 1 && ebx == 1
                 mov cur_interface, in_2p_game
+
                 mov ebx, playerList.curid
                 mov eax, [playerList.DC+8*ebx]
                 mov playerOne.base.DC, eax
+
                 mov ebx, playerList2.curid
                 mov eax, [playerList2.DC+8*ebx]  
                 mov playerTwo.base.DC, eax 
+
+                mov eax, playerList.curid
+                mov playerOne.curid, eax
+                mov eax, playerList2.curid
+                mov playerTwo.curid, eax
+
                 mov playerList.choose_confirm, 0
                 mov playerList2.choose_confirm, 0
         .endif

@@ -70,6 +70,10 @@ Object_DC struct
         hotPot         dd     ? ;火锅
         n95mask        dd     ? ;口罩
         temperature    dd     ? ;测温计
+;special effects
+        soft_inf       dd     ? ;无症状
+        infected       dd     ? ;感染
+        cant_inf       dd      ?;免疫
 Object_DC ends
 
 ;-----------------player choose-----------------
