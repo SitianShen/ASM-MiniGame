@@ -251,6 +251,7 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                                 mov button_start.is_click, 0
                         .elseif eax == button_2p_play.is_click
                                 invoke _Stop_BeginBGM_SOUND
+                                invoke _BGM_SOUND
                                 invoke  ShowWindow, hWinMain2, SW_SHOWNORMAL
                                 invoke _init_2p_mode
                                 mov cur_interface, in_2p_choose
@@ -289,7 +290,7 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                                 mov intro_id, eax
                                 mov button_left.is_click, 0
                         .endif
-                .elseif eax == in_over
+                .elseif eax == in_over || eax == in_2p_over
                         mov eax, 1
                         .if eax == button_exit.is_click
                                 invoke _Stop_END_SOUND
@@ -298,6 +299,7 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                         .elseif eax == button_retry.is_click
                                 invoke _initAll
                                 invoke _Stop_END_SOUND
+                                invoke  ShowWindow, hWinMain2, SW_HIDE
                                 invoke _BeginBGM_SOUND
                                 mov cur_interface, in_begining
                                 mov button_retry.is_click, 0
