@@ -11,6 +11,9 @@ szCollisionEnd byte "collision end", 0ah, 0
 debug_str byte "%s", 0
 szBulletWithSOFT byte "bullet hit SOFT", 0ah, 0
 szCarWithHard byte "cart hit Hard", 0ah, 0
+szPlayerOneGet byte "one get", 0ah, 0
+szPlayerTwoGet byte "Two get", 0ah, 0
+
 
 ;sound
 szPlaySuccess byte "Play Success", 0ah, 0
@@ -1011,11 +1014,8 @@ _collision_Player_with_hotPot proc uses ebx, mainPlayer: ptr Subject, hotPot_tar
         mov ebx, mainPlayer
         assume ebx: ptr Subject
 
-        
-        mov [ebx].has_hotpot, 300
-        
-        
-        ; invoke _hotpot_effect, addr playerOne, addr playerTwo
+        ;kkkkkk
+        invoke _hotpot_effect, addr playerOne, addr playerTwo
         ret
 _collision_Player_with_hotPot endp
 
@@ -1032,13 +1032,17 @@ _collision_Player_with_n95mask proc uses ebx, mainPlayer: ptr Subject, n95mask_t
         ; invoke printf, offset debug_int, [ebx].typeid
         
         ;吃到n95mask
-        mov ebx, mainPlayer
-        assume ebx: ptr Subject
-
+        lea ebx, playerOne
+        .if mainPlayer == ebx
+                ;playerOne吃到了
+                ; invoke printf, offset debug_str, offset szPlayerOneGet
+                invoke _mask_effect, addr playerOne, addr playerTwo
+        .else
+                ;playerTwo吃到了
+                ; invoke printf, offset debug_str, offset szPlayerTwoGet
+                invoke _mask_effect, addr playerTwo, addr playerOne
+        .endif
         
-        mov [ebx].has_mask, time_3s
-
-        ; invoke _mask_effect, addr playerOne, addr playerTwo
         ret
 _collision_Player_with_n95mask endp
 
@@ -1055,12 +1059,15 @@ _collision_Player_with_temperature proc uses ebx, mainPlayer: ptr Subject, tempe
         ; invoke printf, offset debug_int, [ebx].typeid
 
         ;吃到temperature
-        mov ebx, mainPlayer
-        assume ebx: ptr Subject
-        
-        mov [ebx].has_fever, time_3s
+        lea ebx, playerOne
+        .if mainPlayer == ebx
+                ;playerOne吃到了
+                invoke _fever_effect, addr playerOne, addr playerTwo
+        .else
+                ;playerTwo吃到了
+                invoke _fever_effect, addr playerTwo, addr playerOne
+        .endif
 
-        ; invoke _fever_effect, addr playerOne, addr playerTwo
         ret
 _collision_Player_with_temperature endp
 
@@ -1106,6 +1113,9 @@ _two_two_enum_symbiotic  proc uses esi ebx ecx, mainPlayer:ptr Subject, mainTarg
                 add eax, @targetByteOffset
                 mov esi, eax
                 assume esi:ptr Targets
+
+                mov ebx, mainPlayer
+                assume ebx: ptr Subject
 
                 ; 判断逻辑
                 .if [esi].typeid == medicine ;药
@@ -1344,7 +1354,7 @@ _two_two_enum_symbiotic_test proc
         mov [esi].base.DC, 1
         mov [esi].base.rel_v, 1
         mov [esi].base.course_id, 1
-        mov [esi].typeid, temperature
+        mov [esi].typeid, n95mask
 
         mov target_number_one, 2
 
@@ -1365,7 +1375,7 @@ _two_two_enum_symbiotic_test endp
 ;         ; invoke _Close_ALL_SOUND
 ;         ; invoke printHelloWorld
 ;         invoke _two_two_enum_symbiotic_test
-;         invoke printf, offset debug_int, 1
+;         ; invoke printf, offset debug_int, 1
 ;         ret
 ; end     start
 end
