@@ -97,6 +97,8 @@
 # define IDB_BACKG_OVERW      70
 # define IDB_BACKG_OVERL      71
 
+# define IDB_TITLE            1
+
 IDB_BACKG_2p_CHOOSECONFIRM      BITMAP      "resource/background_2p_choose_confirm.bmp"
 IDB_BACKG_2p_CHOOSE BITMAP      "resource/background_2p_choose.bmp"
 IDB_BACKG           BITMAP      "resource/background.bmp"
@@ -199,3 +201,6 @@ IDB_BACKG_INTRO3     BITMAP      "resource/background_intro3.bmp"
 
 IDB_BACKG_OVERW     BITMAP      "resource/background_2p_over_win.bmp"
 IDB_BACKG_OVERL     BITMAP      "resource/background_2p_over_loss.bmp"
+
+
+IDB_TITLE     BITMAP      "resource/title.bmp"

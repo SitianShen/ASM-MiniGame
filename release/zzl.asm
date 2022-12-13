@@ -543,7 +543,8 @@ _createAll proc
         invoke  _load_common_pic, addr object_DC.infected, IDB_SPE_INFECT  
         invoke  _load_common_pic, addr object_DC.cant_inf, IDB_SPE_CANT_INFECT  
 ;pause window
-        invoke  _load_common_pic, addr object_DC.pauw, IDB_PAUSE_WINDOW  
+        invoke  _load_common_pic, addr object_DC.pauw,  IDB_PAUSE_WINDOW  
+        invoke  _load_common_pic, addr object_DC.titles, IDB_TITLE
 
 ;��ʼ�����ؼ� button
         invoke _load_button, addr button_play,  IDB_BUTTON_PLAY_1,  IDB_BUTTON_PLAY_2
@@ -860,6 +861,8 @@ _draw_object proc uses eax ebx ecx edx edi esi, hWnd, hDCGame_ptr, player_addr: 
                 mov eax, hWnd
                 .if eax == hWinMain
                         invoke  TransparentBlt, hDCGame_ptr, 0, 0, gameH, gameW, backGround.DC_b, 0, 0, 1000, 1000, SRCCOPY
+                        invoke  TransparentBlt, hDCGame_ptr, 100, 100, 200, 100, object_DC.titles, 0, 0, 1000, 1000, 16777215
+
                         invoke  _draw_button, addr button_play, hWnd, button_play_LX, button_play_LY, hDCGame_ptr
                         invoke  _draw_button, addr button_2p_play, hWnd, button_2p_play_LX, button_2p_play_LY, hDCGame_ptr
                         invoke  _draw_button, addr button_start, hWnd, button_start_LX, button_start_LY, hDCGame_ptr
@@ -1017,6 +1020,14 @@ _draw_object proc uses eax ebx ecx edx edi esi, hWnd, hDCGame_ptr, player_addr: 
                 invoke  TransparentBlt, hDCGame_ptr, 0, 0, gameH, gameW, backGround.DC_pd, 0, 0, 1000, 1000, SRCCOPY
 ;draw pause
                 invoke  _draw_button, addr button_pause, hWnd, button_pause_LX, button_pause_LY, hDCGame_ptr
+
+;draw tag
+                
+                mov esi, player_addr
+                assume esi: ptr Subject
+                .if [esi].has_fever > 0
+                        invoke  TransparentBlt, hDCGame_ptr, 460, 100, 100, 100, object_DC.temperature, 0, 0, PROP_LX, PROP_LY, 16777215
+                .endif
 
 ;draw obj 1
                 mov ecx, @target_number

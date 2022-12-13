@@ -64,12 +64,12 @@ bullet_init_ly                   equ 36
 ; bullet_init_x7               equ 200+50+50+60+80
 
 
-
 ID_TIMER        equ     1
 ID_TIMER2        equ    2
 ID_TIMER_gene   equ     3
 ID_TIMER_gene2  equ     4
 
+IDB_TITLE equ 1
 IDB_BACKG_OVERW   equ  70
 IDB_BACKG_OVERL   equ  71
 IDB_BACKG_INTRO   equ  80

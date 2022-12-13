@@ -80,6 +80,8 @@ Object_DC struct
         soft_inf       dd     ? ;无症状
         infected       dd     ? ;感染
         cant_inf       dd      ?;免疫
+;
+        titles          dd ?
 Object_DC ends
 
 ;-----------------player choose-----------------
