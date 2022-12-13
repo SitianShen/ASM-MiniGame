@@ -1359,7 +1359,7 @@ _two_two_enum_symbiotic_test proc
         mov [esi].base.course_id, 1
         mov [esi].typeid, n95mask
 
-        mov target_number_one, 1
+        mov target_number_one, 2
 
         ; lea esi, targetsOne[sizeofTargets]
         ; assume esi :ptr Targets
@@ -1372,14 +1372,109 @@ _two_two_enum_symbiotic_test proc
         ret
 _two_two_enum_symbiotic_test endp
 
+_typeid_to_picHandle proc mainTargets:dword, mainTargetsNumber:dword
+        local @target_number_index
+        local @targetByteOffset
+
+        mov @targetByteOffset, 0
+        mov @target_number_index, 0
+
+        .while TRUE
+                mov eax, @target_number_index
+                mov ecx, mainTargetsNumber
+                assume ecx:ptr dword
+                
+                .break .if [ecx] == eax
+
+                mov eax, mainTargets
+                add eax, @targetByteOffset
+                mov esi, eax
+                assume esi:ptr Targets
+
+                .if [esi].typeid == medicine ;药    
+                        mov eax, object_DC.medicine         
+                        mov [esi].base.DC, eax
+                .elseif [esi].typeid == redVirus ;红色病毒
+                        mov eax, object_DC.redVirus         
+                        mov [esi].base.DC, eax
+                .elseif [esi].typeid == greenVirus ;绿色病毒
+                        mov eax, object_DC.greenVirus         
+                        mov [esi].base.DC, eax
+                .elseif [esi].typeid == hotPot ;火锅
+                        mov eax, object_DC.hotPot         
+                        mov [esi].base.DC, eax
+                .elseif [esi].typeid == n95mask ;口罩
+                        mov eax, object_DC.n95mask         
+                        mov [esi].base.DC, eax
+                .elseif [esi].typeid == temperature ;测温计
+                        mov eax, object_DC.temperature         
+                        mov [esi].base.DC, eax
+                .endif
+
+                ;递增offset
+                mov eax, sizeofTargets
+                add eax, @targetByteOffset
+                mov @targetByteOffset, eax
+
+                ;递增index
+                inc @target_number_index
+        .endw   
+
+        ret     
+_typeid_to_picHandle endp
+
+_typeid_to_picHandle_test proc
+        ;第零个targets
+        lea esi, targetsOne[0]
+        assume esi :ptr Targets
+
+        mov [esi].base.posx, 1
+        mov [esi].base.posy, 1
+        mov [esi].base.lengthx, 1
+        mov [esi].base.lengthy, 1
+        mov [esi].base.alive, 1
+        mov [esi].base.DC, 1
+        mov [esi].base.rel_v, 1
+        mov [esi].base.course_id, 1
+        mov [esi].typeid, medicine
+
+        ; invoke _two_two_enum
+        ; .if [esi].typeid == MONEY_1
+        ;         invoke printf, offset szInt, targets[0].typeid
+        ; .endif
+        
+        ; invoke printf, offset debug_int, [esi].base.posx
+        ; invoke printf, offset debug_int, [esi].typeid
+
+        ; 第一个targets
+        lea esi, targetsOne[sizeofTargets]
+        assume esi :ptr Targets
+
+        mov [esi].base.posx, 1
+        mov [esi].base.posy, 1
+        mov [esi].base.lengthx, 1
+        mov [esi].base.lengthy, 1
+        mov [esi].base.alive, 1
+        mov [esi].base.DC, 1
+        mov [esi].base.rel_v, 1
+        mov [esi].base.course_id, 1
+        mov [esi].typeid, n95mask
+
+        mov target_number_one, 2
+
+        invoke _typeid_to_picHandle, addr targetsOne, addr target_number_one
+        ret
+_typeid_to_picHandle_test endp
+
 ; start:
-;         invoke _Open_ALL_SOUND
+;         ; invoke _Open_ALL_SOUND
 ;         ; invoke _collision_SOUND_test
 ;         ; invoke printHelloWorld
-;         invoke _two_two_enum_symbiotic_test
+;         ; invoke _two_two_enum_symbiotic_test
 ;         ; invoke _Play_medicine_SOUND
-;         invoke _Close_ALL_SOUND
+;         ; invoke _Close_ALL_SOUND
 ;         ; invoke printf, offset debug_int, 1
+;         invoke _typeid_to_picHandle_test
 ;         ret
 ; end     start
 end
