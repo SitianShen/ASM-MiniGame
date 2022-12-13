@@ -45,8 +45,6 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                                                 invoke _two_two_enum
                                         .endif
                                 .elseif eax == in_2p_game
-                                        invoke _Move_process_symbiotic, addr playerOne ;only here
-                                        invoke _Move_process_symbiotic, addr playerTwo ;only here
                                         invoke _change_all_position_symbiotic ;only here
                                         invoke _targets_bullet_out_of_bound_symbiotic ;only here
                                         invoke _change_status, addr playerOne, addr playerTwo;only here
