@@ -192,7 +192,7 @@ _Init_car_symbiotic proc uses ebx esi, mainPlayer:ptr Subject
         ;============= base结构体初始化 ==============
         mov ebx, 2
         mov [esi].base.course_id, ebx
-        mov [esi].base.alive, 1
+        mov [esi].base.alive, 3
 
         xor ebx, ebx
         mov [esi].base.rel_v, ebx
