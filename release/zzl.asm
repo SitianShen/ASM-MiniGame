@@ -91,13 +91,13 @@ _shot_bullet proc
         .endif
         mov bullet.base.course_id, eax
         mov bullet.base.DC, ebx
-        mov bullet.base.lengthx, bullet_init_lx
-        mov bullet.base.lengthy, bullet_init_ly
+        mov bullet.base.lengthx, bullet_init_lx*5/3
+        mov bullet.base.lengthy, bullet_init_ly*5/3
         mov eax, player.base.posx
-        add eax, carLX/2
+        add eax, carLX/3
         mov bullet.base.posx, eax
         mov eax, player.base.posy
-        add eax, carLY/2
+        add eax, carLY/3
         mov bullet.base.posy, eax
         mov bullet.base.alive, 1
         ret
