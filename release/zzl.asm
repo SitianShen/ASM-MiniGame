@@ -35,7 +35,7 @@ _load_game proc @player_ptr, @targets_ptr, @target_number_ptr, @fileName
         invoke ReadFile, @hFile, @targets_ptr, 1000*sizeof Targets, addr @tmp, NULL
         invoke printf, offset debug_int, @tmp   
         invoke ReadFile, @hFile, @target_number_ptr, sizeof dword, addr @tmp, NULL
-        invoke printf, offset debug_int, @tmp   
+        invoke printf, offset debug_int, @tmp  
         invoke CloseHandle, @hFile
         xor eax, eax
         ret

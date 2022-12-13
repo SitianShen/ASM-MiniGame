@@ -11,6 +11,7 @@ BASE ends
 
 Subject struct 
         base    BASE  <> 
+        curid           dd      ?
         score           dd      ?
         status          dd      ?
         has_hotpot      dd      ?
@@ -73,7 +74,7 @@ Object_DC ends
 
 ;-----------------player choose-----------------
 PlayerList struct
-        DC              dd 4*2 dup(?) 
+        DC              dd 4*2 dup(?) ;DC[0],   DC[2]    ,   DC[4]    ,   DC[6]    
         curid           dd ?
 
         choose_confirm  dd      ?
