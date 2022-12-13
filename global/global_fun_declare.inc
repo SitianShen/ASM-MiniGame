@@ -12,23 +12,6 @@ system proto c:dword
 
 ;========================= zzl zzl zzl zzl ============================
 ; zzl functions
-<<<<<<< HEAD
-_Init_bullet proto
-_initAll proto
-_random_object_gene proto, :ptr dword, :ptr dword
-_set_char_pos proto
-_load_button proto :ptr Button, :dword, :dword
-_load_common_pic proto :dword, :dword
-_createAll proto
-_deleteAll proto
-_Quit proto
-_draw_button proto :ptr Button, :dword, :dword, :dword, :dword
-_draw_object proto :dword, :dword, :ptr Subject, :ptr Targets, :dword
-_show_score proto :dword
-_shot_bullet proto
-_init_2p_mode proto
-_load_game proto :dword, :dword, :dword
-=======
 _Init_bullet proto ;初始化子弹
 _initAll proto ;
 _random_object_gene proto, :ptr dword, :ptr dword ;随机生成Targets
@@ -43,7 +26,7 @@ _draw_object proto :dword, :dword, :ptr Subject, :ptr Targets, :dword ;画Target
 _show_score proto :dword ;显示分数
 _shot_bullet proto ;发射子弹
 _init_2p_mode proto ;
->>>>>>> 3c95ebace92cc0e349cffaf5accc2d8fbdf77c7c
+_load_game proto :dword, :dword, :dword
 
 ;========================= sst sst sst sst ============================
 ; sst functions
