@@ -134,9 +134,18 @@ _random_object_gene proc @targets_ptr: ptr dword, @target_number_ptr: ptr dword
         invoke rand
         invoke rand
         invoke rand
-        and eax, 15
+        and eax, 31
 
+        .if eax > 26
+                mov eax, 2
+        .endif
+        .if eax > 19
+                mov eax, 1
+        .endif
         .if eax > 12
+                mov eax, 0
+        .endif
+        .if eax > 11
                 mov eax, 7
         .endif
         .if eax > 9
@@ -239,7 +248,17 @@ _random_object_gene_2p proc @targets_ptr: ptr dword, @target_number_ptr: ptr dwo
         invoke rand
         invoke rand
         invoke rand
-        and eax, 15
+        and eax, 31
+
+        .if eax > 26
+                mov eax, 2
+        .endif
+        .if eax > 20
+                mov eax, 1
+        .endif
+        .if eax > 14
+                mov eax, 0
+        .endif
 
         .if eax > 12
                 mov eax, 3
@@ -839,11 +858,14 @@ _draw_object proc hWnd, hDCGame_ptr, player_addr: ptr Subject, @targets_ptr: ptr
                                 mov edx, [esi].base.posy
                                 .if [esi].base.alive == 1 && edx<cary
                                         push ecx
-                                        invoke  TransparentBlt, 
-                                                hDCGame_ptr, 
-                                                [esi].base.posx, [esi].base.posy, 
-                                                [esi].base.lengthx, [esi].base.lengthy, 
-                                                [esi].base.DC, 0, 0, PROP_LX, PROP_LY, 16777215
+                                        mov edx, [esi].base.posy
+                                        .if edx > remote_y+10
+                                                invoke  TransparentBlt, 
+                                                        hDCGame_ptr, 
+                                                        [esi].base.posx, [esi].base.posy, 
+                                                        [esi].base.lengthx, [esi].base.lengthy, 
+                                                        [esi].base.DC, 0, 0, PROP_LX, PROP_LY, 16777215
+                                        .endif
                                         pop ecx
                                 .endif
                                 pop edx
@@ -961,11 +983,14 @@ _draw_object proc hWnd, hDCGame_ptr, player_addr: ptr Subject, @targets_ptr: ptr
 
                         mov edx, [esi].base.posy
                         .if [esi].base.alive == 1 && edx<cary
-                                invoke  TransparentBlt, 
-                                        hDCGame_ptr, 
-                                        [esi].base.posx, [esi].base.posy, 
-                                        [esi].base.lengthx, [esi].base.lengthy, 
-                                        [esi].base.DC, 0, 0, PROP_LX, PROP_LY, 16777215
+                                mov edx, [esi].base.posy
+                                .if edx > remote_y+10
+                                        invoke  TransparentBlt, 
+                                                hDCGame_ptr, 
+                                                [esi].base.posx, [esi].base.posy, 
+                                                [esi].base.lengthx, [esi].base.lengthy, 
+                                                [esi].base.DC, 0, 0, PROP_LX, PROP_LY, 16777215
+                                .endif
                         .endif
 
                         pop esi

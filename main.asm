@@ -410,10 +410,10 @@ _WinMain        proc
         invoke  _createAll
         invoke  _initAll
         invoke  SetTimer, hWinMain, ID_TIMER, 15, NULL ;flush
-        invoke  SetTimer, hWinMain, ID_TIMER_gene, 600, NULL ;generate
+        invoke  SetTimer, hWinMain, ID_TIMER_gene, 200, NULL ;generate
 
         invoke  SetTimer, hWinMain2, ID_TIMER2, 15, NULL ;flush
-        invoke  SetTimer, hWinMain2, ID_TIMER_gene2, 600, NULL ;generate
+        invoke  SetTimer, hWinMain2, ID_TIMER_gene2, 200, NULL ;generate
 
         .while  TRUE
                 invoke  GetMessage, addr @stMsg, NULL, 0, 0
