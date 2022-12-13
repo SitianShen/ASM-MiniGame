@@ -269,7 +269,184 @@ _targets_bullet_out_of_bound proc
                 .endif
         .endif
 ret
+
 _targets_bullet_out_of_bound endp
+
+;聚餐
+_hotpot_effect proc stdcall ptrPlayerOne:ptr Subject, ptrPlayerTwo:ptr Subject
+
+        ; Immunity        equ 100 ;免疫期
+        ; Exposure        equ 101 ;暴露期
+        ; Asymptomatic    equ 102 ;无症状
+        ; Infection       equ 103 ;感染期
+
+        ; 显示一个图像
+
+
+        mov esi, ptrPlayerOne
+        assume  esi: ptr Subject 
+        mov ecx, ptrPlayerTwo
+        assume  ecx: ptr Subject 
+
+        mov [esi].has_hotpot, time_3s
+        mov [ecx].has_hotpot, time_3s
+        mov eax, [esi].status
+        mov ebx, [ecx].status
+
+        .if eax == 101 && ebx == 102
+                inc [esi].score
+                mov [esi].status, 102
+        .elseif eax == 101 && ebx == 103
+                dec [esi].base.alive
+                mov [esi].status, 103
+        .elseif eax == 102 && ebx == 103
+                dec [esi].base.alive
+                mov [esi].status, 103
+        .endif
+
+        assume esi: nothing
+        assume ecx: nothing
+ret
+_hotpot_effect endp
+
+
+;口罩
+_mask_effect proc stdcall ptrPlayerOne:ptr Subject, ptrPlayerTwo:ptr Subject
+
+        mov esi, ptrPlayerTwo
+        assume  esi: ptr Subject 
+        mov [esi].has_mask, time_3s
+        assume esi: nothing
+
+ret
+_mask_effect endp
+
+
+;测温计
+_fever_effect proc stdcall ptrPlayerOne:ptr Subject, ptrPlayerTwo:ptr Subject
+        
+        mov esi, ptrPlayerTwo
+        assume  esi: ptr Subject 
+        mov [esi].has_fever, time_3s
+        assume esi: nothing
+
+ret
+_fever_effect endp
+
+
+_check_player_effect proc stdcall ptrPlayer:ptr Subject
+        mov esi, ptrPlayer
+        assume  esi: ptr Subject 
+
+        mov eax, [esi].has_hotpot
+        .if eax > 0
+                dec [esi].has_hotpot
+        .endif
+        mov eax, [esi].has_mask
+        .if eax > 0
+                dec [esi].has_mask
+        .endif
+        mov eax, [esi].has_fever
+        .if eax > 0
+                dec [esi].has_fever
+        .endif
+        assume esi: nothing
+ret
+_check_player_effect endp
+
+_check_all_effect proc stdcall ptrPlayerOne:ptr Subject, ptrPlayerTwo:ptr Subject
+        invoke _check_player_effect, ptrPlayerOne
+        invoke _check_player_effect, ptrPlayerTwo
+ret
+_check_all_effect endp
+
+;状态的自动转换
+_change_status proc stdcall ptrPlayerOne:ptr Subject, ptrPlayerTwo:ptr Subject
+
+        mov eax, change_two_status_cnt
+        .if eax == 0 
+                mov esi, ptrPlayerOne
+                assume  esi: ptr Subject 
+                mov ecx, ptrPlayerTwo
+                assume  ecx: ptr Subject 
+                
+                mov [esi].status, 101
+                mov [ecx].status, 101
+                mov change_two_status_cnt, time_5s
+        .else
+                dec change_two_status_cnt
+        .endif
+
+ret
+_change_status endp
+
+
+_change_all_position_symbiotic proc stdcall       ; 双人模式遍历所有道具改变位置
+
+        mov eax, speed
+        mov edx, 0
+        mov ebx, 0
+        mul ebx
+        mov ecx, eax
+        push ecx
+        invoke rand
+        pop ecx
+        and eax, ecx
+        .if eax == 0 
+                mov ecx, target_number_one
+                xor eax, eax
+                .while eax < ecx
+                        push eax
+                        mov edx, 0
+                        mov ebx, sizeofTargets
+                        mul ebx
+                        lea esi, targetsOne[eax]
+                        assume esi :ptr Targets
+                        .if [esi].base.alive == 1
+                                invoke _next_position, addr [esi].base
+                        .endif
+                        assume  esi: nothing
+                        pop eax
+                        inc eax
+                .endw
+
+                mov ecx, target_number_two
+                xor eax, eax
+                .while eax < ecx
+                        push eax
+                        mov edx, 0
+                        mov ebx, sizeofTargets
+                        mul ebx
+                        lea esi, targetsTwo[eax]
+                        assume esi :ptr Targets
+                        .if [esi].base.alive == 1
+                                invoke _next_position, addr [esi].base
+                        .endif
+                        assume  esi: nothing
+                        pop eax
+                        inc eax
+                .endw
+                ; 移动子弹
+                lea esi, bulletOne
+                assume esi :ptr Targets
+                .if [esi].base.alive == 1
+                        invoke _next_position, addr [esi].base
+                .endif
+                assume  esi: nothing
+
+                lea esi, bulletTwo
+                assume esi :ptr Targets
+                .if [esi].base.alive == 1
+                        invoke _next_position, addr [esi].base
+                .endif
+                assume  esi: nothing
+        .endif
+ret
+_change_all_position_symbiotic endp
+
+
+
+
 
 ; start:
 ;         ret

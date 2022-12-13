@@ -381,7 +381,7 @@ ret
 _change_status endp
 
 
-_change_all_position_symbiotic proc stdcall       ;遍历所有道具改变位置
+_change_all_position_symbiotic proc stdcall       ; 双人模式遍历所有道具改变位置
 
         mov eax, speed
         mov edx, 0

@@ -1,5 +1,5 @@
 extrn player:Subject         
-extrn bullet:Subject        
+extrn bullet:Targets        
    
 extrn targets:dword ;不知道会不会有bug，本地调试很正常
 extrn digitals_DC:dword
@@ -54,12 +54,12 @@ extrn change_two_status_cnt:dword
 extrn playerOne:Subject 
 extrn targetsOne:dword 
 extrn target_number_one:dword 
-extrn bulletOne:Subject  
+extrn bulletOne:Targets
   
 
 extrn playerTwo:Subject 
 extrn targetsTwo:dword 
 extrn target_number_two:dword 
-extrn bulletTwo:Subject  
+extrn bulletTwo:Targets 
 
 ;==================== 共生模式 ===========================
