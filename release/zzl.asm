@@ -53,8 +53,8 @@ _init_2p_players proc cur_player
 _init_2p_players endp
 
 _init_2p_mode proc
-        invoke _init_2p_players, offset playerOne
-        invoke _init_2p_players, offset playerTwo
+        invoke _Init_car_symbiotic, offset playerOne
+        invoke _Init_car_symbiotic, offset playerTwo
         mov playerList.curid, 0
         mov playerList2.curid, 0
         mov playerList.choose_confirm, 0
@@ -736,6 +736,8 @@ _draw_object proc hWnd, hDCGame_ptr, player_addr: ptr Subject, @targets_ptr: ptr
                         invoke _draw_player_choose, hDCGame_ptr
                 .endif
         .elseif eax == in_2p_game
+                        invoke _Move_process_symbiotic, player_addr
+
                         invoke  TransparentBlt, hDCGame_ptr, 0, 0, gameH, gameW, backGround.DC_pd, 0, 0, 1000, 1000, SRCCOPY
         ;draw pause
                         invoke  _draw_button, addr button_pause, hWnd, button_pause_LX, button_pause_LY, hDCGame_ptr

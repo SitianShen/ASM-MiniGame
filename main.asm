@@ -45,7 +45,8 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                                                 invoke _two_two_enum
                                         .endif
                                 .elseif eax == in_2p_game
-                                        invoke _change_all_position_symbiotic
+                                        invoke _change_all_position_symbiotic ;only here
+                                        invoke _two_two_enum_symbiotic, addr playerOne, addr targetsOne, addr target_number_one ;copy here
                                         invoke  _draw_object, hWnd, hDCGame, addr playerOne, addr targetsOne, target_number_one
                                         ;write here for 1p
                                 .endif
@@ -60,78 +61,7 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                         .endif
 
                 .elseif eax == WM_LBUTTONUP
-                        invoke printf, offset debug_int, wParam
-                        mov eax, cur_interface
-                        .if eax == in_begining 
-                                mov eax, 1
-                                .if eax == button_play.is_click
-                                        invoke _Stop_BeginBGM_SOUND
-                                        invoke _BGM_SOUND
-                                        mov cur_interface, in_game
-                                        mov button_play.is_click, 0
-                                        ;播放开始游戏的BGM
-                                .elseif eax == button_start.is_click
-                                        mov cur_interface, in_intro
-                                        mov button_start.is_click, 0
-                                .elseif eax == button_2p_play.is_click
-                                        invoke _Stop_BeginBGM_SOUND
-                                        invoke  ShowWindow, hWinMain2, SW_SHOWNORMAL
-                                        invoke _init_2p_mode
-                                        mov cur_interface, in_2p_choose
-                                        mov button_2p_play.is_click, 0
-                                .elseif eax == button_load.is_click
-                                        invoke _init_2p_mode
-                                        invoke _load_game, addr playerOne, addr targetsOne, addr target_number_one
-                                        .if eax == 0 
-                                                invoke _load_game, addr playerTwo, addr targetsTwo, addr target_number_two
-                                                .if eax == 0
-                                                        invoke _Stop_BeginBGM_SOUND
-                                                        invoke  ShowWindow, hWinMain2, SW_SHOWNORMAL
-                                                        mov cur_interface, in_2p_game
-                                                        mov button_2p_play.is_click, 0
-                                                .endif
-                                        .endif
-
-                                .endif
-                        .elseif eax == in_intro
-                                mov eax, 1
-                                .if eax == button_back.is_click
-                                        mov cur_interface, in_begining
-                                        mov button_back.is_click, 0
-                                .endif
-                        .elseif eax == in_over
-                                mov eax, 1
-                                .if eax == button_exit.is_click
-                                        invoke _Stop_END_SOUND
-                                        invoke _Quit
-                                        mov button_exit.is_click, 0
-                                .elseif eax == button_retry.is_click
-                                        invoke _initAll
-                                        invoke _Stop_END_SOUND
-                                        invoke _BeginBGM_SOUND
-                                        mov cur_interface, in_begining
-                                        mov button_retry.is_click, 0
-                                .endif
-                        .elseif eax == in_game
-                                mov eax, 1
-                                .if eax == button_pause.is_click
-                                        mov cur_interface, in_pause
-                                .endif
-                        .elseif eax == in_pause
-                                mov eax, 1
-                                .if eax == button_pause.is_click
-                                        mov cur_interface, in_game
-                                        mov button_pause.is_click, 0
-                                .endif
-                        .elseif eax == in_2p_game
-                                mov eax, 1
-                                .if eax == button_pause.is_click
-                                        mov cur_interface, in_2p_pause
-                                .endif
-                        .elseif eax == in_2p_pause
-                        
-
-                        .endif
+                
 
                 .elseif eax == WM_CLOSE
                         invoke  _Quit
@@ -237,8 +167,102 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                         .elseif eax == 13
                                 mov playerList2.choose_confirm, 1
                         .endif
+                .elseif eax == in_2p_game
+                        mov eax, wParam
+                        .if eax == 87 
+                                invoke _Jump_SOUND
+                                invoke _Action_jump_symbiotic, addr playerOne
+                        .elseif eax == 65
+                                invoke _CarMove_SOUND
+                                invoke _Action_left_symbiotic, addr playerOne
+                        .elseif eax == 68
+                                invoke _CarMove_SOUND
+                                invoke _Action_right_symbiotic, addr playerOne
+                        .elseif eax == 38 
+                                invoke _Jump_SOUND
+                                invoke _Action_jump_symbiotic, addr playerTwo
+                        .elseif eax == 37
+                                invoke _CarMove_SOUND
+                                invoke _Action_left_symbiotic, addr playerTwo
+                        .elseif eax == 39
+                                invoke _CarMove_SOUND
+                                invoke _Action_right_symbiotic, addr playerTwo
+                        ; .elseif eax == 13
+                                ; invoke _shot_bullet
+                        .endif
                 .endif
                 ret
+        .elseif eax == WM_LBUTTONUP
+                invoke printf, offset debug_int, wParam
+                mov eax, cur_interface
+                .if eax == in_begining 
+                        mov eax, 1
+                        .if eax == button_play.is_click
+                                invoke _Stop_BeginBGM_SOUND
+                                invoke _BGM_SOUND
+                                mov cur_interface, in_game
+                                mov button_play.is_click, 0
+                                ;播放开始游戏的BGM
+                        .elseif eax == button_start.is_click
+                                mov cur_interface, in_intro
+                                mov button_start.is_click, 0
+                        .elseif eax == button_2p_play.is_click
+                                invoke _Stop_BeginBGM_SOUND
+                                invoke  ShowWindow, hWinMain2, SW_SHOWNORMAL
+                                invoke _init_2p_mode
+                                mov cur_interface, in_2p_choose
+                                mov button_2p_play.is_click, 0
+                        .elseif eax == button_load.is_click
+                                invoke _init_2p_mode
+                                invoke _load_game, addr playerOne, addr targetsOne, addr target_number_one
+                                .if eax == 0 
+                                        invoke _load_game, addr playerTwo, addr targetsTwo, addr target_number_two
+                                        .if eax == 0
+                                                invoke _Stop_BeginBGM_SOUND
+                                                invoke  ShowWindow, hWinMain2, SW_SHOWNORMAL
+                                                mov cur_interface, in_2p_game
+                                                mov button_2p_play.is_click, 0
+                                        .endif
+                                .endif
+
+                        .endif
+                .elseif eax == in_intro
+                        mov eax, 1
+                        .if eax == button_back.is_click
+                                mov cur_interface, in_begining
+                                mov button_back.is_click, 0
+                        .endif
+                .elseif eax == in_over
+                        mov eax, 1
+                        .if eax == button_exit.is_click
+                                invoke _Stop_END_SOUND
+                                invoke _Quit
+                                mov button_exit.is_click, 0
+                        .elseif eax == button_retry.is_click
+                                invoke _initAll
+                                invoke _Stop_END_SOUND
+                                invoke _BeginBGM_SOUND
+                                mov cur_interface, in_begining
+                                mov button_retry.is_click, 0
+                        .endif
+                .elseif eax == in_game
+                        mov eax, 1
+                        .if eax == button_pause.is_click
+                                mov cur_interface, in_pause
+                        .endif
+                .elseif eax == in_pause
+                        mov eax, 1
+                        .if eax == button_pause.is_click
+                                mov cur_interface, in_game
+                                mov button_pause.is_click, 0
+                        .endif
+                .elseif eax == in_2p_game
+                        mov eax, 1
+                        .if eax == button_pause.is_click
+                                mov cur_interface, in_2p_pause
+                        .endif
+                .elseif eax == in_2p_pause
+                .endif
         .endif
 ;check confirmed
         mov eax, playerList.choose_confirm
