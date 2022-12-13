@@ -15,6 +15,7 @@ system proto c:dword
 _Init_bullet proto ;初始化子弹
 _initAll proto ;
 _random_object_gene proto, :ptr dword, :ptr dword ;随机生成Targets
+_random_object_gene_2p proto, :ptr dword, :ptr dword;随机生成Targets 2p mode
 _set_char_pos proto ;
 _load_button proto :ptr Button, :dword, :dword ;
 _load_common_pic proto :dword, :dword ;
@@ -29,6 +30,7 @@ _init_2p_mode proto ;
 _load_game proto :dword, :dword, :dword, :dword
 _save_game proto :dword, :dword, :dword, :dword
 _check_button proto :ptr Button, :dword
+
 
 ;========================= sst sst sst sst ============================
 ; sst functions

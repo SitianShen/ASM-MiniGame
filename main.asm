@@ -59,7 +59,7 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                                 .if eax == in_game
                                         invoke  _random_object_gene, addr targets, addr target_number
                                 .elseif eax == in_2p_game
-                                        invoke  _random_object_gene, addr targetsOne, addr target_number_one
+                                        invoke  _random_object_gene_2p, addr targetsOne, addr target_number_one
                                 .endif
                         .endif
 

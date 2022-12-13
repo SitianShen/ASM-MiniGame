@@ -240,15 +240,16 @@ _random_object_gene_2p proc @targets_ptr: ptr dword, @target_number_ptr: ptr dwo
         invoke rand
         and eax, 15
 
-        .if eax > 13
-                mov eax, 7
-        .endif
-        .if eax > 9
+        .if eax > 12
                 mov eax, 3
         .endif
 
-        .if eax > 7
+        .if eax > 10
                 mov eax, 4
+        .endif
+
+        .if eax > 8
+                mov eax, 5
         .endif
 
         mov @id, eax
@@ -258,33 +259,36 @@ _random_object_gene_2p proc @targets_ptr: ptr dword, @target_number_ptr: ptr dwo
         assume esi: ptr Targets
         .if eax == 0
                 mov ebx, object_DC.env1
-                mov [esi].typeid, OBJ_ENV
+                mov [esi].typeid, env1
         .elseif eax == 1
                 mov ebx, object_DC.env2
-                mov [esi].typeid, OBJ_ENV
+                mov [esi].typeid, env2
         .elseif eax == 2
                 mov ebx, object_DC.env3
-                mov [esi].typeid, OBJ_ENV
+                mov [esi].typeid, env3
         .elseif eax == 3
-                mov ebx, object_DC.sobs
-                mov [esi].typeid, OBST_SOFT
+                mov ebx, object_DC.medicine
+                mov [esi].typeid, medicine
         .elseif eax == 4
-                mov ebx, object_DC.hobs
-                mov [esi].typeid, OBST_HARD
+                mov ebx, object_DC.redVirus
+                mov [esi].typeid, redVirus
         .elseif eax == 5
-                mov ebx, object_DC.accp
-                mov [esi].typeid, PROP_ACC_SELF
+                mov ebx, object_DC.greenVirus
+                mov [esi].typeid, greenVirus
         .elseif eax == 6
-                mov ebx, object_DC.decp
-                mov [esi].typeid, PROP_DEC_SELF
+                mov ebx, object_DC.hotPot
+                mov [esi].typeid, hotPot
         .elseif eax == 7
-                mov ebx, object_DC.coin
-                mov [esi].typeid, MONEY_1
+                mov ebx, object_DC.n95mask
+                mov [esi].typeid, n95mask
+        .elseif eax == 8
+                mov ebx, object_DC.temperature
+                mov [esi].typeid, temperature
         .endif
         mov [esi].base.DC, ebx
 
         mov eax, @id
-        and eax, 7
+        ; and eax, 7
         .if eax <= 2 
                 invoke rand
                 and eax, 4
