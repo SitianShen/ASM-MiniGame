@@ -8,7 +8,29 @@ include global_extrn.inc
 .code
 
 ;zzl part #################################################################
-
+_save_game proc @player_ptr, @targets_ptr, @target_number_ptr
+        local @hFile, @tmp
+        invoke CreateFile, addr saveFileName, GENERIC_WRITE, 0, NULL, OPEN_ALWAYS, FILE_ATTRIBUTE_NORMAL, NULL
+        mov @hFile, eax
+        invoke WriteFile, @hFile, @player_ptr,  sizeof Subject, addr @tmp, NULL
+        invoke WriteFile, @hFile, @targets_ptr, 1000*sizeof Targets, addr @tmp, NULL
+        invoke WriteFile, @hFile, @target_number_ptr, sizeof dword, addr @tmp, NULL
+        ret
+_save_game endp
+_load_game proc @player_ptr, @targets_ptr, @target_number_ptr
+        local @hFile, @tmp
+        invoke CreateFile, addr saveFileName, GENERIC_READ, 0, NULL, OPEN_EXISTING, FILE_ATTRIBUTE_NORMAL, NULL
+        .if eax == INVALID_HANDLE_VALUE
+                mov eax, 1
+                ret
+        .endif
+        mov @hFile, eax
+        invoke WriteFile, @hFile, @player_ptr,  sizeof Subject, addr @tmp, NULL
+        invoke WriteFile, @hFile, @targets_ptr, 1000*sizeof Targets, addr @tmp, NULL
+        invoke WriteFile, @hFile, @target_number_ptr, sizeof dword, addr @tmp, NULL
+        xor eax, eax
+        ret
+_load_game endp
 _init_2p_players proc cur_player
         mov esi, cur_player
         assume esi: ptr Subject
