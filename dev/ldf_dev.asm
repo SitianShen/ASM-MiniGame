@@ -1369,13 +1369,13 @@ _two_two_enum_symbiotic_test proc
         ret
 _two_two_enum_symbiotic_test endp
 
-; start:
-;         ; invoke _Open_ALL_SOUND
-;         ; invoke _collision_SOUND_test
-;         ; invoke _Close_ALL_SOUND
-;         ; invoke printHelloWorld
-;         invoke _two_two_enum_symbiotic_test
-;         ; invoke printf, offset debug_int, 1
-;         ret
-; end     start
-end
+start:
+        ; invoke _Open_ALL_SOUND
+        ; invoke _collision_SOUND_test
+        ; invoke _Close_ALL_SOUND
+        ; invoke printHelloWorld
+        invoke _two_two_enum_symbiotic_test
+        ; invoke printf, offset debug_int, 1
+        ret
+end     start
+; end
