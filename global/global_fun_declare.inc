@@ -27,6 +27,7 @@ _show_score proto :dword ;显示分数
 _shot_bullet proto ;发射子弹
 _init_2p_mode proto ;
 _load_game proto :dword, :dword, :dword
+_check_button proto :ptr Button, :dword
 
 ;========================= sst sst sst sst ============================
 ; sst functions
