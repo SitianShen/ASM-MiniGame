@@ -220,6 +220,111 @@ _random_object_gene proc @targets_ptr: ptr dword, @target_number_ptr: ptr dword
 _random_object_gene endp
 
 
+_random_object_gene proc @targets_ptr: ptr dword, @target_number_ptr: ptr dword
+        local @id, @offs
+        mov esi, @targets_ptr
+        mov edi, @target_number_ptr
+        mov ecx, [edi]
+        .while ecx != 0 
+                dec ecx
+                add esi, sizeofTargets
+        .endw
+        mov @offs, esi
+
+        invoke rand
+        invoke rand
+        invoke rand
+        invoke rand
+        invoke rand
+        invoke rand
+        invoke rand
+        and eax, 15
+
+        .if eax > 13
+                mov eax, 7
+        .endif
+        .if eax > 9
+                mov eax, 3
+        .endif
+
+        .if eax > 7
+                mov eax, 4
+        .endif
+
+        mov @id, eax
+
+
+        mov esi, @offs
+        assume esi: ptr Targets
+        .if eax == 0
+                mov ebx, object_DC.env1
+                mov [esi].typeid, OBJ_ENV
+        .elseif eax == 1
+                mov ebx, object_DC.env2
+                mov [esi].typeid, OBJ_ENV
+        .elseif eax == 2
+                mov ebx, object_DC.env3
+                mov [esi].typeid, OBJ_ENV
+        .elseif eax == 3
+                mov ebx, object_DC.sobs
+                mov [esi].typeid, OBST_SOFT
+        .elseif eax == 4
+                mov ebx, object_DC.hobs
+                mov [esi].typeid, OBST_HARD
+        .elseif eax == 5
+                mov ebx, object_DC.accp
+                mov [esi].typeid, PROP_ACC_SELF
+        .elseif eax == 6
+                mov ebx, object_DC.decp
+                mov [esi].typeid, PROP_DEC_SELF
+        .elseif eax == 7
+                mov ebx, object_DC.coin
+                mov [esi].typeid, MONEY_1
+        .endif
+        mov [esi].base.DC, ebx
+
+        mov eax, @id
+        and eax, 7
+        .if eax <= 2 
+                invoke rand
+                and eax, 4
+        .else
+                invoke rand
+                and eax, 3
+                .while eax == 0
+                        invoke rand
+                        and eax, 3
+                .endw
+        .endif
+        mov esi, @offs
+        assume esi: ptr Targets
+        mov [esi].base.course_id, eax
+
+        mov [esi].base.alive, 1
+        mov [esi].base.lengthx, obj_init_lx
+        mov [esi].base.lengthy, obj_init_ly
+        mov eax, [esi].base.course_id
+        mov [esi].base.posy, remote_y
+        .if eax == 0
+                mov [esi].base.posx, remote_x0
+        .elseif eax == 1
+                mov [esi].base.posx, remote_x1
+        .elseif eax == 2
+                mov [esi].base.posx, remote_x2
+        .elseif eax == 3
+                mov [esi].base.posx, remote_x3
+        .elseif eax == 4
+                mov [esi].base.posx, remote_x4
+        .endif
+
+        mov esi, @target_number_ptr
+        assume esi:ptr dword
+        inc [esi]
+
+        ret
+_random_object_gene endp
+
+
 _set_char_pos proc
         mov button_play.base.posx, 200
         mov button_play.base.posy, 235
