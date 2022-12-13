@@ -27,6 +27,9 @@ button_back       Button <>
 button_exit       Button <>
 button_retry      Button <>
 button_pause      Button <>
+button_continue      Button <>
+button_save      Button <>
+button_changeR      Button <>
 backGround        BackGround <>
 object_DC         Object_DC <>
 playerList        PlayerList<>

@@ -10,7 +10,10 @@ public button_load
 public button_back      
 public button_exit    
 public button_retry
-public button_pause   
+public button_pause  
+public button_continue
+public button_save
+public button_changeR
 public backGround       
 public object_DC        
 public digitals_DC
