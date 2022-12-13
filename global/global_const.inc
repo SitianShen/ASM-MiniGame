@@ -326,6 +326,14 @@ greenVirus      equ 502 ;绿色病毒
 hotPot          equ 600 ;火锅
 n95mask         equ 601 ;口罩
 temperature     equ 602 ;测温计
+
+IDB_medicine        equ 500 ;药
+IDB_redVirus        equ 501 ;红色病毒
+IDB_greenVirus      equ 502 ;绿色病毒
+IDB_hotPot          equ 600 ;火锅
+IDB_n95mask         equ 601 ;口罩
+IDB_temperature     equ 602 ;测温计
+
 time_3s         equ 300 ;持续三秒
 time_5s         equ 500 ;持续三秒
 

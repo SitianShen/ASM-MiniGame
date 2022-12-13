@@ -61,6 +61,14 @@ Object_DC struct
         bltM    dd      ?
         bltR    dd      ?
         pauw    dd      ?
+;new prop
+        medicine       dd     ? ;药
+        redVirus       dd     ? ;红色病毒
+        greenVirus     dd     ? ;绿色病毒
+
+        hotPot         dd     ? ;火锅
+        n95mask        dd     ? ;口罩
+        temperature    dd     ? ;测温计
 Object_DC ends
 
 ;-----------------player choose-----------------
