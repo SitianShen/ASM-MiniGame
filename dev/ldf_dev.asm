@@ -1465,15 +1465,16 @@ _typeid_to_picHandle_test proc
         invoke _typeid_to_picHandle, addr targetsOne, addr target_number_one
         ret
 _typeid_to_picHandle_test endp
-start:
-        ; invoke _Open_ALL_SOUND
-        ; invoke _collision_SOUND_test
-        ; invoke printHelloWorld
-        ; invoke _two_two_enum_symbiotic_test
-        ; invoke _Play_medicine_SOUND
-        ; invoke _Close_ALL_SOUND
-        ; invoke printf, offset debug_int, 1
-        invoke _typeid_to_picHandle_test
-        ret
-end     start
-; end
+
+; start:
+;         ; invoke _Open_ALL_SOUND
+;         ; invoke _collision_SOUND_test
+;         ; invoke printHelloWorld
+;         ; invoke _two_two_enum_symbiotic_test
+;         ; invoke _Play_medicine_SOUND
+;         ; invoke _Close_ALL_SOUND
+;         ; invoke printf, offset debug_int, 1
+;         invoke _typeid_to_picHandle_test
+;         ret
+; end     start
+end
