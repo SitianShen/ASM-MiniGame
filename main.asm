@@ -91,13 +91,22 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                 .elseif eax == WM_TIMER
                         mov     eax, wParam
                         .if     eax == ID_TIMER2
-                                invoke  _draw_object, hWnd, hDCGame2, addr playerTwo, addr targetsTwo, target_number_two
+                                ; invoke  _draw_object, hWnd, hDCGame2, addr playerTwo, addr targetsTwo, target_number_two
+                                mov eax, cur_interface
+                                .if eax == in_2p_game
+                                        invoke _two_two_enum_symbiotic, addr playerTwo, addr targetsTwo, addr target_number_two ;copy here
+                                        invoke  _draw_object, hWnd, hDCGame2, addr playerTwo, addr targetsTwo, target_number_two
+                                .elseif eax == in_2p_pause
+                                        invoke  _draw_object, hWnd, hDCGame2, addr playerTwo, addr targetsTwo, target_number_two
+                                .elseif eax == in_2p_choose
+                                        invoke  _draw_object, hWnd, hDCGame2, addr playerTwo, addr targetsTwo, target_number_two
+                                .endif
                                 invoke  InvalidateRect, hWnd, NULL, FALSE
-                        ; .elseif eax == ID_TIMER_gene2
-                        ;         mov eax, cur_interface
-                        ;         .if eax == in_2p_game
-                        ;                 invoke  _random_object_gene
-                        ;         .endif
+                        .elseif eax == ID_TIMER_gene2
+                                mov eax, cur_interface
+                                .if eax == in_2p_game
+                                        invoke  _random_object_gene_2p, addr targetsTwo, addr target_number_two
+                                .endif
                         .endif
                 .elseif eax == WM_KEYDOWN  
                 .elseif eax == WM_LBUTTONUP
