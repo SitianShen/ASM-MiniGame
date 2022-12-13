@@ -8,7 +8,8 @@ extrn digitals_DC:dword
 ;zzl own
 extrn button_play:Button      
 extrn button_2p_play:Button      
-extrn button_start:Button      
+extrn button_start:Button    
+extrn button_load:Button  
 extrn button_back:Button      
 extrn button_exit:Button     
 extrn button_retry:Button 

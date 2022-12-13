@@ -26,6 +26,7 @@ _draw_object proto :dword, :dword, :ptr Subject, :ptr Targets, :dword
 _show_score proto :dword
 _shot_bullet proto
 _init_2p_mode proto
+_load_game proto :dword, :dword, :dword
 
 ;========================= sst sst sst sst ============================
 ; sst functions

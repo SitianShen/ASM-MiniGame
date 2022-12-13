@@ -76,11 +76,22 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                                 .elseif eax == button_2p_play.is_click
                                         invoke _Stop_BeginBGM_SOUND
                                         invoke  ShowWindow, hWinMain2, SW_SHOWNORMAL
-                                        invoke        GetLastError
-                                        invoke printf, offset debug_int, eax   
                                         invoke _init_2p_mode
                                         mov cur_interface, in_2p_choose
                                         mov button_2p_play.is_click, 0
+                                .elseif eax == button_load.is_click
+                                        invoke _init_2p_mode
+                                        invoke _load_game, addr playerOne, addr targetsOne, addr target_number_one
+                                        .if eax == 0 
+                                                invoke _load_game, addr playerTwo, addr targetsTwo, addr target_number_two
+                                                .if eax == 0
+                                                        invoke _Stop_BeginBGM_SOUND
+                                                        invoke  ShowWindow, hWinMain2, SW_SHOWNORMAL
+                                                        mov cur_interface, in_2p_game
+                                                        mov button_2p_play.is_click, 0
+                                                .endif
+                                        .endif
+
                                 .endif
                         .elseif eax == in_intro
                                 mov eax, 1
@@ -112,6 +123,14 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                                         mov cur_interface, in_game
                                         mov button_pause.is_click, 0
                                 .endif
+                        .elseif eax == in_2p_game
+                                mov eax, 1
+                                .if eax == button_pause.is_click
+                                        mov cur_interface, in_2p_pause
+                                .endif
+                        .elseif eax == in_2p_pause
+                        
+
                         .endif
 
                 .elseif eax == WM_CLOSE

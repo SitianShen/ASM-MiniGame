@@ -41,6 +41,8 @@
 
 # define IDB_BUTTON_2p_PLAY_1  325
 # define IDB_BUTTON_2p_PLAY_2  326
+# define IDB_BUTTON_2p_LOAD_1 327
+# define IDB_BUTTON_2p_LOAD_2 328
 
 # define IDB_PLAYER          400
 # define IDB_PLAYER1_1       401
@@ -99,6 +101,8 @@ IDB_BUTTON_PAUSE_1  BITMAP      "resource/button_pause_1.bmp"
 IDB_BUTTON_PAUSE_2  BITMAP      "resource/button_pause_2.bmp"
 IDB_BUTTON_2p_PLAY_1 BITMAP      "resource/button_2p_play_1.bmp"
 IDB_BUTTON_2p_PLAY_2 BITMAP      "resource/button_2p_play_2.bmp"
+IDB_BUTTON_2p_LOAD_1 BITMAP      "resource/button_2p_load_1.bmp"
+IDB_BUTTON_2p_LOAD_2 BITMAP      "resource/button_2p_load_2.bmp"
 
 IDB_PROP_MONEY      BITMAP       "resource/prop_money.bmp"
 IDB_PROP_ABSTSOFT   BITMAP       "resource/prop_obstsoft.bmp"
