@@ -245,6 +245,11 @@ _set_char_pos proc
         mov button_2p_play.base.posy, 435
         mov button_2p_play.base.lengthx, button_2p_play_LX
         mov button_2p_play.base.lengthy, button_2p_play_LY
+
+        mov button_load.base.posx, 200
+        mov button_load.base.posy, 35
+        mov button_load.base.lengthx, button_2p_load_LX
+        mov button_load.base.lengthy, button_2p_load_LY
         ret
 _set_char_pos endp
 
@@ -363,6 +368,7 @@ _createAll proc
         invoke _load_button, addr button_retry,  IDB_BUTTON_RETRY_1,  IDB_BUTTON_RETRY_2
         invoke _load_button, addr button_pause,  IDB_BUTTON_PAUSE_1,  IDB_BUTTON_PAUSE_2
         invoke _load_button, addr button_2p_play,IDB_BUTTON_2p_PLAY_1,  IDB_BUTTON_2p_PLAY_2
+        invoke _load_button, addr button_load, IDB_BUTTON_2p_LOAD_1,  IDB_BUTTON_2p_LOAD_2
         invoke _set_char_pos
 ;set car
         invoke  _load_common_pic, addr player.base.DC, IDB_PLAYER
@@ -605,6 +611,7 @@ _draw_object proc hWnd, hDCGame_ptr, player_addr: ptr Subject, @targets_ptr: ptr
                         invoke  _draw_button, addr button_play, hWnd, button_play_LX, button_play_LY, hDCGame_ptr
                         invoke  _draw_button, addr button_2p_play, hWnd, button_2p_play_LX, button_2p_play_LY, hDCGame_ptr
                         invoke  _draw_button, addr button_start, hWnd, button_start_LX, button_start_LY, hDCGame_ptr
+                        invoke  _draw_button, addr button_load, hWnd, button_2p_load_LX, button_2p_load_LY, hDCGame_ptr
                 .endif
         .elseif eax == in_game
                 mov eax, hWnd

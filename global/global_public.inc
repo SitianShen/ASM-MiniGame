@@ -6,6 +6,7 @@ public targets
 public button_play      
 public button_2p_play  
 public button_start      
+public button_load
 public button_back      
 public button_exit    
 public button_retry

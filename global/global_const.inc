@@ -32,6 +32,7 @@ in_over                 equ 3
 in_pause                equ 4
 in_2p_choose            equ 5
 in_2p_game              equ 6
+in_2p_pause             equ 7
 
 
 ;sst own
@@ -103,6 +104,11 @@ IDB_BUTTON_2p_PLAY_1  equ 325
 IDB_BUTTON_2p_PLAY_2  equ 326
 button_2p_play_LX     equ 200
 button_2p_play_LY     equ 85
+
+IDB_BUTTON_2p_LOAD_1 equ 327
+IDB_BUTTON_2p_LOAD_2 equ 328
+button_2p_load_LX equ 200
+button_2p_load_LY equ 85
 
 IDB_BUTTON_START_1 equ 311
 IDB_BUTTON_START_2 equ 312
