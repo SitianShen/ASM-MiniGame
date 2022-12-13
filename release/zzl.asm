@@ -1161,10 +1161,12 @@ _draw_object proc uses eax ebx ecx edx edi esi, hWnd, hDCGame_ptr, player_addr: 
                 .else
                         invoke  TransparentBlt, hDCGame_ptr, 0, 0, gameH, gameW, backGround.DC_ov_w, 0, 0, 1000, 1000, SRCCOPY
                         invoke _draw_final_score2p, hDCGame_ptr, [esi].score, 0,0,100,100,20
+                        mov button_retry.base.posx, 100
+                        mov button_retry.base.posy, 100
+                        mov button_retry.base.lengthx, button_retry_LX
+                        mov button_retry.base.lengthy, button_retry_LY
+                        invoke _draw_button, addr button_retry, hWnd, button_retry_LX, button_retry_LY,hDCGame_ptr
                 .endif
-                mov esi, player_addr
-                assume esi: ptr Subject
-                invoke printf, offset debug_int, [esi].base.alive
         .endif
 ;         mov eax, object1H
 ;         mov ebx, object1W

@@ -301,6 +301,7 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                                 invoke _BeginBGM_SOUND
                                 mov cur_interface, in_begining
                                 mov button_retry.is_click, 0
+                                invoke _set_char_pos
                         .endif
                 .elseif eax == in_game
                         mov eax, 0
