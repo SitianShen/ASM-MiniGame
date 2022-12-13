@@ -412,7 +412,7 @@ _set_char_pos proc
         mov button_left.base.lengthx, button_lr_LX/2
         mov button_left.base.lengthy, button_lr_LY/2
 
-        mov button_right.base.posx, 512
+        mov button_right.base.posx, 537
         mov button_right.base.posy, 440
         mov button_right.base.lengthx, button_lr_LX/2
         mov button_right.base.lengthy, button_lr_LY/2
