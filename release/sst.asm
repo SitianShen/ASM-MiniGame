@@ -63,44 +63,45 @@ _Move_process proc uses ebx
                 mov time_jump, ebx ;时间没到不回原地
         .endif
 
+        ;ecx存放targetX
         mov eax, flag_movleft
         .if (eax == 1)
-                .if (time_mov == 0)
-                        mov ebx, stdtime_mov
-                        mov time_mov, ebx
-
-                        mov ebx, 0
-                        mov flag_movleft, ebx
-
-                        ret
+                mov eax, player.base.course_id
+                .if(eax==2)
+                        mov ecx, carx1
+                .elseif(eax==1)
+                        mov ecx, carx0
                 .endif
-                ;没移到足够时间（位置，此处设置移动时间和距离匹
-                mov ebx, player.base.posx
-                sub ebx, 15
-                mov player.base.posx, ebx
 
-                mov ebx, time_mov
-                dec ebx
-                mov time_mov, ebx
+                .if(ecx < player.base.posx)
+                        mov eax, move_speed
+                        sub player.base.posx, eax
+                .endif
+
+                .if(ecx > player.base.posx)
+                        mov eax, move_speed
+                        add player.base.posx, eax
+                .endif
         .endif
 
         mov eax, flag_movright
         .if (eax == 1)
-                .if (time_mov == 0)
-                        mov ebx, stdtime_mov
-                        mov time_mov, ebx
-                        
-                        mov flag_movright, 0
-                        ret
+                mov eax, player.base.course_id
+                .if(eax==2)
+                        mov ecx, carx1
+                .elseif(eax==3)
+                        mov ecx, carx2
                 .endif
-                ;没移到足够时间（位置，此处设置移动时间和距离匹
-                mov ebx, player.base.posx
-                add ebx, 15
-                mov player.base.posx, ebx
 
-                mov ebx, time_mov
-                dec ebx
-                mov time_mov, ebx
+                .if(ecx < player.base.posx)
+                        mov eax, move_speed
+                        sub player.base.posx, eax
+                .endif
+
+                .if(ecx > player.base.posx)
+                        mov eax, move_speed
+                        add player.base.posx, eax
+                .endif
         .endif
         ret
 _Move_process endp
