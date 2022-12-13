@@ -763,6 +763,41 @@ _draw_final_score proc hDCGame_ptr
         ret
 _draw_final_score endp
 
+_draw_final_score2p proc hDCGame_ptr, @score, @X, @Y, @LX, @LY, @DletaX
+        local @digit
+
+        mov ecx, @X
+        mov edx, @Y
+        
+        mov eax, @score
+        .repeat
+                push ecx
+                push edx
+
+                xor edx, edx
+                mov ecx, 10
+                div ecx
+                mov @digit, edx
+
+                pop edx
+                pop ecx
+                push ecx
+                push edx
+                push eax
+
+                mov esi, @digit
+                invoke  TransparentBlt, 
+                        hDCGame_ptr, ecx, edx, @LX, @LY, 
+                        [digitals_DC+4*esi], 0, 0, DIG_LX, DIG_LY, 16777215
+
+                pop eax
+                pop edx
+                pop ecx
+
+                sub ecx, @DletaX
+        .until eax <= 0      
+        ret
+_draw_final_score2p endp
 _draw_player_choose proc hDCGame_ptr
         local @choise
 
@@ -806,7 +841,7 @@ _draw_player_choose proc hDCGame_ptr
         ret
 _draw_player_choose endp
 
-_draw_object proc hWnd, hDCGame_ptr, player_addr: ptr Subject, @targets_ptr: ptr Targets, @target_number
+_draw_object proc uses eax ebx ecx edx edi esi, hWnd, hDCGame_ptr, player_addr: ptr Subject, @targets_ptr: ptr Targets, @target_number
         local @mouse:POINT
         local @window:RECT
         local @bubblex:dword
@@ -972,10 +1007,10 @@ _draw_object proc hWnd, hDCGame_ptr, player_addr: ptr Subject, @targets_ptr: ptr
                 mov esi, player_addr
                 assume esi: ptr Subject
                 .if [esi].base.alive == 0
-                        ; invoke _Stop_BGM_SOUND
-                        ; invoke _Gameover_SOUND
-                        ; invoke _Stop_Gameover_SOUND
-                        ; invoke _END_SOUND
+                        invoke _Stop_BGM_SOUND
+                        invoke _Gameover_SOUND
+                        invoke _Stop_Gameover_SOUND
+                        invoke _END_SOUND
                         ; @ldf 
                         mov cur_interface, in_2p_over
                         ret
@@ -1027,7 +1062,6 @@ _draw_object proc hWnd, hDCGame_ptr, player_addr: ptr Subject, @targets_ptr: ptr
                 .elseif [esi].status == Infection
                         mov edx, object_DC.infected
                 .endif
-
                 mov eax, [esi].base.posx
                 sub eax, 22
                 mov @bubblex, eax
@@ -1041,7 +1075,6 @@ _draw_object proc hWnd, hDCGame_ptr, player_addr: ptr Subject, @targets_ptr: ptr
                 mov eax, [esi].base.lengthy
                 add eax, 40
                 mov @bubbleh, eax
-
                 .if [esi].status != Exposure
                         invoke  TransparentBlt, hDCGame_ptr, 
                                 @bubblex, @bubbley, @bubblew, @bubbleh,  
@@ -1124,8 +1157,16 @@ _draw_object proc hWnd, hDCGame_ptr, player_addr: ptr Subject, @targets_ptr: ptr
                 assume esi: ptr Subject
                 .if [esi].base.alive == 0
                         invoke  TransparentBlt, hDCGame_ptr, 0, 0, gameH, gameW, backGround.DC_ov_l, 0, 0, 1000, 1000, SRCCOPY
+                        invoke _draw_final_score2p, hDCGame_ptr, [esi].score, 330,335,40,40,20
                 .else
                         invoke  TransparentBlt, hDCGame_ptr, 0, 0, gameH, gameW, backGround.DC_ov_w, 0, 0, 1000, 1000, SRCCOPY
+                        invoke _draw_final_score2p, hDCGame_ptr, [esi].score, 0,0,100,100,20
+                        mov button_retry.base.posx, 100
+                        mov button_retry.base.posy, 100
+                        mov button_retry.base.lengthx, button_retry_LX
+                        mov button_retry.base.lengthy, button_retry_LY
+                        invoke _draw_button, addr button_retry, hWnd, button_retry_LX, button_retry_LY,hDCGame_ptr
+                        invoke _draw_final_score2p, hDCGame_ptr, [esi].score, 530,330,40,40,20
                 .endif
         .endif
 ;         mov eax, object1H

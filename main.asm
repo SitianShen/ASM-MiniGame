@@ -12,7 +12,8 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                 local   @hDC
                 local   @stPos: POINT
 
-        ; invoke printf, offset debug_int, playerOne.base.course_id
+        ; invoke printf, offset debug_int, playerOne.base.alive
+        ; invoke printf, offset debug_int, playerTwo.base.alive
         ; invoke printf, offset debug_int, hWinMain
         ; invoke printf, offset debug_int, hWinMain2
         mov eax, hWnd
@@ -36,7 +37,7 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                         mov     eax, wParam
                         .if     eax == ID_TIMER
                                 mov eax, cur_interface
-                                .if eax != in_2p_game && eax != in_2p_pause
+                                .if eax != in_2p_game && eax != in_2p_pause && eax != in_2p_over
                                         invoke  _draw_object, hWnd, hDCGame, addr player, addr targets, target_number
                                         mov eax, cur_interface
                                         .if eax == in_game
@@ -55,6 +56,8 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                                         invoke  _draw_object, hWnd, hDCGame, addr playerOne, addr targetsOne, target_number_one
                                         ;write here for 1p
                                 .elseif eax == in_2p_pause
+                                        invoke  _draw_object, hWnd, hDCGame, addr playerOne, addr targetsOne, target_number_one
+                                .elseif eax == in_2p_over
                                         invoke  _draw_object, hWnd, hDCGame, addr playerOne, addr targetsOne, target_number_one
                                 .endif
                                 invoke  InvalidateRect, hWnd, NULL, FALSE
@@ -298,6 +301,7 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                                 invoke _BeginBGM_SOUND
                                 mov cur_interface, in_begining
                                 mov button_retry.is_click, 0
+                                invoke _set_char_pos
                         .endif
                 .elseif eax == in_game
                         mov eax, 0
