@@ -48,6 +48,8 @@ BackGround struct
         DC_e    dd      ?
         DC_2p_c dd      ?
         DC_2p_cc dd     ?
+        DC_ov_w  dd ?
+        DC_ov_l  dd ?
 BackGround ends
 
 Object_DC struct

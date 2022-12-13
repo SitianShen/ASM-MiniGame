@@ -94,6 +94,9 @@
 # define IDB_SPE_INFECT        801
 # define IDB_SPE_CANT_INFECT   802
 
+# define IDB_BACKG_OVERW      70
+# define IDB_BACKG_OVERL      71
+
 IDB_BACKG_2p_CHOOSECONFIRM      BITMAP      "resource/background_2p_choose_confirm.bmp"
 IDB_BACKG_2p_CHOOSE BITMAP      "resource/background_2p_choose.bmp"
 IDB_BACKG           BITMAP      "resource/background.bmp"
@@ -190,7 +193,9 @@ IDB_BUTTON_LEFT_2         BITMAP      "resource/button_left_2.bmp"
 IDB_BUTTON_RIGHT_1        BITMAP      "resource/button_right_1.bmp"
 IDB_BUTTON_RIGHT_2        BITMAP      "resource/button_right_2.bmp"
 
-
 IDB_BACKG_INTRO     BITMAP      "resource/background_intro.bmp"
 IDB_BACKG_INTRO2     BITMAP      "resource/background_intro2.bmp"
 IDB_BACKG_INTRO3     BITMAP      "resource/background_intro3.bmp"
+
+IDB_BACKG_OVERW     BITMAP      "resource/background_2p_over_win.bmp"
+IDB_BACKG_OVERL     BITMAP      "resource/background_2p_over_loss.bmp"

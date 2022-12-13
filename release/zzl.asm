@@ -513,6 +513,9 @@ _createAll proc
         invoke  _load_common_pic, addr backGround.DC_e, IDB_BACKG_END
         invoke  _load_common_pic, addr backGround.DC_2p_c, IDB_BACKG_2p_CHOOSE
         invoke  _load_common_pic, addr backGround.DC_2p_cc, IDB_BACKG_2p_CHOOSECONFIRM
+;2p over    
+        invoke  _load_common_pic, addr backGround.DC_ov_l, IDB_BACKG_OVERL
+        invoke  _load_common_pic, addr backGround.DC_ov_w, IDB_BACKG_OVERW
 ;�������� env obj
 ;set prop
         invoke  _load_common_pic, addr object_DC.env1, IDB_OBJ1
@@ -540,7 +543,7 @@ _createAll proc
         invoke  _load_common_pic, addr object_DC.infected, IDB_SPE_INFECT  
         invoke  _load_common_pic, addr object_DC.cant_inf, IDB_SPE_CANT_INFECT  
 ;pause window
-        invoke  _load_common_pic, addr object_DC.pauw, IDB_PAUSE_WINDOW      
+        invoke  _load_common_pic, addr object_DC.pauw, IDB_PAUSE_WINDOW  
 
 ;��ʼ�����ؼ� button
         invoke _load_button, addr button_play,  IDB_BUTTON_PLAY_1,  IDB_BUTTON_PLAY_2
@@ -804,8 +807,6 @@ _draw_player_choose proc hDCGame_ptr
 _draw_player_choose endp
 
 _draw_object proc hWnd, hDCGame_ptr, player_addr: ptr Subject, @targets_ptr: ptr Targets, @target_number
-        
-        
         local @mouse:POINT
         local @window:RECT
 
@@ -964,7 +965,17 @@ _draw_object proc hWnd, hDCGame_ptr, player_addr: ptr Subject, @targets_ptr: ptr
                         invoke _draw_player_choose, hDCGame_ptr
                 .endif
         .elseif eax == in_2p_game || eax == in_2p_pause
-                
+                mov esi, player_addr
+                assume esi: ptr Subject
+                .if [esi].base.alive == 0
+                        ; invoke _Stop_BGM_SOUND
+                        ; invoke _Gameover_SOUND
+                        ; invoke _Stop_Gameover_SOUND
+                        ; invoke _END_SOUND
+                        ; @ldf 
+                        mov cur_interface, in_2p_over
+                        ret
+                .endif
 
                 invoke  TransparentBlt, hDCGame_ptr, 0, 0, gameH, gameW, backGround.DC_pd, 0, 0, 1000, 1000, SRCCOPY
 ;draw pause
@@ -1088,6 +1099,14 @@ _draw_object proc hWnd, hDCGame_ptr, player_addr: ptr Subject, @targets_ptr: ptr
                         invoke  _draw_button, addr button_continue, hWnd, button_pause_rel_LX, button_pause_rel_LY, hDCGame_ptr
                         invoke  _draw_button, addr button_changeR, hWnd, button_pause_rel_LX, button_pause_rel_LY, hDCGame_ptr
 
+                .endif
+        .elseif eax == in_2p_over
+                mov esi, player_addr
+                assume esi: ptr Subject
+                .if [esi].base.alive == 0
+                        invoke  TransparentBlt, hDCGame_ptr, 0, 0, gameH, gameW, backGround.DC_ov_l, 0, 0, 1000, 1000, SRCCOPY
+                .else
+                        invoke  TransparentBlt, hDCGame_ptr, 0, 0, gameH, gameW, backGround.DC_ov_w, 0, 0, 1000, 1000, SRCCOPY
                 .endif
         .endif
 ;         mov eax, object1H

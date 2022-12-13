@@ -33,6 +33,7 @@ in_pause                equ 4
 in_2p_choose            equ 5
 in_2p_game              equ 6
 in_2p_pause             equ 7
+in_2p_over              equ 8
 
 
 ;sst own
@@ -69,6 +70,8 @@ ID_TIMER2        equ    2
 ID_TIMER_gene   equ     3
 ID_TIMER_gene2  equ     4
 
+IDB_BACKG_OVERW   equ  70
+IDB_BACKG_OVERL   equ  71
 IDB_BACKG_INTRO   equ  80
 IDB_BACKG_INTRO2  equ  81
 IDB_BACKG_INTRO3  equ  82
