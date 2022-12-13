@@ -42,6 +42,7 @@ _next_position proc stdcall ptrBase :ptr BASE
                 mov ecx, eax
                 mov eax, base_speed
                 add [esi].posy, eax
+                ; invoke printf, offset debug_int, [esi].posy
                 and ecx, 100
                 .if ecx == 0
                         mov edx, 0
@@ -56,7 +57,6 @@ _next_position proc stdcall ptrBase :ptr BASE
                 add [esi].posy, eax
 
                 mov edx, [esi].posy
-                ; invoke printf, offset debug_int, [esi].posy
                 mov ecx, POSCNT
                 and ecx, 3
                 .if ecx == 0
@@ -464,7 +464,7 @@ ret
 _change_all_position_symbiotic endp
 
 _targets_bullet_out_of_bound_symbiotic proc
-        ; 判断道具越界
+        ;判断道具越界
         mov ecx, target_number_one
         xor eax, eax
         .while eax < ecx
@@ -507,7 +507,7 @@ _targets_bullet_out_of_bound_symbiotic proc
                 inc eax
         .endw
 
-        ; 判断子弹越界
+        ;判断子弹越界
         .if bulletOne.base.alive == 1
                 .if bulletOne.base.posx <= 10 || bulletOne.base.posx >= gameW-100 \
                 || bulletOne.base.posy <= 10 || bulletOne.base.posy >= gameW-130
