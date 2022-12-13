@@ -225,7 +225,7 @@ _Init_car_symbiotic endp
 _Move_process_symbiotic proc uses ebx esi, mainPlayer:ptr Subject
         mov esi, mainPlayer
         assume esi:ptr Subject
-        
+
         mov eax, [esi].flag_jump
         .if (eax == 1)
                 .if [esi].time_jump == 0;下降完毕，落地
@@ -257,45 +257,45 @@ _Move_process_symbiotic proc uses ebx esi, mainPlayer:ptr Subject
                 mov [esi].time_jump, ebx ;时间没到不回原地
         .endif
 
+        ;ecx存放targetX
         mov eax, [esi].flag_movleft
         .if (eax == 1)
-                .if [esi].time_mov == 0
-                        mov ebx, stdtime_mov
-                        mov [esi].time_mov, ebx
-
-                        mov ebx, 0
-                        mov [esi].flag_movleft, ebx
-
-                        ret
+                mov eax, [esi].base.course_id
+                .if(eax==2)
+                        mov ecx, carx1
+                .elseif(eax==1)
+                        mov ecx, carx0
                 .endif
-                ;没移到足够时间（位置，此处设置移动时间和距离匹
-                mov ebx, [esi].base.posx
-                sub ebx, 15
-                mov [esi].base.posx, ebx
 
-                mov ebx, [esi].time_mov
-                dec ebx
-                mov [esi].time_mov, ebx
+                .if ecx < [esi].base.posx
+                        mov eax, move_speed
+                        sub [esi].base.posx, eax
+                .endif
+
+                .if ecx > player.base.posx
+                        mov eax, move_speed
+                        add [esi].base.posx, eax
+                .endif
         .endif
 
         mov eax, [esi].flag_movright
         .if (eax == 1)
-                .if [esi].time_mov == 0
-                        mov ebx, stdtime_mov
-                        mov [esi].time_mov, ebx
-                        
-                        mov [esi].flag_movright, 0
-                        ret
+                mov eax, [esi].base.course_id
+                .if(eax==2)
+                        mov ecx, carx1
+                .elseif(eax==3)
+                        mov ecx, carx2
                 .endif
 
-                ;没移到足够时间（位置，此处设置移动时间和距离匹
-                mov ebx, [esi].base.posx
-                add ebx, 15
-                mov [esi].base.posx, ebx
+                .if ecx < [esi].base.posx
+                        mov eax, move_speed
+                        sub [esi].base.posx, eax
+                .endif
 
-                mov ebx, [esi].time_mov
-                dec ebx
-                mov [esi].time_mov, ebx
+                .if ecx > [esi].base.posx
+                        mov eax, move_speed
+                        add [esi].base.posx, eax
+                .endif
         .endif
         ret
 _Move_process_symbiotic endp
