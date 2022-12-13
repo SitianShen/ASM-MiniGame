@@ -207,7 +207,7 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                 .endif
                 ret
         .elseif eax == WM_LBUTTONUP
-                invoke printf, offset debug_int, wParam
+                ; invoke printf, offset debug_int, wParam
                 mov eax, cur_interface
                 .if eax == in_begining 
                         mov eax, 1
@@ -361,7 +361,7 @@ _WinMain        proc
         invoke  ShowWindow, hWinMain, SW_SHOWNORMAL
         invoke  UpdateWindow, hWinMain
 
-        invoke printf, offset debug_int, hWinMain
+        ; invoke printf, offset debug_int, hWinMain
         invoke  CreateWindowEx, NULL, \
                 offset szClassName, offset szClassName, \
                 WS_OVERLAPPEDWINDOW, \
