@@ -48,13 +48,13 @@ _Move_process proc uses ebx
 
                 .if(time_jump >= 25);高度没到继续跳起
                         mov eax, player.base.posy
-                        sub eax, 2
+                        sub eax, 5
                         mov player.base.posy, eax
                 .endif
 
                 .if(time_jump < 25);高度到了，开始降落
                         mov eax, player.base.posy
-                        add eax, 2
+                        add eax, 5
                         mov player.base.posy, eax
                 .endif
 
@@ -76,7 +76,7 @@ _Move_process proc uses ebx
                 .endif
                 ;没移到足够时间（位置，此处设置移动时间和距离匹
                 mov ebx, player.base.posx
-                sub ebx, 5
+                sub ebx, 15
                 mov player.base.posx, ebx
 
                 mov ebx, time_mov
@@ -95,7 +95,7 @@ _Move_process proc uses ebx
                 .endif
                 ;没移到足够时间（位置，此处设置移动时间和距离匹
                 mov ebx, player.base.posx
-                add ebx, 5
+                add ebx, 15
                 mov player.base.posx, ebx
 
                 mov ebx, time_mov
@@ -182,9 +182,191 @@ _sst_test proc
         ret
 _sst_test endp
 
-;test
-start:
-         invoke  _sst_test
-         ret
-end start
-; end
+;==================== 共生模式 ==========================
+
+_Init_car_symbiotic proc uses ebx esi, mainPlayer:ptr Subject
+        mov esi, mainPlayer
+        assume esi:ptr Subject
+        
+        ;============= base结构体初始化 ==============
+        mov ebx, 2
+        mov [esi].base.course_id, ebx
+        mov [esi].base.alive, 1
+
+        xor ebx, ebx
+        mov [esi].base.rel_v, ebx
+        mov [esi].score, ebx
+
+        mov eax, carx1
+        mov [esi].base.posx, eax
+
+        mov ebx, cary
+        mov [esi].base.posy, ebx
+
+        mov [esi].base.lengthx, carLX
+        mov [esi].base.lengthy, carLY
+
+        ;其余变量初始化
+        mov [esi].score, 0                      ;分数起始为0
+        mov [esi].status, Exposure              ;初始化为暴露期
+        mov [esi].has_hotpot, 0                 ;不聚餐
+        mov [esi].has_mask, 0                   ;不带口罩
+        mov [esi].has_fever, 0                  ;不发热
+        mov [esi].flag_movleft, 0               ;
+        mov [esi].flag_movright,0               ;
+        mov [esi].flag_jump,  0                 ;
+        mov [esi].time_jump, 50                 ;
+        mov [esi].time_mov,  10                 ;
+
+        ret
+_Init_car_symbiotic endp
+
+_Move_process_symbiotic proc uses ebx esi, mainPlayer:ptr Subject
+        mov esi, mainPlayer
+        assume esi:ptr Subject
+        
+        mov eax, [esi].flag_jump
+        .if (eax == 1)
+                .if [esi].time_jump == 0;下降完毕，落地
+                        mov ebx, stdtime_jump
+                        mov [esi].time_jump, ebx
+
+                        mov ebx, 0
+                        mov [esi].flag_jump, ebx
+
+                        mov eax, cary
+                        mov [esi].base.posy, eax;回到原地
+                        ret
+                .endif
+
+                .if [esi].time_jump >= 25;高度没到继续跳起
+                        mov eax, [esi].base.posy
+                        sub eax, 5
+                        mov [esi].base.posy, eax
+                .endif
+
+                .if [esi].time_jump < 25;高度到了，开始降落
+                        mov eax, [esi].base.posy
+                        add eax, 5
+                        mov [esi].base.posy, eax
+                .endif
+
+                mov ebx, [esi].time_jump
+                dec ebx
+                mov [esi].time_jump, ebx ;时间没到不回原地
+        .endif
+
+        mov eax, [esi].flag_movleft
+        .if (eax == 1)
+                .if [esi].time_mov == 0
+                        mov ebx, stdtime_mov
+                        mov [esi].time_mov, ebx
+
+                        mov ebx, 0
+                        mov [esi].flag_movleft, ebx
+
+                        ret
+                .endif
+                ;没移到足够时间（位置，此处设置移动时间和距离匹
+                mov ebx, [esi].base.posx
+                sub ebx, 15
+                mov [esi].base.posx, ebx
+
+                mov ebx, [esi].time_mov
+                dec ebx
+                mov [esi].time_mov, ebx
+        .endif
+
+        mov eax, [esi].flag_movright
+        .if (eax == 1)
+                .if [esi].time_mov == 0
+                        mov ebx, stdtime_mov
+                        mov [esi].time_mov, ebx
+                        
+                        mov [esi].flag_movright, 0
+                        ret
+                .endif
+
+                ;没移到足够时间（位置，此处设置移动时间和距离匹
+                mov ebx, [esi].base.posx
+                add ebx, 15
+                mov [esi].base.posx, ebx
+
+                mov ebx, [esi].time_mov
+                dec ebx
+                mov [esi].time_mov, ebx
+        .endif
+        ret
+_Move_process_symbiotic endp
+
+
+_Action_left_symbiotic proc uses ebx esi, mainPlayer:ptr Subject
+        mov esi, mainPlayer
+        assume esi:ptr Subject
+        
+        mov     ebx, [esi].base.course_id
+        .if (ebx == 1)
+                ret
+        .endif
+        dec     ebx
+        mov     [esi].base.course_id, ebx
+
+        mov     [esi].flag_movleft, 1
+        ret
+_Action_left_symbiotic endp
+
+_Action_right_symbiotic proc uses ebx esi, mainPlayer:ptr Subject
+        mov esi, mainPlayer
+        assume esi:ptr Subject
+        
+        mov     ebx, [esi].base.course_id
+        .if (ebx == 3)
+               ret
+        .endif
+        inc     ebx
+        mov     [esi].base.course_id, ebx
+
+        mov     [esi].flag_movright, 1
+        ret
+_Action_right_symbiotic endp
+
+_Action_jump_symbiotic proc uses ebx esi, mainPlayer:ptr Subject
+        mov esi, mainPlayer
+        assume esi:ptr Subject
+        
+        mov     ebx, 1
+        mov     [esi].flag_jump, ebx
+        ret
+_Action_jump_symbiotic endp
+
+
+_sst_test_symbiotic proc
+        invoke _Init_car_symbiotic, addr playerOne
+        invoke printf, offset szInt, playerOne.base.posx
+        invoke printf, offset szInt, playerOne.base.posy
+
+        invoke _Action_jump_symbiotic, addr playerOne
+        invoke printf, offset szInt, playerOne.base.posx
+        invoke printf, offset szInt, playerOne.base.posy
+
+        mov esi, 5
+        .while( esi > 0)
+                invoke _Move_process_symbiotic, addr playerOne
+                invoke printf, offset szInt, playerOne.base.posx
+                invoke printf, offset szInt, playerOne.base.posy
+                dec esi
+        .endw
+
+        ret
+_sst_test_symbiotic endp
+
+;================= 共生模式 ================
+
+; test
+
+; start:
+;         ;  invoke  _sst_test
+;         invoke _sst_test_symbiotic
+;         ret
+; end start
+end

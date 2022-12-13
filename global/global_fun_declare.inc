@@ -144,4 +144,11 @@ _change_all_position_symbiotic proto
 ;========================= sst sst sst sst ============================
 ; sst functions
 
+_Init_car_symbiotic proto :ptr Subject
+_Move_process_symbiotic proto :ptr Subject
+_Action_left_symbiotic proto :ptr Subject
+_Action_right_symbiotic proto :ptr Subject
+_Action_jump_symbiotic proto :ptr Subject
+_sst_test_symbiotic proto
+
 ;==================== 共生模式 ===========================

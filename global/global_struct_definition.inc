@@ -16,6 +16,13 @@ Subject struct
         has_hotpot      dd      ?
         has_mask        dd      ?
         has_fever       dd      ?
+        
+        ;移动逻辑
+        flag_movleft    dd      ?
+        flag_movright    dd      ?
+        flag_jump       dd      ?
+        time_jump       dd      ?
+        time_mov        dd      ?
 Subject ends
 
 Targets struct
