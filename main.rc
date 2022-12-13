@@ -75,6 +75,13 @@
 # define IDB_DIG8            1008
 # define IDB_DIG9            1009
 
+# define IDB_PROP_MASK       601
+# define IDB_PROP_HOTPOT     600
+# define IDB_PROP_MEDICINE   500      
+# define IDB_PROP_REDVIR     501   
+# define IDB_PROP_GREENVIR   502
+# define IDB_PROP_TEMP       602
+
 IDB_BACKG_2p_CHOOSECONFIRM      BITMAP      "resource/background_2p_choose_confirm.bmp"
 IDB_BACKG_2p_CHOOSE BITMAP      "resource/background_2p_choose.bmp"
 IDB_BACKG           BITMAP      "resource/background.bmp"
@@ -153,3 +160,10 @@ IDB_BUTTON_CONTINUE_1         BITMAP      "resource/button_continue_1.bmp"
 IDB_BUTTON_CONTINUE_2         BITMAP      "resource/button_continue_2.bmp"
 IDB_BUTTON_CHANGER_1         BITMAP      "resource/button_changeRole_1.bmp"
 IDB_BUTTON_CHANGER_2         BITMAP      "resource/button_changeRole_2.bmp"
+
+IDB_PROP_MASK               BITMAP     "resource/prop_n95mask.bmp"
+IDB_PROP_HOTPOT             BITMAP     "resource/prop_hotPot.bmp"
+IDB_PROP_MEDICINE           BITMAP     "resource/prop_medicine.bmp"
+IDB_PROP_REDVIR             BITMAP     "resource/prop_obsthard.bmp"
+IDB_PROP_GREENVIR           BITMAP     "resource/prop_obstsoft.bmp"
+IDB_PROP_TEMP               BITMAP     "resource/prop_thermometer.bmp"

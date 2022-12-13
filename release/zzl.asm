@@ -386,6 +386,13 @@ _createAll proc
         invoke  _load_common_pic, addr object_DC.bltL, IDB_PROP_BULLETL
         invoke  _load_common_pic, addr object_DC.bltM, IDB_PROP_BULLETM
         invoke  _load_common_pic, addr object_DC.bltR, IDB_PROP_BULLETR  
+        
+        invoke  _load_common_pic, addr object_DC.medicine, IDB_medicine  
+        invoke  _load_common_pic, addr object_DC.redVirus, IDB_redVirus  
+        invoke  _load_common_pic, addr object_DC.greenVirus, IDB_greenVirus  
+        invoke  _load_common_pic, addr object_DC.hotPot, IDB_hotPot  
+        invoke  _load_common_pic, addr object_DC.n95mask, IDB_n95mask  
+        invoke  _load_common_pic, addr object_DC.temperature, IDB_temperature  
 
 ;pause window
         invoke  _load_common_pic, addr object_DC.pauw, IDB_PAUSE_WINDOW      
