@@ -222,12 +222,10 @@ _Init_car_symbiotic proc uses ebx esi, mainPlayer:ptr Subject
         ret
 _Init_car_symbiotic endp
 
-_Move_process_symbiotic proc uses ebx esi, mainPlayer:ptr Subject
-        
-        
+_Move_process_symbiotic proc uses ebx esi eax, mainPlayer:ptr Subject
         mov esi, mainPlayer
         assume esi:ptr Subject
-        ; invoke printf, offset debug_int, [esi].base.course_id
+        
         mov eax, [esi].flag_jump
         .if (eax == 1)
                 .if [esi].time_jump == 0;下降完毕，落地

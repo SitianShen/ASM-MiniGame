@@ -941,7 +941,7 @@ _draw_object proc hWnd, hDCGame_ptr, player_addr: ptr Subject, @targets_ptr: ptr
                         invoke _draw_player_choose, hDCGame_ptr
                 .endif
         .elseif eax == in_2p_game || eax == in_2p_pause
-                invoke _Move_process_symbiotic, player_addr
+                
 
                 invoke  TransparentBlt, hDCGame_ptr, 0, 0, gameH, gameW, backGround.DC_pd, 0, 0, 1000, 1000, SRCCOPY
 ;draw pause
