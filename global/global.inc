@@ -51,6 +51,7 @@ dwNowBack       dd      ?
 ;========================  data data data data ==========================
 
 
+;intro:
 .data
 flag_jump               dd      0
 flag_movleft            dd      0
@@ -74,6 +75,7 @@ POSCNT          dd      0; NEXTPOS的计数器
 TESTCNT          dd      0
 change_two_status_cnt   dd  0
 
+intro_id  dd  0
 
 
 ;==================== 共生模式 ===========================
