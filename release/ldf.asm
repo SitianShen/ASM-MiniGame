@@ -969,13 +969,14 @@ _collision_Player_with_redVirus proc uses ebx, mainPlayer: ptr Subject, redVirus
                 ret
         .endif
 
-        ;非免疫，则一定最终状态为感染期
-        mov [ebx].status, Infection
-
         ;非感染，HP-1
         .if [ebx].status != Infection
                 dec [ebx].base.alive
         .endif
+        
+        ;非免疫，则一定最终状态为感染期
+        mov [ebx].status, Infection
+
         ret
 _collision_Player_with_redVirus endp
 
