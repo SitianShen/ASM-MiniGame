@@ -42,6 +42,7 @@ carx2                   equ     400
 cary                    equ     380
 carLX                   equ     100
 carLY                   equ     100
+move_speed              equ     3
 
 ;obj init size
 obj_init_lx                   equ 36
