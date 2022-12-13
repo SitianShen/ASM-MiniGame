@@ -968,10 +968,10 @@ _draw_object proc hWnd, hDCGame_ptr, player_addr: ptr Subject, @targets_ptr: ptr
                 mov esi, player_addr
                 assume esi: ptr Subject
                 .if [esi].base.alive == 0
-                        ; invoke _Stop_BGM_SOUND
-                        ; invoke _Gameover_SOUND
-                        ; invoke _Stop_Gameover_SOUND
-                        ; invoke _END_SOUND
+                        invoke _Stop_BGM_SOUND
+                        invoke _Gameover_SOUND
+                        invoke _Stop_Gameover_SOUND
+                        invoke _END_SOUND
                         ; @ldf 
                         mov cur_interface, in_2p_over
                         ret
@@ -1108,6 +1108,7 @@ _draw_object proc hWnd, hDCGame_ptr, player_addr: ptr Subject, @targets_ptr: ptr
                 .else
                         invoke  TransparentBlt, hDCGame_ptr, 0, 0, gameH, gameW, backGround.DC_ov_w, 0, 0, 1000, 1000, SRCCOPY
                 .endif
+                invoke printf, offset debug_int, [esi].base.alive
         .endif
 ;         mov eax, object1H
 ;         mov ebx, object1W
