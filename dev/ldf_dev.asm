@@ -151,11 +151,17 @@ _check_collision proc uses ebx esi, @objectOne:ptr BASE, @objectTwo:ptr BASE
         mov eax, @objectOneLengthX
         add eax, @objectTwoLengthX
         shr eax, 2
+        .if cur_interface == in_2p_game
+                shr eax, 1
+        .endif
         mov @criticalX, eax
 
         mov eax, @objectOneLengthY
         add eax, @objectTwoLengthY
         shr eax, 2
+        .if cur_interface == in_2p_game
+                shr eax, 1
+        .endif
         mov @criticalY, eax
 
         ;两中心点构成的三角形处于临界三角形之内
@@ -969,13 +975,14 @@ _collision_Player_with_redVirus proc uses ebx, mainPlayer: ptr Subject, redVirus
                 ret
         .endif
 
-        ;非免疫，则一定最终状态为感染期
-        mov [ebx].status, Infection
-
         ;非感染，HP-1
         .if [ebx].status != Infection
                 dec [ebx].base.alive
         .endif
+
+        ;非免疫，则一定最终状态为感染期
+        mov [ebx].status, Infection
+
         ret
 _collision_Player_with_redVirus endp
 

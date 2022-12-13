@@ -339,6 +339,7 @@ szStopGameover byte "stop Gameover", 0
 
 ;BeginBGM
 szOpenBeginBGM byte "open sound/BeginBGM.mp3 alias BeginBGM",0
+szSetVolumeBeginBGM byte "setaudio BeginBGM volume to ", 0
 szPlayBeginBGM byte "play BeginBGM from 0 repeat",0
 szCloseBeginBGM byte "close BeginBGM", 0
 szStopBeginBGM byte "stop BeginBGM", 0
@@ -350,6 +351,9 @@ szStopBeginBGM byte "stop BeginBGM", 0
 
 
 ;==================== 共生模式 ===========================
+initHP          equ 2
+
+
 ;状态编码
 Immunity        equ 100 ;免疫期
 Exposure        equ 101 ;暴露期

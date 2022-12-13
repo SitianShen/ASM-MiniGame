@@ -192,7 +192,7 @@ _Init_car_symbiotic proc uses ebx esi, mainPlayer:ptr Subject
         ;============= base结构体初始化 ==============
         mov ebx, 2
         mov [esi].base.course_id, ebx
-        mov [esi].base.alive, 1
+        mov [esi].base.alive, initHP
 
         xor ebx, ebx
         mov [esi].base.rel_v, ebx
@@ -222,12 +222,10 @@ _Init_car_symbiotic proc uses ebx esi, mainPlayer:ptr Subject
         ret
 _Init_car_symbiotic endp
 
-_Move_process_symbiotic proc uses ebx esi, mainPlayer:ptr Subject
-        
-        
+_Move_process_symbiotic proc uses ebx esi eax ecx, mainPlayer:ptr Subject
         mov esi, mainPlayer
         assume esi:ptr Subject
-        ; invoke printf, offset debug_int, [esi].base.course_id
+        
         mov eax, [esi].flag_jump
         .if (eax == 1)
                 .if [esi].time_jump == 0;下降完毕，落地
@@ -306,7 +304,7 @@ _Move_process_symbiotic endp
 _Action_left_symbiotic proc uses ebx esi, mainPlayer:ptr Subject
         mov esi, mainPlayer
         assume esi:ptr Subject
-        
+        ; invoke printf, offset debug_int, [esi].base.course_id
         mov     ebx, [esi].base.course_id
         .if (ebx == 1)
                 ret
@@ -321,7 +319,7 @@ _Action_left_symbiotic endp
 _Action_right_symbiotic proc uses ebx esi, mainPlayer:ptr Subject
         mov esi, mainPlayer
         assume esi:ptr Subject
-
+        ; invoke printf, offset debug_int, [esi].base.course_id
         mov     ebx, [esi].base.course_id
         .if (ebx == 3)
                ret
