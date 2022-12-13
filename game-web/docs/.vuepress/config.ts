@@ -3,8 +3,8 @@ import { path } from '@vuepress/utils'
 
 export default defineUserConfig({
     lang: 'zh-CN',
-    title: 'Run away from covid-19',
-    description: 'The War of Viruses',
+    title: 'Cyberpunk Covid-19',
+    description: 'Cyberpunk Covid-19',
     theme: defaultTheme(),
     base:'/asm-game/',
     // dest: path.resolve(__dirname, '../../dist/vuepress'),
