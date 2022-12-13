@@ -303,6 +303,10 @@ _Move_process_symbiotic endp
 _Action_left_symbiotic proc uses ebx esi, mainPlayer:ptr Subject
         mov esi, mainPlayer
         assume esi:ptr Subject
+
+        .if [esi].flag_movright == 1
+                ret
+        .endif
         
         mov     ebx, [esi].base.course_id
         .if (ebx == 1)
@@ -318,6 +322,10 @@ _Action_left_symbiotic endp
 _Action_right_symbiotic proc uses ebx esi, mainPlayer:ptr Subject
         mov esi, mainPlayer
         assume esi:ptr Subject
+
+        .if [esi].flag_movleft == 1
+                ret
+        .endif
         
         mov     ebx, [esi].base.course_id
         .if (ebx == 3)
