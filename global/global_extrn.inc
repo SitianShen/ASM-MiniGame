@@ -6,6 +6,8 @@ extrn digitals_DC:dword
 
 
 ;zzl own
+extrn intro_id:dword
+
 extrn button_play:Button      
 extrn button_2p_play:Button      
 extrn button_start:Button    

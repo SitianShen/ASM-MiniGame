@@ -3,6 +3,8 @@ public bullet
 public targets
 
 ;zzl own
+public intro_id
+
 public button_play      
 public button_2p_play  
 public button_start      

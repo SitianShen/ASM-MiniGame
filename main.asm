@@ -245,6 +245,20 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                         .if eax == button_back.is_click
                                 mov cur_interface, in_begining
                                 mov button_back.is_click, 0
+                        .elseif eax == button_right.is_click
+                                mov eax, intro_id
+                                .if eax < 2
+                                        inc eax
+                                .endif
+                                mov intro_id, eax
+                                mov button_right.is_click, 0
+                        .elseif eax == button_left.is_click
+                                mov eax, intro_id
+                                .if eax > 0
+                                        dec eax
+                                .endif
+                                mov intro_id, eax
+                                mov button_left.is_click, 0
                         .endif
                 .elseif eax == in_over
                         mov eax, 1

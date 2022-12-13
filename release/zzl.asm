@@ -896,7 +896,15 @@ _draw_object proc hWnd, hDCGame_ptr, player_addr: ptr Subject, @targets_ptr: ptr
         .elseif eax == in_intro
                 mov eax, hWnd
                 .if eax == hWinMain
-                        invoke  TransparentBlt, hDCGame_ptr, 0, 0, gameH, gameW, backGround.DC_i, 0, 0, 1000, 1000, SRCCOPY
+                        mov eax, intro_id
+                        .if eax == 0
+                                invoke  TransparentBlt, hDCGame_ptr, 0, 0, gameH, gameW, backGround.DC_i, 0, 0, 1000, 1000, SRCCOPY
+                        .elseif eax == 1
+                                invoke  TransparentBlt, hDCGame_ptr, 0, 0, gameH, gameW, backGround.DC_i2, 0, 0, 1000, 1000, SRCCOPY
+                        .elseif  eax == 2
+                                invoke  TransparentBlt, hDCGame_ptr, 0, 0, gameH, gameW, backGround.DC_i3, 0, 0, 1000, 1000, SRCCOPY
+                        .endif
+
                         invoke  _draw_button, addr button_back, hWnd, button_back_LX, button_back_LY, hDCGame_ptr
                         invoke  _draw_button, addr button_left, hWnd, button_lr_LX, button_lr_LY, hDCGame_ptr
                         invoke  _draw_button, addr button_right, hWnd, button_lr_LX, button_lr_LY, hDCGame_ptr
