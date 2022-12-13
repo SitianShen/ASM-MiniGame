@@ -331,13 +331,13 @@ _random_object_gene_2p endp
 
 
 _set_char_pos proc
-        mov button_play.base.posx, 200
+        mov button_play.base.posx, 100
         mov button_play.base.posy, 235
         mov button_play.base.lengthx, button_play_LX
         mov button_play.base.lengthy, button_play_LY
 
-        mov button_start.base.posx, 200
-        mov button_start.base.posy, 435
+        mov button_start.base.posx, 300
+        mov button_start.base.posy, 235
         mov button_start.base.lengthx, button_start_LX
         mov button_start.base.lengthy, button_start_LY
 
@@ -362,13 +362,13 @@ _set_char_pos proc
         mov button_pause.base.lengthx, button_pause_LX/2
         mov button_pause.base.lengthy, button_pause_LY/2
 
-        mov button_2p_play.base.posx, 200
+        mov button_2p_play.base.posx, 100
         mov button_2p_play.base.posy, 335
         mov button_2p_play.base.lengthx, button_2p_play_LX
         mov button_2p_play.base.lengthy, button_2p_play_LY
 
-        mov button_load.base.posx, 200
-        mov button_load.base.posy, 35
+        mov button_load.base.posx, 300
+        mov button_load.base.posy, 335
         mov button_load.base.lengthx, button_2p_load_LX
         mov button_load.base.lengthy, button_2p_load_LY
 
