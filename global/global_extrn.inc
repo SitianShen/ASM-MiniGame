@@ -48,7 +48,7 @@ extrn object1H:dword
 extrn object1W:dword      
 extrn object_move_v:dword   
 extrn POSCNT:dword          ; NEXTPOS的计数器
-
+extrn TESTCNT:dword 
 extrn change_two_status_cnt:dword 
 ;==================== 共生模式 ===========================
 
