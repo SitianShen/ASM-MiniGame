@@ -465,6 +465,12 @@ _two_two_enum proc uses ebx
 
                 .elseif [esi].typeid == PROP_ACC_SELF
                         
+                        .if flag_jump == 1
+                                mov @collisionFlag, 0
+                        .else
+                                invoke _check_collision, addr player.base, addr [esi].base
+                                mov @collisionFlag, eax
+                        .endif
 
                         ; invoke printf, offset debug_int, [esi].typeid
                         ; invoke printf, offset debug_int, @collisionFlag

@@ -360,10 +360,10 @@ _set_char_pos proc
         mov button_start.base.lengthx, button_start_LX
         mov button_start.base.lengthy, button_start_LY
 
-        mov button_back.base.posx, 410
+        mov button_back.base.posx, 472
         mov button_back.base.posy, 480
-        mov button_back.base.lengthx, button_back_LX/2
-        mov button_back.base.lengthy, button_back_LY/2
+        mov button_back.base.lengthx, button_back_LX/3
+        mov button_back.base.lengthy, button_back_LY/3
 
         mov button_exit.base.posx, 80
         mov button_exit.base.posy, 260
@@ -407,15 +407,15 @@ _set_char_pos proc
         mov button_changeR.base.lengthx, button_pause_rel_LX/3*2
         mov button_changeR.base.lengthy, button_pause_rel_LY/3*2
 
-        mov button_left.base.posx, 410
-        mov button_left.base.posy, 400
-        mov button_left.base.lengthx, button_lr_LX
-        mov button_left.base.lengthy, button_lr_LY
+        mov button_left.base.posx, 472
+        mov button_left.base.posy, 440
+        mov button_left.base.lengthx, button_lr_LX/2
+        mov button_left.base.lengthy, button_lr_LY/2
 
-        mov button_right.base.posx, 490
-        mov button_right.base.posy, 400
-        mov button_right.base.lengthx, button_lr_LX
-        mov button_right.base.lengthy, button_lr_LY
+        mov button_right.base.posx, 537
+        mov button_right.base.posy, 440
+        mov button_right.base.lengthx, button_lr_LX/2
+        mov button_right.base.lengthy, button_lr_LY/2
         ret
 _set_char_pos endp
 
@@ -844,10 +844,8 @@ _draw_player_choose endp
 _draw_object proc uses eax ebx ecx edx edi esi, hWnd, hDCGame_ptr, player_addr: ptr Subject, @targets_ptr: ptr Targets, @target_number
         local @mouse:POINT
         local @window:RECT
-        local @bubblex:dword
-        local @bubbley:dword
-        local @bubblew:dword
-        local @bubbleh:dword
+        local @bubblex:dword,@bubbley:dword,@bubblew:dword,@bubbleh:dword
+        local @carx, @cary, @carlx, @carly
 
         .if player.base.alive == 0 && cur_interface == in_game
                 invoke _Stop_BGM_SOUND
@@ -1063,17 +1061,17 @@ _draw_object proc uses eax ebx ecx edx edi esi, hWnd, hDCGame_ptr, player_addr: 
                         mov edx, object_DC.infected
                 .endif
                 mov eax, [esi].base.posx
-                sub eax, 22
+                sub eax, 74
                 mov @bubblex, eax
                 mov eax, [esi].base.posy
-                sub eax, 0
+                sub eax, 30
                 mov @bubbley, eax
 
                 mov eax, [esi].base.lengthx
-                add eax, 40
+                add eax, 140
                 mov @bubblew, eax
                 mov eax, [esi].base.lengthy
-                add eax, 40
+                add eax, 140
                 mov @bubbleh, eax
                 .if [esi].status != Exposure
                         invoke  TransparentBlt, hDCGame_ptr, 
@@ -1082,10 +1080,25 @@ _draw_object proc uses eax ebx ecx edx edi esi, hWnd, hDCGame_ptr, player_addr: 
                 .endif
 
                 
+                mov eax, [esi].base.posx
+                sub eax, 50
+                mov @carx, eax
+
+                mov eax, [esi].base.posy
+                sub eax, 50
+                mov @cary, eax
+
+                mov eax, [esi].base.lengthx
+                shl eax, 1
+                mov @carlx, eax
+
+                mov eax, [esi].base.lengthy
+                shl eax, 1
+                mov @carly, eax
 
                 mov esi, player_addr
                 assume esi: ptr Subject
-                invoke  TransparentBlt, hDCGame_ptr, [esi].base.posx, [esi].base.posy, [esi].base.lengthx, [esi].base.lengthy, [esi].base.DC, 0, 0, PLAYER_LX, PLAYER_LY, 16777215
+                invoke  TransparentBlt, hDCGame_ptr, @carx, @cary, @carlx, @carly, [esi].base.DC, 0, 0, PLAYER_LX, PLAYER_LY, 16777215
 ;draw obj 1
                 mov ecx, @target_number
                 mov esi, @targets_ptr

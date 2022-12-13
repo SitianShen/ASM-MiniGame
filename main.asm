@@ -326,6 +326,7 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                         .if eax == 1
                                 invoke _save_game, addr playerOne, addr targetsOne, addr target_number_one, addr saveFileName1
                                 invoke _save_game, addr playerTwo, addr targetsTwo, addr target_number_two, addr saveFileName2
+                                invoke  ShowWindow, hWinMain2, SW_HIDE
                                 mov cur_interface, in_begining
                                 mov button_save.is_click, 0
                         .endif
