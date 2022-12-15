@@ -263,6 +263,7 @@ _ProcWinMain    proc    uses ebx edi esi, hWnd, uMsg, wParam, lParam
                                         invoke _load_game, addr playerTwo, addr targetsTwo, addr target_number_two, addr saveFileName2
                                         .if eax == 0
                                                 invoke _Stop_BeginBGM_SOUND
+                                                invoke _BGM_SOUND
                                                 invoke  ShowWindow, hWinMain2, SW_SHOWNORMAL
                                                 mov cur_interface, in_2p_game
                                                 mov button_2p_play.is_click, 0

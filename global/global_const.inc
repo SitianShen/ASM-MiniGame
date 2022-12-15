@@ -1,7 +1,7 @@
 ;========================  const const const const ==========================
 
 .const 
-szClassName     db      'Run away from covid-19', 0
+szClassName     db      'Cyberpunk covid-19', 0
 debug_int       db      '%d', 0ah, 0
 szInt       db      '%d', 0ah, 0
 
