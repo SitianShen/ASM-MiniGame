@@ -3,7 +3,7 @@
 ## 游戏界面
 
 > 一些简单的界面展示
-
+![image](https://user-images.githubusercontent.com/74302383/233284928-16ad2f09-66f3-414a-8c3b-8083e5906c30.png)
 
 
 ## 成员介绍与分工
